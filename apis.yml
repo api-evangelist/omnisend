@@ -1,0 +1,66 @@
+aid: omnisend
+name: Omnisend
+description: >-
+  Omnisend is an email and SMS marketing automation platform purpose-built
+  for ecommerce, with deep integrations into Shopify, BigCommerce, WooCommerce,
+  and other storefronts. The platform provides automation workflows, campaign
+  builders, segmentation, popups and forms, and product recommendations to
+  drive customer engagement and revenue. Omnisend's REST API exposes contacts,
+  events, products, categories, carts, orders, and campaigns using an
+  X-API-KEY header or OAuth 2.0 for app-based integrations.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Email Marketing
+  - Marketing Automation
+  - Ecommerce
+  - SMS Marketing
+  - Customer Engagement
+  - Segmentation
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/omnisend/refs/heads/main/apis.yml
+created: '2026-05-11'
+modified: '2026-05-11'
+specificationVersion: '0.19'
+apis:
+  - aid: omnisend:rest-api
+    name: Omnisend REST API
+    description: >-
+      REST API for managing contacts, events, products, categories, carts,
+      orders, and campaigns for ecommerce marketing automation. Authentication
+      uses an X-API-KEY header or OAuth 2.0 authorization code flow.
+    humanURL: https://api-docs.omnisend.com/reference/overview
+    baseURL: https://api.omnisend.com/v5
+    tags:
+      - Email Marketing
+      - Contacts
+      - Campaigns
+      - Ecommerce
+      - Events
+    properties:
+      - type: Documentation
+        url: https://api-docs.omnisend.com/
+      - type: API Reference
+        url: https://api-docs.omnisend.com/reference/overview
+      - type: Authentication
+        url: https://api-docs.omnisend.com/reference/authentication
+      - type: OAuth
+        url: https://api-docs.omnisend.com/reference/oauth
+      - type: Postman
+        url: https://www.postman.com/omnisend-api/workspace/omnisend/overview
+common:
+  - type: Website
+    url: https://www.omnisend.com
+  - type: Documentation
+    url: https://api-docs.omnisend.com
+  - type: Pricing
+    url: https://www.omnisend.com/pricing
+  - type: Sign Up
+    url: https://app.omnisend.com/signup
+  - type: Support
+    url: https://support.omnisend.com
+  - type: Help Center
+    url: https://support.omnisend.com/en/articles/1061798-omnisend-api-documentation
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
