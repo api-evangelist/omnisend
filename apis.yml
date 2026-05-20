@@ -49,6 +49,10 @@ apis:
       - type: Postman
         url: https://www.postman.com/omnisend-api/workspace/omnisend/overview
 common:
+  - type: GitHubOrganization
+    url: https://github.com/omnisend
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/omnisend
   - type: Website
     url: https://www.omnisend.com
   - type: Documentation
