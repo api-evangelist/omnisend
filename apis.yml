@@ -65,6 +65,8 @@ common:
     url: https://support.omnisend.com
   - type: Help Center
     url: https://support.omnisend.com/en/articles/1061798-omnisend-api-documentation
+  - type: LLMsTxt
+    url: https://api-docs.omnisend.com/llms.txt
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
