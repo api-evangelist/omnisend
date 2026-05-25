@@ -1,0 +1,90 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Omnisend REST API — Segments
+  description: 'Omnisend Segments capability. Manage contact segments with behavioral and event-based criteria. Segment modification returns 409 if segment is in building state.'
+  tags:
+    - Omnisend
+    - Segments
+    - Audiences
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+  - namespace: env
+    keys:
+      OMNISEND_API_KEY: OMNISEND_API_KEY
+capability:
+  consumes:
+    - type: http
+      namespace: segments
+      baseUri: https://api.omnisend.com/v5
+      description: Omnisend Segments business capability.
+      resources:
+        - name: segments
+          path: /segments
+          operations:
+            - name: listSegments
+              method: GET
+              description: List segments
+              outputRawFormat: json
+              outputParameters: [{ name: result, type: object, value: $. }]
+            - name: createSegment
+              method: POST
+              description: Create a segment
+              outputRawFormat: json
+              outputParameters: [{ name: result, type: object, value: $. }]
+              inputParameters: [{ name: body, in: body, type: object, required: true }]
+        - name: segment-by-id
+          path: /segments/{segmentID}
+          operations:
+            - name: getSegment
+              method: GET
+              description: Get a segment
+              outputRawFormat: json
+              outputParameters: [{ name: result, type: object, value: $. }]
+              inputParameters: [{ name: segmentID, in: path, type: string, required: true }]
+            - name: replaceSegment
+              method: PUT
+              description: Replace a segment
+              outputRawFormat: json
+              outputParameters: [{ name: result, type: object, value: $. }]
+              inputParameters:
+                - { name: segmentID, in: path, type: string, required: true }
+                - { name: body, in: body, type: object, required: true }
+            - name: deleteSegment
+              method: DELETE
+              description: Delete a segment
+              outputRawFormat: json
+              outputParameters: [{ name: result, type: object, value: $. }]
+              inputParameters: [{ name: segmentID, in: path, type: string, required: true }]
+        - name: segment-statistics
+          path: /segments/{segmentID}/statistics
+          operations:
+            - name: getSegmentStatistics
+              method: GET
+              description: Get segment statistics
+              outputRawFormat: json
+              outputParameters: [{ name: result, type: object, value: $. }]
+              inputParameters: [{ name: segmentID, in: path, type: string, required: true }]
+      authentication:
+        type: apikey
+        key: X-API-KEY
+        value: '{{env.OMNISEND_API_KEY}}'
+        placement: header
+  exposes:
+    - type: mcp
+      namespace: segments-mcp
+      port: 9090
+      transport: http
+      description: MCP adapter for Omnisend Segments.
+      tools:
+        - name: omnisend-list-segments
+          description: List Omnisend segments
+          hints: { readOnly: true, destructive: false, idempotent: true }
+          call: segments.listSegments
+          outputParameters: [{ type: object, mapping: $. }]
+        - name: omnisend-get-segment-statistics
+          description: Get Omnisend segment statistics
+          hints: { readOnly: true, destructive: false, idempotent: true }
+          call: segments.getSegmentStatistics
+          with: { segmentID: tools.segmentID }
+          outputParameters: [{ type: object, mapping: $. }]

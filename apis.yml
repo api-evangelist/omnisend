@@ -1,15 +1,23 @@
 aid: omnisend
 name: Omnisend
 description: >-
-  Omnisend is an email and SMS marketing automation platform purpose-built
-  for ecommerce, with deep integrations into Shopify, BigCommerce, WooCommerce,
-  and other storefronts. The platform provides automation workflows, campaign
-  builders, segmentation, popups and forms, and product recommendations to
-  drive customer engagement and revenue. Omnisend's REST API exposes contacts,
-  events, products, categories, carts, orders, and campaigns using an
-  X-API-KEY header or OAuth 2.0 for app-based integrations.
+  Omnisend is a Lithuanian-headquartered email and SMS marketing automation
+  platform purpose-built for ecommerce, with first-class integrations into
+  Shopify, BigCommerce, WooCommerce, Magento, Wix, Square Online, and other
+  storefronts. The platform unifies automation workflows, campaign builders,
+  segmentation, popups and forms, web push, product recommendations, A/B
+  testing, and reporting to drive customer engagement and revenue. Omnisend's
+  REST API exposes contacts, events, products, product categories, segments,
+  campaigns, batches, email templates, email content, universal layouts,
+  images, brands, and analytics reports. Authentication uses an API key passed
+  via the `X-API-KEY` header, or OAuth 2.0 authorization-code flow with
+  resource-scoped permissions for app-based integrations on the Omnisend App
+  Market.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+kind: contract
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+access: 3rd-Party
+position: Consuming
 tags:
   - Email Marketing
   - Marketing Automation
@@ -17,18 +25,29 @@ tags:
   - SMS Marketing
   - Customer Engagement
   - Segmentation
+  - Campaigns
+  - Forms
+  - Popups
+  - Web Push
 url: >-
   https://raw.githubusercontent.com/api-evangelist/omnisend/refs/heads/main/apis.yml
 created: '2026-05-11'
-modified: '2026-05-11'
+modified: '2026-05-25'
 specificationVersion: '0.19'
 apis:
   - aid: omnisend:rest-api
     name: Omnisend REST API
     description: >-
-      REST API for managing contacts, events, products, categories, carts,
-      orders, and campaigns for ecommerce marketing automation. Authentication
-      uses an X-API-KEY header or OAuth 2.0 authorization code flow.
+      Omnisend's REST API for ecommerce email and SMS marketing automation.
+      Manage contacts, events, products, product categories, segments,
+      campaigns, batches, email templates, email content, email universal
+      layouts, images, brands, and analytics reports. Authentication uses
+      `X-API-KEY` header or OAuth 2.0 with resource-scoped permissions
+      (`contacts.read`, `contacts.write`, `events.write`, `products.read`,
+      `products.write`, `campaigns.read`, `campaigns.write`, `segments.read`,
+      `segments.write`, `email-templates.read`, `email-templates.write`,
+      `images.read`, `images.write`, `brands.read`, `brands.write`,
+      `analytics.read`). Cursor-based pagination across list endpoints.
     humanURL: https://api-docs.omnisend.com/reference/overview
     baseURL: https://api.omnisend.com/v5
     tags:
@@ -37,6 +56,10 @@ apis:
       - Campaigns
       - Ecommerce
       - Events
+      - Segments
+      - Products
+      - Templates
+      - Analytics
     properties:
       - type: Documentation
         url: https://api-docs.omnisend.com/
@@ -48,25 +71,132 @@ apis:
         url: https://api-docs.omnisend.com/reference/oauth
       - type: Postman
         url: https://www.postman.com/omnisend-api/workspace/omnisend/overview
+      - type: LLMsTxt
+        url: https://api-docs.omnisend.com/llms.txt
+      - type: OpenAPI
+        url: openapi/omnisend-openapi.yml
+      - type: JSONSchema
+        url: json-schema/omnisend-contact-schema.json
+      - type: JSONSchema
+        url: json-schema/omnisend-event-schema.json
+      - type: JSONLD
+        url: json-ld/omnisend-context.jsonld
+      - type: NaftikoCapability
+        url: capabilities/contacts.yaml
+      - type: NaftikoCapability
+        url: capabilities/events.yaml
+      - type: NaftikoCapability
+        url: capabilities/products.yaml
+      - type: NaftikoCapability
+        url: capabilities/product-categories.yaml
+      - type: NaftikoCapability
+        url: capabilities/segments.yaml
+      - type: NaftikoCapability
+        url: capabilities/campaigns.yaml
+      - type: NaftikoCapability
+        url: capabilities/batches.yaml
+      - type: NaftikoCapability
+        url: capabilities/email-templates.yaml
+      - type: NaftikoCapability
+        url: capabilities/analytics-reports.yaml
 common:
+  - type: Website
+    url: https://www.omnisend.com
+  - type: Portal
+    url: https://www.omnisend.com
+  - type: Documentation
+    url: https://api-docs.omnisend.com
+  - type: APIReference
+    url: https://api-docs.omnisend.com/reference/overview
+  - type: GettingStarted
+    url: https://api-docs.omnisend.com/docs/getting-started
+  - type: Authentication
+    url: https://api-docs.omnisend.com/reference/authentication
+  - type: OAuth
+    url: https://api-docs.omnisend.com/reference/oauth
+  - type: ChangeLog
+    url: https://api-docs.omnisend.com/changelog
+  - type: LLMsTxt
+    url: https://api-docs.omnisend.com/llms.txt
+  - type: Pricing
+    url: https://www.omnisend.com/pricing
+  - type: Plans
+    url: plans/omnisend-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/omnisend-rate-limits.yml
+  - type: FinOps
+    url: finops/omnisend-finops.yml
+  - type: SignUp
+    url: https://app.omnisend.com/signup
+  - type: Login
+    url: https://app.omnisend.com/login
+  - type: Support
+    url: https://support.omnisend.com
+  - type: HelpCenter
+    url: https://support.omnisend.com/en/articles/1061798-omnisend-api-documentation
+  - type: ContactSupport
+    url: https://www.omnisend.com/contact-us/support
+  - type: StatusPage
+    url: https://status.omnisend.com
+  - type: Blog
+    url: https://www.omnisend.com/blog
   - type: GitHubOrganization
     url: https://github.com/omnisend
   - type: LinkedIn
     url: https://www.linkedin.com/company/omnisend
-  - type: Website
-    url: https://www.omnisend.com
-  - type: Documentation
-    url: https://api-docs.omnisend.com
-  - type: Pricing
-    url: https://www.omnisend.com/pricing
-  - type: SignUp
-    url: https://app.omnisend.com/signup
-  - type: Support
-    url: https://support.omnisend.com
-  - type: Help Center
-    url: https://support.omnisend.com/en/articles/1061798-omnisend-api-documentation
-  - type: LLMsTxt
-    url: https://api-docs.omnisend.com/llms.txt
+  - type: PrivacyPolicy
+    url: https://www.omnisend.com/privacy
+  - type: TermsOfService
+    url: https://www.omnisend.com/terms
+  - type: SDK
+    name: PHP SDK
+    url: https://github.com/omnisend/php-sdk
+  - type: Plugin
+    name: WordPress Plugin
+    url: https://github.com/omnisend/wp-omnisend
+  - type: Plugin
+    name: Magento 2 Plugin
+    url: https://github.com/omnisend/magento2-plugin
+  - type: Plugin
+    name: WooCommerce Integration
+    url: https://www.omnisend.com/integrations/woocommerce
+  - type: Plugin
+    name: Shopify Integration
+    url: https://www.omnisend.com/integrations/shopify
+  - type: Plugin
+    name: BigCommerce Integration
+    url: https://www.omnisend.com/integrations/bigcommerce
+  - type: Integrations
+    url: https://www.omnisend.com/integrations
+  - type: AppMarket
+    url: https://www.omnisend.com/app-market
+  - type: Features
+    data:
+      - Email marketing automation with prebuilt ecommerce workflows (welcome, cart abandonment, browse abandonment, order confirmation, post-purchase, win-back)
+      - SMS marketing with global coverage and TCPA / GDPR compliant opt-in management
+      - Web push notifications across desktop and mobile browsers
+      - Drag-and-drop campaign builder with dynamic content blocks, product recommender, and conditional logic
+      - Audience segmentation with behavioral, lifecycle, predictive, and custom-event criteria
+      - Forms, popups, and signup boxes with Wheel-of-Fortune gamified opt-ins
+      - A/B testing on subject lines, content, and send time
+      - Advanced analytics and reporting with revenue attribution per campaign and workflow
+      - Native integrations with Shopify, BigCommerce, WooCommerce, Wix, Square Online, Magento, and PrestaShop
+      - REST API with X-API-KEY and OAuth 2.0 authentication, resource-scoped permissions, and cursor-based pagination
+      - Batch API for bulk contact, product, and event imports (up to 100 actions per batch)
+      - Email Templates, Email Content, and Email Universal Layouts APIs for programmatic template management
+      - Customer events tracking (predefined and custom) for automation triggers
+      - Brands API for managing brand identity across templates
+      - Analytics Reports and Statistics APIs for aggregated marketing performance data
+      - Postman public workspace and llms.txt feed for AI-agent friendly discovery
+      - 24/7 live support across all paid plans
+      - Free plan for up to 250 contacts and 500 emails/month
+    sources:
+      - https://www.omnisend.com
+      - https://api-docs.omnisend.com/reference/overview
+      - https://www.omnisend.com/pricing
+      - https://api-docs.omnisend.com/llms.txt
+    updated: '2026-05-25'
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+    url: https://apievangelist.com

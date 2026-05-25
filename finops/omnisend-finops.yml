@@ -1,0 +1,128 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Omnisend
+providerId: omnisend
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - FinOps
+  - FOCUS
+  - Cost Management
+  - Email Marketing
+  - SMS
+  - Marketing Automation
+description: >-
+  FOCUS-aligned FinOps definition for Omnisend's ecommerce email and SMS
+  marketing automation platform. Subscription pricing scales with active
+  contact list; SMS, dedicated IP, and overages are usage-metered.
+sources:
+  - https://www.omnisend.com/pricing
+  - https://www.omnisend.com/sms-pricing
+  - https://api-docs.omnisend.com
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Omnisend
+serviceCategory: Marketing and Commerce
+billingModel:
+  pricingCategory: Hybrid
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+    - Usage
+    - Purchase
+    - Tax
+    - Credit
+    - Adjustment
+  primaryUnit: contact
+  secondaryUnits:
+    - email
+    - sms_message
+    - web_push_notification
+focusColumns:
+  ServiceName: Omnisend Marketing Automation
+  ServiceCategory: Marketing and Commerce
+  ProviderName: Omnisend
+  PublisherName: Omnisend
+  InvoiceIssuerName: Omnisend
+  PricingCategory: Hybrid
+  PricingUnit: contact
+  BillingCurrency: USD
+meters:
+  - name: active_contacts
+    unit: contact
+    aggregation: max
+    dimensions:
+      - list
+      - status
+      - geo
+    description: Active subscribed contacts; the principal driver of subscription pricing.
+  - name: emails_sent
+    unit: email
+    aggregation: sum
+    dimensions:
+      - campaign
+      - workflow
+      - geo
+  - name: sms_messages_sent
+    unit: sms_message
+    aggregation: sum
+    dimensions:
+      - destination_country
+      - campaign
+      - workflow
+    description: Billed per SMS at country-specific rates; volume discounts apply.
+  - name: web_push_notifications
+    unit: notification
+    aggregation: sum
+    dimensions:
+      - campaign
+      - workflow
+  - name: dedicated_ip
+    unit: month
+    aggregation: count
+    dimensions:
+      - account
+discountModels:
+  - name: 3-month prepay
+    discount: ~30% on Standard and Pro plans when prepaying 3 months
+  - name: Annual / volume contracts
+    discount: Custom; available for Pro and Enterprise customers
+  - name: SMS volume tiers
+    discount: SMS per-message rates decrease at higher monthly volumes (varies by destination country)
+  - name: Free migration
+    discount: One-time free migration from other ESPs for Standard and Pro customers
+unitEconomics:
+  - name: Cost per active contact
+    metric: monthly_subscription_cost / active_contacts
+    description: Helps benchmark whether your list size and plan are well matched.
+  - name: Cost per email sent
+    metric: monthly_subscription_cost / emails_sent
+    description: Effective cost per delivered marketing email.
+  - name: Cost per SMS
+    metric: sms_spend / sms_messages_sent
+    description: Country-weighted blended SMS cost.
+  - name: Revenue-per-email (RPE)
+    metric: attributed_revenue / emails_sent
+    description: Pair with Omnisend's revenue attribution to derive marketing ROI.
+principles:
+  - name: Visibility
+    description: Pull aggregated send and attribution metrics from the Analytics Reports and Analytics Statistics APIs into your BI / FinOps stack.
+  - name: Allocation
+    description: Tag campaigns, automation workflows, and segments to allocate marketing spend to brands, product lines, or geographies.
+  - name: Optimization
+    description: Prune dormant contacts before list-tier breaks; suppress low-engagement segments to reduce send volume without losing revenue.
+  - name: Accountability
+    description: Set per-campaign / per-workflow spend caps and review weekly RPE against email + SMS unit costs.
+recommendations:
+  - name: List hygiene
+    description: Maintain regular cleansing of unengaged subscribers to avoid jumping list-size pricing tiers prematurely.
+  - name: SMS targeting
+    description: SMS is expensive per-message; reserve for high-intent moments (cart abandonment, VIP launches) and use email for everything else.
+  - name: Prepay arbitrage
+    description: 3-month prepay yields ~30% off — lock in only if your contact list size is stable.

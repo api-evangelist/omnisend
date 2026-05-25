@@ -1,0 +1,110 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://schema.org/",
+    "omnisend": "https://api.omnisend.com/v5/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+
+    "Contact": {
+      "@id": "omnisend:Contact",
+      "@context": {
+        "contactID":    { "@id": "omnisend:Contact/contactID",    "@type": "xsd:string" },
+        "firstName":    { "@id": "schema:givenName",              "@type": "xsd:string" },
+        "lastName":     { "@id": "schema:familyName",             "@type": "xsd:string" },
+        "country":      { "@id": "schema:addressCountry",         "@type": "xsd:string" },
+        "countryCode":  { "@id": "omnisend:Contact/countryCode",  "@type": "xsd:string" },
+        "state":        { "@id": "schema:addressRegion",          "@type": "xsd:string" },
+        "city":         { "@id": "schema:addressLocality",        "@type": "xsd:string" },
+        "address":      { "@id": "schema:streetAddress",          "@type": "xsd:string" },
+        "postalCode":   { "@id": "schema:postalCode",             "@type": "xsd:string" },
+        "gender":       { "@id": "schema:gender",                 "@type": "xsd:string" },
+        "birthdate":    { "@id": "schema:birthDate",              "@type": "xsd:date"   },
+        "tags":         { "@id": "omnisend:Contact/tags",         "@container": "@set" },
+        "segments":     { "@id": "omnisend:Contact/segments",     "@container": "@set" },
+        "identifiers":  { "@id": "omnisend:Contact/identifiers",  "@container": "@list" },
+        "createdAt":    { "@id": "dcterms:created",               "@type": "xsd:dateTime" },
+        "updatedAt":    { "@id": "dcterms:modified",              "@type": "xsd:dateTime" }
+      }
+    },
+
+    "Event": {
+      "@id": "omnisend:Event",
+      "@context": {
+        "eventName":  { "@id": "omnisend:Event/name",       "@type": "xsd:string" },
+        "eventTime":  { "@id": "omnisend:Event/time",       "@type": "xsd:dateTime" },
+        "eventID":    { "@id": "omnisend:Event/id",         "@type": "xsd:string" },
+        "origin":     { "@id": "omnisend:Event/origin",     "@type": "xsd:string" },
+        "contact":    { "@id": "omnisend:Event/contact" },
+        "properties": { "@id": "omnisend:Event/properties" },
+        "order":      { "@id": "omnisend:Event/order" },
+        "lineItems":  { "@id": "omnisend:Event/lineItems",  "@container": "@list" }
+      }
+    },
+
+    "Product": {
+      "@id": "schema:Product",
+      "@context": {
+        "productID":   { "@id": "schema:productID",   "@type": "xsd:string" },
+        "title":       { "@id": "schema:name",        "@type": "xsd:string" },
+        "description": { "@id": "schema:description", "@type": "xsd:string" },
+        "vendor":      { "@id": "schema:brand",       "@type": "xsd:string" },
+        "productUrl":  { "@id": "schema:url",         "@type": "xsd:anyURI" },
+        "imageUrl":    { "@id": "schema:image",       "@type": "xsd:anyURI" },
+        "sku":         { "@id": "schema:sku",         "@type": "xsd:string" },
+        "currency":    { "@id": "schema:priceCurrency","@type": "xsd:string" },
+        "price":       { "@id": "schema:price",       "@type": "xsd:decimal" },
+        "categoryIDs": { "@id": "schema:category",    "@container": "@set" },
+        "variants":    { "@id": "omnisend:Product/variants", "@container": "@list" },
+        "tags":        { "@id": "omnisend:Product/tags",     "@container": "@set" }
+      }
+    },
+
+    "ProductCategory": {
+      "@id": "schema:CategoryCode",
+      "@context": {
+        "categoryID": { "@id": "omnisend:ProductCategory/id",   "@type": "xsd:string" },
+        "title":      { "@id": "schema:name",                   "@type": "xsd:string" }
+      }
+    },
+
+    "Segment": {
+      "@id": "omnisend:Segment",
+      "@context": {
+        "segmentID":  { "@id": "omnisend:Segment/id",        "@type": "xsd:string" },
+        "name":       { "@id": "schema:name",                "@type": "xsd:string" },
+        "status":     { "@id": "omnisend:Segment/status",    "@type": "xsd:string" },
+        "criteria":   { "@id": "omnisend:Segment/criteria" },
+        "createdAt":  { "@id": "dcterms:created",            "@type": "xsd:dateTime" },
+        "updatedAt":  { "@id": "dcterms:modified",           "@type": "xsd:dateTime" }
+      }
+    },
+
+    "Campaign": {
+      "@id": "omnisend:Campaign",
+      "@context": {
+        "campaignID":  { "@id": "omnisend:Campaign/id",     "@type": "xsd:string" },
+        "name":        { "@id": "schema:name",              "@type": "xsd:string" },
+        "subject":     { "@id": "omnisend:Campaign/subject","@type": "xsd:string" },
+        "fromName":    { "@id": "omnisend:Campaign/fromName","@type": "xsd:string" },
+        "fromEmail":   { "@id": "omnisend:Campaign/fromEmail","@type": "xsd:string" },
+        "status":      { "@id": "omnisend:Campaign/status", "@type": "xsd:string" },
+        "type":        { "@id": "omnisend:Campaign/type",   "@type": "xsd:string" },
+        "scheduledAt": { "@id": "omnisend:Campaign/scheduledAt","@type": "xsd:dateTime" },
+        "sentAt":      { "@id": "omnisend:Campaign/sentAt", "@type": "xsd:dateTime" }
+      }
+    },
+
+    "Batch": {
+      "@id": "omnisend:Batch",
+      "@context": {
+        "batchID":   { "@id": "omnisend:Batch/id",       "@type": "xsd:string" },
+        "endpoint":  { "@id": "omnisend:Batch/endpoint", "@type": "xsd:string" },
+        "method":    { "@id": "omnisend:Batch/method",   "@type": "xsd:string" },
+        "status":    { "@id": "omnisend:Batch/status",   "@type": "xsd:string" },
+        "items":     { "@id": "omnisend:Batch/items",    "@container": "@list" }
+      }
+    }
+  }
+}

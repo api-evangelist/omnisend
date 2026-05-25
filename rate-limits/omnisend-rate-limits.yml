@@ -1,0 +1,112 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Omnisend
+providerId: omnisend
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - Rate Limiting
+  - Quotas
+  - Email Marketing
+description: >-
+  Documented rate limits for the Omnisend REST API. Most resources share a
+  default request-per-minute budget; Segments resource has explicit per-method
+  caps; Batch operations are bounded to 100 actions per batch.
+sources:
+  - https://api-docs.omnisend.com/reference/overview
+  - https://api-docs.omnisend.com/reference/authentication
+  - https://api-docs.omnisend.com/llms.txt
+algorithm: fixed-window
+responseCodes:
+  throttled: 429
+  quotaExceeded: 429
+  conflict: 409
+headers:
+  retryAfter: Retry-After
+limits:
+  - resource: contacts
+    method: any
+    rpm: 400
+    note: Default contact endpoint budget. Filtering restrictions apply (`tag`/`status` are mutually exclusive; `updatedAtFrom` cannot be combined with email/phone/status/segmentID/tag).
+  - resource: events
+    method: POST
+    rpm: 400
+    note: Customer event ingestion. Before sending bulk events, ensure no automations are configured that would trigger messages from imported historic data.
+  - resource: products
+    method: any
+    rpm: 400
+  - resource: product-categories
+    method: any
+    rpm: 400
+  - resource: segments
+    method: GET
+    rpm: 100
+    note: Segments list and statistics reads.
+  - resource: segments
+    method: POST
+    rpm: 15
+    note: Segment create.
+  - resource: segments
+    method: PUT
+    rpm: 15
+    note: Segment update — returns 409 if segment is in building state.
+  - resource: segments
+    method: DELETE
+    rpm: 100
+  - resource: campaigns
+    method: any
+    rpm: 400
+    note: Campaign list/get/create/update/delete/send/cancel/copy.
+  - resource: batches
+    method: any
+    rpm: 100
+    note: Up to 100 actions per batch operation.
+  - resource: email-templates
+    method: any
+    rpm: 400
+    note: Import limited to 1 MB file size.
+  - resource: email-content
+    method: any
+    rpm: 400
+  - resource: email-universal-layouts
+    method: any
+    rpm: 400
+  - resource: images
+    method: POST
+    rpm: 100
+    note: JPEG, PNG, GIF, WebP; max 5MB per upload.
+  - resource: brands
+    method: any
+    rpm: 100
+    note: Store-connection (`POST /brands/current`) is only possible via OAuth flow.
+  - resource: analytics-reports
+    method: POST
+    rpm: 60
+  - resource: analytics-statistics
+    method: POST
+    rpm: 60
+pagination:
+  style: cursor
+  parameters:
+    - paging.cursors.after
+    - paging.cursors.before
+    - paging.hasMore
+  defaults:
+    campaigns: { default: 100, max: 250 }
+    email-templates: { default: 50, max: 100 }
+    email-universal-layouts: { default: 100, max: 250 }
+    segments: { default: 100, max: 250 }
+policies:
+  - name: 429 handling
+    description: Clients should honor Retry-After when present, and otherwise back off exponentially.
+  - name: Building-state segments
+    description: Segments in building state return 409 Conflict for modifying methods.
+  - name: Batch sizing
+    description: Batch endpoint capped at 100 actions per batch; larger imports should be chunked.
+  - name: OAuth-required endpoints
+    description: Store connection (`POST /brands/current`) requires OAuth 2.0; API key alone is insufficient.
+notes:
+  - Omnisend does not publish a single global RPM; the limits above are consolidated from the API reference (api-docs.omnisend.com) and the llms.txt index. Treat them as starting guidance and consult support for high-volume integrations.
+  - Per-endpoint Retry-After headers may differ; always honor the response header value when present.

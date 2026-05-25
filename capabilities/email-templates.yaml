@@ -1,0 +1,101 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Omnisend REST API — Email Templates
+  description: 'Omnisend Email Templates capability. Manage email templates and renderings; import templates up to 1 MB.'
+  tags:
+    - Omnisend
+    - Templates
+    - Email
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+  - namespace: env
+    keys:
+      OMNISEND_API_KEY: OMNISEND_API_KEY
+capability:
+  consumes:
+    - type: http
+      namespace: email-templates
+      baseUri: https://api.omnisend.com/v5
+      description: Omnisend Email Templates business capability.
+      resources:
+        - name: email-templates
+          path: /email-templates
+          operations:
+            - name: listTemplates
+              method: GET
+              description: List email templates
+              outputRawFormat: json
+              outputParameters: [{ name: result, type: object, value: $. }]
+            - name: createTemplate
+              method: POST
+              description: Create a template
+              outputRawFormat: json
+              outputParameters: [{ name: result, type: object, value: $. }]
+              inputParameters: [{ name: body, in: body, type: object, required: true }]
+        - name: template-by-id
+          path: /email-templates/{templateID}
+          operations:
+            - name: getTemplate
+              method: GET
+              description: Get an email template
+              outputRawFormat: json
+              outputParameters: [{ name: result, type: object, value: $. }]
+              inputParameters: [{ name: templateID, in: path, type: string, required: true }]
+            - name: replaceTemplate
+              method: PUT
+              description: Replace an email template
+              outputRawFormat: json
+              outputParameters: [{ name: result, type: object, value: $. }]
+              inputParameters:
+                - { name: templateID, in: path, type: string, required: true }
+                - { name: body, in: body, type: object, required: true }
+            - name: deleteTemplate
+              method: DELETE
+              description: Delete an email template
+              outputRawFormat: json
+              outputParameters: [{ name: result, type: object, value: $. }]
+              inputParameters: [{ name: templateID, in: path, type: string, required: true }]
+        - name: template-render
+          path: /email-templates/{templateID}/render
+          operations:
+            - name: renderTemplate
+              method: POST
+              description: Render an email template with merge data
+              outputRawFormat: json
+              outputParameters: [{ name: result, type: object, value: $. }]
+              inputParameters:
+                - { name: templateID, in: path, type: string, required: true }
+                - { name: body, in: body, type: object, required: true }
+        - name: template-import
+          path: /email-templates/import
+          operations:
+            - name: importTemplate
+              method: POST
+              description: Import an email template (1 MB max)
+              outputRawFormat: json
+              outputParameters: [{ name: result, type: object, value: $. }]
+              inputParameters: [{ name: body, in: body, type: object, required: true }]
+      authentication:
+        type: apikey
+        key: X-API-KEY
+        value: '{{env.OMNISEND_API_KEY}}'
+        placement: header
+  exposes:
+    - type: mcp
+      namespace: email-templates-mcp
+      port: 9090
+      transport: http
+      description: MCP adapter for Omnisend Email Templates.
+      tools:
+        - name: omnisend-list-email-templates
+          description: List Omnisend email templates
+          hints: { readOnly: true, destructive: false, idempotent: true }
+          call: email-templates.listTemplates
+          outputParameters: [{ type: object, mapping: $. }]
+        - name: omnisend-render-email-template
+          description: Render an Omnisend email template
+          hints: { readOnly: false, destructive: false, idempotent: true }
+          call: email-templates.renderTemplate
+          with: { templateID: tools.templateID, body: tools.body }
+          outputParameters: [{ type: object, mapping: $. }]

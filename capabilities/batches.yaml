@@ -1,0 +1,77 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Omnisend REST API — Batches
+  description: 'Omnisend Batches capability. Bulk-process up to 100 actions per batch across contacts, products, and events. Poll batch status and inspect per-item results.'
+  tags:
+    - Omnisend
+    - Batches
+    - Bulk Operations
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+  - namespace: env
+    keys:
+      OMNISEND_API_KEY: OMNISEND_API_KEY
+capability:
+  consumes:
+    - type: http
+      namespace: batches
+      baseUri: https://api.omnisend.com/v5
+      description: Omnisend Batches business capability.
+      resources:
+        - name: batches
+          path: /batches
+          operations:
+            - name: listBatches
+              method: GET
+              description: List batches
+              outputRawFormat: json
+              outputParameters: [{ name: result, type: object, value: $. }]
+            - name: createBatch
+              method: POST
+              description: Create a batch (up to 100 actions)
+              outputRawFormat: json
+              outputParameters: [{ name: result, type: object, value: $. }]
+              inputParameters: [{ name: body, in: body, type: object, required: true }]
+        - name: batch-by-id
+          path: /batches/{batchID}
+          operations:
+            - name: getBatch
+              method: GET
+              description: Get a batch by ID
+              outputRawFormat: json
+              outputParameters: [{ name: result, type: object, value: $. }]
+              inputParameters: [{ name: batchID, in: path, type: string, required: true }]
+        - name: batch-items
+          path: /batches/{batchID}/items
+          operations:
+            - name: getBatchItems
+              method: GET
+              description: List per-item results of a batch
+              outputRawFormat: json
+              outputParameters: [{ name: result, type: object, value: $. }]
+              inputParameters: [{ name: batchID, in: path, type: string, required: true }]
+      authentication:
+        type: apikey
+        key: X-API-KEY
+        value: '{{env.OMNISEND_API_KEY}}'
+        placement: header
+  exposes:
+    - type: mcp
+      namespace: batches-mcp
+      port: 9090
+      transport: http
+      description: MCP adapter for Omnisend Batches.
+      tools:
+        - name: omnisend-create-batch
+          description: Create an Omnisend batch (up to 100 actions)
+          hints: { readOnly: false, destructive: false, idempotent: false }
+          call: batches.createBatch
+          with: { body: tools.body }
+          outputParameters: [{ type: object, mapping: $. }]
+        - name: omnisend-get-batch
+          description: Get an Omnisend batch
+          hints: { readOnly: true, destructive: false, idempotent: true }
+          call: batches.getBatch
+          with: { batchID: tools.batchID }
+          outputParameters: [{ type: object, mapping: $. }]

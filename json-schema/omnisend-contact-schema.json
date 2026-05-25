@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.com/schemas/omnisend/omnisend-contact-schema.json",
+  "title": "Omnisend Contact",
+  "description": "Schema for the Omnisend Contact resource exposed by GET/POST/PATCH /contacts and GET/PATCH /contacts/{contactID}.",
+  "type": "object",
+  "required": ["identifiers"],
+  "properties": {
+    "contactID": {
+      "type": "string",
+      "description": "Unique Omnisend identifier for the contact."
+    },
+    "identifiers": {
+      "type": "array",
+      "description": "One or more identifiers (email or phone) for the contact, each with channel-specific status and consent.",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/Identifier" }
+    },
+    "firstName": {
+      "type": "string",
+      "description": "Contact first name."
+    },
+    "lastName": {
+      "type": "string",
+      "description": "Contact last name."
+    },
+    "country": {
+      "type": "string",
+      "description": "ISO country name for the contact."
+    },
+    "countryCode": {
+      "type": "string",
+      "description": "ISO 3166-1 alpha-2 country code.",
+      "pattern": "^[A-Z]{2}$"
+    },
+    "state": {
+      "type": "string",
+      "description": "State or province."
+    },
+    "city": {
+      "type": "string",
+      "description": "City."
+    },
+    "address": {
+      "type": "string",
+      "description": "Street address."
+    },
+    "postalCode": {
+      "type": "string"
+    },
+    "gender": {
+      "type": "string",
+      "enum": ["f", "m"]
+    },
+    "birthdate": {
+      "type": "string",
+      "format": "date"
+    },
+    "tags": {
+      "type": "array",
+      "description": "Free-form tags applied to the contact (max 250 per contact).",
+      "items": { "type": "string" }
+    },
+    "segments": {
+      "type": "array",
+      "description": "Segment IDs the contact currently belongs to (read-only).",
+      "items": { "type": "string" }
+    },
+    "customProperties": {
+      "type": "object",
+      "description": "Arbitrary custom contact properties.",
+      "additionalProperties": true
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "$defs": {
+    "Identifier": {
+      "type": "object",
+      "required": ["type", "id", "channels"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["email", "phone"],
+          "description": "Channel type for this identifier."
+        },
+        "id": {
+          "type": "string",
+          "description": "The address itself — an email for type=email, an E.164 phone number for type=phone."
+        },
+        "channels": {
+          "type": "object",
+          "description": "Per-channel subscription state.",
+          "properties": {
+            "email": { "$ref": "#/$defs/ChannelState" },
+            "sms":   { "$ref": "#/$defs/ChannelState" }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "ChannelState": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["subscribed", "unsubscribed", "nonSubscribed"],
+          "description": "Current subscription status for this channel."
+        },
+        "statusDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp the status last changed."
+        }
+      }
+    }
+  }
+}

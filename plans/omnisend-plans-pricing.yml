@@ -1,0 +1,172 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Omnisend
+providerId: omnisend
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - Email Marketing
+  - SMS
+  - Marketing Automation
+  - Ecommerce
+description: >-
+  Reconciled subscription plans and feature entitlements for Omnisend's
+  ecommerce email + SMS marketing automation platform. Pricing scales with
+  contact list size; SMS and dedicated IP are usage-based add-ons. Source:
+  omnisend.com/pricing.
+sources:
+  - https://www.omnisend.com/pricing
+  - https://www.omnisend.com/sms-pricing
+plans:
+  - id: omnisend-free
+    name: Free
+    type: tiered
+    description: Free tier for very small lists and trial usage.
+    entries:
+      - label: Contacts
+        name: contacts
+        type: included
+        metric: contacts
+        limit: 250
+        timeFrame: month
+        geo: global
+        price: '0'
+      - label: Emails
+        name: emails
+        type: included
+        metric: emails
+        limit: 500
+        timeFrame: month
+        geo: global
+        price: '0'
+      - label: Web Push
+        name: web_push
+        type: included
+        metric: notifications
+        limit: 500
+        timeFrame: month
+        geo: global
+        price: '0'
+    elements:
+      - name: Email + automation + segmentation core features
+      - name: Forms, popups, and signup boxes
+      - name: Pre-built ecommerce workflows
+      - name: Up to 500 web push notifications per month
+      - name: 24/7 live support
+      - name: Omnisend branding in emails
+  - id: omnisend-standard
+    name: Standard
+    type: tiered
+    description: Entry paid plan with unlimited web push and core ecommerce automation.
+    entries:
+      - label: Base price
+        name: base
+        type: recurring
+        metric: subscription
+        limit: 1
+        timeFrame: month
+        geo: US
+        unit: 1
+        price: '11.20'
+      - label: Emails
+        name: emails
+        type: included
+        metric: emails
+        limit: 6000
+        timeFrame: month
+        geo: global
+        price: '0'
+      - label: Contacts (starting tier)
+        name: contacts
+        type: included
+        metric: contacts
+        limit: 500
+        timeFrame: month
+        geo: global
+        price: '0'
+    elements:
+      - name: Unlimited web push notifications
+      - name: Customer success expert (when spending $400+/month)
+      - name: Forms AI and advanced reporting
+      - name: Dynamic content AI
+      - name: Personalized product recommendations
+      - name: No Omnisend branding in emails
+      - name: Free migration from other ESPs
+      - name: 24/7 priority live support
+  - id: omnisend-pro
+    name: Pro
+    type: tiered
+    description: SMS-included plan with unlimited emails and AI-powered personalization.
+    entries:
+      - label: Base price
+        name: base
+        type: recurring
+        metric: subscription
+        limit: 1
+        timeFrame: month
+        geo: US
+        unit: 1
+        price: '41.30'
+      - label: Emails
+        name: emails
+        type: included
+        metric: emails
+        limit: -1
+        timeFrame: month
+        geo: global
+        price: '0'
+      - label: Contacts (starting tier)
+        name: contacts
+        type: included
+        metric: contacts
+        limit: 2500
+        timeFrame: month
+        geo: global
+        price: '0'
+      - label: SMS credits
+        name: sms
+        type: metered
+        metric: messages
+        limit: -1
+        timeFrame: usage
+        geo: US
+        unit: 1
+        price: '0.007'
+        description: SMS pricing varies by destination country and volume.
+    elements:
+      - name: All Standard plan benefits
+      - name: Unlimited monthly emails
+      - name: SMS credits included (starting at $0.007/SMS, varies by country)
+      - name: AI-powered personalizations
+      - name: Advanced reporting and dynamic content AI
+      - name: Personalized product recommender AI
+      - name: Priority customer success
+  - id: omnisend-enterprise
+    name: Enterprise / Custom
+    type: contract
+    description: Custom plan for ecommerce brands with 150,000+ contacts; pricing negotiated.
+    entries:
+      - label: Custom pricing
+        name: custom
+        type: contract
+        metric: contract
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: 'Contact Sales'
+    elements:
+      - name: Volume pricing for 150k+ contact lists
+      - name: Dedicated account manager
+      - name: Custom SLA
+      - name: Priority deliverability support
+      - name: Custom onboarding and migration
+billingFrequency: Monthly
+billingCurrency: USD
+notes:
+  - Pricing scales with active contact list size — Omnisend's pricing calculator on omnisend.com/pricing computes the exact monthly cost per list-size tier.
+  - 3-month prepay discount of approximately 30% is offered on Standard and Pro plans.
+  - SMS pricing is country-specific and volume-discounted; consult omnisend.com/sms-pricing for per-country rates.
+  - Dedicated IP is an add-on for Pro and Enterprise customers with large sending volumes.

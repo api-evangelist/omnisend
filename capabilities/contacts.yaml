@@ -1,0 +1,206 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Omnisend REST API — Contacts
+  description: 'Omnisend Contacts capability. Manage contact records, including create-or-update by email/phone, fetch by ID, list with filters, update by ID, and tag bulk-add/remove. Self-contained Naftiko capability covering one Omnisend business surface.'
+  tags:
+    - Omnisend
+    - Contacts
+    - Email Marketing
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+  - namespace: env
+    keys:
+      OMNISEND_API_KEY: OMNISEND_API_KEY
+capability:
+  consumes:
+    - type: http
+      namespace: contacts
+      baseUri: https://api.omnisend.com/v5
+      description: Omnisend Contacts business capability. Self-contained, no shared references.
+      resources:
+        - name: contacts
+          path: /contacts
+          operations:
+            - name: listContacts
+              method: GET
+              description: List contacts with pagination and filters
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+              inputParameters:
+                - name: limit
+                  in: query
+                  type: integer
+                - name: 'paging.cursors.after'
+                  in: query
+                  type: string
+                - name: email
+                  in: query
+                  type: string
+                - name: phone
+                  in: query
+                  type: string
+                - name: status
+                  in: query
+                  type: string
+                - name: tag
+                  in: query
+                  type: string
+                - name: segmentID
+                  in: query
+                  type: string
+                - name: updatedAtFrom
+                  in: query
+                  type: string
+            - name: createOrUpdateContact
+              method: POST
+              description: Create or update a contact by email/phone identifier
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+            - name: updateContactByEmail
+              method: PATCH
+              description: Update contact by email
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+        - name: contact-by-id
+          path: /contacts/{contactID}
+          operations:
+            - name: getContact
+              method: GET
+              description: Get a contact by ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+              inputParameters:
+                - name: contactID
+                  in: path
+                  type: string
+                  required: true
+            - name: updateContactById
+              method: PATCH
+              description: Update contact by ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+              inputParameters:
+                - name: contactID
+                  in: path
+                  type: string
+                  required: true
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+        - name: contacts-tags
+          path: /contacts/tags
+          operations:
+            - name: addContactTags
+              method: POST
+              description: Add tags to contacts in bulk
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+            - name: removeContactTags
+              method: DELETE
+              description: Remove tags from contacts in bulk
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+      authentication:
+        type: apikey
+        key: X-API-KEY
+        value: '{{env.OMNISEND_API_KEY}}'
+        placement: header
+  exposes:
+    - type: rest
+      namespace: contacts-rest
+      port: 8080
+      description: REST adapter for Omnisend Contacts.
+      resources:
+        - path: /v1/contacts
+          name: contacts
+          description: REST surface for contacts.
+          operations:
+            - method: GET
+              name: listContacts
+              call: contacts.listContacts
+              with:
+                limit: rest.query.limit
+              outputParameters:
+                - type: object
+                  mapping: $.
+            - method: POST
+              name: createOrUpdateContact
+              call: contacts.createOrUpdateContact
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+    - type: mcp
+      namespace: contacts-mcp
+      port: 9090
+      transport: http
+      description: MCP adapter for Omnisend Contacts.
+      tools:
+        - name: omnisend-list-contacts
+          description: List Omnisend contacts
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: contacts.listContacts
+          with:
+            limit: tools.limit
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: omnisend-upsert-contact
+          description: Create or update an Omnisend contact
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: contacts.createOrUpdateContact
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.

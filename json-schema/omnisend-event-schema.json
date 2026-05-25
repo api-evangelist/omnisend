@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.com/schemas/omnisend/omnisend-event-schema.json",
+  "title": "Omnisend Customer Event",
+  "description": "Schema for the customer event payload submitted to POST /events. Supports predefined ecommerce events (placed order, started checkout, added product to cart, viewed product, ordered product, paid for order, order fulfilled, order refunded, order canceled) and custom events that drive automations.",
+  "type": "object",
+  "required": ["eventName", "contact"],
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "description": "The event name. Predefined names include: 'placed order', 'started checkout', 'added product to cart', 'viewed product', 'ordered product', 'paid for order', 'order fulfilled', 'order refunded', 'order canceled'. Custom names are allowed."
+    },
+    "eventTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp the event occurred. Defaults to server receive time if omitted."
+    },
+    "eventID": {
+      "type": "string",
+      "description": "Caller-supplied unique event id for idempotency."
+    },
+    "origin": {
+      "type": "string",
+      "description": "Source of the event (e.g. 'api', 'web', 'pos')."
+    },
+    "contact": {
+      "type": "object",
+      "description": "Identifies the contact the event is associated with.",
+      "properties": {
+        "contactID": { "type": "string" },
+        "email":     { "type": "string", "format": "email" },
+        "phone":     { "type": "string" }
+      },
+      "minProperties": 1
+    },
+    "properties": {
+      "type": "object",
+      "description": "Arbitrary event properties used for personalization, segmentation, and automation triggers.",
+      "additionalProperties": true
+    },
+    "order": {
+      "$ref": "#/$defs/Order",
+      "description": "Optional order payload for ecommerce events."
+    },
+    "lineItems": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/LineItem" }
+    }
+  },
+  "$defs": {
+    "Order": {
+      "type": "object",
+      "properties": {
+        "orderID":      { "type": "string" },
+        "orderNumber":  { "type": "string" },
+        "totalPrice":   { "type": "number" },
+        "subTotalPrice":{ "type": "number" },
+        "currency":     { "type": "string", "pattern": "^[A-Z]{3}$" },
+        "discountCode": { "type": "string" },
+        "discountValue":{ "type": "number" },
+        "paymentStatus":{ "type": "string" },
+        "fulfillmentStatus": { "type": "string" },
+        "cartID":       { "type": "string" },
+        "cartRecoveryURL": { "type": "string", "format": "uri" }
+      }
+    },
+    "LineItem": {
+      "type": "object",
+      "required": ["productID"],
+      "properties": {
+        "productID":   { "type": "string" },
+        "variantID":   { "type": "string" },
+        "title":       { "type": "string" },
+        "vendor":      { "type": "string" },
+        "sku":         { "type": "string" },
+        "quantity":    { "type": "integer", "minimum": 1 },
+        "price":       { "type": "number" },
+        "discount":    { "type": "number" },
+        "imageUrl":    { "type": "string", "format": "uri" },
+        "productUrl":  { "type": "string", "format": "uri" },
+        "categoryIDs": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "tags":        {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

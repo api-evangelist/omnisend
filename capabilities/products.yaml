@@ -1,0 +1,96 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Omnisend REST API — Products
+  description: 'Omnisend Products capability. List, create, replace, and delete product catalog entries used for personalization and recommendations.'
+  tags:
+    - Omnisend
+    - Products
+    - Catalog
+    - Ecommerce
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+  - namespace: env
+    keys:
+      OMNISEND_API_KEY: OMNISEND_API_KEY
+capability:
+  consumes:
+    - type: http
+      namespace: products
+      baseUri: https://api.omnisend.com/v5
+      description: Omnisend Products business capability.
+      resources:
+        - name: products
+          path: /products
+          operations:
+            - name: listProducts
+              method: GET
+              description: List products
+              outputRawFormat: json
+              outputParameters:
+                - { name: result, type: object, value: $. }
+            - name: createProduct
+              method: POST
+              description: Create a product
+              outputRawFormat: json
+              outputParameters:
+                - { name: result, type: object, value: $. }
+              inputParameters:
+                - { name: body, in: body, type: object, required: true }
+        - name: product-by-id
+          path: /products/{productID}
+          operations:
+            - name: getProduct
+              method: GET
+              description: Get a product
+              outputRawFormat: json
+              outputParameters:
+                - { name: result, type: object, value: $. }
+              inputParameters:
+                - { name: productID, in: path, type: string, required: true }
+            - name: replaceProduct
+              method: PUT
+              description: Replace a product
+              outputRawFormat: json
+              outputParameters:
+                - { name: result, type: object, value: $. }
+              inputParameters:
+                - { name: productID, in: path, type: string, required: true }
+                - { name: body,      in: body, type: object, required: true }
+            - name: deleteProduct
+              method: DELETE
+              description: Delete a product
+              outputRawFormat: json
+              outputParameters:
+                - { name: result, type: object, value: $. }
+              inputParameters:
+                - { name: productID, in: path, type: string, required: true }
+      authentication:
+        type: apikey
+        key: X-API-KEY
+        value: '{{env.OMNISEND_API_KEY}}'
+        placement: header
+  exposes:
+    - type: mcp
+      namespace: products-mcp
+      port: 9090
+      transport: http
+      description: MCP adapter for Omnisend Products.
+      tools:
+        - name: omnisend-list-products
+          description: List Omnisend products
+          hints: { readOnly: true, destructive: false, idempotent: true }
+          call: products.listProducts
+          outputParameters: [{ type: object, mapping: $. }]
+        - name: omnisend-create-product
+          description: Create an Omnisend product
+          hints: { readOnly: false, destructive: false, idempotent: false }
+          call: products.createProduct
+          with: { body: tools.body }
+          outputParameters: [{ type: object, mapping: $. }]
+        - name: omnisend-get-product
+          description: Get an Omnisend product
+          hints: { readOnly: true, destructive: false, idempotent: true }
+          call: products.getProduct
+          with: { productID: tools.productID }
+          outputParameters: [{ type: object, mapping: $. }]
