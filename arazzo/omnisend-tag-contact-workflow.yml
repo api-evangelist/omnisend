@@ -1,0 +1,83 @@
+arazzo: 1.0.1
+info:
+  title: Omnisend Create and Tag Contact
+  summary: Create or update a contact, then apply tags to it for segmentation.
+  description: >-
+    Builds a tagged audience member in two steps. The workflow creates or
+    updates the contact by email, captures the returned contact id, and then
+    calls the contact-tags endpoint to attach the supplied tags so the contact
+    can be targeted by tag-based segments. Every step spells out its request
+    inline, including the X-API-KEY header, so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: omnisendApi
+  url: ../openapi/omnisend-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-and-tag-contact
+  summary: Create or update a contact and attach tags for segmentation.
+  description: >-
+    Writes a contact with the create-or-update endpoint and then adds tags to
+    that contact so it can be grouped into tag-driven segments.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - email
+    - tags
+    properties:
+      apiKey:
+        type: string
+        description: The Omnisend API key sent in the X-API-KEY header.
+      email:
+        type: string
+        description: The contact email used as the natural key.
+      firstName:
+        type: string
+        description: The contact first name.
+      tags:
+        type: array
+        items:
+          type: string
+        description: The list of tags to apply to the contact.
+  steps:
+  - stepId: createContact
+    description: >-
+      Create or update the contact by email and capture the Omnisend contact
+      id used to scope the tag write.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1contacts/post'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $inputs.email
+        firstName: $inputs.firstName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      contactId: $response.body#/contactID
+  - stepId: addTags
+    description: >-
+      Attach the supplied tags to the newly written contact so it is included
+      in tag-based segments.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1contacts-tags/post'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        contactID: $steps.createContact.outputs.contactId
+        tags: $inputs.tags
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      taggedContactId: $steps.createContact.outputs.contactId
+  outputs:
+    contactId: $steps.createContact.outputs.contactId
+    taggedContactId: $steps.addTags.outputs.taggedContactId

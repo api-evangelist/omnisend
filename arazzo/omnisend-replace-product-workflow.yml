@@ -1,0 +1,84 @@
+arazzo: 1.0.1
+info:
+  title: Omnisend Refresh Product Catalog Entry
+  summary: Read a product by id, then replace it with an updated representation.
+  description: >-
+    Keeps a catalog entry in sync with the store of record. The workflow reads
+    the current product by id to confirm it exists, then performs a full
+    replace (PUT) of that product with the updated title, price, and currency.
+    Every step spells out its request inline, including the X-API-KEY header, so
+    the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: omnisendApi
+  url: ../openapi/omnisend-openapi.yml
+  type: openapi
+workflows:
+- workflowId: refresh-product
+  summary: Read a product and then replace it with updated catalog values.
+  description: >-
+    Confirms a product exists by reading it, then fully replaces it with the
+    supplied representation.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - productId
+    - title
+    properties:
+      apiKey:
+        type: string
+        description: The Omnisend API key sent in the X-API-KEY header.
+      productId:
+        type: string
+        description: The id of the product to read and replace.
+      title:
+        type: string
+        description: The updated product title.
+      price:
+        type: number
+        description: The updated product price.
+      currency:
+        type: string
+        description: The ISO currency code for the price.
+  steps:
+  - stepId: getProduct
+    description: >-
+      Read the current product by id to confirm it exists before replacing it.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1products~1{productId}/get'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    - name: productId
+      in: path
+      value: $inputs.productId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      currentProductId: $response.body#/productID
+  - stepId: replaceProduct
+    description: >-
+      Replace the product in full with the updated representation.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1products~1{productId}/put'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    - name: productId
+      in: path
+      value: $steps.getProduct.outputs.currentProductId
+    requestBody:
+      contentType: application/json
+      payload:
+        productID: $inputs.productId
+        title: $inputs.title
+        price: $inputs.price
+        currency: $inputs.currency
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      productId: $response.body#/productID
+  outputs:
+    productId: $steps.replaceProduct.outputs.productId

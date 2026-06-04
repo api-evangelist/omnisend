@@ -1,0 +1,83 @@
+arazzo: 1.0.1
+info:
+  title: Omnisend Subscribe and Trigger Welcome
+  summary: Create or update a subscriber, then send a subscribed event to trigger the welcome automation.
+  description: >-
+    Onboards a new subscriber and kicks off their welcome journey. The workflow
+    creates or updates the contact with a subscribed status and then sends a
+    custom subscribed event keyed to the same email so a welcome automation can
+    fire. Every step spells out its request inline, including the X-API-KEY
+    header, so the flow can be read and executed without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: omnisendApi
+  url: ../openapi/omnisend-openapi.yml
+  type: openapi
+workflows:
+- workflowId: subscribe-and-welcome
+  summary: Upsert a subscribed contact and emit a subscribed event for them.
+  description: >-
+    Writes the contact as subscribed and then sends a subscribed customer event
+    keyed to that email to trigger the welcome automation.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - email
+    properties:
+      apiKey:
+        type: string
+        description: The Omnisend API key sent in the X-API-KEY header.
+      email:
+        type: string
+        description: The subscriber email, used as the contact key and event identifier.
+      firstName:
+        type: string
+        description: The subscriber first name.
+      source:
+        type: string
+        description: The acquisition source, carried as an event property.
+  steps:
+  - stepId: subscribeContact
+    description: >-
+      Create or update the contact with a subscribed status using the email as
+      the natural key.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1contacts/post'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $inputs.email
+        firstName: $inputs.firstName
+        status: subscribed
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      contactId: $response.body#/contactID
+  - stepId: sendSubscribedEvent
+    description: >-
+      Send a subscribed customer event to trigger the welcome automation.
+      Returns 202 Accepted when the event is queued.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1events/post'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        eventName: subscribed
+        email: $inputs.email
+        properties:
+          source: $inputs.source
+    successCriteria:
+    - condition: $statusCode == 202
+    outputs:
+      eventStatus: $statusCode
+  outputs:
+    contactId: $steps.subscribeContact.outputs.contactId
+    eventStatus: $steps.sendSubscribedEvent.outputs.eventStatus

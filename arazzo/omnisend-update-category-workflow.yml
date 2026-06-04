@@ -1,0 +1,74 @@
+arazzo: 1.0.1
+info:
+  title: Omnisend Update Product Category
+  summary: Read a product category by id, then patch it with new values.
+  description: >-
+    Edits an existing product category safely. The workflow reads the category
+    by id to confirm it exists, then patches it with the supplied title so only
+    the provided fields change. Every step spells out its request inline,
+    including the X-API-KEY header, so the flow can be read and executed without
+    opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: omnisendApi
+  url: ../openapi/omnisend-openapi.yml
+  type: openapi
+workflows:
+- workflowId: update-category
+  summary: Read a category and then patch it with updated values.
+  description: >-
+    Confirms a category exists by reading it, then applies a partial update to
+    its fields.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - categoryId
+    - title
+    properties:
+      apiKey:
+        type: string
+        description: The Omnisend API key sent in the X-API-KEY header.
+      categoryId:
+        type: string
+        description: The id of the category to read and update.
+      title:
+        type: string
+        description: The updated category title.
+  steps:
+  - stepId: getCategory
+    description: >-
+      Read the category by id to confirm it exists before updating it.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1product-categories~1{categoryId}/get'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    - name: categoryId
+      in: path
+      value: $inputs.categoryId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      currentCategoryId: $response.body#/categoryID
+  - stepId: updateCategory
+    description: >-
+      Patch the category with the supplied title. Only provided fields change.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1product-categories~1{categoryId}/patch'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    - name: categoryId
+      in: path
+      value: $steps.getCategory.outputs.currentCategoryId
+    requestBody:
+      contentType: application/json
+      payload:
+        title: $inputs.title
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      categoryId: $response.body#/categoryID
+  outputs:
+    categoryId: $steps.updateCategory.outputs.categoryId

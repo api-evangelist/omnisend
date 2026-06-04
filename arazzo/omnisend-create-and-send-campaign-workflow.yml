@@ -1,0 +1,98 @@
+arazzo: 1.0.1
+info:
+  title: Omnisend Create and Send Campaign
+  summary: Create a campaign, read it back to confirm, then queue it for sending.
+  description: >-
+    Launches an email campaign end to end. The workflow creates the campaign,
+    reads it back by id to confirm it persisted, and then queues it for sending.
+    Every step spells out its request inline, including the X-API-KEY header, so
+    the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: omnisendApi
+  url: ../openapi/omnisend-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-and-send-campaign
+  summary: Create a campaign, verify it, and queue it for sending.
+  description: >-
+    Writes a campaign, fetches it by id to confirm persistence, and then
+    triggers the send.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - name
+    - subject
+    properties:
+      apiKey:
+        type: string
+        description: The Omnisend API key sent in the X-API-KEY header.
+      name:
+        type: string
+        description: The internal campaign name.
+      subject:
+        type: string
+        description: The email subject line.
+      fromName:
+        type: string
+        description: The sender display name.
+      segmentId:
+        type: string
+        description: The id of the segment to target.
+  steps:
+  - stepId: createCampaign
+    description: >-
+      Create the campaign. Returns 201 Created with the campaign id.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1campaigns/post'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.name
+        subject: $inputs.subject
+        fromName: $inputs.fromName
+        segmentID: $inputs.segmentId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      campaignId: $response.body#/id
+  - stepId: getCampaign
+    description: >-
+      Read the campaign back by id to confirm it persisted before sending.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1campaigns~1{id}/get'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    - name: id
+      in: path
+      value: $steps.createCampaign.outputs.campaignId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      campaignId: $response.body#/id
+      status: $response.body#/status
+  - stepId: sendCampaign
+    description: >-
+      Queue the campaign for sending. Returns 202 Accepted when the send is
+      queued.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1campaigns~1{id}~1send/post'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    - name: id
+      in: path
+      value: $steps.getCampaign.outputs.campaignId
+    successCriteria:
+    - condition: $statusCode == 202
+    outputs:
+      sendStatus: $statusCode
+  outputs:
+    campaignId: $steps.getCampaign.outputs.campaignId
+    sendStatus: $steps.sendCampaign.outputs.sendStatus

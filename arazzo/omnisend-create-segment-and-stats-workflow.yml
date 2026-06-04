@@ -1,0 +1,88 @@
+arazzo: 1.0.1
+info:
+  title: Omnisend Create Segment and Read Statistics
+  summary: Create a segment, read it back to confirm, then pull its membership statistics.
+  description: >-
+    Builds an audience segment and immediately measures it. The workflow creates
+    a segment, reads it back by id to confirm it persisted, and then retrieves
+    the segment statistics so callers can see how many contacts it captures.
+    Every step spells out its request inline, including the X-API-KEY header, so
+    the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: omnisendApi
+  url: ../openapi/omnisend-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-segment-and-stats
+  summary: Create a segment, verify it, and read its statistics.
+  description: >-
+    Writes a segment, fetches it by id to confirm persistence, and then pulls
+    its statistics.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - name
+    properties:
+      apiKey:
+        type: string
+        description: The Omnisend API key sent in the X-API-KEY header.
+      name:
+        type: string
+        description: The segment name.
+      filter:
+        type: object
+        description: The segment filter definition.
+  steps:
+  - stepId: createSegment
+    description: >-
+      Create the segment. Returns 201 Created with the segment id.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1segments/post'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.name
+        filter: $inputs.filter
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      segmentId: $response.body#/segmentID
+  - stepId: getSegment
+    description: >-
+      Read the segment back by id to confirm it persisted.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1segments~1{segmentId}/get'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    - name: segmentId
+      in: path
+      value: $steps.createSegment.outputs.segmentId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      segmentId: $response.body#/segmentID
+  - stepId: getStatistics
+    description: >-
+      Retrieve the segment statistics to see how many contacts it captures.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1segments~1{segmentId}~1statistics/get'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    - name: segmentId
+      in: path
+      value: $steps.getSegment.outputs.segmentId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      statistics: $response.body
+  outputs:
+    segmentId: $steps.getSegment.outputs.segmentId
+    statistics: $steps.getStatistics.outputs.statistics

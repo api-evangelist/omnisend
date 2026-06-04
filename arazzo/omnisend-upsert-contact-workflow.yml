@@ -1,0 +1,126 @@
+arazzo: 1.0.1
+info:
+  title: Omnisend Upsert a Contact
+  summary: Look up a contact by id and update it if it exists, otherwise create or update it by email.
+  description: >-
+    A core Omnisend integration pattern. The workflow attempts to read a
+    contact by its Omnisend contact id and then branches: when the contact is
+    found it patches the existing record by id, and when no contact id is
+    supplied or the contact is missing it falls back to the create-or-update
+    endpoint which resolves the contact by email. Every step spells out its
+    request inline, including the X-API-KEY header, so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: omnisendApi
+  url: ../openapi/omnisend-openapi.yml
+  type: openapi
+workflows:
+- workflowId: upsert-contact
+  summary: Upsert a single Omnisend contact by id with an email-based fallback.
+  description: >-
+    Reads a contact by id when one is supplied and either patches the matched
+    record or falls back to the create-or-update-by-email endpoint, so a
+    contact is always written exactly once.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - email
+    properties:
+      apiKey:
+        type: string
+        description: The Omnisend API key sent in the X-API-KEY header.
+      contactId:
+        type: string
+        description: Optional Omnisend contact id used to look up an existing contact.
+      email:
+        type: string
+        description: The contact email used as the natural key for create-or-update.
+      firstName:
+        type: string
+        description: The contact first name to write.
+      lastName:
+        type: string
+        description: The contact last name to write.
+      status:
+        type: string
+        description: Subscription status (subscribed, unsubscribed, nonSubscribed).
+  steps:
+  - stepId: findContact
+    description: >-
+      Attempt to read an existing contact by its Omnisend contact id. A 200
+      means the contact exists and can be patched by id; any other status
+      routes to the create-or-update fallback.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1contacts~1{id}/get'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    - name: id
+      in: path
+      value: $inputs.contactId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      matchedContactId: $response.body#/contactID
+    onSuccess:
+    - name: contactExists
+      type: goto
+      stepId: updateExisting
+      criteria:
+      - condition: $statusCode == 200
+    onFailure:
+    - name: contactMissing
+      type: goto
+      stepId: createOrUpdate
+      criteria:
+      - condition: $statusCode != 200
+  - stepId: updateExisting
+    description: >-
+      Patch the matched contact by id with the supplied attributes. Only the
+      provided fields are changed.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1contacts~1{id}/patch'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    - name: id
+      in: path
+      value: $steps.findContact.outputs.matchedContactId
+    requestBody:
+      contentType: application/json
+      payload:
+        firstName: $inputs.firstName
+        lastName: $inputs.lastName
+        status: $inputs.status
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      contactId: $response.body#/contactID
+    onSuccess:
+    - name: done
+      type: end
+  - stepId: createOrUpdate
+    description: >-
+      Create the contact, or update it in place, using the email as the natural
+      key when no contact id matched.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1contacts/post'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $inputs.email
+        firstName: $inputs.firstName
+        lastName: $inputs.lastName
+        status: $inputs.status
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      contactId: $response.body#/contactID
+  outputs:
+    updatedContactId: $steps.updateExisting.outputs.contactId
+    createdContactId: $steps.createOrUpdate.outputs.contactId

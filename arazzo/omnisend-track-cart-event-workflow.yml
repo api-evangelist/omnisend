@@ -1,0 +1,90 @@
+arazzo: 1.0.1
+info:
+  title: Omnisend Track Added-to-Cart Event
+  summary: Create or update the shopper contact, then send an added-to-cart customer event for them.
+  description: >-
+    Omnisend tracks carts as customer events, not as a dedicated cart resource,
+    so this workflow adapts the "create cart then get cart" theme to the events
+    endpoint. It creates or updates the shopper as a contact by email and then
+    sends an "added product to cart" event carrying the cart and product
+    context, which drives abandoned-cart automations. Every step spells out its
+    request inline, including the X-API-KEY header, so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: omnisendApi
+  url: ../openapi/omnisend-openapi.yml
+  type: openapi
+workflows:
+- workflowId: track-cart-event
+  summary: Upsert the shopper contact and emit an added-to-cart event for them.
+  description: >-
+    Writes the shopper as a contact and then sends an added-to-cart customer
+    event keyed to that contact's email, since Omnisend exposes carts only
+    through events.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - email
+    - cartId
+    - productId
+    properties:
+      apiKey:
+        type: string
+        description: The Omnisend API key sent in the X-API-KEY header.
+      email:
+        type: string
+        description: The shopper email, used as the contact key and event identifier.
+      cartId:
+        type: string
+        description: The store cart id, carried as an event property.
+      productId:
+        type: string
+        description: The product id added to the cart, carried as an event property.
+      quantity:
+        type: integer
+        description: The quantity of the product added to the cart.
+  steps:
+  - stepId: upsertShopper
+    description: >-
+      Create or update the shopper as a contact so the cart event can be
+      attributed to a known profile.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1contacts/post'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $inputs.email
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      contactId: $response.body#/contactID
+  - stepId: sendCartEvent
+    description: >-
+      Send an added-to-cart customer event for the shopper so abandoned-cart
+      automations fire. Returns 202 Accepted when the event is queued.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1events/post'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        eventName: added product to cart
+        email: $inputs.email
+        properties:
+          cartId: $inputs.cartId
+          productId: $inputs.productId
+          quantity: $inputs.quantity
+    successCriteria:
+    - condition: $statusCode == 202
+    outputs:
+      eventStatus: $statusCode
+  outputs:
+    contactId: $steps.upsertShopper.outputs.contactId
+    cartEventStatus: $steps.sendCartEvent.outputs.eventStatus

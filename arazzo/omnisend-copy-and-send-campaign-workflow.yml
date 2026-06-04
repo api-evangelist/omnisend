@@ -1,0 +1,83 @@
+arazzo: 1.0.1
+info:
+  title: Omnisend Copy and Send Campaign
+  summary: Copy an existing campaign, read the copy to confirm, then queue it for sending.
+  description: >-
+    Reuses a proven campaign as the basis for a new send. The workflow copies an
+    existing campaign by id, reads the resulting copy back to confirm it
+    persisted, and then queues the copy for sending. Every step spells out its
+    request inline, including the X-API-KEY header, so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: omnisendApi
+  url: ../openapi/omnisend-openapi.yml
+  type: openapi
+workflows:
+- workflowId: copy-and-send-campaign
+  summary: Copy a campaign, verify the copy, and queue it for sending.
+  description: >-
+    Duplicates an existing campaign, fetches the new copy by id to confirm
+    persistence, and then triggers the send of the copy.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - sourceCampaignId
+    properties:
+      apiKey:
+        type: string
+        description: The Omnisend API key sent in the X-API-KEY header.
+      sourceCampaignId:
+        type: string
+        description: The id of the campaign to copy.
+  steps:
+  - stepId: copyCampaign
+    description: >-
+      Copy the source campaign. Returns 201 Created with the new campaign id.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1campaigns~1{id}~1copy/post'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    - name: id
+      in: path
+      value: $inputs.sourceCampaignId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      copyId: $response.body#/id
+  - stepId: getCopy
+    description: >-
+      Read the copied campaign back by id to confirm it persisted before
+      sending.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1campaigns~1{id}/get'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    - name: id
+      in: path
+      value: $steps.copyCampaign.outputs.copyId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      copyId: $response.body#/id
+  - stepId: sendCopy
+    description: >-
+      Queue the copied campaign for sending. Returns 202 Accepted when queued.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1campaigns~1{id}~1send/post'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    - name: id
+      in: path
+      value: $steps.getCopy.outputs.copyId
+    successCriteria:
+    - condition: $statusCode == 202
+    outputs:
+      sendStatus: $statusCode
+  outputs:
+    copyId: $steps.getCopy.outputs.copyId
+    sendStatus: $steps.sendCopy.outputs.sendStatus

@@ -1,0 +1,85 @@
+arazzo: 1.0.1
+info:
+  title: Omnisend Create and Verify Product
+  summary: Create a product, then read it back by id to confirm it was stored.
+  description: >-
+    Seeds the Omnisend product catalog and verifies the result. The workflow
+    creates a product, captures the returned product id, and then reads the
+    product back by id so callers receive the persisted catalog entry. Every
+    step spells out its request inline, including the X-API-KEY header, so the
+    flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: omnisendApi
+  url: ../openapi/omnisend-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-and-verify-product
+  summary: Create a catalog product and read it back to confirm persistence.
+  description: >-
+    Writes a product with the create endpoint and then fetches the same product
+    by its returned id so the caller gets the stored catalog entry.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - productID
+    - title
+    properties:
+      apiKey:
+        type: string
+        description: The Omnisend API key sent in the X-API-KEY header.
+      productID:
+        type: string
+        description: The store-side product id to register in the catalog.
+      title:
+        type: string
+        description: The product title.
+      price:
+        type: number
+        description: The product price.
+      currency:
+        type: string
+        description: The ISO currency code for the price.
+  steps:
+  - stepId: createProduct
+    description: >-
+      Create the product in the Omnisend catalog. Returns 201 Created with the
+      product id.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1products/post'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        productID: $inputs.productID
+        title: $inputs.title
+        price: $inputs.price
+        currency: $inputs.currency
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      productId: $response.body#/productID
+  - stepId: getProduct
+    description: >-
+      Read the product back by its id to confirm the write and return the
+      stored catalog entry.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1products~1{productId}/get'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    - name: productId
+      in: path
+      value: $steps.createProduct.outputs.productId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      productId: $response.body#/productID
+      title: $response.body#/title
+  outputs:
+    productId: $steps.getProduct.outputs.productId
+    title: $steps.getProduct.outputs.title

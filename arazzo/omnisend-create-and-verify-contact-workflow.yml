@@ -1,0 +1,86 @@
+arazzo: 1.0.1
+info:
+  title: Omnisend Create and Verify Contact
+  summary: Create or update a contact, then read it back by id to confirm the write.
+  description: >-
+    Onboards a contact into Omnisend and immediately verifies the result. The
+    workflow calls the create-or-update endpoint with the supplied profile,
+    captures the returned contact id, and then reads the contact back by id so
+    callers receive the persisted, canonical representation. Every step spells
+    out its request inline, including the X-API-KEY header, so the flow can be
+    read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: omnisendApi
+  url: ../openapi/omnisend-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-and-verify-contact
+  summary: Create or update a contact and read it back to confirm persistence.
+  description: >-
+    Writes a contact with the create-or-update endpoint and then fetches the
+    same contact by its returned id so the caller gets the stored values.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - email
+    properties:
+      apiKey:
+        type: string
+        description: The Omnisend API key sent in the X-API-KEY header.
+      email:
+        type: string
+        description: The contact email used as the natural key.
+      firstName:
+        type: string
+        description: The contact first name.
+      lastName:
+        type: string
+        description: The contact last name.
+      status:
+        type: string
+        description: Subscription status (subscribed, unsubscribed, nonSubscribed).
+  steps:
+  - stepId: createContact
+    description: >-
+      Create the contact or update it in place using the email as the natural
+      key, returning the Omnisend contact id.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1contacts/post'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $inputs.email
+        firstName: $inputs.firstName
+        lastName: $inputs.lastName
+        status: $inputs.status
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      contactId: $response.body#/contactID
+  - stepId: getContact
+    description: >-
+      Read the contact back by its id to confirm the write and return the
+      persisted profile.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1contacts~1{id}/get'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    - name: id
+      in: path
+      value: $steps.createContact.outputs.contactId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      contactId: $response.body#/contactID
+      email: $response.body#/email
+      status: $response.body#/status
+  outputs:
+    contactId: $steps.getContact.outputs.contactId
+    email: $steps.getContact.outputs.email
+    status: $steps.getContact.outputs.status

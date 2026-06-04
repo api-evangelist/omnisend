@@ -1,0 +1,75 @@
+arazzo: 1.0.1
+info:
+  title: Omnisend Create and Verify Product Category
+  summary: Create a product category, then read it back by id to confirm it was stored.
+  description: >-
+    Establishes a product category and verifies it. The workflow creates a
+    category, captures the returned category id, and then reads the category
+    back by id so callers receive the persisted record. Every step spells out
+    its request inline, including the X-API-KEY header, so the flow can be read
+    and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: omnisendApi
+  url: ../openapi/omnisend-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-and-verify-category
+  summary: Create a product category and read it back to confirm persistence.
+  description: >-
+    Writes a category with the create endpoint and then fetches it by its
+    returned id so the caller gets the stored record.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - categoryID
+    - title
+    properties:
+      apiKey:
+        type: string
+        description: The Omnisend API key sent in the X-API-KEY header.
+      categoryID:
+        type: string
+        description: The store-side category id to register.
+      title:
+        type: string
+        description: The category title.
+  steps:
+  - stepId: createCategory
+    description: >-
+      Create the product category. Returns 201 Created with the category id.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1product-categories/post'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        categoryID: $inputs.categoryID
+        title: $inputs.title
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      categoryId: $response.body#/categoryID
+  - stepId: getCategory
+    description: >-
+      Read the category back by its id to confirm the write and return the
+      stored record.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1product-categories~1{categoryId}/get'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    - name: categoryId
+      in: path
+      value: $steps.createCategory.outputs.categoryId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      categoryId: $response.body#/categoryID
+      title: $response.body#/title
+  outputs:
+    categoryId: $steps.getCategory.outputs.categoryId
+    title: $steps.getCategory.outputs.title

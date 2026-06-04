@@ -1,0 +1,93 @@
+arazzo: 1.0.1
+info:
+  title: Omnisend Track Placed Order Event
+  summary: Create or update the buyer contact, then send a placed-order customer event for them.
+  description: >-
+    Omnisend models orders as customer events rather than as a dedicated order
+    resource, so this workflow adapts the "create order" theme to the events
+    endpoint. It first creates or updates the buyer as a contact by email, then
+    sends a "placed order" event tied to that contact's email so order-based
+    automations and reporting are triggered. Every step spells out its request
+    inline, including the X-API-KEY header, so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: omnisendApi
+  url: ../openapi/omnisend-openapi.yml
+  type: openapi
+workflows:
+- workflowId: track-placed-order-event
+  summary: Upsert the buyer contact and emit a placed-order event for them.
+  description: >-
+    Writes the buyer as a contact and then sends a placed-order customer event
+    keyed to that contact's email, since Omnisend has no standalone order
+    resource.
+  inputs:
+    type: object
+    required:
+    - apiKey
+    - email
+    - orderId
+    properties:
+      apiKey:
+        type: string
+        description: The Omnisend API key sent in the X-API-KEY header.
+      email:
+        type: string
+        description: The buyer email, used both as the contact key and the event identifier.
+      firstName:
+        type: string
+        description: The buyer first name.
+      orderId:
+        type: string
+        description: The originating store order id, carried as an event property.
+      orderValue:
+        type: number
+        description: The total monetary value of the order.
+      currency:
+        type: string
+        description: The ISO currency code for the order value.
+  steps:
+  - stepId: upsertBuyer
+    description: >-
+      Create or update the buyer as a contact by email so the order event can
+      be attributed to a known profile.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1contacts/post'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $inputs.email
+        firstName: $inputs.firstName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      contactId: $response.body#/contactID
+  - stepId: sendOrderEvent
+    description: >-
+      Send a placed-order customer event for the buyer so order automations and
+      analytics fire. Returns 202 Accepted when the event is queued.
+    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1events/post'
+    parameters:
+    - name: X-API-KEY
+      in: header
+      value: $inputs.apiKey
+    requestBody:
+      contentType: application/json
+      payload:
+        eventName: placed order
+        email: $inputs.email
+        properties:
+          orderId: $inputs.orderId
+          value: $inputs.orderValue
+          currency: $inputs.currency
+    successCriteria:
+    - condition: $statusCode == 202
+    outputs:
+      eventStatus: $statusCode
+  outputs:
+    contactId: $steps.upsertBuyer.outputs.contactId
+    orderEventStatus: $steps.sendOrderEvent.outputs.eventStatus
