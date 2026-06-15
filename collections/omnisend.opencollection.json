@@ -1,0 +1,1014 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Omnisend REST API",
+    "version": "v5"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-API-KEY",
+      "value": "{{X-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Contacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/contacts"
+          },
+          "docs": "List contacts"
+        },
+        {
+          "info": {
+            "name": "Create or update a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/contacts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update a contact"
+        },
+        {
+          "info": {
+            "name": "Update contact by email",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.omnisend.com/v5/contacts"
+          },
+          "docs": "Update contact by email"
+        },
+        {
+          "info": {
+            "name": "Get a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/contacts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a contact"
+        },
+        {
+          "info": {
+            "name": "Update contact by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.omnisend.com/v5/contacts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update contact by id"
+        },
+        {
+          "info": {
+            "name": "Add tags to contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/contacts-tags"
+          },
+          "docs": "Add tags to contacts"
+        },
+        {
+          "info": {
+            "name": "Remove tags from contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.omnisend.com/v5/contacts-tags"
+          },
+          "docs": "Remove tags from contacts"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a customer event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/events",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a customer event"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/products"
+          },
+          "docs": "List products"
+        },
+        {
+          "info": {
+            "name": "Create a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/products"
+          },
+          "docs": "Create a product"
+        },
+        {
+          "info": {
+            "name": "Get a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/products/:productId",
+            "params": [
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a product"
+        },
+        {
+          "info": {
+            "name": "Replace a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.omnisend.com/v5/products/:productId",
+            "params": [
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Replace a product"
+        },
+        {
+          "info": {
+            "name": "Delete a product",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.omnisend.com/v5/products/:productId",
+            "params": [
+              {
+                "name": "productId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a product"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "ProductCategories",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List product categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/product-categories"
+          },
+          "docs": "List product categories"
+        },
+        {
+          "info": {
+            "name": "Create a product category",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/product-categories"
+          },
+          "docs": "Create a product category"
+        },
+        {
+          "info": {
+            "name": "Get a product category",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/product-categories/:categoryId",
+            "params": [
+              {
+                "name": "categoryId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a product category"
+        },
+        {
+          "info": {
+            "name": "Update a product category",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.omnisend.com/v5/product-categories/:categoryId",
+            "params": [
+              {
+                "name": "categoryId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update a product category"
+        },
+        {
+          "info": {
+            "name": "Delete a product category",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.omnisend.com/v5/product-categories/:categoryId",
+            "params": [
+              {
+                "name": "categoryId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a product category"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Segments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List segments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/segments"
+          },
+          "docs": "List segments"
+        },
+        {
+          "info": {
+            "name": "Create a segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/segments"
+          },
+          "docs": "Create a segment"
+        },
+        {
+          "info": {
+            "name": "Get a segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/segments/:segmentId",
+            "params": [
+              {
+                "name": "segmentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a segment"
+        },
+        {
+          "info": {
+            "name": "Update a segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.omnisend.com/v5/segments/:segmentId",
+            "params": [
+              {
+                "name": "segmentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update a segment"
+        },
+        {
+          "info": {
+            "name": "Delete a segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.omnisend.com/v5/segments/:segmentId",
+            "params": [
+              {
+                "name": "segmentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a segment"
+        },
+        {
+          "info": {
+            "name": "Get segment statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/segments/:segmentId/statistics",
+            "params": [
+              {
+                "name": "segmentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get segment statistics"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Campaigns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List campaigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/campaigns"
+          },
+          "docs": "List campaigns"
+        },
+        {
+          "info": {
+            "name": "Create a campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/campaigns"
+          },
+          "docs": "Create a campaign"
+        },
+        {
+          "info": {
+            "name": "Get a campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/campaigns/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a campaign"
+        },
+        {
+          "info": {
+            "name": "Update a campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.omnisend.com/v5/campaigns/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update a campaign"
+        },
+        {
+          "info": {
+            "name": "Delete a campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.omnisend.com/v5/campaigns/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a campaign"
+        },
+        {
+          "info": {
+            "name": "Send a campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/campaigns/:id/send",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Send a campaign"
+        },
+        {
+          "info": {
+            "name": "Cancel a campaign send",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/campaigns/:id/cancel",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Cancel a campaign send"
+        },
+        {
+          "info": {
+            "name": "Copy a campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/campaigns/:id/copy",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Copy a campaign"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Batches",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List batches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/batches"
+          },
+          "docs": "List batches"
+        },
+        {
+          "info": {
+            "name": "Create a batch operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/batches"
+          },
+          "docs": "Create a batch operation"
+        },
+        {
+          "info": {
+            "name": "Get a batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/batches/:batchId",
+            "params": [
+              {
+                "name": "batchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a batch"
+        },
+        {
+          "info": {
+            "name": "List items in a batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/batches/:batchId/items",
+            "params": [
+              {
+                "name": "batchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List items in a batch"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "EmailTemplates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List email templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/email-templates"
+          },
+          "docs": "List email templates"
+        },
+        {
+          "info": {
+            "name": "Create an email template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/email-templates"
+          },
+          "docs": "Create an email template"
+        },
+        {
+          "info": {
+            "name": "Get an email template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/email-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an email template"
+        },
+        {
+          "info": {
+            "name": "Replace an email template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.omnisend.com/v5/email-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Replace an email template"
+        },
+        {
+          "info": {
+            "name": "Delete an email template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.omnisend.com/v5/email-templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an email template"
+        },
+        {
+          "info": {
+            "name": "Render an email template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/email-templates/:id/render",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Render an email template"
+        },
+        {
+          "info": {
+            "name": "Import an email template from HTML",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/email-templates-import"
+          },
+          "docs": "Import an email template from HTML"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "EmailContent",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get email content",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/email-content/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get email content"
+        },
+        {
+          "info": {
+            "name": "Update email content",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.omnisend.com/v5/email-content/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update email content"
+        },
+        {
+          "info": {
+            "name": "Render email content",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/email-content/:id/render",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Render email content"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "EmailUniversalLayouts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List universal layouts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/email-universal-layouts"
+          },
+          "docs": "List universal layouts"
+        },
+        {
+          "info": {
+            "name": "Create a universal layout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/email-universal-layouts"
+          },
+          "docs": "Create a universal layout"
+        },
+        {
+          "info": {
+            "name": "Get a universal layout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/email-universal-layouts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a universal layout"
+        },
+        {
+          "info": {
+            "name": "Update a universal layout",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.omnisend.com/v5/email-universal-layouts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update a universal layout"
+        },
+        {
+          "info": {
+            "name": "Delete a universal layout",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.omnisend.com/v5/email-universal-layouts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a universal layout"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Images",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List images",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/images"
+          },
+          "docs": "List images"
+        },
+        {
+          "info": {
+            "name": "Upload an image by URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/images"
+          },
+          "docs": "Upload an image by URL"
+        },
+        {
+          "info": {
+            "name": "Upload an image file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/images-upload"
+          },
+          "docs": "Upload an image file"
+        },
+        {
+          "info": {
+            "name": "Get an image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/images/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an image"
+        },
+        {
+          "info": {
+            "name": "Delete an image",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.omnisend.com/v5/images/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an image"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Brands",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get current brand",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/v5/brands/current"
+          },
+          "docs": "Get current brand"
+        },
+        {
+          "info": {
+            "name": "Connect a brand",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/brands/current"
+          },
+          "docs": "Connect a brand"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Analytics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate a marketing analytics report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/analytics-reports"
+          },
+          "docs": "Generate a marketing analytics report"
+        },
+        {
+          "info": {
+            "name": "Generate event-based statistics report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/v5/analytics-statistics"
+          },
+          "docs": "Generate event-based statistics report"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

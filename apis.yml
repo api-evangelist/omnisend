@@ -1,18 +1,14 @@
 aid: omnisend
 name: Omnisend
 description: >-
-  Omnisend is a Lithuanian-headquartered email and SMS marketing automation
-  platform purpose-built for ecommerce, with first-class integrations into
-  Shopify, BigCommerce, WooCommerce, Magento, Wix, Square Online, and other
-  storefronts. The platform unifies automation workflows, campaign builders,
-  segmentation, popups and forms, web push, product recommendations, A/B
-  testing, and reporting to drive customer engagement and revenue. Omnisend's
-  REST API exposes contacts, events, products, product categories, segments,
-  campaigns, batches, email templates, email content, universal layouts,
-  images, brands, and analytics reports. Authentication uses an API key passed
-  via the `X-API-KEY` header, or OAuth 2.0 authorization-code flow with
-  resource-scoped permissions for app-based integrations on the Omnisend App
-  Market.
+  Omnisend is a Lithuanian-headquartered email and SMS marketing automation platform purpose-built for ecommerce, with
+  first-class integrations into Shopify, BigCommerce, WooCommerce, Magento, Wix, Square Online, and other storefronts.
+  The platform unifies automation workflows, campaign builders, segmentation, popups and forms, web push, product
+  recommendations, A/B testing, and reporting to drive customer engagement and revenue. Omnisend's REST API exposes
+  contacts, events, products, product categories, segments, campaigns, batches, email templates, email content,
+  universal layouts, images, brands, and analytics reports. Authentication uses an API key passed via the `X-API-KEY`
+  header, or OAuth 2.0 authorization-code flow with resource-scoped permissions for app-based integrations on the
+  Omnisend App Market.
 type: Index
 kind: contract
 image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
@@ -29,8 +25,7 @@ tags:
   - Forms
   - Popups
   - Web Push
-url: >-
-  https://raw.githubusercontent.com/api-evangelist/omnisend/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/omnisend/refs/heads/main/apis.yml
 created: '2026-05-11'
 modified: '2026-05-25'
 specificationVersion: '0.19'
@@ -38,16 +33,13 @@ apis:
   - aid: omnisend:rest-api
     name: Omnisend REST API
     description: >-
-      Omnisend's REST API for ecommerce email and SMS marketing automation.
-      Manage contacts, events, products, product categories, segments,
-      campaigns, batches, email templates, email content, email universal
-      layouts, images, brands, and analytics reports. Authentication uses
-      `X-API-KEY` header or OAuth 2.0 with resource-scoped permissions
-      (`contacts.read`, `contacts.write`, `events.write`, `products.read`,
-      `products.write`, `campaigns.read`, `campaigns.write`, `segments.read`,
-      `segments.write`, `email-templates.read`, `email-templates.write`,
-      `images.read`, `images.write`, `brands.read`, `brands.write`,
-      `analytics.read`). Cursor-based pagination across list endpoints.
+      Omnisend's REST API for ecommerce email and SMS marketing automation. Manage contacts, events, products, product
+      categories, segments, campaigns, batches, email templates, email content, email universal layouts, images, brands,
+      and analytics reports. Authentication uses `X-API-KEY` header or OAuth 2.0 with resource-scoped permissions
+      (`contacts.read`, `contacts.write`, `events.write`, `products.read`, `products.write`, `campaigns.read`,
+      `campaigns.write`, `segments.read`, `segments.write`, `email-templates.read`, `email-templates.write`,
+      `images.read`, `images.write`, `brands.read`, `brands.write`, `analytics.read`). Cursor-based pagination across
+      list endpoints.
     humanURL: https://api-docs.omnisend.com/reference/overview
     baseURL: https://api.omnisend.com/v5
     tags:
@@ -81,67 +73,51 @@ apis:
         url: json-schema/omnisend-event-schema.json
       - type: JSONLD
         url: json-ld/omnisend-context.jsonld
-      - type: NaftikoCapability
-        url: capabilities/contacts.yaml
-      - type: NaftikoCapability
-        url: capabilities/events.yaml
-      - type: NaftikoCapability
-        url: capabilities/products.yaml
-      - type: NaftikoCapability
-        url: capabilities/product-categories.yaml
-      - type: NaftikoCapability
-        url: capabilities/segments.yaml
-      - type: NaftikoCapability
-        url: capabilities/campaigns.yaml
-      - type: NaftikoCapability
-        url: capabilities/batches.yaml
-      - type: NaftikoCapability
-        url: capabilities/email-templates.yaml
-      - type: NaftikoCapability
-        url: capabilities/analytics-reports.yaml
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/omnisend/overview
   - type: ArazzoWorkflows
     url: arazzo/
     workflows:
-    - url: arazzo/omnisend-copy-and-send-campaign-workflow.yml
-      name: Omnisend Copy and Send Campaign
-      summary: Copy an existing campaign, read the copy to confirm, then queue it for sending.
-    - url: arazzo/omnisend-create-and-send-campaign-workflow.yml
-      name: Omnisend Create and Send Campaign
-      summary: Create a campaign, read it back to confirm, then queue it for sending.
-    - url: arazzo/omnisend-create-and-verify-category-workflow.yml
-      name: Omnisend Create and Verify Product Category
-      summary: Create a product category, then read it back by id to confirm it was stored.
-    - url: arazzo/omnisend-create-and-verify-contact-workflow.yml
-      name: Omnisend Create and Verify Contact
-      summary: Create or update a contact, then read it back by id to confirm the write.
-    - url: arazzo/omnisend-create-and-verify-product-workflow.yml
-      name: Omnisend Create and Verify Product
-      summary: Create a product, then read it back by id to confirm it was stored.
-    - url: arazzo/omnisend-create-segment-and-stats-workflow.yml
-      name: Omnisend Create Segment and Read Statistics
-      summary: Create a segment, read it back to confirm, then pull its membership statistics.
-    - url: arazzo/omnisend-replace-product-workflow.yml
-      name: Omnisend Refresh Product Catalog Entry
-      summary: Read a product by id, then replace it with an updated representation.
-    - url: arazzo/omnisend-subscribe-and-welcome-workflow.yml
-      name: Omnisend Subscribe and Trigger Welcome
-      summary: Create or update a subscriber, then send a subscribed event to trigger the welcome automation.
-    - url: arazzo/omnisend-tag-contact-workflow.yml
-      name: Omnisend Create and Tag Contact
-      summary: Create or update a contact, then apply tags to it for segmentation.
-    - url: arazzo/omnisend-track-cart-event-workflow.yml
-      name: Omnisend Track Added-to-Cart Event
-      summary: Create or update the shopper contact, then send an added-to-cart customer event for them.
-    - url: arazzo/omnisend-track-order-event-workflow.yml
-      name: Omnisend Track Placed Order Event
-      summary: Create or update the buyer contact, then send a placed-order customer event for them.
-    - url: arazzo/omnisend-update-category-workflow.yml
-      name: Omnisend Update Product Category
-      summary: Read a product category by id, then patch it with new values.
-    - url: arazzo/omnisend-upsert-contact-workflow.yml
-      name: Omnisend Upsert a Contact
-      summary: Look up a contact by id and update it if it exists, otherwise create or update it by email.
+      - url: arazzo/omnisend-copy-and-send-campaign-workflow.yml
+        name: Omnisend Copy and Send Campaign
+        summary: Copy an existing campaign, read the copy to confirm, then queue it for sending.
+      - url: arazzo/omnisend-create-and-send-campaign-workflow.yml
+        name: Omnisend Create and Send Campaign
+        summary: Create a campaign, read it back to confirm, then queue it for sending.
+      - url: arazzo/omnisend-create-and-verify-category-workflow.yml
+        name: Omnisend Create and Verify Product Category
+        summary: Create a product category, then read it back by id to confirm it was stored.
+      - url: arazzo/omnisend-create-and-verify-contact-workflow.yml
+        name: Omnisend Create and Verify Contact
+        summary: Create or update a contact, then read it back by id to confirm the write.
+      - url: arazzo/omnisend-create-and-verify-product-workflow.yml
+        name: Omnisend Create and Verify Product
+        summary: Create a product, then read it back by id to confirm it was stored.
+      - url: arazzo/omnisend-create-segment-and-stats-workflow.yml
+        name: Omnisend Create Segment and Read Statistics
+        summary: Create a segment, read it back to confirm, then pull its membership statistics.
+      - url: arazzo/omnisend-replace-product-workflow.yml
+        name: Omnisend Refresh Product Catalog Entry
+        summary: Read a product by id, then replace it with an updated representation.
+      - url: arazzo/omnisend-subscribe-and-welcome-workflow.yml
+        name: Omnisend Subscribe and Trigger Welcome
+        summary: Create or update a subscriber, then send a subscribed event to trigger the welcome automation.
+      - url: arazzo/omnisend-tag-contact-workflow.yml
+        name: Omnisend Create and Tag Contact
+        summary: Create or update a contact, then apply tags to it for segmentation.
+      - url: arazzo/omnisend-track-cart-event-workflow.yml
+        name: Omnisend Track Added-to-Cart Event
+        summary: Create or update the shopper contact, then send an added-to-cart customer event for them.
+      - url: arazzo/omnisend-track-order-event-workflow.yml
+        name: Omnisend Track Placed Order Event
+        summary: Create or update the buyer contact, then send a placed-order customer event for them.
+      - url: arazzo/omnisend-update-category-workflow.yml
+        name: Omnisend Update Product Category
+        summary: Read a product category by id, then patch it with new values.
+      - url: arazzo/omnisend-upsert-contact-workflow.yml
+        name: Omnisend Upsert a Contact
+        summary: Look up a contact by id and update it if it exists, otherwise create or update it by email.
   - type: Website
     url: https://www.omnisend.com
   - type: Portal
@@ -214,7 +190,9 @@ common:
     url: https://www.omnisend.com/app-market
   - type: Features
     data:
-      - Email marketing automation with prebuilt ecommerce workflows (welcome, cart abandonment, browse abandonment, order confirmation, post-purchase, win-back)
+      - >-
+        Email marketing automation with prebuilt ecommerce workflows (welcome, cart abandonment, browse abandonment,
+        order confirmation, post-purchase, win-back)
       - SMS marketing with global coverage and TCPA / GDPR compliant opt-in management
       - Web push notifications across desktop and mobile browsers
       - Drag-and-drop campaign builder with dynamic content blocks, product recommender, and conditional logic

@@ -2,13 +2,20 @@
   "repo": "omnisend",
   "feeds": [
     {
+      "source": "https://www.omnisend.com/blog/feed/",
+      "feed_url": "https://www.omnisend.com/blog/feed/",
+      "title": "",
+      "saved": 10,
+      "method": "feed"
+    },
+    {
       "source": "https://status.omnisend.com",
       "feed_url": "https://status.omnisend.com/history.atom",
       "title": "",
-      "saved": 1,
+      "saved": 0,
       "method": "discovered"
     }
   ],
-  "post_count": 1,
-  "fetched": "2026-06-01T23:35:02Z"
+  "post_count": 14,
+  "fetched": "2026-06-14T20:42:17Z"
 }

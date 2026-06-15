@@ -1,0 +1,4405 @@
+{
+  "info": {
+    "_postman_id": "dd9abb95-01ca-46c4-adf2-a553d7837952",
+    "name": "Omnisend REST API",
+    "description": "Omnisend's REST API for managing ecommerce email and SMS marketing\nautomation. Exposes contacts, events, products, product categories,\nsegments, campaigns, batches, email templates, email content, email\nuniversal layouts, images, brands, and analytics reports. Authentication\nuses an API key passed via the `X-API-KEY` header, or OAuth 2.0 with\nscopes such as `contacts.read`, `contacts.write`, `campaigns.read`,\n`campaigns.write`, `analytics.read`, etc.\n\n\nContact Support:\n Name: Omnisend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T15:13:22.000Z",
+    "updatedAt": "2026-06-05T15:13:23.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-dd9abb95-01ca-46c4-adf2-a553d7837952"
+  },
+  "item": [
+    {
+      "name": "contacts",
+      "item": [
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "Get a contact",
+              "id": "25ae4d49-a2c5-4086-8c86-ea736358ac15",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/contacts/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "6afc6cc0-dcd9-425c-abaf-9d05b27f75f3",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "8182ef01-b804-4f81-8bf4-5074d898bdb3",
+                  "name": "Contact",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/contacts/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "contacts",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"contactID\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"status\": \"nonSubscribed\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-8182ef01-b804-4f81-8bf4-5074d898bdb3"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-25ae4d49-a2c5-4086-8c86-ea736358ac15"
+            },
+            {
+              "name": "Update contact by id",
+              "id": "674d75e5-ec96-4913-a03a-bcbd1bdbfc20",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/contacts/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "ef2ca387-05f2-4b36-a6e5-a5ce3180ce5c",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "1db351a9-7cc6-476e-904d-768f9edc9a87",
+                  "name": "Contact updated",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/contacts/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "contacts",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-1db351a9-7cc6-476e-904d-768f9edc9a87"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-674d75e5-ec96-4913-a03a-bcbd1bdbfc20"
+            }
+          ],
+          "id": "337d884d-7a69-48ba-a429-804467f439ea",
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-337d884d-7a69-48ba-a429-804467f439ea"
+        },
+        {
+          "name": "List contacts",
+          "id": "745acf3b-7457-4bb0-a296-6550eed53678",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/contacts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "contacts"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e4ca848e-03b0-43c8-90f8-e2281f8a854c",
+              "name": "Paginated list of contacts",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/contacts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "contacts"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-e4ca848e-03b0-43c8-90f8-e2281f8a854c"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-745acf3b-7457-4bb0-a296-6550eed53678"
+        },
+        {
+          "name": "Create or update a contact",
+          "id": "1157f692-2b02-46cf-912a-4ec5f744c348",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contactID\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"status\": \"nonSubscribed\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/contacts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "contacts"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "06a4c385-4994-49ae-a4af-d7ce929e692c",
+              "name": "Contact created or updated",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contactID\": \"<string>\",\n  \"email\": \"<email>\",\n  \"phone\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"status\": \"nonSubscribed\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/contacts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "contacts"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-06a4c385-4994-49ae-a4af-d7ce929e692c"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-1157f692-2b02-46cf-912a-4ec5f744c348"
+        },
+        {
+          "name": "Update contact by email",
+          "id": "924db7cb-4712-4621-937c-1452b2f1e050",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/contacts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "contacts"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "95139bc8-9f22-4973-978a-88ab9f0e691c",
+              "name": "Contact updated",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/contacts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "contacts"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-95139bc8-9f22-4973-978a-88ab9f0e691c"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-924db7cb-4712-4621-937c-1452b2f1e050"
+        }
+      ],
+      "id": "81460d90-ace6-47dd-9037-c8fe450090c7",
+      "createdAt": "2026-06-05T15:13:23.000Z",
+      "updatedAt": "2026-06-05T15:13:23.000Z",
+      "uid": "35240-81460d90-ace6-47dd-9037-c8fe450090c7"
+    },
+    {
+      "name": "contacts-tags",
+      "item": [
+        {
+          "name": "Add tags to contacts",
+          "id": "df8c4966-1b40-4548-98d6-5d2384639fe1",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/contacts-tags",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "contacts-tags"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b231bebb-c82a-44ea-8f36-8ab15df1b84e",
+              "name": "Tags added",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/contacts-tags",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "contacts-tags"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-b231bebb-c82a-44ea-8f36-8ab15df1b84e"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-df8c4966-1b40-4548-98d6-5d2384639fe1"
+        },
+        {
+          "name": "Remove tags from contacts",
+          "id": "9b29e8ea-61bc-472a-adc8-d90a9d39312b",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/contacts-tags",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "contacts-tags"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "83b2b41f-5353-474c-a2f8-f03439d26c6a",
+              "name": "Tags removed",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/contacts-tags",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "contacts-tags"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-83b2b41f-5353-474c-a2f8-f03439d26c6a"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-9b29e8ea-61bc-472a-adc8-d90a9d39312b"
+        }
+      ],
+      "id": "e551c742-6f3a-499d-8fe3-9347ccc1f750",
+      "createdAt": "2026-06-05T15:13:23.000Z",
+      "updatedAt": "2026-06-05T15:13:23.000Z",
+      "uid": "35240-e551c742-6f3a-499d-8fe3-9347ccc1f750"
+    },
+    {
+      "name": "events",
+      "item": [
+        {
+          "name": "Send a customer event",
+          "id": "b09c7bd4-56ec-4a9a-b519-239d9473d639",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"incididunt9b\": -90787193.78691211\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "events"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "75525cf8-974f-417b-977f-da87e617708f",
+              "name": "Event accepted",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"incididunt9b\": -90787193.78691211\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/events",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "events"
+                  ]
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-75525cf8-974f-417b-977f-da87e617708f"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-b09c7bd4-56ec-4a9a-b519-239d9473d639"
+        }
+      ],
+      "id": "9304b350-24fa-475d-83d8-3124a4215c88",
+      "createdAt": "2026-06-05T15:13:23.000Z",
+      "updatedAt": "2026-06-05T15:13:23.000Z",
+      "uid": "35240-9304b350-24fa-475d-83d8-3124a4215c88"
+    },
+    {
+      "name": "products",
+      "item": [
+        {
+          "name": "{productId}",
+          "item": [
+            {
+              "name": "Get a product",
+              "id": "afe2e1d4-2ca2-4d5b-80df-cbf1d7e72061",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/products/:productId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "products",
+                    ":productId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "f4c6c19e-bdb0-4566-b77d-c3c95117f80e",
+                      "key": "productId",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "7a1bc44e-a975-4fb3-b05a-e323a67aea81",
+                  "name": "Product",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/products/:productId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "products",
+                        ":productId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "productId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-7a1bc44e-a975-4fb3-b05a-e323a67aea81"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-afe2e1d4-2ca2-4d5b-80df-cbf1d7e72061"
+            },
+            {
+              "name": "Replace a product",
+              "id": "2746b1b7-d881-4c10-8ef8-0f06a1d9bcdc",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/products/:productId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "products",
+                    ":productId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "182a03ae-4db6-4bff-82f5-98d40847dfe0",
+                      "key": "productId",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "a348c518-107d-455d-a385-b2365e46028b",
+                  "name": "Product replaced",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/products/:productId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "products",
+                        ":productId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "productId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-a348c518-107d-455d-a385-b2365e46028b"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-2746b1b7-d881-4c10-8ef8-0f06a1d9bcdc"
+            },
+            {
+              "name": "Delete a product",
+              "id": "05820f5b-e74a-4d4f-ad8f-1038292bae42",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/products/:productId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "products",
+                    ":productId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "9a2bee23-04ed-4a78-8c08-da1283d1032d",
+                      "key": "productId",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "b4675573-0953-4209-8c2a-23bac9e71253",
+                  "name": "Product deleted",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/products/:productId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "products",
+                        ":productId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "productId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-b4675573-0953-4209-8c2a-23bac9e71253"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-05820f5b-e74a-4d4f-ad8f-1038292bae42"
+            }
+          ],
+          "id": "60613e36-ee29-4642-b5c2-23acebfdc1de",
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-60613e36-ee29-4642-b5c2-23acebfdc1de"
+        },
+        {
+          "name": "List products",
+          "id": "c3f467b8-5bb0-4a6d-95d2-85b9d7aa4d11",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8517f353-0c0f-4c59-87d8-fa224dccbdd5",
+              "name": "List of products",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/products",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "products"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-8517f353-0c0f-4c59-87d8-fa224dccbdd5"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-c3f467b8-5bb0-4a6d-95d2-85b9d7aa4d11"
+        },
+        {
+          "name": "Create a product",
+          "id": "83d03e08-b757-4be7-89f0-14fe7862de8f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2b8aabd7-357e-457f-b1ac-3e08d39d4fdb",
+              "name": "Product created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/products",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "products"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-2b8aabd7-357e-457f-b1ac-3e08d39d4fdb"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-83d03e08-b757-4be7-89f0-14fe7862de8f"
+        }
+      ],
+      "id": "035b642a-d5c5-4327-b1e4-196c34b84085",
+      "createdAt": "2026-06-05T15:13:23.000Z",
+      "updatedAt": "2026-06-05T15:13:23.000Z",
+      "uid": "35240-035b642a-d5c5-4327-b1e4-196c34b84085"
+    },
+    {
+      "name": "product-categories",
+      "item": [
+        {
+          "name": "{categoryId}",
+          "item": [
+            {
+              "name": "Get a product category",
+              "id": "07bbcf24-ab82-4b94-8d88-1df23958dec8",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/product-categories/:categoryId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "product-categories",
+                    ":categoryId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "f763cf95-c122-4339-870a-a8f989f95cfb",
+                      "key": "categoryId",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "a1a2bcb7-1b20-4f61-bfd3-c65ef4264e0c",
+                  "name": "Category",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/product-categories/:categoryId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "product-categories",
+                        ":categoryId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "categoryId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-a1a2bcb7-1b20-4f61-bfd3-c65ef4264e0c"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-07bbcf24-ab82-4b94-8d88-1df23958dec8"
+            },
+            {
+              "name": "Update a product category",
+              "id": "039be69f-f1ea-4295-addb-06e0ad591370",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/product-categories/:categoryId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "product-categories",
+                    ":categoryId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "daf32e8c-06b3-42b6-86e8-f4b3fe1a6ea9",
+                      "key": "categoryId",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "1b70e014-d558-4e3e-9229-220ac4dd3c26",
+                  "name": "Category updated",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/product-categories/:categoryId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "product-categories",
+                        ":categoryId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "categoryId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-1b70e014-d558-4e3e-9229-220ac4dd3c26"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-039be69f-f1ea-4295-addb-06e0ad591370"
+            },
+            {
+              "name": "Delete a product category",
+              "id": "1219722f-2c5e-4b27-8c44-91411ce12264",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/product-categories/:categoryId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "product-categories",
+                    ":categoryId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "fd2ccb6a-29d1-41fd-8b91-561fb07d775b",
+                      "key": "categoryId",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "6d14ae87-d49c-4cd5-b161-89c5f9214dc8",
+                  "name": "Category deleted",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/product-categories/:categoryId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "product-categories",
+                        ":categoryId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "categoryId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-6d14ae87-d49c-4cd5-b161-89c5f9214dc8"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-1219722f-2c5e-4b27-8c44-91411ce12264"
+            }
+          ],
+          "id": "a27cd8ad-a125-45d3-8c5a-f6d408a0618c",
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-a27cd8ad-a125-45d3-8c5a-f6d408a0618c"
+        },
+        {
+          "name": "List product categories",
+          "id": "c6c78e9c-b64c-4956-9846-45bd56532bae",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/product-categories",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "product-categories"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8e802ea3-ceb1-45c5-9149-79dde3286594",
+              "name": "List of categories",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/product-categories",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "product-categories"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-8e802ea3-ceb1-45c5-9149-79dde3286594"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-c6c78e9c-b64c-4956-9846-45bd56532bae"
+        },
+        {
+          "name": "Create a product category",
+          "id": "b9a78919-b043-46e3-9ec3-45402562576f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/product-categories",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "product-categories"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7d9e697f-6b34-4147-bb60-6f50a8823fac",
+              "name": "Category created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/product-categories",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "product-categories"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-7d9e697f-6b34-4147-bb60-6f50a8823fac"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-b9a78919-b043-46e3-9ec3-45402562576f"
+        }
+      ],
+      "id": "1bcfb048-0dae-4262-b8f9-4b0971deabbc",
+      "createdAt": "2026-06-05T15:13:23.000Z",
+      "updatedAt": "2026-06-05T15:13:23.000Z",
+      "uid": "35240-1bcfb048-0dae-4262-b8f9-4b0971deabbc"
+    },
+    {
+      "name": "segments",
+      "item": [
+        {
+          "name": "{segmentId}",
+          "item": [
+            {
+              "name": "statistics",
+              "item": [
+                {
+                  "name": "Get segment statistics",
+                  "id": "61cdec0c-3c03-4a55-b309-aa88c0f54269",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/segments/:segmentId/statistics",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "segments",
+                        ":segmentId",
+                        "statistics"
+                      ],
+                      "variable": [
+                        {
+                          "id": "af7b47b9-8506-4841-b6ef-d152a002d5a2",
+                          "key": "segmentId",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "d15bd205-ed21-4cb0-a911-2dd621f981ff",
+                      "name": "Segment statistics",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-KEY",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/segments/:segmentId/statistics",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "segments",
+                            ":segmentId",
+                            "statistics"
+                          ],
+                          "variable": [
+                            {
+                              "key": "segmentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-06-05T15:13:23.000Z",
+                      "updatedAt": "2026-06-05T15:13:23.000Z",
+                      "uid": "35240-d15bd205-ed21-4cb0-a911-2dd621f981ff"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-61cdec0c-3c03-4a55-b309-aa88c0f54269"
+                }
+              ],
+              "id": "77a00a90-2712-46d3-a301-013e2c50bd95",
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-77a00a90-2712-46d3-a301-013e2c50bd95"
+            },
+            {
+              "name": "Get a segment",
+              "id": "0e9d25fd-e3ad-4dff-963b-2cdea1eb378f",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/segments/:segmentId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "segments",
+                    ":segmentId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "eb982023-3851-42ac-9b87-14da9c91f95b",
+                      "key": "segmentId",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "4b175ca8-81e8-4411-a3ef-ade8acb71500",
+                  "name": "Segment",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/segments/:segmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "segments",
+                        ":segmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "segmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-4b175ca8-81e8-4411-a3ef-ade8acb71500"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-0e9d25fd-e3ad-4dff-963b-2cdea1eb378f"
+            },
+            {
+              "name": "Update a segment",
+              "id": "00f5b975-ed2b-4f84-885d-a0000dd6092b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/segments/:segmentId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "segments",
+                    ":segmentId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "5f4b0f61-5012-4421-a13f-772b05363f55",
+                      "key": "segmentId",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "4286fc78-1a84-4ad3-9fd9-89c3188db0a7",
+                  "name": "Segment updated",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/segments/:segmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "segments",
+                        ":segmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "segmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-4286fc78-1a84-4ad3-9fd9-89c3188db0a7"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-00f5b975-ed2b-4f84-885d-a0000dd6092b"
+            },
+            {
+              "name": "Delete a segment",
+              "id": "fc1ce7f4-b115-44e8-89b9-13e446867858",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/segments/:segmentId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "segments",
+                    ":segmentId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "a76cfd88-0ce5-448b-ba48-bbd4ffe62429",
+                      "key": "segmentId",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "49b3d810-087a-4ef0-a77c-0270f6046ee0",
+                  "name": "Segment deleted",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/segments/:segmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "segments",
+                        ":segmentId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "segmentId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-49b3d810-087a-4ef0-a77c-0270f6046ee0"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-fc1ce7f4-b115-44e8-89b9-13e446867858"
+            }
+          ],
+          "id": "1d6883c0-8fe0-48ad-a072-d36d47969479",
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-1d6883c0-8fe0-48ad-a072-d36d47969479"
+        },
+        {
+          "name": "List segments",
+          "id": "3cd60136-b089-4300-9055-95e6918c0388",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/segments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "segments"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "541b9f3a-3ecf-4ba6-b6d1-5270d2ec1005",
+              "name": "List of segments",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/segments",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "segments"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-541b9f3a-3ecf-4ba6-b6d1-5270d2ec1005"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-3cd60136-b089-4300-9055-95e6918c0388"
+        },
+        {
+          "name": "Create a segment",
+          "id": "93ebda50-bb34-48e3-831b-f4cd60a23469",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/segments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "segments"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fd98ae2f-8c4f-4a00-9552-19371f51ddbb",
+              "name": "Segment created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/segments",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "segments"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-fd98ae2f-8c4f-4a00-9552-19371f51ddbb"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-93ebda50-bb34-48e3-831b-f4cd60a23469"
+        }
+      ],
+      "id": "7a1cf525-c540-4e73-bb96-8c492eb6e422",
+      "createdAt": "2026-06-05T15:13:23.000Z",
+      "updatedAt": "2026-06-05T15:13:23.000Z",
+      "uid": "35240-7a1cf525-c540-4e73-bb96-8c492eb6e422"
+    },
+    {
+      "name": "campaigns",
+      "item": [
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "send",
+              "item": [
+                {
+                  "name": "Send a campaign",
+                  "id": "7dc46691-07c7-40c7-a7a9-20869f54cf67",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/campaigns/:id/send",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "campaigns",
+                        ":id",
+                        "send"
+                      ],
+                      "variable": [
+                        {
+                          "id": "f06f6417-d0bf-47d8-a96c-020e33865dcd",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "dcfc4332-4103-4ab3-ae50-84db067aad43",
+                      "name": "Campaign send queued",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-KEY",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/campaigns/:id/send",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "campaigns",
+                            ":id",
+                            "send"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Accepted",
+                      "code": 202,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-06-05T15:13:23.000Z",
+                      "updatedAt": "2026-06-05T15:13:23.000Z",
+                      "uid": "35240-dcfc4332-4103-4ab3-ae50-84db067aad43"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-7dc46691-07c7-40c7-a7a9-20869f54cf67"
+                }
+              ],
+              "id": "7c9e0e2b-72db-4e2b-8538-98a7e84e30bb",
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-7c9e0e2b-72db-4e2b-8538-98a7e84e30bb"
+            },
+            {
+              "name": "cancel",
+              "item": [
+                {
+                  "name": "Cancel a campaign send",
+                  "id": "034191bd-690b-46b1-a100-f6550333dee8",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/campaigns/:id/cancel",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "campaigns",
+                        ":id",
+                        "cancel"
+                      ],
+                      "variable": [
+                        {
+                          "id": "b51c1ce9-79ed-4659-ad9b-e4429fca3f18",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "5673aef4-a3a8-4791-86b8-80e4b017a334",
+                      "name": "Campaign cancelled",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-KEY",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/campaigns/:id/cancel",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "campaigns",
+                            ":id",
+                            "cancel"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-06-05T15:13:23.000Z",
+                      "updatedAt": "2026-06-05T15:13:23.000Z",
+                      "uid": "35240-5673aef4-a3a8-4791-86b8-80e4b017a334"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-034191bd-690b-46b1-a100-f6550333dee8"
+                }
+              ],
+              "id": "03f91805-5d4c-44de-b287-c7146399931e",
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-03f91805-5d4c-44de-b287-c7146399931e"
+            },
+            {
+              "name": "copy",
+              "item": [
+                {
+                  "name": "Copy a campaign",
+                  "id": "4f25a6b4-e495-4f0c-845b-ec2f6ee150b9",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/campaigns/:id/copy",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "campaigns",
+                        ":id",
+                        "copy"
+                      ],
+                      "variable": [
+                        {
+                          "id": "0932a187-75de-4096-835b-b166dc24f8a8",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "fdad35ad-3232-44ff-83d6-c8389ee0bc31",
+                      "name": "Campaign copied",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-KEY",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/campaigns/:id/copy",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "campaigns",
+                            ":id",
+                            "copy"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-06-05T15:13:23.000Z",
+                      "updatedAt": "2026-06-05T15:13:23.000Z",
+                      "uid": "35240-fdad35ad-3232-44ff-83d6-c8389ee0bc31"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-4f25a6b4-e495-4f0c-845b-ec2f6ee150b9"
+                }
+              ],
+              "id": "1b494408-d822-4c25-a318-c6b8570ef2b5",
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-1b494408-d822-4c25-a318-c6b8570ef2b5"
+            },
+            {
+              "name": "Get a campaign",
+              "id": "3c37471b-ff8e-4d7f-88dc-47d99d4151c2",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/campaigns/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "campaigns",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "58875f1d-7e07-44e8-ab73-363e5102a27c",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "146340a5-0eaf-4d02-a03b-70adeaf5ce50",
+                  "name": "Campaign",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/campaigns/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "campaigns",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-146340a5-0eaf-4d02-a03b-70adeaf5ce50"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-3c37471b-ff8e-4d7f-88dc-47d99d4151c2"
+            },
+            {
+              "name": "Update a campaign",
+              "id": "d5ef2747-06ee-4820-b66b-398e0e21b7d1",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/campaigns/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "campaigns",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "d11eaeb5-c6d9-4ec2-9b27-7962aa353a8c",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "66a534b4-5e56-4e82-808c-41a7781ce390",
+                  "name": "Campaign updated",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/campaigns/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "campaigns",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-66a534b4-5e56-4e82-808c-41a7781ce390"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-d5ef2747-06ee-4820-b66b-398e0e21b7d1"
+            },
+            {
+              "name": "Delete a campaign",
+              "id": "c68fa197-f6c4-422d-8544-e6e7a3cd73fd",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/campaigns/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "campaigns",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "850b1533-3387-45c1-ab28-389dce2313d9",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "fcb28398-2195-4c71-9f95-581fdd86636d",
+                  "name": "Campaign deleted",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/campaigns/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "campaigns",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-fcb28398-2195-4c71-9f95-581fdd86636d"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-c68fa197-f6c4-422d-8544-e6e7a3cd73fd"
+            }
+          ],
+          "id": "363d8e3a-d707-4a22-ac72-62d6f24f5fb0",
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-363d8e3a-d707-4a22-ac72-62d6f24f5fb0"
+        },
+        {
+          "name": "List campaigns",
+          "id": "1123c838-77c9-4868-ac6a-328b9ee79216",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/campaigns",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "campaigns"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8a0c45e5-701c-4725-bd0a-7d2c0b71344f",
+              "name": "List of campaigns",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/campaigns",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "campaigns"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-8a0c45e5-701c-4725-bd0a-7d2c0b71344f"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-1123c838-77c9-4868-ac6a-328b9ee79216"
+        },
+        {
+          "name": "Create a campaign",
+          "id": "b6461427-8b18-4f56-baf8-69de93cdca44",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/campaigns",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "campaigns"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5223ed13-a42d-456a-b505-4cd16c6f8c4d",
+              "name": "Campaign created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/campaigns",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "campaigns"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-5223ed13-a42d-456a-b505-4cd16c6f8c4d"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-b6461427-8b18-4f56-baf8-69de93cdca44"
+        }
+      ],
+      "id": "2745f5ab-7082-481b-985e-2b52b1ef9681",
+      "createdAt": "2026-06-05T15:13:23.000Z",
+      "updatedAt": "2026-06-05T15:13:23.000Z",
+      "uid": "35240-2745f5ab-7082-481b-985e-2b52b1ef9681"
+    },
+    {
+      "name": "batches",
+      "item": [
+        {
+          "name": "{batchId}",
+          "item": [
+            {
+              "name": "items",
+              "item": [
+                {
+                  "name": "List items in a batch",
+                  "id": "23eae0dd-e327-4014-949e-cde22da9df83",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/batches/:batchId/items",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "batches",
+                        ":batchId",
+                        "items"
+                      ],
+                      "variable": [
+                        {
+                          "id": "507dc43c-50fa-4217-b881-3f50f385139a",
+                          "key": "batchId",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "51b0d9cf-b2fd-4038-82b6-be436582da1e",
+                      "name": "Batch items",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-KEY",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/batches/:batchId/items",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "batches",
+                            ":batchId",
+                            "items"
+                          ],
+                          "variable": [
+                            {
+                              "key": "batchId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-06-05T15:13:23.000Z",
+                      "updatedAt": "2026-06-05T15:13:23.000Z",
+                      "uid": "35240-51b0d9cf-b2fd-4038-82b6-be436582da1e"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-23eae0dd-e327-4014-949e-cde22da9df83"
+                }
+              ],
+              "id": "af63ffb4-939e-4e8c-aa1c-23fa8a06466f",
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-af63ffb4-939e-4e8c-aa1c-23fa8a06466f"
+            },
+            {
+              "name": "Get a batch",
+              "id": "85fdef8a-59db-4954-95de-77e20954c077",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/batches/:batchId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "batches",
+                    ":batchId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "19401f4e-fbef-4b95-9503-7608a93feb14",
+                      "key": "batchId",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "5e6ee47d-4f86-4ec9-8cd3-7c2b7c8a4919",
+                  "name": "Batch details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/batches/:batchId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "batches",
+                        ":batchId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "batchId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-5e6ee47d-4f86-4ec9-8cd3-7c2b7c8a4919"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-85fdef8a-59db-4954-95de-77e20954c077"
+            }
+          ],
+          "id": "cdb75aa7-6a1f-4db1-9f60-a8bf1a270304",
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-cdb75aa7-6a1f-4db1-9f60-a8bf1a270304"
+        },
+        {
+          "name": "List batches",
+          "id": "8411ebf1-8ca7-4854-930d-46e29978c272",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/batches",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "batches"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "140b6947-cc16-493a-806c-e83c52ec2f59",
+              "name": "List of batch operations",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/batches",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "batches"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-140b6947-cc16-493a-806c-e83c52ec2f59"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-8411ebf1-8ca7-4854-930d-46e29978c272"
+        },
+        {
+          "name": "Create a batch operation",
+          "id": "aafad409-38c7-4492-beaa-057e82aeecab",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/batches",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "batches"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "99303455-a957-4133-803a-c95411d7969e",
+              "name": "Batch accepted",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/batches",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "batches"
+                  ]
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-99303455-a957-4133-803a-c95411d7969e"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-aafad409-38c7-4492-beaa-057e82aeecab"
+        }
+      ],
+      "id": "0f5a03dd-90aa-437e-aaeb-7f3ed6863c87",
+      "createdAt": "2026-06-05T15:13:23.000Z",
+      "updatedAt": "2026-06-05T15:13:23.000Z",
+      "uid": "35240-0f5a03dd-90aa-437e-aaeb-7f3ed6863c87"
+    },
+    {
+      "name": "email-templates",
+      "item": [
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "render",
+              "item": [
+                {
+                  "name": "Render an email template",
+                  "id": "9cb7ae68-e2c3-4c3d-ad88-3539f4a14be6",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/email-templates/:id/render",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "email-templates",
+                        ":id",
+                        "render"
+                      ],
+                      "variable": [
+                        {
+                          "id": "75453f0f-b4ca-40e7-afc2-6d4dc7100b66",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "865cc76d-2f60-4284-a358-e97405fc42c0",
+                      "name": "Rendered email",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-KEY",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/email-templates/:id/render",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "email-templates",
+                            ":id",
+                            "render"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-06-05T15:13:23.000Z",
+                      "updatedAt": "2026-06-05T15:13:23.000Z",
+                      "uid": "35240-865cc76d-2f60-4284-a358-e97405fc42c0"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-9cb7ae68-e2c3-4c3d-ad88-3539f4a14be6"
+                }
+              ],
+              "id": "b6827cbc-77ea-4e42-b8dd-eabe72ad4882",
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-b6827cbc-77ea-4e42-b8dd-eabe72ad4882"
+            },
+            {
+              "name": "Get an email template",
+              "id": "2317c9f4-225d-453c-8e61-aebbc1743c1f",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/email-templates/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "email-templates",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "4fe97885-cc8f-416b-9583-f9d2892fb12b",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "d3599cbf-26f4-4e70-9f31-4e7293891773",
+                  "name": "Template",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/email-templates/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "email-templates",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-d3599cbf-26f4-4e70-9f31-4e7293891773"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-2317c9f4-225d-453c-8e61-aebbc1743c1f"
+            },
+            {
+              "name": "Replace an email template",
+              "id": "fa25843e-34a2-4cb6-98fe-4add3e0518ae",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/email-templates/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "email-templates",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "52d29e78-25fe-461f-8cf0-f2411a70e4f4",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "3b01b904-e917-4f8d-84e4-4c2ed51d40f3",
+                  "name": "Template replaced",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/email-templates/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "email-templates",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-3b01b904-e917-4f8d-84e4-4c2ed51d40f3"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-fa25843e-34a2-4cb6-98fe-4add3e0518ae"
+            },
+            {
+              "name": "Delete an email template",
+              "id": "295582ec-1a8d-4b23-aebe-a94f52e312d6",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/email-templates/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "email-templates",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "4527f41c-38f0-4e2b-9741-f902ed432419",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "bcda6c2b-5bf5-41b0-bd01-645ed089eaab",
+                  "name": "Template deleted",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/email-templates/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "email-templates",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-bcda6c2b-5bf5-41b0-bd01-645ed089eaab"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-295582ec-1a8d-4b23-aebe-a94f52e312d6"
+            }
+          ],
+          "id": "d3c9015e-99b1-477b-b258-a3106b2af0d9",
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-d3c9015e-99b1-477b-b258-a3106b2af0d9"
+        },
+        {
+          "name": "List email templates",
+          "id": "5f0082ff-6f65-4dc8-ae32-d701f10011d4",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/email-templates",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "email-templates"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "47d7ae3c-f01b-4e96-af45-f1408bc47415",
+              "name": "Templates",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/email-templates",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "email-templates"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-47d7ae3c-f01b-4e96-af45-f1408bc47415"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-5f0082ff-6f65-4dc8-ae32-d701f10011d4"
+        },
+        {
+          "name": "Create an email template",
+          "id": "a6485da4-fb5f-4bbc-a970-b2080355e8a6",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/email-templates",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "email-templates"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fc4893a3-9358-45ae-8937-1dc04545b361",
+              "name": "Template created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/email-templates",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "email-templates"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-fc4893a3-9358-45ae-8937-1dc04545b361"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-a6485da4-fb5f-4bbc-a970-b2080355e8a6"
+        }
+      ],
+      "id": "cbc78211-c6a5-4d2b-8aa7-f2dda6386b4e",
+      "createdAt": "2026-06-05T15:13:23.000Z",
+      "updatedAt": "2026-06-05T15:13:23.000Z",
+      "uid": "35240-cbc78211-c6a5-4d2b-8aa7-f2dda6386b4e"
+    },
+    {
+      "name": "email-templates-import",
+      "item": [
+        {
+          "name": "Import an email template from HTML",
+          "id": "85b0d35f-b662-428d-8d4e-b86ad0ce6527",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/email-templates-import",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "email-templates-import"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8581803f-90a6-4016-b621-b5f94eece9b7",
+              "name": "Template imported",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/email-templates-import",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "email-templates-import"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-8581803f-90a6-4016-b621-b5f94eece9b7"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-85b0d35f-b662-428d-8d4e-b86ad0ce6527"
+        }
+      ],
+      "id": "cbd3c471-518b-49d4-bae1-3461dbd61352",
+      "createdAt": "2026-06-05T15:13:23.000Z",
+      "updatedAt": "2026-06-05T15:13:23.000Z",
+      "uid": "35240-cbd3c471-518b-49d4-bae1-3461dbd61352"
+    },
+    {
+      "name": "email-content",
+      "item": [
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "render",
+              "item": [
+                {
+                  "name": "Render email content",
+                  "id": "47770ec7-2d6f-49ed-8b7d-c9428f8f2e91",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/email-content/:id/render",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "email-content",
+                        ":id",
+                        "render"
+                      ],
+                      "variable": [
+                        {
+                          "id": "f7b3ef19-80d2-4221-bbeb-0cdb34819752",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "19200b7d-a8db-4646-b1e2-8750434797cc",
+                      "name": "Rendered content",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-API-KEY",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/email-content/:id/render",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "email-content",
+                            ":id",
+                            "render"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-06-05T15:13:23.000Z",
+                      "updatedAt": "2026-06-05T15:13:23.000Z",
+                      "uid": "35240-19200b7d-a8db-4646-b1e2-8750434797cc"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-47770ec7-2d6f-49ed-8b7d-c9428f8f2e91"
+                }
+              ],
+              "id": "fa9102e2-0d51-4389-b157-278a734b000c",
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-fa9102e2-0d51-4389-b157-278a734b000c"
+            },
+            {
+              "name": "Get email content",
+              "id": "6e80d116-c7f2-400f-92fd-7e071843c951",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/email-content/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "email-content",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "711a11bc-6eae-4036-b06d-1dc49d97b01e",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "49dc2ce9-3d01-42d0-9fc9-4b46e35675d0",
+                  "name": "Email content",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/email-content/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "email-content",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-49dc2ce9-3d01-42d0-9fc9-4b46e35675d0"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-6e80d116-c7f2-400f-92fd-7e071843c951"
+            },
+            {
+              "name": "Update email content",
+              "id": "08b4b623-d878-400e-81e4-d01187b251af",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/email-content/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "email-content",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "1d1cf988-1933-4a48-b00d-6d2cc1d1b403",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "d21c4d28-98e6-4f18-b3b6-47fae6fdc3c0",
+                  "name": "Email content updated",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/email-content/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "email-content",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-d21c4d28-98e6-4f18-b3b6-47fae6fdc3c0"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-08b4b623-d878-400e-81e4-d01187b251af"
+            }
+          ],
+          "id": "599c78c2-b328-4ac9-95a8-4382ea8ea8a5",
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-599c78c2-b328-4ac9-95a8-4382ea8ea8a5"
+        }
+      ],
+      "id": "b0251a7e-56c5-482f-a1fd-e14e0adc7a1d",
+      "createdAt": "2026-06-05T15:13:23.000Z",
+      "updatedAt": "2026-06-05T15:13:23.000Z",
+      "uid": "35240-b0251a7e-56c5-482f-a1fd-e14e0adc7a1d"
+    },
+    {
+      "name": "email-universal-layouts",
+      "item": [
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "Get a universal layout",
+              "id": "6787caf6-87fc-4d91-ba8d-e141108672be",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/email-universal-layouts/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "email-universal-layouts",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "6c7cc333-036c-48fd-b3d0-0928cad46ee5",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "62987ab5-4761-4212-bbb4-b2dd35555c25",
+                  "name": "Layout",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/email-universal-layouts/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "email-universal-layouts",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-62987ab5-4761-4212-bbb4-b2dd35555c25"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-6787caf6-87fc-4d91-ba8d-e141108672be"
+            },
+            {
+              "name": "Update a universal layout",
+              "id": "00d51cb9-311e-4b28-8a10-659c2b0765e4",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/email-universal-layouts/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "email-universal-layouts",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "be04ca77-7815-4a9a-82bf-815e8d27ced7",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "387ed182-2d6e-4959-b9de-6f477e59e827",
+                  "name": "Layout updated",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/email-universal-layouts/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "email-universal-layouts",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-387ed182-2d6e-4959-b9de-6f477e59e827"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-00d51cb9-311e-4b28-8a10-659c2b0765e4"
+            },
+            {
+              "name": "Delete a universal layout",
+              "id": "05a8c79a-f5e2-4c8e-8f51-2d3b16447982",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/email-universal-layouts/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "email-universal-layouts",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "a15c2fe2-5961-4b05-98cf-0d3edc7c7ef1",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "03b4f376-34ea-46be-8a14-723f5ef3ae50",
+                  "name": "Layout deleted",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/email-universal-layouts/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "email-universal-layouts",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-03b4f376-34ea-46be-8a14-723f5ef3ae50"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-05a8c79a-f5e2-4c8e-8f51-2d3b16447982"
+            }
+          ],
+          "id": "878356f9-7d11-46d0-9948-9789b38ef3d4",
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-878356f9-7d11-46d0-9948-9789b38ef3d4"
+        },
+        {
+          "name": "List universal layouts",
+          "id": "8f9d0458-00f7-4915-afa5-2e9f544d1d14",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/email-universal-layouts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "email-universal-layouts"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "58d1553c-94aa-44b0-85f7-3847581c57f8",
+              "name": "Layouts",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/email-universal-layouts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "email-universal-layouts"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-58d1553c-94aa-44b0-85f7-3847581c57f8"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-8f9d0458-00f7-4915-afa5-2e9f544d1d14"
+        },
+        {
+          "name": "Create a universal layout",
+          "id": "5ff5bf36-6dd8-47ec-879f-ec9b0b95c968",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/email-universal-layouts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "email-universal-layouts"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "de7d2a1a-4533-4ad1-8b45-fb2cf7910436",
+              "name": "Layout created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/email-universal-layouts",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "email-universal-layouts"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-de7d2a1a-4533-4ad1-8b45-fb2cf7910436"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-5ff5bf36-6dd8-47ec-879f-ec9b0b95c968"
+        }
+      ],
+      "id": "57fb396b-6187-4ff4-abb6-00a41cca280c",
+      "createdAt": "2026-06-05T15:13:23.000Z",
+      "updatedAt": "2026-06-05T15:13:23.000Z",
+      "uid": "35240-57fb396b-6187-4ff4-abb6-00a41cca280c"
+    },
+    {
+      "name": "images",
+      "item": [
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "Get an image",
+              "id": "17dc9546-e06c-4f87-9101-b3b5f4c9b73f",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/images/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "images",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "a6e74fa2-cc13-43f6-9b32-220a5f753046",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "2b23ad84-4a2b-4140-b3e4-f17731e1c46c",
+                  "name": "Image",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/images/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "images",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-2b23ad84-4a2b-4140-b3e4-f17731e1c46c"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-17dc9546-e06c-4f87-9101-b3b5f4c9b73f"
+            },
+            {
+              "name": "Delete an image",
+              "id": "493772a7-8a0a-483d-99fe-12df534eb7f1",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/images/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "images",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "691e351f-86d1-440e-ab0c-a597e8b7e7cc",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "14e95759-4708-4e4e-a9b5-7f744389025d",
+                  "name": "Image deleted",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/images/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "images",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-14e95759-4708-4e4e-a9b5-7f744389025d"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-493772a7-8a0a-483d-99fe-12df534eb7f1"
+            }
+          ],
+          "id": "1fad1d73-39e7-42af-85ae-cc6ffacc052f",
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-1fad1d73-39e7-42af-85ae-cc6ffacc052f"
+        },
+        {
+          "name": "List images",
+          "id": "23181474-f35c-4577-9c14-84a6988b19b0",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/images",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "images"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a0b34274-3a74-4937-a599-cb59eafdf238",
+              "name": "Images",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/images",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "images"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-a0b34274-3a74-4937-a599-cb59eafdf238"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-23181474-f35c-4577-9c14-84a6988b19b0"
+        },
+        {
+          "name": "Upload an image by URL",
+          "id": "77de11ad-8c19-44d6-a9b9-548b7fc86492",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/images",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "images"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b31f6ef4-d800-4d17-a247-9516b389ab3f",
+              "name": "Image created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/images",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "images"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-b31f6ef4-d800-4d17-a247-9516b389ab3f"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-77de11ad-8c19-44d6-a9b9-548b7fc86492"
+        }
+      ],
+      "id": "8305af5d-a8a6-42ac-8553-d9692516f8ca",
+      "createdAt": "2026-06-05T15:13:23.000Z",
+      "updatedAt": "2026-06-05T15:13:23.000Z",
+      "uid": "35240-8305af5d-a8a6-42ac-8553-d9692516f8ca"
+    },
+    {
+      "name": "images-upload",
+      "item": [
+        {
+          "name": "Upload an image file",
+          "id": "9d260a13-ac90-4ec7-ae97-f82b01544d19",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/images-upload",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "images-upload"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "54268dc3-f125-46f2-bb9a-606bc53fc064",
+              "name": "Image uploaded",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/images-upload",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "images-upload"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-54268dc3-f125-46f2-bb9a-606bc53fc064"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-9d260a13-ac90-4ec7-ae97-f82b01544d19"
+        }
+      ],
+      "id": "5624d444-0ee4-4404-8c82-501f44d9d77b",
+      "createdAt": "2026-06-05T15:13:23.000Z",
+      "updatedAt": "2026-06-05T15:13:23.000Z",
+      "uid": "35240-5624d444-0ee4-4404-8c82-501f44d9d77b"
+    },
+    {
+      "name": "brands",
+      "item": [
+        {
+          "name": "current",
+          "item": [
+            {
+              "name": "Get current brand",
+              "id": "74263dcd-8013-46ca-bb2e-6c81d6e7542e",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/brands/current",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "brands",
+                    "current"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "b879d526-0ec7-46b2-a9ea-2557336a9d99",
+                  "name": "Brand",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/brands/current",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "brands",
+                        "current"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-b879d526-0ec7-46b2-a9ea-2557336a9d99"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-74263dcd-8013-46ca-bb2e-6c81d6e7542e"
+            },
+            {
+              "name": "Connect a brand",
+              "id": "ffbc2d41-e2ae-4603-a351-100d06822de1",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/brands/current",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "brands",
+                    "current"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "31d7bb6b-a661-4af0-bac6-0d447724fd8c",
+                  "name": "Brand connected",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-API-KEY",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/brands/current",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "brands",
+                        "current"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-06-05T15:13:23.000Z",
+                  "updatedAt": "2026-06-05T15:13:23.000Z",
+                  "uid": "35240-31d7bb6b-a661-4af0-bac6-0d447724fd8c"
+                }
+              ],
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-ffbc2d41-e2ae-4603-a351-100d06822de1"
+            }
+          ],
+          "id": "88779f4b-9d52-4679-9c90-726ed5428343",
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-88779f4b-9d52-4679-9c90-726ed5428343"
+        }
+      ],
+      "id": "08bfed6e-33f9-4fdd-bc8a-47cf318fcee9",
+      "createdAt": "2026-06-05T15:13:23.000Z",
+      "updatedAt": "2026-06-05T15:13:23.000Z",
+      "uid": "35240-08bfed6e-33f9-4fdd-bc8a-47cf318fcee9"
+    },
+    {
+      "name": "analytics-reports",
+      "item": [
+        {
+          "name": "Generate a marketing analytics report",
+          "id": "ffc32bcf-f2e9-4115-a1fe-588c28e131ef",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/analytics-reports",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "analytics-reports"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1ebf66d9-5004-492a-afaa-f4a165e0fe53",
+              "name": "Report",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/analytics-reports",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "analytics-reports"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-1ebf66d9-5004-492a-afaa-f4a165e0fe53"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-ffc32bcf-f2e9-4115-a1fe-588c28e131ef"
+        }
+      ],
+      "id": "de56ef68-bf7a-4f43-9834-d8b78e67dd0b",
+      "createdAt": "2026-06-05T15:13:23.000Z",
+      "updatedAt": "2026-06-05T15:13:23.000Z",
+      "uid": "35240-de56ef68-bf7a-4f43-9834-d8b78e67dd0b"
+    },
+    {
+      "name": "analytics-statistics",
+      "item": [
+        {
+          "name": "Generate event-based statistics report",
+          "id": "dbe86ad4-f860-4523-bf6c-d4bdd7768fd1",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/analytics-statistics",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "analytics-statistics"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "043f945d-2d87-42e4-88df-eec52553e2b9",
+              "name": "Statistics report",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: apikey",
+                    "key": "X-API-KEY",
+                    "value": "<API Key>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/analytics-statistics",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "analytics-statistics"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-06-05T15:13:23.000Z",
+              "updatedAt": "2026-06-05T15:13:23.000Z",
+              "uid": "35240-043f945d-2d87-42e4-88df-eec52553e2b9"
+            }
+          ],
+          "createdAt": "2026-06-05T15:13:23.000Z",
+          "updatedAt": "2026-06-05T15:13:23.000Z",
+          "uid": "35240-dbe86ad4-f860-4523-bf6c-d4bdd7768fd1"
+        }
+      ],
+      "id": "086942d9-4b7a-41e8-99ee-2314e2f8aaae",
+      "createdAt": "2026-06-05T15:13:23.000Z",
+      "updatedAt": "2026-06-05T15:13:23.000Z",
+      "uid": "35240-086942d9-4b7a-41e8-99ee-2314e2f8aaae"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-KEY",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.omnisend.com/v5"
+    }
+  ]
+}
