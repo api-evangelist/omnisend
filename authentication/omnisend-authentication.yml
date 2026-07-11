@@ -1,0 +1,27 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/omnisend-openapi.yml
+summary:
+  types:
+  - apiKey
+  - oauth2
+  api_key_in:
+  - header
+  oauth2_flows:
+  - authorizationCode
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: X-API-KEY
+  sources:
+  - openapi/omnisend-openapi.yml
+- name: OAuth2
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://app.omnisend.com/oauth/authorize
+    tokenUrl: https://api.omnisend.com/v5/oauth/token
+    scopes: 5
+  sources:
+  - openapi/omnisend-openapi.yml

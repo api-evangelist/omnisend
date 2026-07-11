@@ -74,6 +74,12 @@ apis:
       - type: JSONLD
         url: json-ld/omnisend-context.jsonld
 common:
+  - type: VulnerabilityDisclosure
+    url: security/omnisend-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/omnisend-domain-security.yml
+  - type: Authentication
+    url: authentication/omnisend-authentication.yml
   - type: OAuthScopes
     url: scopes/omnisend-scopes.yml
   - type: PostmanWorkspace
