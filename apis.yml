@@ -74,6 +74,8 @@ apis:
       - type: JSONLD
         url: json-ld/omnisend-context.jsonld
 common:
+  - type: OAuthScopes
+    url: scopes/omnisend-scopes.yml
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/omnisend/overview
   - type: Arazzo

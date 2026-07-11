@@ -1,0 +1,41 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/omnisend-openapi.yml
+schemes:
+- name: OAuth2
+  source: openapi/omnisend-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://app.omnisend.com/oauth/authorize
+    tokenUrl: https://api.omnisend.com/v5/oauth/token
+scopes:
+- scope: analytics.read
+  description: Read analytics
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/omnisend-openapi.yml
+- scope: campaigns.read
+  description: Read campaigns
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/omnisend-openapi.yml
+- scope: campaigns.write
+  description: Manage campaigns
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/omnisend-openapi.yml
+- scope: contacts.read
+  description: Read contacts
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/omnisend-openapi.yml
+- scope: contacts.write
+  description: Manage contacts
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/omnisend-openapi.yml
