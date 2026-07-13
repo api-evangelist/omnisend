@@ -5,7 +5,7 @@
       "source": "https://www.omnisend.com/blog/feed/",
       "feed_url": "https://www.omnisend.com/blog/feed/",
       "title": "",
-      "saved": 10,
+      "saved": 0,
       "method": "feed"
     },
     {
@@ -23,6 +23,6 @@
       "method": "discovered"
     }
   ],
-  "post_count": 28,
-  "fetched": "2026-06-27T12:03:07Z"
+  "post_count": 61,
+  "fetched": "2026-07-11T11:50:51Z"
 }
