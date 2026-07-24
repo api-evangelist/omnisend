@@ -1,0 +1,146 @@
+openapi: 3.1.0
+info:
+  title: Omnisend REST Analytics Campaigns API
+  description: 'Omnisend''s REST API for managing ecommerce email and SMS marketing
+
+    automation. Exposes contacts, events, products, product categories,
+
+    segments, campaigns, batches, email templates, email content, email
+
+    universal layouts, images, brands, and analytics reports. Authentication
+
+    uses an API key passed via the `X-API-KEY` header, or OAuth 2.0 with
+
+    scopes such as `contacts.read`, `contacts.write`, `campaigns.read`,
+
+    `campaigns.write`, `analytics.read`, etc.
+
+    '
+  version: v5
+  contact:
+    name: Omnisend
+    url: https://api-docs.omnisend.com/
+servers:
+- url: https://api.omnisend.com/v5
+  description: Omnisend REST API v5
+security:
+- ApiKeyAuth: []
+- OAuth2: []
+tags:
+- name: Campaigns
+paths:
+  /campaigns:
+    get:
+      tags:
+      - Campaigns
+      summary: List campaigns
+      responses:
+        '200':
+          description: List of campaigns
+    post:
+      tags:
+      - Campaigns
+      summary: Create a campaign
+      responses:
+        '201':
+          description: Campaign created
+  /campaigns/{id}:
+    get:
+      tags:
+      - Campaigns
+      summary: Get a campaign
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Campaign
+    patch:
+      tags:
+      - Campaigns
+      summary: Update a campaign
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Campaign updated
+    delete:
+      tags:
+      - Campaigns
+      summary: Delete a campaign
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Campaign deleted
+  /campaigns/{id}/send:
+    post:
+      tags:
+      - Campaigns
+      summary: Send a campaign
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Campaign send queued
+  /campaigns/{id}/cancel:
+    post:
+      tags:
+      - Campaigns
+      summary: Cancel a campaign send
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Campaign cancelled
+  /campaigns/{id}/copy:
+    post:
+      tags:
+      - Campaigns
+      summary: Copy a campaign
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Campaign copied
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://app.omnisend.com/oauth/authorize
+          tokenUrl: https://api.omnisend.com/v5/oauth/token
+          scopes:
+            contacts.read: Read contacts
+            contacts.write: Manage contacts
+            campaigns.read: Read campaigns
+            campaigns.write: Manage campaigns
+            analytics.read: Read analytics

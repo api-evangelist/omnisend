@@ -1,0 +1,126 @@
+openapi: 3.1.0
+info:
+  title: Omnisend REST Analytics EmailTemplates API
+  description: 'Omnisend''s REST API for managing ecommerce email and SMS marketing
+
+    automation. Exposes contacts, events, products, product categories,
+
+    segments, campaigns, batches, email templates, email content, email
+
+    universal layouts, images, brands, and analytics reports. Authentication
+
+    uses an API key passed via the `X-API-KEY` header, or OAuth 2.0 with
+
+    scopes such as `contacts.read`, `contacts.write`, `campaigns.read`,
+
+    `campaigns.write`, `analytics.read`, etc.
+
+    '
+  version: v5
+  contact:
+    name: Omnisend
+    url: https://api-docs.omnisend.com/
+servers:
+- url: https://api.omnisend.com/v5
+  description: Omnisend REST API v5
+security:
+- ApiKeyAuth: []
+- OAuth2: []
+tags:
+- name: EmailTemplates
+paths:
+  /email-templates:
+    get:
+      tags:
+      - EmailTemplates
+      summary: List email templates
+      responses:
+        '200':
+          description: Templates
+    post:
+      tags:
+      - EmailTemplates
+      summary: Create an email template
+      responses:
+        '201':
+          description: Template created
+  /email-templates/{id}:
+    get:
+      tags:
+      - EmailTemplates
+      summary: Get an email template
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Template
+    put:
+      tags:
+      - EmailTemplates
+      summary: Replace an email template
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Template replaced
+    delete:
+      tags:
+      - EmailTemplates
+      summary: Delete an email template
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Template deleted
+  /email-templates/{id}/render:
+    post:
+      tags:
+      - EmailTemplates
+      summary: Render an email template
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Rendered email
+  /email-templates-import:
+    post:
+      tags:
+      - EmailTemplates
+      summary: Import an email template from HTML
+      responses:
+        '201':
+          description: Template imported
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://app.omnisend.com/oauth/authorize
+          tokenUrl: https://api.omnisend.com/v5/oauth/token
+          scopes:
+            contacts.read: Read contacts
+            contacts.write: Manage contacts
+            campaigns.read: Read campaigns
+            campaigns.write: Manage campaigns
+            analytics.read: Read analytics

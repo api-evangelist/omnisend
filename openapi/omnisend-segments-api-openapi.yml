@@ -1,0 +1,118 @@
+openapi: 3.1.0
+info:
+  title: Omnisend REST Analytics Segments API
+  description: 'Omnisend''s REST API for managing ecommerce email and SMS marketing
+
+    automation. Exposes contacts, events, products, product categories,
+
+    segments, campaigns, batches, email templates, email content, email
+
+    universal layouts, images, brands, and analytics reports. Authentication
+
+    uses an API key passed via the `X-API-KEY` header, or OAuth 2.0 with
+
+    scopes such as `contacts.read`, `contacts.write`, `campaigns.read`,
+
+    `campaigns.write`, `analytics.read`, etc.
+
+    '
+  version: v5
+  contact:
+    name: Omnisend
+    url: https://api-docs.omnisend.com/
+servers:
+- url: https://api.omnisend.com/v5
+  description: Omnisend REST API v5
+security:
+- ApiKeyAuth: []
+- OAuth2: []
+tags:
+- name: Segments
+paths:
+  /segments:
+    get:
+      tags:
+      - Segments
+      summary: List segments
+      responses:
+        '200':
+          description: List of segments
+    post:
+      tags:
+      - Segments
+      summary: Create a segment
+      responses:
+        '201':
+          description: Segment created
+  /segments/{segmentId}:
+    get:
+      tags:
+      - Segments
+      summary: Get a segment
+      parameters:
+      - in: path
+        name: segmentId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Segment
+    put:
+      tags:
+      - Segments
+      summary: Update a segment
+      parameters:
+      - in: path
+        name: segmentId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Segment updated
+    delete:
+      tags:
+      - Segments
+      summary: Delete a segment
+      parameters:
+      - in: path
+        name: segmentId
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Segment deleted
+  /segments/{segmentId}/statistics:
+    get:
+      tags:
+      - Segments
+      summary: Get segment statistics
+      parameters:
+      - in: path
+        name: segmentId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Segment statistics
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://app.omnisend.com/oauth/authorize
+          tokenUrl: https://api.omnisend.com/v5/oauth/token
+          scopes:
+            contacts.read: Read contacts
+            contacts.write: Manage contacts
+            campaigns.read: Read campaigns
+            campaigns.write: Manage campaigns
+            analytics.read: Read analytics

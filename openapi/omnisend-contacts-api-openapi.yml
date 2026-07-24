@@ -1,0 +1,148 @@
+openapi: 3.1.0
+info:
+  title: Omnisend REST Analytics Contacts API
+  description: 'Omnisend''s REST API for managing ecommerce email and SMS marketing
+
+    automation. Exposes contacts, events, products, product categories,
+
+    segments, campaigns, batches, email templates, email content, email
+
+    universal layouts, images, brands, and analytics reports. Authentication
+
+    uses an API key passed via the `X-API-KEY` header, or OAuth 2.0 with
+
+    scopes such as `contacts.read`, `contacts.write`, `campaigns.read`,
+
+    `campaigns.write`, `analytics.read`, etc.
+
+    '
+  version: v5
+  contact:
+    name: Omnisend
+    url: https://api-docs.omnisend.com/
+servers:
+- url: https://api.omnisend.com/v5
+  description: Omnisend REST API v5
+security:
+- ApiKeyAuth: []
+- OAuth2: []
+tags:
+- name: Contacts
+paths:
+  /contacts:
+    get:
+      tags:
+      - Contacts
+      summary: List contacts
+      responses:
+        '200':
+          description: Paginated list of contacts
+    post:
+      tags:
+      - Contacts
+      summary: Create or update a contact
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contact'
+      responses:
+        '200':
+          description: Contact created or updated
+    patch:
+      tags:
+      - Contacts
+      summary: Update contact by email
+      responses:
+        '200':
+          description: Contact updated
+  /contacts/{id}:
+    get:
+      tags:
+      - Contacts
+      summary: Get a contact
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Contact
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+    patch:
+      tags:
+      - Contacts
+      summary: Update contact by id
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Contact updated
+  /contacts-tags:
+    post:
+      tags:
+      - Contacts
+      summary: Add tags to contacts
+      responses:
+        '200':
+          description: Tags added
+    delete:
+      tags:
+      - Contacts
+      summary: Remove tags from contacts
+      responses:
+        '200':
+          description: Tags removed
+components:
+  schemas:
+    Contact:
+      type: object
+      properties:
+        contactID:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        status:
+          type: string
+          enum:
+          - subscribed
+          - unsubscribed
+          - nonSubscribed
+        tags:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://app.omnisend.com/oauth/authorize
+          tokenUrl: https://api.omnisend.com/v5/oauth/token
+          scopes:
+            contacts.read: Read contacts
+            contacts.write: Manage contacts
+            campaigns.read: Read campaigns
+            campaigns.write: Manage campaigns
+            analytics.read: Read analytics

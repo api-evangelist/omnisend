@@ -1,0 +1,92 @@
+openapi: 3.1.0
+info:
+  title: Omnisend REST Analytics Batches API
+  description: 'Omnisend''s REST API for managing ecommerce email and SMS marketing
+
+    automation. Exposes contacts, events, products, product categories,
+
+    segments, campaigns, batches, email templates, email content, email
+
+    universal layouts, images, brands, and analytics reports. Authentication
+
+    uses an API key passed via the `X-API-KEY` header, or OAuth 2.0 with
+
+    scopes such as `contacts.read`, `contacts.write`, `campaigns.read`,
+
+    `campaigns.write`, `analytics.read`, etc.
+
+    '
+  version: v5
+  contact:
+    name: Omnisend
+    url: https://api-docs.omnisend.com/
+servers:
+- url: https://api.omnisend.com/v5
+  description: Omnisend REST API v5
+security:
+- ApiKeyAuth: []
+- OAuth2: []
+tags:
+- name: Batches
+paths:
+  /batches:
+    get:
+      tags:
+      - Batches
+      summary: List batches
+      responses:
+        '200':
+          description: List of batch operations
+    post:
+      tags:
+      - Batches
+      summary: Create a batch operation
+      responses:
+        '202':
+          description: Batch accepted
+  /batches/{batchId}:
+    get:
+      tags:
+      - Batches
+      summary: Get a batch
+      parameters:
+      - in: path
+        name: batchId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Batch details
+  /batches/{batchId}/items:
+    get:
+      tags:
+      - Batches
+      summary: List items in a batch
+      parameters:
+      - in: path
+        name: batchId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Batch items
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://app.omnisend.com/oauth/authorize
+          tokenUrl: https://api.omnisend.com/v5/oauth/token
+          scopes:
+            contacts.read: Read contacts
+            contacts.write: Manage contacts
+            campaigns.read: Read campaigns
+            campaigns.write: Manage campaigns
+            analytics.read: Read analytics
