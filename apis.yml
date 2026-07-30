@@ -11,7 +11,20 @@ description: >-
   Omnisend App Market.
 type: Index
 kind: contract
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/omnisend.png
 access: 3rd-Party
 position: Consuming
 tags:
@@ -30,49 +43,370 @@ created: '2026-05-11'
 modified: '2026-05-25'
 specificationVersion: '0.19'
 apis:
-  - aid: omnisend:rest-api
-    name: Omnisend REST API
-    description: >-
-      Omnisend's REST API for ecommerce email and SMS marketing automation. Manage contacts, events, products, product
-      categories, segments, campaigns, batches, email templates, email content, email universal layouts, images, brands,
-      and analytics reports. Authentication uses `X-API-KEY` header or OAuth 2.0 with resource-scoped permissions
-      (`contacts.read`, `contacts.write`, `events.write`, `products.read`, `products.write`, `campaigns.read`,
-      `campaigns.write`, `segments.read`, `segments.write`, `email-templates.read`, `email-templates.write`,
-      `images.read`, `images.write`, `brands.read`, `brands.write`, `analytics.read`). Cursor-based pagination across
-      list endpoints.
-    humanURL: https://api-docs.omnisend.com/reference/overview
-    baseURL: https://api.omnisend.com/v5
-    tags:
-      - Email Marketing
-      - Contacts
-      - Campaigns
-      - Ecommerce
-      - Events
-      - Segments
-      - Products
-      - Templates
-      - Analytics
-    properties:
-      - type: Documentation
-        url: https://api-docs.omnisend.com/
-      - type: APIReference
-        url: https://api-docs.omnisend.com/reference/overview
-      - type: Authentication
-        url: https://api-docs.omnisend.com/reference/authentication
-      - type: OAuth
-        url: https://api-docs.omnisend.com/reference/oauth
-      - type: Postman
-        url: https://www.postman.com/omnisend-api/workspace/omnisend/overview
-      - type: LlmsText
-        url: https://api-docs.omnisend.com/llms.txt
-      - type: OpenAPI
-        url: openapi/omnisend-openapi.yml
-      - type: JSONSchema
-        url: json-schema/omnisend-contact-schema.json
-      - type: JSONSchema
-        url: json-schema/omnisend-event-schema.json
-      - type: JSONLD
-        url: json-ld/omnisend-context.jsonld
+- aid: omnisend:omnisend-analytics-api
+  name: Omnisend Analytics API
+  description: The Analytics API from Omnisend — 2 operation(s) for analytics.
+  humanURL: https://api-docs.omnisend.com/reference/overview
+  baseURL: https://api.omnisend.com/v5
+  tags:
+  - Analytics
+  properties:
+  - type: OpenAPI
+    url: openapi/omnisend-analytics-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.omnisend.com/
+  - type: APIReference
+    url: https://api-docs.omnisend.com/reference/overview
+  - type: Authentication
+    url: https://api-docs.omnisend.com/reference/authentication
+  - type: OAuth
+    url: https://api-docs.omnisend.com/reference/oauth
+  - type: Postman
+    url: https://www.postman.com/omnisend-api/workspace/omnisend/overview
+  - type: LlmsText
+    url: https://api-docs.omnisend.com/llms.txt
+  - type: JSONSchema
+    url: json-schema/omnisend-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/omnisend-event-schema.json
+  - type: JSONLD
+    url: json-ld/omnisend-context.jsonld
+- aid: omnisend:omnisend-batches-api
+  name: Omnisend Batches API
+  description: The Batches API from Omnisend — 3 operation(s) for batches.
+  humanURL: https://api-docs.omnisend.com/reference/overview
+  baseURL: https://api.omnisend.com/v5
+  tags:
+  - Batches
+  properties:
+  - type: OpenAPI
+    url: openapi/omnisend-batches-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.omnisend.com/
+  - type: APIReference
+    url: https://api-docs.omnisend.com/reference/overview
+  - type: Authentication
+    url: https://api-docs.omnisend.com/reference/authentication
+  - type: OAuth
+    url: https://api-docs.omnisend.com/reference/oauth
+  - type: Postman
+    url: https://www.postman.com/omnisend-api/workspace/omnisend/overview
+  - type: LlmsText
+    url: https://api-docs.omnisend.com/llms.txt
+  - type: JSONSchema
+    url: json-schema/omnisend-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/omnisend-event-schema.json
+  - type: JSONLD
+    url: json-ld/omnisend-context.jsonld
+- aid: omnisend:omnisend-brands-api
+  name: Omnisend Brands API
+  description: The Brands API from Omnisend — 1 operation(s) for brands.
+  humanURL: https://api-docs.omnisend.com/reference/overview
+  baseURL: https://api.omnisend.com/v5
+  tags:
+  - Brands
+  properties:
+  - type: OpenAPI
+    url: openapi/omnisend-brands-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.omnisend.com/
+  - type: APIReference
+    url: https://api-docs.omnisend.com/reference/overview
+  - type: Authentication
+    url: https://api-docs.omnisend.com/reference/authentication
+  - type: OAuth
+    url: https://api-docs.omnisend.com/reference/oauth
+  - type: Postman
+    url: https://www.postman.com/omnisend-api/workspace/omnisend/overview
+  - type: LlmsText
+    url: https://api-docs.omnisend.com/llms.txt
+  - type: JSONSchema
+    url: json-schema/omnisend-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/omnisend-event-schema.json
+  - type: JSONLD
+    url: json-ld/omnisend-context.jsonld
+- aid: omnisend:omnisend-campaigns-api
+  name: Omnisend Campaigns API
+  description: The Campaigns API from Omnisend — 5 operation(s) for campaigns.
+  humanURL: https://api-docs.omnisend.com/reference/overview
+  baseURL: https://api.omnisend.com/v5
+  tags:
+  - Campaigns
+  properties:
+  - type: OpenAPI
+    url: openapi/omnisend-campaigns-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.omnisend.com/
+  - type: APIReference
+    url: https://api-docs.omnisend.com/reference/overview
+  - type: Authentication
+    url: https://api-docs.omnisend.com/reference/authentication
+  - type: OAuth
+    url: https://api-docs.omnisend.com/reference/oauth
+  - type: Postman
+    url: https://www.postman.com/omnisend-api/workspace/omnisend/overview
+  - type: LlmsText
+    url: https://api-docs.omnisend.com/llms.txt
+  - type: JSONSchema
+    url: json-schema/omnisend-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/omnisend-event-schema.json
+  - type: JSONLD
+    url: json-ld/omnisend-context.jsonld
+- aid: omnisend:omnisend-contacts-api
+  name: Omnisend Contacts API
+  description: The Contacts API from Omnisend — 3 operation(s) for contacts.
+  humanURL: https://api-docs.omnisend.com/reference/overview
+  baseURL: https://api.omnisend.com/v5
+  tags:
+  - Contacts
+  properties:
+  - type: OpenAPI
+    url: openapi/omnisend-contacts-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.omnisend.com/
+  - type: APIReference
+    url: https://api-docs.omnisend.com/reference/overview
+  - type: Authentication
+    url: https://api-docs.omnisend.com/reference/authentication
+  - type: OAuth
+    url: https://api-docs.omnisend.com/reference/oauth
+  - type: Postman
+    url: https://www.postman.com/omnisend-api/workspace/omnisend/overview
+  - type: LlmsText
+    url: https://api-docs.omnisend.com/llms.txt
+  - type: JSONSchema
+    url: json-schema/omnisend-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/omnisend-event-schema.json
+  - type: JSONLD
+    url: json-ld/omnisend-context.jsonld
+- aid: omnisend:omnisend-emailcontent-api
+  name: Omnisend EmailContent API
+  description: The EmailContent API from Omnisend — 2 operation(s) for emailcontent.
+  humanURL: https://api-docs.omnisend.com/reference/overview
+  baseURL: https://api.omnisend.com/v5
+  tags:
+  - EmailContent
+  properties:
+  - type: OpenAPI
+    url: openapi/omnisend-emailcontent-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.omnisend.com/
+  - type: APIReference
+    url: https://api-docs.omnisend.com/reference/overview
+  - type: Authentication
+    url: https://api-docs.omnisend.com/reference/authentication
+  - type: OAuth
+    url: https://api-docs.omnisend.com/reference/oauth
+  - type: Postman
+    url: https://www.postman.com/omnisend-api/workspace/omnisend/overview
+  - type: LlmsText
+    url: https://api-docs.omnisend.com/llms.txt
+  - type: JSONSchema
+    url: json-schema/omnisend-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/omnisend-event-schema.json
+  - type: JSONLD
+    url: json-ld/omnisend-context.jsonld
+- aid: omnisend:omnisend-emailtemplates-api
+  name: Omnisend EmailTemplates API
+  description: The EmailTemplates API from Omnisend — 4 operation(s) for emailtemplates.
+  humanURL: https://api-docs.omnisend.com/reference/overview
+  baseURL: https://api.omnisend.com/v5
+  tags:
+  - EmailTemplates
+  properties:
+  - type: OpenAPI
+    url: openapi/omnisend-emailtemplates-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.omnisend.com/
+  - type: APIReference
+    url: https://api-docs.omnisend.com/reference/overview
+  - type: Authentication
+    url: https://api-docs.omnisend.com/reference/authentication
+  - type: OAuth
+    url: https://api-docs.omnisend.com/reference/oauth
+  - type: Postman
+    url: https://www.postman.com/omnisend-api/workspace/omnisend/overview
+  - type: LlmsText
+    url: https://api-docs.omnisend.com/llms.txt
+  - type: JSONSchema
+    url: json-schema/omnisend-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/omnisend-event-schema.json
+  - type: JSONLD
+    url: json-ld/omnisend-context.jsonld
+- aid: omnisend:omnisend-emailuniversallayouts-api
+  name: Omnisend EmailUniversalLayouts API
+  description: The EmailUniversalLayouts API from Omnisend — 2 operation(s) for emailuniversallayouts.
+  humanURL: https://api-docs.omnisend.com/reference/overview
+  baseURL: https://api.omnisend.com/v5
+  tags:
+  - EmailUniversalLayouts
+  properties:
+  - type: OpenAPI
+    url: openapi/omnisend-emailuniversallayouts-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.omnisend.com/
+  - type: APIReference
+    url: https://api-docs.omnisend.com/reference/overview
+  - type: Authentication
+    url: https://api-docs.omnisend.com/reference/authentication
+  - type: OAuth
+    url: https://api-docs.omnisend.com/reference/oauth
+  - type: Postman
+    url: https://www.postman.com/omnisend-api/workspace/omnisend/overview
+  - type: LlmsText
+    url: https://api-docs.omnisend.com/llms.txt
+  - type: JSONSchema
+    url: json-schema/omnisend-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/omnisend-event-schema.json
+  - type: JSONLD
+    url: json-ld/omnisend-context.jsonld
+- aid: omnisend:omnisend-events-api
+  name: Omnisend Events API
+  description: The Events API from Omnisend — 1 operation(s) for events.
+  humanURL: https://api-docs.omnisend.com/reference/overview
+  baseURL: https://api.omnisend.com/v5
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/omnisend-events-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.omnisend.com/
+  - type: APIReference
+    url: https://api-docs.omnisend.com/reference/overview
+  - type: Authentication
+    url: https://api-docs.omnisend.com/reference/authentication
+  - type: OAuth
+    url: https://api-docs.omnisend.com/reference/oauth
+  - type: Postman
+    url: https://www.postman.com/omnisend-api/workspace/omnisend/overview
+  - type: LlmsText
+    url: https://api-docs.omnisend.com/llms.txt
+  - type: JSONSchema
+    url: json-schema/omnisend-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/omnisend-event-schema.json
+  - type: JSONLD
+    url: json-ld/omnisend-context.jsonld
+- aid: omnisend:omnisend-images-api
+  name: Omnisend Images API
+  description: The Images API from Omnisend — 3 operation(s) for images.
+  humanURL: https://api-docs.omnisend.com/reference/overview
+  baseURL: https://api.omnisend.com/v5
+  tags:
+  - Images
+  properties:
+  - type: OpenAPI
+    url: openapi/omnisend-images-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.omnisend.com/
+  - type: APIReference
+    url: https://api-docs.omnisend.com/reference/overview
+  - type: Authentication
+    url: https://api-docs.omnisend.com/reference/authentication
+  - type: OAuth
+    url: https://api-docs.omnisend.com/reference/oauth
+  - type: Postman
+    url: https://www.postman.com/omnisend-api/workspace/omnisend/overview
+  - type: LlmsText
+    url: https://api-docs.omnisend.com/llms.txt
+  - type: JSONSchema
+    url: json-schema/omnisend-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/omnisend-event-schema.json
+  - type: JSONLD
+    url: json-ld/omnisend-context.jsonld
+- aid: omnisend:omnisend-productcategories-api
+  name: Omnisend ProductCategories API
+  description: The ProductCategories API from Omnisend — 2 operation(s) for productcategories.
+  humanURL: https://api-docs.omnisend.com/reference/overview
+  baseURL: https://api.omnisend.com/v5
+  tags:
+  - ProductCategories
+  properties:
+  - type: OpenAPI
+    url: openapi/omnisend-productcategories-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.omnisend.com/
+  - type: APIReference
+    url: https://api-docs.omnisend.com/reference/overview
+  - type: Authentication
+    url: https://api-docs.omnisend.com/reference/authentication
+  - type: OAuth
+    url: https://api-docs.omnisend.com/reference/oauth
+  - type: Postman
+    url: https://www.postman.com/omnisend-api/workspace/omnisend/overview
+  - type: LlmsText
+    url: https://api-docs.omnisend.com/llms.txt
+  - type: JSONSchema
+    url: json-schema/omnisend-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/omnisend-event-schema.json
+  - type: JSONLD
+    url: json-ld/omnisend-context.jsonld
+- aid: omnisend:omnisend-products-api
+  name: Omnisend Products API
+  description: The Products API from Omnisend — 2 operation(s) for products.
+  humanURL: https://api-docs.omnisend.com/reference/overview
+  baseURL: https://api.omnisend.com/v5
+  tags:
+  - Products
+  properties:
+  - type: OpenAPI
+    url: openapi/omnisend-products-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.omnisend.com/
+  - type: APIReference
+    url: https://api-docs.omnisend.com/reference/overview
+  - type: Authentication
+    url: https://api-docs.omnisend.com/reference/authentication
+  - type: OAuth
+    url: https://api-docs.omnisend.com/reference/oauth
+  - type: Postman
+    url: https://www.postman.com/omnisend-api/workspace/omnisend/overview
+  - type: LlmsText
+    url: https://api-docs.omnisend.com/llms.txt
+  - type: JSONSchema
+    url: json-schema/omnisend-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/omnisend-event-schema.json
+  - type: JSONLD
+    url: json-ld/omnisend-context.jsonld
+- aid: omnisend:omnisend-segments-api
+  name: Omnisend Segments API
+  description: The Segments API from Omnisend — 3 operation(s) for segments.
+  humanURL: https://api-docs.omnisend.com/reference/overview
+  baseURL: https://api.omnisend.com/v5
+  tags:
+  - Segments
+  properties:
+  - type: OpenAPI
+    url: openapi/omnisend-segments-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.omnisend.com/
+  - type: APIReference
+    url: https://api-docs.omnisend.com/reference/overview
+  - type: Authentication
+    url: https://api-docs.omnisend.com/reference/authentication
+  - type: OAuth
+    url: https://api-docs.omnisend.com/reference/oauth
+  - type: Postman
+    url: https://www.postman.com/omnisend-api/workspace/omnisend/overview
+  - type: LlmsText
+    url: https://api-docs.omnisend.com/llms.txt
+  - type: JSONSchema
+    url: json-schema/omnisend-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/omnisend-event-schema.json
+  - type: JSONLD
+    url: json-ld/omnisend-context.jsonld
 common:
   - type: AgenticAccess
     url: agentic-access/omnisend-agentic-access.yml
