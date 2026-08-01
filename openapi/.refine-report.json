@@ -1,0 +1,38 @@
+{
+  "provider": "omnisend",
+  "sources": [
+    "omnisend-analytics-api-openapi.yml",
+    "omnisend-batches-api-openapi.yml",
+    "omnisend-brands-api-openapi.yml",
+    "omnisend-campaigns-api-openapi.yml",
+    "omnisend-contacts-api-openapi.yml",
+    "omnisend-emailcontent-api-openapi.yml",
+    "omnisend-emailtemplates-api-openapi.yml",
+    "omnisend-emailuniversallayouts-api-openapi.yml",
+    "omnisend-events-api-openapi.yml",
+    "omnisend-images-api-openapi.yml",
+    "omnisend-productcategories-api-openapi.yml",
+    "omnisend-products-api-openapi.yml",
+    "omnisend-segments-api-openapi.yml"
+  ],
+  "outputs": [
+    "omnisend-analytics-api-openapi.yml",
+    "omnisend-batches-api-openapi.yml",
+    "omnisend-brands-api-openapi.yml",
+    "omnisend-campaigns-api-openapi.yml",
+    "omnisend-contacts-api-openapi.yml",
+    "omnisend-emailcontent-api-openapi.yml",
+    "omnisend-emailtemplates-api-openapi.yml",
+    "omnisend-emailuniversallayouts-api-openapi.yml",
+    "omnisend-events-api-openapi.yml",
+    "omnisend-images-api-openapi.yml",
+    "omnisend-productcategories-api-openapi.yml",
+    "omnisend-products-api-openapi.yml",
+    "omnisend-segments-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
