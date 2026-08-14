@@ -1,14 +1,16 @@
 aid: omnisend
 name: Omnisend
-description: >-
-  Omnisend is a Lithuanian-headquartered email and SMS marketing automation platform purpose-built for ecommerce, with
-  first-class integrations into Shopify, BigCommerce, WooCommerce, Magento, Wix, Square Online, and other storefronts.
-  The platform unifies automation workflows, campaign builders, segmentation, popups and forms, web push, product
-  recommendations, A/B testing, and reporting to drive customer engagement and revenue. Omnisend's REST API exposes
-  contacts, events, products, product categories, segments, campaigns, batches, email templates, email content,
-  universal layouts, images, brands, and analytics reports. Authentication uses an API key passed via the `X-API-KEY`
-  header, or OAuth 2.0 authorization-code flow with resource-scoped permissions for app-based integrations on the
-  Omnisend App Market.
+description: Omnisend is a Lithuanian-headquartered email and SMS marketing automation platform purpose-built for
+  ecommerce, with first-class integrations into Shopify, BigCommerce, WooCommerce, Magento, Wix, Square Online,
+  and other storefronts. The platform unifies automation workflows, campaign builders, segmentation, popups and
+  forms, web push, product recommendations, A/B testing, and reporting to drive customer engagement and revenue.
+  The REST API at version 2026-03-15 is served from https://api.omnisend.com/api and covers contacts, events and
+  custom event metadata, products, product categories, segments, campaigns, automations, batches, email templates,
+  email content, universal layouts, images, brands and analytics — 82 published operations across 15 OpenAPI 3.0.0
+  documents. Authentication is an API key on the Authorization header (Omnisend-API-Key {key}) or OAuth 2.0 authorization
+  code with PKCE and 26 resource scopes; every request must also carry an Omnisend-Version header, and a retired
+  version returns 410. Omnisend additionally operates two first-party hosted MCP servers at mcp.omnisend.com and
+  is listed in Claude's Connector Directory.
 type: Index
 kind: contract
 accessModel:
@@ -28,26 +30,32 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/omnisend.p
 access: 3rd-Party
 position: Consuming
 tags:
-  - Email Marketing
-  - Marketing Automation
-  - Ecommerce
-  - SMS Marketing
-  - Customer Engagement
-  - Segmentation
-  - Campaigns
-  - Forms
-  - Popups
-  - Web Push
+- Email Marketing
+- Marketing Automation
+- Ecommerce
+- SMS Marketing
+- Customer Engagement
+- Segmentation
+- Campaigns
+- Forms
+- Popups
+- Web Push
+- Automation Workflows
+- Analytics
+- MCP
+- Agent Ready
+- Transactional Messaging
 url: https://raw.githubusercontent.com/api-evangelist/omnisend/refs/heads/main/apis.yml
 created: '2026-05-11'
-modified: '2026-05-25'
+modified: '2026-08-13'
 specificationVersion: '0.19'
 apis:
 - aid: omnisend:omnisend-analytics-api
   name: Omnisend Analytics API
-  description: The Analytics API from Omnisend — 2 operation(s) for analytics.
+  description: The Analytics API from Omnisend — 2 operation(s) for analytics. Version 2026-03-15, harvested from
+    Omnisend's published contract.
   humanURL: https://api-docs.omnisend.com/reference/overview
-  baseURL: https://api.omnisend.com/v5
+  baseURL: https://api.omnisend.com/api
   tags:
   - Analytics
   properties:
@@ -73,9 +81,10 @@ apis:
     url: json-ld/omnisend-context.jsonld
 - aid: omnisend:omnisend-batches-api
   name: Omnisend Batches API
-  description: The Batches API from Omnisend — 3 operation(s) for batches.
+  description: The Batches API from Omnisend — 4 operation(s) for batches. Version 2026-03-15, harvested from Omnisend's
+    published contract.
   humanURL: https://api-docs.omnisend.com/reference/overview
-  baseURL: https://api.omnisend.com/v5
+  baseURL: https://api.omnisend.com/api
   tags:
   - Batches
   properties:
@@ -101,9 +110,10 @@ apis:
     url: json-ld/omnisend-context.jsonld
 - aid: omnisend:omnisend-brands-api
   name: Omnisend Brands API
-  description: The Brands API from Omnisend — 1 operation(s) for brands.
+  description: The Brands API from Omnisend — 2 operation(s) for brands. Version 2026-03-15, harvested from Omnisend's
+    published contract.
   humanURL: https://api-docs.omnisend.com/reference/overview
-  baseURL: https://api.omnisend.com/v5
+  baseURL: https://api.omnisend.com/api
   tags:
   - Brands
   properties:
@@ -129,9 +139,10 @@ apis:
     url: json-ld/omnisend-context.jsonld
 - aid: omnisend:omnisend-campaigns-api
   name: Omnisend Campaigns API
-  description: The Campaigns API from Omnisend — 5 operation(s) for campaigns.
+  description: The Campaigns API from Omnisend — 14 operation(s) for campaigns. Version 2026-03-15, harvested from
+    Omnisend's published contract.
   humanURL: https://api-docs.omnisend.com/reference/overview
-  baseURL: https://api.omnisend.com/v5
+  baseURL: https://api.omnisend.com/api
   tags:
   - Campaigns
   properties:
@@ -157,9 +168,10 @@ apis:
     url: json-ld/omnisend-context.jsonld
 - aid: omnisend:omnisend-contacts-api
   name: Omnisend Contacts API
-  description: The Contacts API from Omnisend — 3 operation(s) for contacts.
+  description: The Contacts API from Omnisend — 7 operation(s) for contacts. Version 2026-03-15, harvested from
+    Omnisend's published contract.
   humanURL: https://api-docs.omnisend.com/reference/overview
-  baseURL: https://api.omnisend.com/v5
+  baseURL: https://api.omnisend.com/api
   tags:
   - Contacts
   properties:
@@ -185,9 +197,10 @@ apis:
     url: json-ld/omnisend-context.jsonld
 - aid: omnisend:omnisend-emailcontent-api
   name: Omnisend EmailContent API
-  description: The EmailContent API from Omnisend — 2 operation(s) for emailcontent.
+  description: The EmailContent API from Omnisend — 3 operation(s) for emailcontent. Version 2026-03-15, harvested
+    from Omnisend's published contract.
   humanURL: https://api-docs.omnisend.com/reference/overview
-  baseURL: https://api.omnisend.com/v5
+  baseURL: https://api.omnisend.com/api
   tags:
   - EmailContent
   properties:
@@ -213,9 +226,10 @@ apis:
     url: json-ld/omnisend-context.jsonld
 - aid: omnisend:omnisend-emailtemplates-api
   name: Omnisend EmailTemplates API
-  description: The EmailTemplates API from Omnisend — 4 operation(s) for emailtemplates.
+  description: The EmailTemplates API from Omnisend — 7 operation(s) for emailtemplates. Version 2026-03-15, harvested
+    from Omnisend's published contract.
   humanURL: https://api-docs.omnisend.com/reference/overview
-  baseURL: https://api.omnisend.com/v5
+  baseURL: https://api.omnisend.com/api
   tags:
   - EmailTemplates
   properties:
@@ -241,9 +255,10 @@ apis:
     url: json-ld/omnisend-context.jsonld
 - aid: omnisend:omnisend-emailuniversallayouts-api
   name: Omnisend EmailUniversalLayouts API
-  description: The EmailUniversalLayouts API from Omnisend — 2 operation(s) for emailuniversallayouts.
+  description: The EmailUniversalLayouts API from Omnisend — 5 operation(s) for emailuniversallayouts. Version 2026-03-15,
+    harvested from Omnisend's published contract.
   humanURL: https://api-docs.omnisend.com/reference/overview
-  baseURL: https://api.omnisend.com/v5
+  baseURL: https://api.omnisend.com/api
   tags:
   - EmailUniversalLayouts
   properties:
@@ -269,9 +284,10 @@ apis:
     url: json-ld/omnisend-context.jsonld
 - aid: omnisend:omnisend-events-api
   name: Omnisend Events API
-  description: The Events API from Omnisend — 1 operation(s) for events.
+  description: The Events API from Omnisend — 1 operation(s) for events. Version 2026-03-15, harvested from Omnisend's
+    published contract.
   humanURL: https://api-docs.omnisend.com/reference/overview
-  baseURL: https://api.omnisend.com/v5
+  baseURL: https://api.omnisend.com/api
   tags:
   - Events
   properties:
@@ -297,9 +313,10 @@ apis:
     url: json-ld/omnisend-context.jsonld
 - aid: omnisend:omnisend-images-api
   name: Omnisend Images API
-  description: The Images API from Omnisend — 3 operation(s) for images.
+  description: The Images API from Omnisend — 5 operation(s) for images. Version 2026-03-15, harvested from Omnisend's
+    published contract.
   humanURL: https://api-docs.omnisend.com/reference/overview
-  baseURL: https://api.omnisend.com/v5
+  baseURL: https://api.omnisend.com/api
   tags:
   - Images
   properties:
@@ -325,9 +342,10 @@ apis:
     url: json-ld/omnisend-context.jsonld
 - aid: omnisend:omnisend-productcategories-api
   name: Omnisend ProductCategories API
-  description: The ProductCategories API from Omnisend — 2 operation(s) for productcategories.
+  description: The ProductCategories API from Omnisend — 5 operation(s) for productcategories. Version 2026-03-15,
+    harvested from Omnisend's published contract.
   humanURL: https://api-docs.omnisend.com/reference/overview
-  baseURL: https://api.omnisend.com/v5
+  baseURL: https://api.omnisend.com/api
   tags:
   - ProductCategories
   properties:
@@ -353,9 +371,10 @@ apis:
     url: json-ld/omnisend-context.jsonld
 - aid: omnisend:omnisend-products-api
   name: Omnisend Products API
-  description: The Products API from Omnisend — 2 operation(s) for products.
+  description: The Products API from Omnisend — 5 operation(s) for products. Version 2026-03-15, harvested from
+    Omnisend's published contract.
   humanURL: https://api-docs.omnisend.com/reference/overview
-  baseURL: https://api.omnisend.com/v5
+  baseURL: https://api.omnisend.com/api
   tags:
   - Products
   properties:
@@ -381,9 +400,10 @@ apis:
     url: json-ld/omnisend-context.jsonld
 - aid: omnisend:omnisend-segments-api
   name: Omnisend Segments API
-  description: The Segments API from Omnisend — 3 operation(s) for segments.
+  description: The Segments API from Omnisend — 6 operation(s) for segments. Version 2026-03-15, harvested from
+    Omnisend's published contract.
   humanURL: https://api-docs.omnisend.com/reference/overview
-  baseURL: https://api.omnisend.com/v5
+  baseURL: https://api.omnisend.com/api
   tags:
   - Segments
   properties:
@@ -407,157 +427,307 @@ apis:
     url: json-schema/omnisend-event-schema.json
   - type: JSONLD
     url: json-ld/omnisend-context.jsonld
-common:
-  - type: AgenticAccess
-    url: agentic-access/omnisend-agentic-access.yml
-  - type: VulnerabilityDisclosure
-    url: security/omnisend-vulnerability-disclosure.yml
-  - type: DomainSecurity
-    url: security/omnisend-domain-security.yml
-  - type: Authentication
-    url: authentication/omnisend-authentication.yml
-  - type: OAuthScopes
-    url: scopes/omnisend-scopes.yml
-  - type: PostmanWorkspace
-    url: https://www.postman.com/kinlaneapi/omnisend/overview
-  - type: Arazzo
-    url: arazzo/omnisend-copy-and-send-campaign-workflow.yml
-    name: Omnisend Copy and Send Campaign
-  - type: Arazzo
-    url: arazzo/omnisend-create-and-send-campaign-workflow.yml
-    name: Omnisend Create and Send Campaign
-  - type: Arazzo
-    url: arazzo/omnisend-create-and-verify-category-workflow.yml
-    name: Omnisend Create and Verify Product Category
-  - type: Arazzo
-    url: arazzo/omnisend-create-and-verify-contact-workflow.yml
-    name: Omnisend Create and Verify Contact
-  - type: Arazzo
-    url: arazzo/omnisend-create-and-verify-product-workflow.yml
-    name: Omnisend Create and Verify Product
-  - type: Arazzo
-    url: arazzo/omnisend-create-segment-and-stats-workflow.yml
-    name: Omnisend Create Segment and Read Statistics
-  - type: Arazzo
-    url: arazzo/omnisend-replace-product-workflow.yml
-    name: Omnisend Refresh Product Catalog Entry
-  - type: Arazzo
-    url: arazzo/omnisend-subscribe-and-welcome-workflow.yml
-    name: Omnisend Subscribe and Trigger Welcome
-  - type: Arazzo
-    url: arazzo/omnisend-tag-contact-workflow.yml
-    name: Omnisend Create and Tag Contact
-  - type: Arazzo
-    url: arazzo/omnisend-track-cart-event-workflow.yml
-    name: Omnisend Track Added-to-Cart Event
-  - type: Arazzo
-    url: arazzo/omnisend-track-order-event-workflow.yml
-    name: Omnisend Track Placed Order Event
-  - type: Arazzo
-    url: arazzo/omnisend-update-category-workflow.yml
-    name: Omnisend Update Product Category
-  - type: Arazzo
-    url: arazzo/omnisend-upsert-contact-workflow.yml
-    name: Omnisend Upsert a Contact
-  - type: Website
-    url: https://www.omnisend.com
-  - type: Portal
-    url: https://www.omnisend.com
+- aid: omnisend:omnisend-automations-api
+  name: Omnisend Automations API
+  description: The Automations API from Omnisend — 13 operation(s) for creating, enabling, copying and restructuring
+    event-triggered automation workflows, including the sendWebhook action block that is Omnisend's only outbound
+    webhook mechanism.
+  humanURL: https://api-docs.omnisend.com/reference/overview
+  baseURL: https://api.omnisend.com/api
+  tags:
+  - Automations
+  - Workflows
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/omnisend-automations-api-openapi.yml
   - type: Documentation
-    url: https://api-docs.omnisend.com
+    url: https://api-docs.omnisend.com/
   - type: APIReference
     url: https://api-docs.omnisend.com/reference/overview
-  - type: GettingStarted
-    url: https://api-docs.omnisend.com/docs/getting-started
   - type: Authentication
     url: https://api-docs.omnisend.com/reference/authentication
   - type: OAuth
     url: https://api-docs.omnisend.com/reference/oauth
-  - type: ChangeLog
-    url: https://api-docs.omnisend.com/changelog
+  - type: Postman
+    url: https://www.postman.com/omnisend-api/workspace/omnisend/overview
   - type: LlmsText
     url: https://api-docs.omnisend.com/llms.txt
-  - type: Pricing
-    url: https://www.omnisend.com/pricing
-  - type: Plans
-    url: plans/omnisend-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/omnisend-rate-limits.yml
-  - type: FinOps
-    url: finops/omnisend-finops.yml
-  - type: Signup
-    url: https://app.omnisend.com/signup
-  - type: Login
-    url: https://app.omnisend.com/login
-  - type: Support
-    url: https://support.omnisend.com
-  - type: HelpCenter
-    url: https://support.omnisend.com/en/articles/1061798-omnisend-api-documentation
-  - type: ContactSupport
-    url: https://www.omnisend.com/contact-us/support
-  - type: StatusPage
-    url: https://status.omnisend.com
-  - type: Blog
-    url: https://www.omnisend.com/blog
-  - type: GitHubOrganization
-    url: https://github.com/omnisend
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/omnisend
-  - type: PrivacyPolicy
-    url: https://www.omnisend.com/privacy
-  - type: TermsOfService
-    url: https://www.omnisend.com/terms
-  - type: SDKs
-    name: PHP SDK
-    url: https://github.com/omnisend/php-sdk
-  - type: Plugin
-    name: WordPress Plugin
-    url: https://github.com/omnisend/wp-omnisend
-  - type: Plugin
-    name: Magento 2 Plugin
-    url: https://github.com/omnisend/magento2-plugin
-  - type: Plugin
-    name: WooCommerce Integration
-    url: https://www.omnisend.com/integrations/woocommerce
-  - type: Plugin
-    name: Shopify Integration
-    url: https://www.omnisend.com/integrations/shopify
-  - type: Plugin
-    name: BigCommerce Integration
-    url: https://www.omnisend.com/integrations/bigcommerce
-  - type: Integrations
-    url: https://www.omnisend.com/integrations
-  - type: AppMarket
-    url: https://www.omnisend.com/app-market
-  - type: Features
-    data:
-      - >-
-        Email marketing automation with prebuilt ecommerce workflows (welcome, cart abandonment, browse abandonment,
-        order confirmation, post-purchase, win-back)
-      - SMS marketing with global coverage and TCPA / GDPR compliant opt-in management
-      - Web push notifications across desktop and mobile browsers
-      - Drag-and-drop campaign builder with dynamic content blocks, product recommender, and conditional logic
-      - Audience segmentation with behavioral, lifecycle, predictive, and custom-event criteria
-      - Forms, popups, and signup boxes with Wheel-of-Fortune gamified opt-ins
-      - A/B testing on subject lines, content, and send time
-      - Advanced analytics and reporting with revenue attribution per campaign and workflow
-      - Native integrations with Shopify, BigCommerce, WooCommerce, Wix, Square Online, Magento, and PrestaShop
-      - REST API with X-API-KEY and OAuth 2.0 authentication, resource-scoped permissions, and cursor-based pagination
-      - Batch API for bulk contact, product, and event imports (up to 100 actions per batch)
-      - Email Templates, Email Content, and Email Universal Layouts APIs for programmatic template management
-      - Customer events tracking (predefined and custom) for automation triggers
-      - Brands API for managing brand identity across templates
-      - Analytics Reports and Statistics APIs for aggregated marketing performance data
-      - Postman public workspace and llms.txt feed for AI-agent friendly discovery
-      - 24/7 live support across all paid plans
-      - Free plan for up to 250 contacts and 500 emails/month
-    sources:
-      - https://www.omnisend.com
-      - https://api-docs.omnisend.com/reference/overview
-      - https://www.omnisend.com/pricing
-      - https://api-docs.omnisend.com/llms.txt
-    updated: '2026-05-25'
+  - type: JSONSchema
+    url: json-schema/omnisend-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/omnisend-event-schema.json
+  - type: JSONLD
+    url: json-ld/omnisend-context.jsonld
+- aid: omnisend:omnisend-event-metadata-api
+  name: Omnisend Event Metadata API
+  description: The Event Metadata API from Omnisend — 3 operation(s) for declaring, merging and querying brand-custom
+    event schemas. The only Omnisend operations that carry an operationId.
+  humanURL: https://api-docs.omnisend.com/reference/overview
+  baseURL: https://api.omnisend.com/api
+  tags:
+  - EventMetadata
+  - Events
+  - Schemas
+  properties:
+  - type: OpenAPI
+    url: openapi/omnisend-event-metadata-api-openapi.yml
+  - type: Documentation
+    url: https://api-docs.omnisend.com/
+  - type: APIReference
+    url: https://api-docs.omnisend.com/reference/overview
+  - type: Authentication
+    url: https://api-docs.omnisend.com/reference/authentication
+  - type: OAuth
+    url: https://api-docs.omnisend.com/reference/oauth
+  - type: Postman
+    url: https://www.postman.com/omnisend-api/workspace/omnisend/overview
+  - type: LlmsText
+    url: https://api-docs.omnisend.com/llms.txt
+  - type: JSONSchema
+    url: json-schema/omnisend-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/omnisend-event-schema.json
+  - type: JSONLD
+    url: json-ld/omnisend-context.jsonld
+common:
+- type: AgenticAccess
+  url: agentic-access/omnisend-agentic-access.yml
+- type: VulnerabilityDisclosure
+  url: security/omnisend-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/omnisend-domain-security.yml
+- type: Authentication
+  url: authentication/omnisend-authentication.yml
+- type: OAuthScopes
+  url: scopes/omnisend-scopes.yml
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/omnisend/overview
+- type: Arazzo
+  url: arazzo/omnisend-copy-and-send-campaign-workflow.yml
+  name: Omnisend Copy and Send Campaign
+- type: Arazzo
+  url: arazzo/omnisend-create-and-send-campaign-workflow.yml
+  name: Omnisend Create and Send Campaign
+- type: Arazzo
+  url: arazzo/omnisend-create-and-verify-category-workflow.yml
+  name: Omnisend Create and Verify Product Category
+- type: Arazzo
+  url: arazzo/omnisend-create-and-verify-contact-workflow.yml
+  name: Omnisend Create and Verify Contact
+- type: Arazzo
+  url: arazzo/omnisend-create-and-verify-product-workflow.yml
+  name: Omnisend Create and Verify Product
+- type: Arazzo
+  url: arazzo/omnisend-create-segment-and-stats-workflow.yml
+  name: Omnisend Create Segment and Read Statistics
+- type: Arazzo
+  url: arazzo/omnisend-replace-product-workflow.yml
+  name: Omnisend Refresh Product Catalog Entry
+- type: Arazzo
+  url: arazzo/omnisend-subscribe-and-welcome-workflow.yml
+  name: Omnisend Subscribe and Trigger Welcome
+- type: Arazzo
+  url: arazzo/omnisend-tag-contact-workflow.yml
+  name: Omnisend Create and Tag Contact
+- type: Arazzo
+  url: arazzo/omnisend-track-cart-event-workflow.yml
+  name: Omnisend Track Added-to-Cart Event
+- type: Arazzo
+  url: arazzo/omnisend-track-order-event-workflow.yml
+  name: Omnisend Track Placed Order Event
+- type: Arazzo
+  url: arazzo/omnisend-update-category-workflow.yml
+  name: Omnisend Update Product Category
+- type: Arazzo
+  url: arazzo/omnisend-upsert-contact-workflow.yml
+  name: Omnisend Upsert a Contact
+- type: Website
+  url: https://www.omnisend.com
+- type: Portal
+  url: https://www.omnisend.com
+- type: Documentation
+  url: https://api-docs.omnisend.com
+- type: APIReference
+  url: https://api-docs.omnisend.com/reference/overview
+- type: GettingStarted
+  url: https://api-docs.omnisend.com/docs/getting-started
+- type: Authentication
+  url: https://api-docs.omnisend.com/reference/authentication
+- type: OAuth
+  url: https://api-docs.omnisend.com/reference/oauth
+- type: ChangeLog
+  url: https://www.omnisend.com/changelog/
+- type: LLMsTxt
+  url: https://api-docs.omnisend.com/llms.txt
+- type: Pricing
+  url: https://www.omnisend.com/pricing
+- type: Plans
+  url: plans/omnisend-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/omnisend-rate-limits.yml
+- type: FinOps
+  url: finops/omnisend-finops.yml
+- type: SignUp
+  url: https://app.omnisend.com/signup
+- type: Login
+  url: https://app.omnisend.com/login
+- type: Support
+  url: https://support.omnisend.com
+- type: HelpCenter
+  url: https://support.omnisend.com/en/articles/1061798-omnisend-api-documentation
+- type: ContactSupport
+  url: https://www.omnisend.com/contact-us/support
+- type: StatusPage
+  url: https://status.omnisend.com
+- type: Blog
+  url: https://www.omnisend.com/blog
+- type: GitHubOrganization
+  url: https://github.com/omnisend
+- type: LinkedIn
+  url: https://www.linkedin.com/company/omnisend
+- type: PrivacyPolicy
+  url: https://www.omnisend.com/privacy
+- type: TermsOfService
+  url: https://www.omnisend.com/terms
+- type: SDKs
+  name: PHP SDK
+  url: https://github.com/omnisend/php-sdk
+- type: Plugin
+  name: WordPress Plugin
+  url: https://github.com/omnisend/wp-omnisend
+- type: Plugin
+  name: Magento 2 Plugin
+  url: https://github.com/omnisend/magento2-plugin
+- type: Plugin
+  name: WooCommerce Integration
+  url: https://www.omnisend.com/integrations/woocommerce
+- type: Plugin
+  name: Shopify Integration
+  url: https://www.omnisend.com/integrations/shopify
+- type: Plugin
+  name: BigCommerce Integration
+  url: https://www.omnisend.com/integrations/bigcommerce
+- type: Integrations
+  url: https://www.omnisend.com/integrations
+- type: AppMarket
+  url: https://www.omnisend.com/app-market
+- type: Features
+  data:
+  - Email marketing automation with prebuilt ecommerce workflows (welcome, cart abandonment, browse abandonment,
+    order confirmation, post-purchase, win-back)
+  - SMS marketing with global coverage and TCPA / GDPR compliant opt-in management
+  - Web push notifications across desktop and mobile browsers
+  - Drag-and-drop campaign builder with dynamic content blocks, product recommender, and conditional logic
+  - Audience segmentation with behavioral, lifecycle, predictive, and custom-event criteria
+  - Forms, popups, and signup boxes with Wheel-of-Fortune gamified opt-ins
+  - A/B testing on subject lines, content, and send time
+  - Advanced analytics and reporting with revenue attribution per campaign and workflow
+  - Native integrations with Shopify, BigCommerce, WooCommerce, Wix, Square Online, Magento, and PrestaShop
+  - REST API with X-API-KEY and OAuth 2.0 authentication, resource-scoped permissions, and cursor-based pagination
+  - Batch API for bulk contact, product, and event imports (up to 100 actions per batch)
+  - Email Templates, Email Content, and Email Universal Layouts APIs for programmatic template management
+  - Customer events tracking (predefined and custom) for automation triggers
+  - Brands API for managing brand identity across templates
+  - Analytics Reports and Statistics APIs for aggregated marketing performance data
+  - Postman public workspace and llms.txt feed for AI-agent friendly discovery
+  - 24/7 live support across all paid plans
+  - Free plan for up to 250 contacts and 500 emails/month
+  sources:
+  - https://www.omnisend.com
+  - https://api-docs.omnisend.com/reference/overview
+  - https://www.omnisend.com/pricing
+  - https://api-docs.omnisend.com/llms.txt
+  updated: '2026-05-25'
+- type: Packages
+  url: packages/omnisend-packages.yml
+- type: WellKnown
+  url: well-known/omnisend-well-known.yml
+- type: SecurityTxt
+  url: well-known/omnisend-security.txt
+- type: MCPServer
+  url: mcp/omnisend-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/omnisend-tool-crosswalk.yml
+- type: LLMsTxt
+  url: llms/omnisend-llms.txt
+- type: Conformance
+  url: conformance/omnisend-conformance.yml
+- type: ErrorCatalog
+  url: errors/omnisend-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/omnisend-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/omnisend-lifecycle.yml
+- type: Security
+  url: security/omnisend-vulnerability-disclosure.yml
+- type: Conventions
+  url: conventions/omnisend-conventions.yml
+- type: ChangeLog
+  url: changelog/omnisend-changelog.yml
+- type: Roadmap
+  url: https://www.omnisend.com/changelog/#roadmap
+- type: Components
+  url: components/omnisend-components.yml
+- type: DataModel
+  url: data-model/omnisend-data-model.yml
+- type: Webhooks
+  url: asyncapi/omnisend-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DeveloperPortal
+  url: https://api-docs.omnisend.com
+- type: Overlay
+  url: overlays/omnisend-analytics-api-overlay.yaml
+  name: analytics-api
+- type: Overlay
+  url: overlays/omnisend-automations-api-overlay.yaml
+  name: automations-api
+- type: Overlay
+  url: overlays/omnisend-batches-api-overlay.yaml
+  name: batches-api
+- type: Overlay
+  url: overlays/omnisend-brands-api-overlay.yaml
+  name: brands-api
+- type: Overlay
+  url: overlays/omnisend-campaigns-api-overlay.yaml
+  name: campaigns-api
+- type: Overlay
+  url: overlays/omnisend-contacts-api-overlay.yaml
+  name: contacts-api
+- type: Overlay
+  url: overlays/omnisend-emailcontent-api-overlay.yaml
+  name: emailcontent-api
+- type: Overlay
+  url: overlays/omnisend-emailtemplates-api-overlay.yaml
+  name: emailtemplates-api
+- type: Overlay
+  url: overlays/omnisend-emailuniversallayouts-api-overlay.yaml
+  name: emailuniversallayouts-api
+- type: Overlay
+  url: overlays/omnisend-event-metadata-api-overlay.yaml
+  name: event-metadata-api
+- type: Overlay
+  url: overlays/omnisend-events-api-overlay.yaml
+  name: events-api
+- type: Overlay
+  url: overlays/omnisend-images-api-overlay.yaml
+  name: images-api
+- type: Overlay
+  url: overlays/omnisend-productcategories-api-overlay.yaml
+  name: productcategories-api
+- type: Overlay
+  url: overlays/omnisend-products-api-overlay.yaml
+  name: products-api
+- type: Overlay
+  url: overlays/omnisend-segments-api-overlay.yaml
+  name: segments-api
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
-    url: https://apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
+  url: https://apievangelist.com
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 46
+  pass: local-v1
