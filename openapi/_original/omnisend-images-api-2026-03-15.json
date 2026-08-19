@@ -1,0 +1,853 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "contact": {},
+  "description": "External API for image retrieval, upload, and deletion.",
+  "title": "Images API",
+  "version": "5.0"
+ },
+ "paths": {
+  "/images": {
+   "get": {
+    "description": "With this endpoint you can get a paginated list of images for a brand.\n\n**Sorting:**\nSupported sort fields: `createdAt` (default), `name`\nSupported directions: `asc`, `desc` (default)\n\n**Filtering:**\nUse `nameContains` to filter images by name (case-insensitive, partial match)\n\n**Pagination:**\nThis endpoint uses cursor-based pagination for efficient traversal of large datasets.\n- Use the `cursors.after` value from the response to get the next page\n- Use the `cursors.before` value from the response to get the previous page\n- The `hasMore` field indicates if more results are available\n- Do not use both `after` and `before` parameters simultaneously\n- Maximum page size is 250 items (default 100)\n\n**Scopes:**\n`images.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     },
+     {
+      "description": "Number of images per page (1-250)",
+      "in": "query",
+      "name": "limit",
+      "schema": {
+       "type": "integer",
+       "minimum": 1,
+       "maximum": 250,
+       "default": 100
+      }
+     },
+     {
+      "description": "Cursor for next page (base64-encoded, from previous response)",
+      "in": "query",
+      "name": "after",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "description": "Cursor for previous page (base64-encoded, from previous response)",
+      "in": "query",
+      "name": "before",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "description": "Field to sort by",
+      "in": "query",
+      "name": "sort",
+      "schema": {
+       "type": "string",
+       "enum": [
+        "createdAt",
+        "name"
+       ],
+       "default": "createdAt"
+      }
+     },
+     {
+      "description": "Sort order",
+      "in": "query",
+      "name": "direction",
+      "schema": {
+       "type": "string",
+       "enum": [
+        "asc",
+        "desc"
+       ],
+       "default": "desc"
+      }
+     },
+     {
+      "description": "Filter images by name (partial match, case-insensitive, max 200 characters)",
+      "in": "query",
+      "name": "nameContains",
+      "schema": {
+       "type": "string",
+       "maxLength": 200
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "List of images",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ListResponse"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "images.read"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "List images",
+    "tags": [
+     "Images"
+    ]
+   },
+   "post": {
+    "description": "With this endpoint you can upload an image from a publicly accessible URL.\nIf the name is not provided, the filename will be extracted from the URL.\n\n**Scopes:**\n`images.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/UploadURLRequest"
+       }
+      }
+     },
+     "description": "Image URL and optional name",
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Image uploaded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Image"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "images.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Upload image by URL",
+    "tags": [
+     "Images"
+    ]
+   }
+  },
+  "/images/{id}": {
+   "delete": {
+    "description": "With this endpoint you can delete an image by ID.\n\n**Scopes:**\n`images.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     },
+     {
+      "description": "Image ID",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Image deleted"
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "images.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Delete image",
+    "tags": [
+     "Images"
+    ]
+   },
+   "get": {
+    "description": "With this endpoint you can get a single image by ID.\n\n**Scopes:**\n`images.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     },
+     {
+      "description": "Image ID",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Image retrieved successfully",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Image"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "images.read"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Get image",
+    "tags": [
+     "Images"
+    ]
+   }
+  },
+  "/images/upload": {
+   "post": {
+    "description": "With this endpoint you can upload an image file directly from your computer.\n\n**File Requirements:**\n- Supported formats: JPEG, PNG, GIF, WebP\n- Maximum file size: 5MB\n\n**Scopes:**\n`images.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "multipart/form-data": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "file": {
+          "description": "Image file to upload (JPEG, PNG, GIF, or WebP, max 5MB)",
+          "type": "string",
+          "format": "binary"
+         },
+         "name": {
+          "description": "Custom name for the image. Defaults to the filename if not provided",
+          "type": "string"
+         }
+        },
+        "required": [
+         "file"
+        ]
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Image uploaded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Image"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "images.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Upload image file",
+    "tags": [
+     "Images"
+    ]
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "https://api.omnisend.com/api"
+  }
+ ],
+ "components": {
+  "parameters": {
+   "APIVersionHeader": {
+    "description": "API version that specifies the response format and behaviour",
+    "in": "header",
+    "name": "Omnisend-Version",
+    "required": true,
+    "schema": {
+     "type": "string",
+     "default": "2026-03-15"
+    }
+   }
+  },
+  "securitySchemes": {
+   "ApiKeyAuth": {
+    "in": "header",
+    "name": "Authorization",
+    "type": "apiKey"
+   },
+   "Bearer": {
+    "type": "oauth2",
+    "flows": {
+     "clientCredentials": {
+      "tokenUrl": "https://app.omnisend.com/oauth2/token",
+      "scopes": {
+       "images.read": "Allows reading images",
+       "images.write": "Allows uploading and deleting images"
+      }
+     }
+    }
+   }
+  },
+  "schemas": {
+   "CursorsResponse": {
+    "description": "Cursor pointers for paginating forward and backward through results",
+    "properties": {
+     "after": {
+      "description": "Opaque cursor for fetching the next page of results",
+      "example": "eyJpZCI6ImNhbXAtNDU2In0",
+      "type": "string",
+      "nullable": true
+     },
+     "before": {
+      "description": "Opaque cursor for fetching the previous page of results",
+      "example": "eyJpZCI6ImNhbXAtMTIzIn0",
+      "type": "string",
+      "nullable": true
+     }
+    },
+    "type": "object"
+   },
+   "FieldError": {
+    "description": "A single field validation failure within a validation error response.",
+    "properties": {
+     "code": {
+      "description": "Error code indicating the type of failure",
+      "example": "invalid_format",
+      "type": "string"
+     },
+     "field": {
+      "description": "Dot-separated path to the field that failed validation",
+      "example": "content.email.subject",
+      "type": "string"
+     },
+     "message": {
+      "description": "Human-readable explanation of what is wrong with the field value",
+      "example": "Must be a valid email address",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Image": {
+    "description": "Image is an external image resource.",
+    "properties": {
+     "createdAt": {
+      "description": "Image creation timestamp.",
+      "example": "2026-01-15T10:30:00Z",
+      "type": "string"
+     },
+     "height": {
+      "description": "Image height in pixels.",
+      "example": 1080,
+      "type": "integer"
+     },
+     "id": {
+      "description": "Unique image identifier.",
+      "example": "507f1f77bcf86cd799439011",
+      "type": "string"
+     },
+     "name": {
+      "description": "Image name.",
+      "example": "my-image",
+      "type": "string"
+     },
+     "size": {
+      "description": "Image size in bytes.",
+      "example": 102400,
+      "type": "integer"
+     },
+     "type": {
+      "description": "MIME type of the image.",
+      "example": "image/jpeg",
+      "type": "string"
+     },
+     "url": {
+      "description": "Public CDN URL of the image.",
+      "example": "https://cdn.example.com/image.jpg",
+      "type": "string"
+     },
+     "width": {
+      "description": "Image width in pixels.",
+      "example": 1920,
+      "type": "integer"
+     }
+    },
+    "type": "object"
+   },
+   "ListResponse": {
+    "description": "ListResponse is the paginated image list response.",
+    "properties": {
+     "images": {
+      "description": "Returned images.",
+      "items": {
+       "$ref": "#/components/schemas/Image"
+      },
+      "type": "array"
+     },
+     "paging": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/PagingResponse"
+       }
+      ],
+      "description": "Cursor pagination metadata."
+     }
+    },
+    "type": "object"
+   },
+   "PagingResponse": {
+    "description": "Cursor-based pagination metadata",
+    "properties": {
+     "cursors": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/CursorsResponse"
+       }
+      ],
+      "description": "Cursor values for navigating between pages"
+     },
+     "hasMore": {
+      "description": "Whether there are more items available beyond the current page",
+      "example": true,
+      "type": "boolean"
+     },
+     "limit": {
+      "description": "Maximum number of items returned per page",
+      "example": 50,
+      "type": "integer"
+     }
+    },
+    "type": "object"
+   },
+   "Problem": {
+    "description": "Standard error response returned by all API endpoints on failure.",
+    "properties": {
+     "detail": {
+      "description": "Human-readable explanation of this specific error occurrence",
+      "example": "A human-readable explanation of the error.",
+      "type": "string"
+     },
+     "instance": {
+      "description": "Request trace identifier for support and debugging",
+      "example": "urn:omnisend:request:00000000-0000-0000-0000-000000000001",
+      "type": "string"
+     },
+     "status": {
+      "description": "HTTP status code",
+      "example": 0,
+      "type": "integer"
+     },
+     "title": {
+      "description": "Short description of the error type",
+      "example": "Problem",
+      "type": "string"
+     },
+     "type": {
+      "description": "URI that identifies the error type",
+      "example": "https://problems.omnisend.com/problem",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "UploadURLRequest": {
+    "description": "UploadURLRequest contains payload for uploading an image by URL.",
+    "properties": {
+     "name": {
+      "description": "Custom name for the image. If not provided, the filename will be extracted from the URL",
+      "example": "my-image",
+      "type": "string"
+     },
+     "url": {
+      "description": "URL of the image to upload. Must be publicly accessible (HTTPS, PNG, JPEG, GIF, or WebP, max 5MB)",
+      "example": "https://example.com/image.jpg",
+      "type": "string"
+     }
+    },
+    "required": [
+     "url"
+    ],
+    "type": "object"
+   },
+   "ValidationProblem": {
+    "description": "Error response returned when the request contains invalid input. The errors array lists every field that failed validation.",
+    "properties": {
+     "detail": {
+      "description": "Human-readable explanation of this specific error occurrence",
+      "example": "A human-readable explanation of the error.",
+      "type": "string"
+     },
+     "errors": {
+      "description": "List of fields that failed validation",
+      "items": {
+       "$ref": "#/components/schemas/FieldError"
+      },
+      "type": "array"
+     },
+     "instance": {
+      "description": "Request trace identifier for support and debugging",
+      "example": "urn:omnisend:request:00000000-0000-0000-0000-000000000001",
+      "type": "string"
+     },
+     "status": {
+      "description": "HTTP status code",
+      "example": 0,
+      "type": "integer"
+     },
+     "title": {
+      "description": "Short description of the error type",
+      "example": "Problem",
+      "type": "string"
+     },
+     "type": {
+      "description": "URI that identifies the error type",
+      "example": "https://problems.omnisend.com/problem",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   }
+  }
+ }
+}

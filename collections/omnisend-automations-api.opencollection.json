@@ -1,0 +1,562 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Automations API",
+    "version": "2026-preview"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Automations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List automation workflows",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/automations",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page. Range: 1-250. Default: 100"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Opaque cursor for the next page"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Opaque cursor for the previous page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort field. Default: createdAt"
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction. Default: desc"
+              },
+              {
+                "name": "isEnabled",
+                "value": "",
+                "type": "query",
+                "description": "If true, only enabled automations; if false, only disabled. Omit for no filter."
+              },
+              {
+                "name": "nameContains",
+                "value": "",
+                "type": "query",
+                "description": "Filter by name (partial match, max 200 characters)"
+              },
+              {
+                "name": "createdAtFrom",
+                "value": "",
+                "type": "query",
+                "description": "Filter automations created after this timestamp (ISO 8601, e.g. 2026-01-01T00:00:00Z)"
+              },
+              {
+                "name": "createdAtTo",
+                "value": "",
+                "type": "query",
+                "description": "Filter automations created before this timestamp (ISO 8601, e.g. 2026-01-01T00:00:00Z)"
+              },
+              {
+                "name": "updatedAtFrom",
+                "value": "",
+                "type": "query",
+                "description": "Filter automations updated after this timestamp (ISO 8601, e.g. 2026-01-01T00:00:00Z)"
+              },
+              {
+                "name": "updatedAtTo",
+                "value": "",
+                "type": "query",
+                "description": "Filter automations updated before this timestamp (ISO 8601, e.g. 2026-01-01T00:00:00Z)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "List automation workflows with filtering, sorting, and cursor-based pagination.\n\n**Scopes:**\n`automations.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n**Pagination:**\nThis endpoint uses cursor-based pagination.\n- Use the `paging.cursors.after` value from the response to get the next page\n- Use the `paging.cursors.before` value to get the previous page\n- The `paging.hasMore` field indicates if more results are available\n- Maximum page size is 250 items. Def"
+        },
+        {
+          "info": {
+            "name": "Create automation workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/automations",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create a new automation workflow.\n\n**Scopes:**\n`automations.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n## Trigger condition examples\n\nThe `trigger.condition` field defines the event that enrolls contacts into the automation. Most trigger events use standard Events API event names and may require `origin`. Built-in trigger events, such as `\"birthday\"`, do not use `origin`.\n\nFor the `\"birthday\"` trigger, omit `trigger.condition.filterGroups` to enroll con"
+        },
+        {
+          "info": {
+            "name": "Get automation workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/automations/:id",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Automation workflow ID (24 character hexadecimal)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get a single automation workflow by ID.\n\n**Scopes:**\n`automations.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Patch automation workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.omnisend.com/api/automations/:id",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Automation workflow ID (24 character hexadecimal)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Partially update an automation workflow. Only the fields provided in the request body are updated.\n\nEnabled automations cannot be patched. Disable the automation via\n`POST /automations/{id}/disable`, make changes, then re-enable via\n`POST /automations/{id}/enable` when ready. When disabling, `contactsInWorkflow`\ncontrols whether contacts already in the workflow continue through the remaining\nblocks (`keep`) or exit immediately (`exit`). Enable/disable state is controlled\nexclusively via the `/au"
+        },
+        {
+          "info": {
+            "name": "Delete automation workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.omnisend.com/api/automations/:id",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Automation workflow ID (24 character hexadecimal)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Delete a single automation workflow by ID.\n\nThis operation is idempotent — deleting a non-existent automation returns a success response.\n\n**Scopes:**\n`automations.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Replace automation workflow blocks",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.omnisend.com/api/automations/:id/blocks",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Automation workflow ID (24 character hexadecimal)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Replace the full block tree for an automation workflow.\n\nBlocks identified by `id` are updated in place.\nBlocks identified by `temporaryID` are created as new blocks.\nExisting blocks not included in this array are removed.\n\nEnabled automations cannot be restructured. Disable the automation via\n`POST /automations/{id}/disable`, send the new block tree, then re-enable via\n`POST /automations/{id}/enable` when ready. When disabling, `contactsInWorkflow`\ncontrols whether contacts already in the workf"
+        },
+        {
+          "info": {
+            "name": "Send test email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/automations/:id/blocks/:blockID/test-email",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Automation workflow ID (24 character hexadecimal)"
+              },
+              {
+                "name": "blockID",
+                "value": "",
+                "type": "path",
+                "description": "Block identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Send the saved email content of a specific email block as a test\nemail to up to 5 recipients. The email is rendered and delivered\nasynchronously.\n\n**Scopes:**\n`automations.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Get UTM tags for an automation block",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/automations/:id/blocks/:blockID/utm",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Automation workflow ID (24 character hexadecimal)"
+              },
+              {
+                "name": "blockID",
+                "value": "",
+                "type": "path",
+                "description": "Block identifier"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieve UTM tracking tags for a specific send-action block.\nMissing or cleared tags are returned with their default values.\n\n**Scopes:**\n`automations.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Update UTM tags for an automation block",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.omnisend.com/api/automations/:id/blocks/:blockID/utm",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Automation workflow ID (24 character hexadecimal)"
+              },
+              {
+                "name": "blockID",
+                "value": "",
+                "type": "path",
+                "description": "Block identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Set UTM tracking tags for a specific send-action block.\nAll three tag fields are replaced atomically. Send an empty string\nto clear a field — the next read will return its default value.\n\n**Scopes:**\n`automations.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Copy automation workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/automations/:id/copy",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Automation workflow ID to copy (24 character hexadecimal)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create a copy of an existing automation workflow.\n\nThe copy is always created in a disabled state, regardless of the source automation's status.\n\nThe request body is optional. When provided, you can specify a custom name for the copy.\nWhen omitted (or when name is empty), the copy is named \"Copy of: <original name>\".\n\n**Scopes:**\n`automations.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Disable automation workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/automations/:id/disable",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Automation workflow ID (24 character hexadecimal)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Disable an automation workflow. Once disabled, the workflow stops\naccepting new trigger events.\n\nUse `contactsInWorkflow` to control what happens to contacts\ncurrently progressing through the workflow:\n- `keep`: contacts remain and continue through the remaining blocks\nuntil completion. No new contacts enter.\n- `exit`: all contacts are immediately removed from the workflow.\nContacts who have not yet received their messages will not receive them.\n\nDisabling an already-disabled automation is idemp"
+        },
+        {
+          "info": {
+            "name": "Enable automation workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/automations/:id/enable",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Automation workflow ID (24 character hexadecimal)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Enable an automation workflow. Once enabled, the workflow starts\nprocessing trigger events in real time.\n\nThe request body is optional. Use `enrollExisting` to also enroll\ncontacts who already qualify at the time of enabling. When the body is\nomitted (or `enrollExisting` is omitted or false), only future trigger\nevents are processed.\n\nEnabling an already-enabled automation is idempotent — returns the\ncurrent state without side effects.\n\n**Scopes:**\n`automations.write`\n\n**Rate Limiting:**\nThis en"
+        },
+        {
+          "info": {
+            "name": "Get aggregated UTM tags for all blocks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/automations/:id/utm",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Automation workflow ID (24 character hexadecimal)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieve UTM tracking tags for all send-action blocks in an automation.\nEach block's tags include default-value synthesis for missing fields.\n\n**Scopes:**\n`automations.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

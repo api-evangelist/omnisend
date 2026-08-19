@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Analytics API",
+    "version": "5.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/analytics/reports",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns aggregated marketing analytics grouped by message send date. Covers delivery, engagement, and revenue attribution metrics for campaigns and automations. Supports optional dimensions (timestamp, channel, activity), filters, and up to 4 queries per request.\n\n**Scopes:**\n`analytics.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 10 requests per minute and 55 requests per 24 hours.\nRate limits apply per brand. See [Rate limits](https://api-docs.omnisend.com/reference/reports#rate-"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Statistics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/analytics/statistics",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns aggregated marketing analytics grouped by event date (when opens, clicks, orders actually occurred). Covers delivery, engagement, revenue attribution, and audience growth metrics. Requires a timestamp dimension. Supports a rich set of dimensions (client, click, subscription, deliverability) and up to 4 queries per request.\n\n**Scopes:**\n`analytics.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 10 requests per minute and 55 requests per 24 hours.\nRate limits apply per brand. Se"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

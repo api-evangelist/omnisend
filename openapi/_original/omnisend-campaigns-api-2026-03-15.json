@@ -1,0 +1,3842 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "contact": {},
+  "description": "API for managing campaigns.",
+  "title": "Campaigns API",
+  "version": "2026-preview"
+ },
+ "paths": {
+  "/campaigns": {
+   "get": {
+    "description": "List campaigns with filtering, sorting, and cursor-based pagination.\n\n**Scopes:**\n`campaigns.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n**Filtering & sorting:**\nSupported query parameters: `nameContains`, `status`, `channel`, `type`, `parentCampaignID`, `createdAtFrom`/`createdAtTo`, `updatedAtFrom`/`updatedAtTo`, `sort`, `direction`, `limit`, `after`, `before`. Only these documented parameters are accepted; any unknown parameter returns 400.\n- `sort` accepts `createdAt`, `updatedAt`, or `name`; `direction` (`asc`/`desc`) is only valid together with `sort`.\n\n**Pagination:**\nThis endpoint uses cursor-based pagination.\n- Use the `paging.cursors.after` value from the response to get the next page\n- Use the `paging.cursors.before` value to get the previous page\n- The `paging.hasMore` field indicates if more results are available\n- Maximum page size is 250 items. Default: 100\n- Do not send `after` and `before` together, and keep filters and sorting unchanged while paginating with a cursor",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     },
+     {
+      "description": "Number of items per page. Range: 1-250. Default: 100",
+      "in": "query",
+      "name": "limit",
+      "schema": {
+       "type": "integer",
+       "minimum": 1,
+       "maximum": 250
+      }
+     },
+     {
+      "description": "Opaque cursor for the next page",
+      "in": "query",
+      "name": "after",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "description": "Opaque cursor for the previous page",
+      "in": "query",
+      "name": "before",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "description": "Sort field. Default: createdAt",
+      "in": "query",
+      "name": "sort",
+      "schema": {
+       "type": "string",
+       "enum": [
+        "createdAt",
+        "updatedAt",
+        "name"
+       ]
+      }
+     },
+     {
+      "description": "Sort direction. Default: desc",
+      "in": "query",
+      "name": "direction",
+      "schema": {
+       "type": "string",
+       "enum": [
+        "asc",
+        "desc"
+       ]
+      }
+     },
+     {
+      "description": "Filter by status (repeatable for OR logic)",
+      "in": "query",
+      "name": "status",
+      "explode": true,
+      "schema": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "error",
+         "onHold",
+         "sent",
+         "paused",
+         "started",
+         "stopped",
+         "expired",
+         "draft",
+         "scheduled",
+         "canceled"
+        ],
+        "type": "string"
+       }
+      }
+     },
+     {
+      "description": "Filter by name (partial match, max 200 characters)",
+      "in": "query",
+      "name": "nameContains",
+      "schema": {
+       "type": "string",
+       "maxLength": 200
+      }
+     },
+     {
+      "description": "Filter by message channel (repeatable for OR logic)",
+      "in": "query",
+      "name": "channel",
+      "explode": true,
+      "schema": {
+       "type": "array",
+       "items": {
+        "enum": [
+         "email",
+         "sms",
+         "push"
+        ],
+        "type": "string"
+       }
+      }
+     },
+     {
+      "description": "Filter by campaign type. Use `booster` to list only boosters, `abTest` to list only A/B test parents.",
+      "in": "query",
+      "name": "type",
+      "schema": {
+       "type": "string",
+       "enum": [
+        "regular",
+        "booster",
+        "abTest"
+       ]
+      }
+     },
+     {
+      "description": "Filter to boosters of the given parent campaign ID. Implies type=booster.",
+      "in": "query",
+      "name": "parentCampaignID",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "description": "Filter campaigns created after this timestamp (ISO 8601, e.g. 2026-01-01T00:00:00Z)",
+      "in": "query",
+      "name": "createdAtFrom",
+      "schema": {
+       "type": "string",
+       "format": "date-time"
+      }
+     },
+     {
+      "description": "Filter campaigns created before this timestamp (ISO 8601, e.g. 2026-01-01T00:00:00Z)",
+      "in": "query",
+      "name": "createdAtTo",
+      "schema": {
+       "type": "string",
+       "format": "date-time"
+      }
+     },
+     {
+      "description": "Filter campaigns updated after this timestamp (ISO 8601, e.g. 2026-01-01T00:00:00Z)",
+      "in": "query",
+      "name": "updatedAtFrom",
+      "schema": {
+       "type": "string",
+       "format": "date-time"
+      }
+     },
+     {
+      "description": "Filter campaigns updated before this timestamp (ISO 8601, e.g. 2026-01-01T00:00:00Z)",
+      "in": "query",
+      "name": "updatedAtTo",
+      "schema": {
+       "type": "string",
+       "format": "date-time"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "List of campaigns with pagination",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CampaignsResponse"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/RateLimitProblem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "campaigns.read"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "List campaigns with filtering, sorting, and cursor pagination",
+    "tags": [
+     "Campaigns"
+    ]
+   },
+   "post": {
+    "description": "Create a new campaign draft.\n\n**Boosters (`type: booster`):**\n- The parent campaign (`boosterSettings.campaignID`) must be a regular email campaign in 'draft' or 'sent' status; 'scheduled' and 'started' parents return 409.\n- Each parent campaign supports at most one booster; creating another returns 409. Delete the existing booster first to replace it.\n- `sendingSettings` is only allowed when the parent is already sent; for a draft parent provide `boosterSettings.delay` instead (max 240 hours) and the booster is scheduled automatically when the parent sends.\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/CreateCampaignRequest"
+       }
+      }
+     },
+     "description": "Campaign data",
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Created campaign",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Campaign"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Booster only: parent campaign not found",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "409": {
+      "description": "Booster only: booster already exists for this campaign, or parent campaign status does not allow booster operations",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Campaign channel is not supported, or the store has no verified sender email to use when content.email.senderEmail is omitted",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/RateLimitProblem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "campaigns.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Create campaign",
+    "tags": [
+     "Campaigns"
+    ]
+   }
+  },
+  "/campaigns/{id}": {
+   "delete": {
+    "description": "Delete a campaign.\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     },
+     {
+      "description": "Campaign ID",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Campaign deleted successfully"
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "409": {
+      "description": "Campaign status does not allow deletion",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Campaign type is not supported",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/RateLimitProblem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "campaigns.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Delete campaign",
+    "tags": [
+     "Campaigns"
+    ]
+   },
+   "get": {
+    "description": "Get a single campaign by ID.\n\n**Scopes:**\n`campaigns.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     },
+     {
+      "description": "Campaign ID (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Campaign",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Campaign"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Campaign not found",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/RateLimitProblem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "campaigns.read"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Get campaign",
+    "tags": [
+     "Campaigns"
+    ]
+   },
+   "patch": {
+    "description": "Update a campaign draft. Only campaigns in 'draft' status can be updated; any other status returns 409.\nTo change a campaign that is no longer a draft, copy it and edit the new draft copy.\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     },
+     {
+      "description": "Campaign ID (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/UpdateCampaignRequest"
+       }
+      }
+     },
+     "description": "Campaign update data",
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Updated campaign",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Campaign"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Campaign not found",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "409": {
+      "description": "Campaign state does not allow modification",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/RateLimitProblem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "campaigns.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Update campaign (draft status only)",
+    "tags": [
+     "Campaigns"
+    ]
+   }
+  },
+  "/campaigns/{id}/ab-test/resume": {
+   "post": {
+    "description": "Resume a stopped A/B test. Automatic winner selection becomes eligible to pick this campaign again.\n\nAvailable only while the campaign is in `stopped` status.\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     },
+     {
+      "description": "Campaign ID (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "A/B test resumed"
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Campaign not found",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "409": {
+      "description": "Campaign status is not stopped",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Campaign is not an A/B test",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/RateLimitProblem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "campaigns.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Resume A/B test",
+    "tags": [
+     "Campaigns"
+    ]
+   }
+  },
+  "/campaigns/{id}/ab-test/stop": {
+   "post": {
+    "description": "Halt the A/B test winner-selection phase. While stopped, automatic winner selection no longer considers this campaign until it is resumed.\n\nAvailable only while the campaign is in `started` status.\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     },
+     {
+      "description": "Campaign ID (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "A/B test stopped"
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Campaign not found",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "409": {
+      "description": "Campaign status is not started",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Campaign is not an A/B test",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/RateLimitProblem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "campaigns.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Stop A/B test",
+    "tags": [
+     "Campaigns"
+    ]
+   }
+  },
+  "/campaigns/{id}/ab-test/winner": {
+   "post": {
+    "description": "Manually pick a variant as the winner. The chosen variant is routed into the send pipeline immediately.\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     },
+     {
+      "description": "Campaign ID (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/SelectABTestWinnerRequest"
+       }
+      }
+     },
+     "description": "Winner variant selection",
+     "required": true
+    },
+    "responses": {
+     "204": {
+      "description": "Winner selected"
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Campaign not found",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "409": {
+      "description": "Campaign status does not allow winner selection",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Campaign is not an A/B parent",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/RateLimitProblem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "campaigns.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Select A/B test winner",
+    "tags": [
+     "Campaigns"
+    ]
+   }
+  },
+  "/campaigns/{id}/cancel": {
+   "post": {
+    "description": "Cancel a campaign and mark it as canceled.\n\n**Cancelable source states:** `scheduled` or `paused` (all channel types), or `started` (email only). Any other status (e.g. `draft`, `sent`, `canceled`) returns 409.\n\nSupported cases:\n- Any scheduled or paused campaign (all channel types)\n- Started email campaigns\n\n**Note:** For started campaigns, cancellation is best-effort \u2014 messages already in flight may still be delivered.\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     },
+     {
+      "description": "Campaign ID (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Campaign cancel initiated successfully"
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Campaign not found",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "409": {
+      "description": "Campaign is not in a cancelable state (only scheduled, or started/paused email campaigns can be canceled)",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Campaign type is not supported",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/RateLimitProblem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "campaigns.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Cancel campaign",
+    "tags": [
+     "Campaigns"
+    ]
+   }
+  },
+  "/campaigns/{id}/copy": {
+   "post": {
+    "description": "Create a draft copy of an existing campaign, copying content, audience, and settings from the original.\nThe copy is a new draft campaign with its own ID; the original campaign is left unchanged.\nThe copied campaign name will be prefixed with \"Copy of: \".\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     },
+     {
+      "description": "Campaign ID to copy (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "201": {
+      "description": "Created draft copy of the campaign",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Campaign"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Campaign not found",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Campaign type is not supported",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/RateLimitProblem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "campaigns.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Copy campaign",
+    "tags": [
+     "Campaigns"
+    ]
+   }
+  },
+  "/campaigns/{id}/send": {
+   "post": {
+    "description": "Submit a campaign draft for sending. Only campaigns in 'draft' status can be sent; to send a campaign again, copy it and send the copy.\nSupports both email and SMS campaigns. Behavior depends on the campaign's sending strategy:\n\n- **Immediate**: Campaign will be sent immediately\n- **Scheduled**: Campaign will be queued for the scheduled time with optional timezone optimization\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     },
+     {
+      "description": "Campaign ID (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Campaign send initiated successfully"
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "402": {
+      "description": "Payment is required to send this campaign",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Campaign not found",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "409": {
+      "description": "Campaign state does not allow sending or content is invalid",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/RateLimitProblem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "campaigns.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Send campaign",
+    "tags": [
+     "Campaigns"
+    ]
+   }
+  },
+  "/campaigns/{id}/test-email": {
+   "post": {
+    "description": "Render the campaign draft and email it to up to 5 recipients so the merchant (or their AI tool) can preview it without leaving the API. The test uses the campaign's saved subject, sender, and content; only email campaigns are supported.\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     },
+     {
+      "description": "Campaign ID (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/SendTestEmailRequest"
+       }
+      }
+     },
+     "description": "Test email recipients",
+     "required": true
+    },
+    "responses": {
+     "204": {
+      "description": "Test email queued for delivery"
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "402": {
+      "description": "Payment is required to send this campaign",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Campaign not found",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "409": {
+      "description": "Email sending is disabled, the sender domain is unverified, or every recipient is suppressed",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Campaign type is not supported (only email campaigns)",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/RateLimitProblem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "campaigns.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Send campaign test email",
+    "tags": [
+     "Campaigns"
+    ]
+   }
+  },
+  "/campaigns/{id}/utm": {
+   "get": {
+    "description": "Get UTM tag settings for a campaign. The response shape is the same for all\ncampaign types: `tags` is populated for regular campaigns, `variants` for A/B\ncampaigns. The absent field is omitted.\n\n**Scopes:**\n`campaigns.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     },
+     {
+      "description": "Campaign ID (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "UTM settings",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/UTMResponse"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Campaign not found",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/RateLimitProblem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "campaigns.read"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Get campaign UTM settings",
+    "tags": [
+     "Campaigns"
+    ]
+   },
+   "put": {
+    "description": "Replace UTM tag settings for a campaign. For regular campaigns send a\n`tags` object. For A/B test campaigns send a `variants` object. The campaign\nmust be in draft status.\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     },
+     {
+      "description": "Campaign ID (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/UTMUpdate"
+       }
+      }
+     },
+     "description": "UTM update data \u2014 use `tags` for regular campaigns, `variants` for A/B test campaigns",
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Updated UTM settings",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/UTMResponse"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Campaign not found",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "409": {
+      "description": "Campaign state does not allow modification",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/RateLimitProblem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "campaigns.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Update campaign UTM settings",
+    "tags": [
+     "Campaigns"
+    ]
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "https://api.omnisend.com/api"
+  }
+ ],
+ "components": {
+  "parameters": {
+   "APIVersionHeader": {
+    "description": "API version that specifies the response format and behaviour",
+    "in": "header",
+    "name": "Omnisend-Version",
+    "required": true,
+    "schema": {
+     "type": "string",
+     "default": "2026-03-15"
+    }
+   }
+  },
+  "securitySchemes": {
+   "ApiKeyAuth": {
+    "description": "API key authentication. Use format: Omnisend-API-Key {api-key}",
+    "in": "header",
+    "name": "Authorization",
+    "type": "apiKey"
+   },
+   "Bearer": {
+    "type": "oauth2",
+    "flows": {
+     "clientCredentials": {
+      "tokenUrl": "https://app.omnisend.com/oauth2/token",
+      "scopes": {
+       "campaigns.read": "Read access to campaigns",
+       "campaigns.write": "Write access to campaigns"
+      }
+     }
+    }
+   }
+  },
+  "schemas": {
+   "ABTest": {
+    "description": "A/B test configuration. Variants are keyed by \"a\" and \"b\"; the parent campaign's `content` field is omitted because variants carry their own content. `result` is populated once a winner is selected and is `null` otherwise.",
+    "properties": {
+     "result": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/ABTestResult"
+       }
+      ],
+      "description": "Winner information (read-only). Null until winner is selected."
+     },
+     "settings": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/ABTestSettings"
+       }
+      ],
+      "description": "Test configuration"
+     },
+     "variants": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/ABTestVariants"
+       }
+      ],
+      "description": "Variants keyed by \"a\" and \"b\""
+     }
+    },
+    "type": "object"
+   },
+   "ABTestDecisionTime": {
+    "description": "Decision time before selecting a winner. Same shape as booster delay.",
+    "properties": {
+     "amount": {
+      "description": "Amount of time units to wait",
+      "example": 4,
+      "type": "integer"
+     },
+     "unit": {
+      "description": "Time unit: \"h\" for hours, \"d\" for days",
+      "enum": [
+       "h",
+       "d"
+      ],
+      "example": "h",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "ABTestResult": {
+    "description": "A/B test result (read-only).",
+    "properties": {
+     "isManuallySelected": {
+      "description": "Whether the winner was manually selected (read-only)",
+      "example": false,
+      "readOnly": true,
+      "type": "boolean"
+     },
+     "selectedAt": {
+      "description": "When the winner was selected (read-only)",
+      "example": "2026-01-15T10:30:00Z",
+      "readOnly": true,
+      "type": "string"
+     },
+     "winnerVariantID": {
+      "description": "Campaign ID of the winning variant (read-only). Matches variants.a.id or variants.b.id.",
+      "example": "000000000000000000000011",
+      "readOnly": true,
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "ABTestSettings": {
+    "description": "A/B test settings.",
+    "properties": {
+     "decisionTime": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/ABTestDecisionTime"
+       }
+      ],
+      "description": "Time to wait before selecting the winner"
+     },
+     "testSizePercent": {
+      "description": "Percentage of audience for the test phase (10-100)",
+      "example": 30,
+      "type": "integer"
+     },
+     "winningMetric": {
+      "description": "Winner determination metric",
+      "enum": [
+       "openRate",
+       "clickRate"
+      ],
+      "example": "openRate",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "ABTestVariant": {
+    "description": "A/B test variant. Email-specific fields live under `content.email`.",
+    "properties": {
+     "content": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/ABTestVariantContent"
+       }
+      ],
+      "description": "Variant content grouped by channel"
+     },
+     "id": {
+      "description": "Variant campaign ID (read-only). Used for reporting API access.",
+      "example": "000000000000000000000010",
+      "readOnly": true,
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "ABTestVariantContent": {
+    "description": "A/B test variant content grouped by channel.",
+    "properties": {
+     "email": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/ABTestVariantEmail"
+       }
+      ],
+      "description": "Email content for this variant"
+     }
+    },
+    "type": "object"
+   },
+   "ABTestVariantEmail": {
+    "description": "Email content fields for an A/B test variant.",
+    "properties": {
+     "contentID": {
+      "description": "Email content unique identifier referencing the variant's email design",
+      "example": "000000000000000000000001",
+      "type": "string"
+     },
+     "preheader": {
+      "description": "Preheader text",
+      "example": "Check it out",
+      "type": "string"
+     },
+     "replyToEmail": {
+      "description": "Reply-to email address",
+      "example": "support@example.com",
+      "type": "string"
+     },
+     "senderEmail": {
+      "description": "Sender email address",
+      "example": "hello@example.com",
+      "type": "string"
+     },
+     "senderName": {
+      "description": "Sender display name",
+      "example": "My Store",
+      "type": "string"
+     },
+     "subject": {
+      "description": "Email subject line",
+      "example": "Welcome!",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "ABTestVariants": {
+    "description": "A/B test variants object with keys \"a\" and \"b\".",
+    "properties": {
+     "a": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/ABTestVariant"
+       }
+      ],
+      "description": "Variant A (null if not yet configured)"
+     },
+     "b": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/ABTestVariant"
+       }
+      ],
+      "description": "Variant B (null if not yet configured)"
+     }
+    },
+    "type": "object"
+   },
+   "Audience": {
+    "description": "Campaign audience",
+    "properties": {
+     "excludedSegmentIDs": {
+      "description": "Segments to exclude from the audience",
+      "items": {
+       "type": "string"
+      },
+      "type": "array"
+     },
+     "includedSegmentIDs": {
+      "description": "Segments to include. Empty includes all subscribers",
+      "items": {
+       "type": "string"
+      },
+      "type": "array"
+     }
+    },
+    "type": "object"
+   },
+   "BoosterDelay": {
+    "description": "Delay between the parent campaign send and the booster send.",
+    "properties": {
+     "amount": {
+      "description": "Amount of time units before the booster is sent",
+      "example": 48,
+      "type": "integer"
+     },
+     "unit": {
+      "description": "Time unit: \"h\" for hours, \"d\" for days",
+      "enum": [
+       "h",
+       "d"
+      ],
+      "example": "h",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "BoosterSettings": {
+    "description": "Booster-specific settings.",
+    "properties": {
+     "campaignID": {
+      "description": "Parent campaign ID this booster follows up on",
+      "example": "000000000000000000000001",
+      "type": "string"
+     },
+     "delay": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/BoosterDelay"
+       }
+      ],
+      "description": "Delay between the parent's send and this booster's send"
+     },
+     "sendTo": {
+      "description": "Audience selector. The booster targets recipients of the parent who\ndid NOT perform the implied action (`nonOpeners` did not open;\n`nonClickers` did not click).",
+      "enum": [
+       "nonOpeners",
+       "nonClickers"
+      ],
+      "example": "nonOpeners",
+      "type": "string"
+     }
+    },
+    "required": [
+     "campaignID",
+     "sendTo"
+    ],
+    "type": "object"
+   },
+   "Campaign": {
+    "description": "Campaign resource. When `type` is `booster`, the `boosterSettings` field is populated, identifying the parent campaign and the conditions under which the booster targets recipients of that parent.",
+    "properties": {
+     "abTest": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/ABTest"
+       }
+      ],
+      "description": "A/B test configuration. Populated only when `type` is `abTest`;\nvariants carry their own content (see `ABTest.variants`), so the\ntop-level `content` field is omitted in that case."
+     },
+     "audience": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/Audience"
+       }
+      ],
+      "description": "Campaign audience"
+     },
+     "boosterSettings": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/BoosterSettings"
+       }
+      ],
+      "description": "Booster-specific settings. Populated only when `type` is `booster` and\nidentifies the parent campaign and the conditions under which this\nbooster targets recipients of that parent."
+     },
+     "brandID": {
+      "description": "Brand unique identifier (read-only)",
+      "example": "000000000000000000000001",
+      "readOnly": true,
+      "type": "string"
+     },
+     "channel": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/CampaignChannel"
+       }
+      ],
+      "description": "Campaign message channel",
+      "enum": [
+       "email",
+       "push",
+       "sms"
+      ],
+      "example": "email"
+     },
+     "content": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/Content"
+       }
+      ],
+      "description": "Campaign content. Populated based on channel"
+     },
+     "createdAt": {
+      "description": "Campaign creation timestamp (read-only)",
+      "example": "2026-01-15T10:30:00Z",
+      "readOnly": true,
+      "type": "string"
+     },
+     "endedAt": {
+      "description": "Campaign end timestamp (read-only)",
+      "example": "2026-01-15T10:30:00Z",
+      "readOnly": true,
+      "type": "string"
+     },
+     "id": {
+      "description": "Campaign unique identifier (read-only)",
+      "example": "000000000000000000000001",
+      "readOnly": true,
+      "type": "string"
+     },
+     "language": {
+      "description": "Campaign language locale in xx_XX format",
+      "example": "en_US",
+      "type": "string"
+     },
+     "name": {
+      "description": "Campaign name",
+      "example": "Welcome Email Campaign",
+      "type": "string"
+     },
+     "sendingSettings": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/SendingSettings"
+       }
+      ],
+      "description": "Campaign sending settings"
+     },
+     "startedAt": {
+      "description": "Campaign start timestamp (read-only)",
+      "example": "2026-01-15T10:30:00Z",
+      "readOnly": true,
+      "type": "string"
+     },
+     "status": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/CampaignStatus"
+       }
+      ],
+      "description": "Campaign status",
+      "enum": [
+       "error",
+       "onHold",
+       "sent",
+       "paused",
+       "started",
+       "stopped",
+       "expired",
+       "draft",
+       "scheduled",
+       "canceled"
+      ],
+      "example": "draft"
+     },
+     "type": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/CampaignType"
+       }
+      ],
+      "description": "Campaign type. `booster` identifies a follow-up campaign sent to the\naudience of a parent campaign.",
+      "enum": [
+       "regular",
+       "abTest",
+       "booster"
+      ],
+      "example": "regular"
+     },
+     "updatedAt": {
+      "description": "Campaign last update timestamp (read-only)",
+      "example": "2026-01-15T10:30:00Z",
+      "readOnly": true,
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "CampaignChannel": {
+    "description": "Campaign message channel",
+    "enum": [
+     "email",
+     "push",
+     "sms"
+    ],
+    "type": "string",
+    "x-enum-varnames": [
+     "CampaignChannelEmail",
+     "CampaignChannelPush",
+     "CampaignChannelSMS"
+    ]
+   },
+   "CampaignStatus": {
+    "description": "Campaign status",
+    "enum": [
+     "draft",
+     "scheduled",
+     "started",
+     "sent",
+     "error",
+     "canceled",
+     "paused",
+     "onHold",
+     "expired",
+     "stopped"
+    ],
+    "type": "string",
+    "x-enum-varnames": [
+     "CampaignStatusDraft",
+     "CampaignStatusScheduled",
+     "CampaignStatusStarted",
+     "CampaignStatusSent",
+     "CampaignStatusError",
+     "CampaignStatusCanceled",
+     "CampaignStatusPaused",
+     "CampaignStatusOnHold",
+     "CampaignStatusExpired",
+     "CampaignStatusStopped"
+    ]
+   },
+   "CampaignType": {
+    "description": "Campaign type",
+    "enum": [
+     "regular",
+     "abTest",
+     "booster"
+    ],
+    "type": "string",
+    "x-enum-varnames": [
+     "CampaignTypeRegular",
+     "CampaignTypeABTest",
+     "CampaignTypeBooster"
+    ]
+   },
+   "CampaignsResponse": {
+    "description": "Paginated list of campaigns",
+    "properties": {
+     "campaigns": {
+      "description": "List of campaigns",
+      "items": {
+       "$ref": "#/components/schemas/Campaign"
+      },
+      "type": "array"
+     },
+     "paging": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/PagingResponse"
+       }
+      ],
+      "description": "Pagination information"
+     }
+    },
+    "type": "object"
+   },
+   "Content": {
+    "description": "Campaign content",
+    "properties": {
+     "email": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/Email"
+       }
+      ],
+      "description": "Email content"
+     },
+     "sms": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/SMS"
+       }
+      ],
+      "description": "SMS content"
+     }
+    },
+    "type": "object"
+   },
+   "CreateABTest": {
+    "description": "A/B test configuration for campaign creation.",
+    "properties": {
+     "settings": {
+      "$ref": "#/components/schemas/CreateABTestSettings"
+     },
+     "variants": {
+      "$ref": "#/components/schemas/CreateABTestVariants"
+     }
+    },
+    "required": [
+     "settings",
+     "variants"
+    ],
+    "type": "object"
+   },
+   "CreateABTestDecisionTime": {
+    "description": "Decision time before selecting a winner. Same shape as booster delay.",
+    "properties": {
+     "amount": {
+      "description": "Number of time units to wait before selecting a winner",
+      "example": 4,
+      "minimum": 1,
+      "type": "integer"
+     },
+     "unit": {
+      "description": "Time unit: \"h\" for hours, \"d\" for days",
+      "enum": [
+       "h",
+       "d"
+      ],
+      "example": "h",
+      "type": "string"
+     }
+    },
+    "required": [
+     "amount",
+     "unit"
+    ],
+    "type": "object"
+   },
+   "CreateABTestSettings": {
+    "description": "A/B test settings for campaign creation.",
+    "properties": {
+     "decisionTime": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/CreateABTestDecisionTime"
+       }
+      ],
+      "description": "Time to wait before selecting a winner. Required unless testSizePercent is 100"
+     },
+     "testSizePercent": {
+      "description": "Percentage of the audience used for testing (10-100). When 100, all recipients get a variant (send-all mode)",
+      "example": 30,
+      "maximum": 100,
+      "minimum": 10,
+      "type": "integer"
+     },
+     "winningMetric": {
+      "description": "Metric used to determine the winner. Required unless testSizePercent is 100",
+      "enum": [
+       "openRate",
+       "clickRate"
+      ],
+      "example": "openRate",
+      "type": "string"
+     }
+    },
+    "required": [
+     "testSizePercent"
+    ],
+    "type": "object"
+   },
+   "CreateABTestVariant": {
+    "description": "A/B test variant for creation. Email fields live under `content.email`.",
+    "properties": {
+     "content": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/CreateABTestVariantContent"
+       }
+      ],
+      "description": "Variant content grouped by channel"
+     }
+    },
+    "required": [
+     "content"
+    ],
+    "type": "object"
+   },
+   "CreateABTestVariantContent": {
+    "description": "Variant content grouped by channel for creation.",
+    "properties": {
+     "email": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/CreateABTestVariantEmail"
+       }
+      ],
+      "description": "Email content for this variant"
+     }
+    },
+    "required": [
+     "email"
+    ],
+    "type": "object"
+   },
+   "CreateABTestVariantEmail": {
+    "description": "Email content fields for an A/B test variant creation.",
+    "properties": {
+     "preheader": {
+      "description": "Preview text shown in the inbox after the subject line",
+      "example": "Check it out",
+      "type": "string"
+     },
+     "replyToEmail": {
+      "description": "Reply-to email address for recipient responses. Omit it and replies go to the sender\naddress. Set it only when a specific address is required: it must be an address\nverified for the brand, and verification status is not exposed here, so an address\nthat is guessed, or copied from another campaign, is rejected.",
+      "example": "support@example.com",
+      "type": "string"
+     },
+     "senderEmail": {
+      "description": "Sender email address. Omit it and the campaign is sent from the sender address\nconfigured for the brand. Set it only when a specific address is required: which\naddresses a brand may send from follows from its sender setup and is not exposed\nhere, so an address that is guessed, or copied from another campaign, is rejected.",
+      "example": "hello@example.com",
+      "type": "string"
+     },
+     "senderName": {
+      "description": "Display name of the sender",
+      "example": "My Store",
+      "type": "string"
+     },
+     "subject": {
+      "description": "Email subject line",
+      "example": "Welcome!",
+      "type": "string"
+     },
+     "templateID": {
+      "description": "Template unique identifier. Must reference an existing template.",
+      "example": "000000000000000000000001",
+      "type": "string"
+     }
+    },
+    "required": [
+     "subject",
+     "templateID"
+    ],
+    "type": "object"
+   },
+   "CreateABTestVariants": {
+    "description": "A/B test variants object with keys \"a\" and \"b\".",
+    "properties": {
+     "a": {
+      "$ref": "#/components/schemas/CreateABTestVariant"
+     },
+     "b": {
+      "$ref": "#/components/schemas/CreateABTestVariant"
+     }
+    },
+    "required": [
+     "a",
+     "b"
+    ],
+    "type": "object"
+   },
+   "CreateBoosterDelay": {
+    "description": "Delay settings for booster campaign",
+    "properties": {
+     "amount": {
+      "description": "Amount of time units. Minimum 0 (SMS booster only \u2014 means \"send together with parent\").\nMaximum 240 hours (or 10 days)",
+      "example": 48,
+      "minimum": 0,
+      "type": "integer"
+     },
+     "unit": {
+      "description": "Time unit: \"h\" for hours, \"d\" for days",
+      "enum": [
+       "h",
+       "d"
+      ],
+      "example": "h",
+      "type": "string"
+     }
+    },
+    "required": [
+     "amount",
+     "unit"
+    ],
+    "type": "object"
+   },
+   "CreateBoosterSettings": {
+    "description": "Booster settings for campaign creation",
+    "properties": {
+     "campaignID": {
+      "description": "Parent campaign ID to boost",
+      "example": "000000000000000000000001",
+      "type": "string"
+     },
+     "delay": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/CreateBoosterDelay"
+       }
+      ],
+      "description": "Delay before sending the booster after the parent campaign is sent.\nOnly required when the parent campaign is in draft status"
+     },
+     "sendTo": {
+      "description": "Which recipients to target: \"nonOpeners\" or \"nonClickers\"",
+      "enum": [
+       "nonOpeners",
+       "nonClickers"
+      ],
+      "example": "nonOpeners",
+      "type": "string"
+     }
+    },
+    "required": [
+     "campaignID",
+     "sendTo"
+    ],
+    "type": "object"
+   },
+   "CreateCampaignRequest": {
+    "description": "Campaign creation request",
+    "properties": {
+     "abTest": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/CreateABTest"
+       }
+      ],
+      "description": "A/B test configuration. Required when type is \"abTest\".\nVariants carry per-variant content; omit the top-level content field."
+     },
+     "audience": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/Audience"
+       }
+      ],
+      "description": "Campaign audience. Included and excluded segments must not overlap"
+     },
+     "boosterSettings": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/CreateBoosterSettings"
+       }
+      ],
+      "description": "Booster settings. Required when type is \"booster\""
+     },
+     "channel": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/CampaignChannel"
+       }
+      ],
+      "description": "Campaign message channel",
+      "enum": [
+       "email",
+       "push",
+       "sms"
+      ],
+      "example": "email"
+     },
+     "content": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/CreateContent"
+       }
+      ],
+      "description": "Campaign content. Required for regular campaigns (not required for booster or abTest). Populated based on channel"
+     },
+     "language": {
+      "description": "Campaign language locale in xx_XX format. Optional; defaults to en_US when not provided. Must be a supported language when specified",
+      "example": "en_US",
+      "type": "string"
+     },
+     "name": {
+      "description": "Campaign name. Required for regular and abTest campaigns (not required for booster)",
+      "example": "Welcome Campaign",
+      "maxLength": 250,
+      "type": "string"
+     },
+     "sendingSettings": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/CreateSendingSettings"
+       }
+      ],
+      "description": "Campaign sending settings"
+     },
+     "type": {
+      "description": "Campaign type.\n\nWhen `type` is `booster`, there are two supported flows:\n\nFlow 1 \u2014 draft parent + draft booster:\nCreate a draft parent campaign, then create a draft booster for it\n(set `boosterSettings.delay` to control when it fires). Send the parent;\nthe booster is scheduled automatically based on the configured delay.\n\nFlow 2 \u2014 already-sent parent:\nCreate and send a parent campaign first. Once it reaches `sent` status,\ncreate the booster campaign (omit `boosterSettings.delay`) and use\n`sendingSettings.scheduledAt` to set the exact send time. Then call\nthe send endpoint on the booster.",
+      "enum": [
+       "regular",
+       "booster",
+       "abTest"
+      ],
+      "example": "regular",
+      "type": "string"
+     }
+    },
+    "required": [
+     "channel",
+     "type"
+    ],
+    "type": "object"
+   },
+   "CreateContent": {
+    "description": "Campaign content for creation",
+    "properties": {
+     "email": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/CreateEmail"
+       }
+      ],
+      "description": "Email content"
+     },
+     "sms": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/CreateSMS"
+       }
+      ],
+      "description": "SMS content"
+     }
+    },
+    "type": "object"
+   },
+   "CreateEmail": {
+    "description": "Email content for campaign creation",
+    "properties": {
+     "preheader": {
+      "description": "Email preheader text",
+      "example": "Discover what we have in store for you",
+      "maxLength": 250,
+      "type": "string"
+     },
+     "replyToEmail": {
+      "description": "Reply-to email address for recipient responses. Omit it and replies go to the sender\naddress. Set it only when a specific address is required: it must be an address\nverified for the brand, and verification status is not exposed here, so an address\nthat is guessed, or copied from another campaign, is rejected.",
+      "example": "support@example.com",
+      "type": "string"
+     },
+     "senderEmail": {
+      "description": "Sender email address. Omit it and the campaign is sent from the sender address\nconfigured for the brand. Set it only when a specific address is required: which\naddresses a brand may send from follows from its sender setup and is not exposed\nhere, so an address that is guessed, or copied from another campaign, is rejected.",
+      "example": "hello@example.com",
+      "type": "string"
+     },
+     "senderName": {
+      "description": "Sender display name shown in the recipient's inbox",
+      "example": "My Store",
+      "maxLength": 250,
+      "type": "string"
+     },
+     "subject": {
+      "description": "Email subject line",
+      "example": "Welcome to Omnisend!",
+      "maxLength": 250,
+      "type": "string"
+     },
+     "templateID": {
+      "description": "Email template unique identifier. Required for regular email campaigns: creation is\nrejected without it, even when the campaign would be saved as a draft. Booster campaigns\nare exempt \u2014 they may still send content.email (e.g. to override the subject) but do not\nrequire a template, inheriting the parent campaign's. A/B-test campaigns carry their\ntemplate per variant under abTest.variants, not in top-level content.\nMust reference an existing template.\nSee [Email Templates API](https://api-docs.omnisend.com/reference/email-templates).",
+      "example": "000000000000000000000001",
+      "type": "string"
+     }
+    },
+    "required": [
+     "templateID"
+    ],
+    "type": "object"
+   },
+   "CreateSMS": {
+    "description": "SMS content for campaign creation",
+    "properties": {
+     "compliance": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/CreateSMSCompliance"
+       }
+      ],
+      "description": "Compliance text appended to every SMS"
+     },
+     "imageID": {
+      "description": "Image ID obtained from the Images API.\nWhen set, the message is delivered as MMS to US/CA recipients;\nother countries receive SMS without the image.\nImage must be JPEG, JPG, PNG, or GIF and not exceed 500 KB",
+      "example": "000000000000000000000001",
+      "type": "string"
+     },
+     "isLinkShorteningEnabled": {
+      "description": "Auto-shorten links in message body. Default: true",
+      "example": true,
+      "type": "boolean"
+     },
+     "message": {
+      "description": "SMS message body.\nWhen sent as SMS, the message (including the appended\ncompliance text and unsubscribe link/keyword) must not exceed 9 SMS\nsegments for either US/CA or other-country recipients.\nWhen sent as MMS, the message (including the appended\ncompliance text) must not exceed 1600 characters for US/CA recipients.",
+      "example": "Hi! Check out our deals",
+      "type": "string"
+     }
+    },
+    "required": [
+     "compliance",
+     "message"
+    ],
+    "type": "object"
+   },
+   "CreateSMSCompliance": {
+    "description": "SMS compliance text settings for creation",
+    "properties": {
+     "stopKeywordText": {
+      "description": "STOP keyword text for US/CA recipients",
+      "example": "Reply STOP to opt out",
+      "maxLength": 250,
+      "type": "string"
+     },
+     "unsubscribeLinkText": {
+      "description": "Unsubscribe link text for non-US/CA recipients",
+      "example": "Unsubscribe [[unsubscribe_link]]",
+      "maxLength": 250,
+      "type": "string"
+     }
+    },
+    "required": [
+     "stopKeywordText",
+     "unsubscribeLinkText"
+    ],
+    "type": "object"
+   },
+   "CreateSendingSettings": {
+    "description": "Sending settings for campaign creation",
+    "properties": {
+     "isTZOptimizationEnabled": {
+      "description": "Whether timezone optimization is enabled.\nOnly available with immediate or scheduled strategy, and only in email campaigns",
+      "example": false,
+      "type": "boolean"
+     },
+     "optimizeFor": {
+      "description": "Optimization objective for personalized sends.\nRequired when strategy is \"personalized\", must not be set otherwise",
+      "enum": [
+       "opens",
+       "clicks",
+       "orders"
+      ],
+      "example": "opens",
+      "type": "string"
+     },
+     "scheduledAt": {
+      "description": "Campaign scheduled send time in RFC 3339 format.\nRequired when strategy is \"scheduled\" or \"personalized\", must not be set for \"immediate\".\nFor \"scheduled\" it must be in the future and within one year from now.\nFor \"personalized\" only the calendar date in the brand timezone is used, not the time-of-day:\nthe value is normalized to the start of that day in the brand timezone. A date resolving to today\nstarts the STO window at the next whole hour when the campaign is sent; a future date (within one\nyear) starts it at brand-local midnight. Per-contact send times are then chosen within the\nfollowing 24 hours. Responses store the start as brand-local midnight, which can appear as the\nprevious UTC calendar date",
+      "example": "2026-06-15T00:00:00+03:00",
+      "type": "string"
+     },
+     "strategy": {
+      "description": "Sending strategy. Default: immediate.\n\"personalized\" enables send time optimization and is only available\nfor regular email campaigns in stores whose plan includes personalized send times and that are eligible for them",
+      "enum": [
+       "immediate",
+       "scheduled",
+       "personalized"
+      ],
+      "example": "immediate",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "CursorsResponse": {
+    "description": "Cursor pointers for paginating forward and backward through results",
+    "properties": {
+     "after": {
+      "description": "Opaque cursor for fetching the next page of results",
+      "example": "eyJpZCI6ImNhbXAtNDU2In0",
+      "type": "string",
+      "nullable": true
+     },
+     "before": {
+      "description": "Opaque cursor for fetching the previous page of results",
+      "example": "eyJpZCI6ImNhbXAtMTIzIn0",
+      "type": "string",
+      "nullable": true
+     }
+    },
+    "type": "object"
+   },
+   "Email": {
+    "description": "Email content",
+    "properties": {
+     "contentID": {
+      "description": "Email content unique identifier referencing the campaign's email design",
+      "example": "000000000000000000000001",
+      "type": "string"
+     },
+     "preheader": {
+      "description": "Email preheader text displayed after the subject line in the recipient's inbox",
+      "example": "Discover what we have in store for you",
+      "type": "string"
+     },
+     "replyToEmail": {
+      "description": "Reply-to email address for recipient responses",
+      "example": "support@example.com",
+      "type": "string"
+     },
+     "senderEmail": {
+      "description": "Sender email address shown in the recipient's inbox",
+      "example": "hello@example.com",
+      "type": "string"
+     },
+     "senderName": {
+      "description": "Sender display name shown in the recipient's inbox",
+      "example": "My Store",
+      "type": "string"
+     },
+     "subject": {
+      "description": "Email subject line displayed in the recipient's inbox",
+      "example": "Welcome to Omnisend!",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "FieldError": {
+    "description": "A single field validation failure within a validation error response.",
+    "properties": {
+     "code": {
+      "description": "Error code indicating the type of failure",
+      "example": "invalid_format",
+      "type": "string"
+     },
+     "field": {
+      "description": "Dot-separated path to the field that failed validation",
+      "example": "content.email.subject",
+      "type": "string"
+     },
+     "message": {
+      "description": "Human-readable explanation of what is wrong with the field value",
+      "example": "Must be a valid email address",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "PagingResponse": {
+    "description": "Cursor-based pagination metadata",
+    "properties": {
+     "cursors": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/CursorsResponse"
+       }
+      ],
+      "description": "Cursor values for navigating between pages"
+     },
+     "hasMore": {
+      "description": "Whether there are more items available beyond the current page",
+      "example": true,
+      "type": "boolean"
+     },
+     "limit": {
+      "description": "Maximum number of items returned per page",
+      "example": 50,
+      "type": "integer"
+     }
+    },
+    "type": "object"
+   },
+   "Problem": {
+    "description": "Standard error response returned by all API endpoints on failure.",
+    "properties": {
+     "detail": {
+      "description": "Human-readable explanation of this specific error occurrence",
+      "example": "A human-readable explanation of the error.",
+      "type": "string"
+     },
+     "instance": {
+      "description": "Request trace identifier for support and debugging",
+      "example": "urn:omnisend:request:00000000-0000-0000-0000-000000000001",
+      "type": "string"
+     },
+     "status": {
+      "description": "HTTP status code",
+      "example": 0,
+      "type": "integer"
+     },
+     "title": {
+      "description": "Short description of the error type",
+      "example": "Problem",
+      "type": "string"
+     },
+     "type": {
+      "description": "URI that identifies the error type",
+      "example": "https://problems.omnisend.com/problem",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "RateLimitProblem": {
+    "description": "Error response returned when the rate limit is exceeded. Use the retryAfter value to know when it is safe to retry the request.",
+    "properties": {
+     "detail": {
+      "description": "Human-readable explanation of this specific error occurrence",
+      "example": "A human-readable explanation of the error.",
+      "type": "string"
+     },
+     "instance": {
+      "description": "Request trace identifier for support and debugging",
+      "example": "urn:omnisend:request:00000000-0000-0000-0000-000000000001",
+      "type": "string"
+     },
+     "retryAfter": {
+      "description": "Seconds to wait before retrying the request",
+      "example": 60,
+      "type": "integer"
+     },
+     "status": {
+      "description": "HTTP status code",
+      "example": 0,
+      "type": "integer"
+     },
+     "title": {
+      "description": "Short description of the error type",
+      "example": "Problem",
+      "type": "string"
+     },
+     "type": {
+      "description": "URI that identifies the error type",
+      "example": "https://problems.omnisend.com/problem",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "SMS": {
+    "description": "SMS message content",
+    "properties": {
+     "compliance": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/SMSCompliance"
+       }
+      ],
+      "description": "Compliance text appended to every SMS"
+     },
+     "imageID": {
+      "description": "Image ID obtained from the Images API.\nWhen set, the message is delivered as MMS to US/CA recipients;\nother countries receive SMS without the image.\nImage must be JPEG, JPG, PNG, or GIF and not exceed 500 KB",
+      "example": "000000000000000000000001",
+      "type": "string"
+     },
+     "isLinkShorteningEnabled": {
+      "description": "Auto-shorten links in message body",
+      "example": true,
+      "type": "boolean"
+     },
+     "message": {
+      "description": "SMS message body.\nWhen sent as SMS, the message (including the appended\ncompliance text and unsubscribe link/keyword) must not exceed 9 SMS\nsegments for either US/CA or other-country recipients.\nWhen sent as MMS, the message (including the appended\ncompliance text) must not exceed 1600 characters for US/CA recipients.",
+      "example": "Hi! Check out our new deals",
+      "type": "string"
+     },
+     "senderName": {
+      "description": "Sender display name. Max 250 chars",
+      "example": "My Store",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "SMSCompliance": {
+    "description": "SMS compliance text settings",
+    "properties": {
+     "stopKeywordText": {
+      "description": "STOP keyword text for US/CA recipients. Max 250 chars",
+      "example": "Reply STOP to opt out",
+      "type": "string"
+     },
+     "unsubscribeLinkText": {
+      "description": "Unsubscribe link text for non-US/CA recipients. Max 250 chars",
+      "example": "Unsubscribe [[unsubscribe_link]]",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "SelectABTestWinnerRequest": {
+    "description": "Winning variant selection for a manual A/B test winner pick",
+    "properties": {
+     "variantID": {
+      "description": "ID of the variant to promote as the winner",
+      "example": "000000000000000000000001",
+      "type": "string"
+     }
+    },
+    "required": [
+     "variantID"
+    ],
+    "type": "object"
+   },
+   "SendTestEmailRequest": {
+    "description": "Request payload for sending a campaign test email.",
+    "properties": {
+     "recipients": {
+      "description": "Email addresses that receive the test send. Between 1 and 5 addresses.",
+      "example": [
+       "merchant@example.com",
+       "teammate@example.com"
+      ],
+      "items": {
+       "format": "email",
+       "type": "string"
+      },
+      "maxItems": 5,
+      "minItems": 1,
+      "type": "array"
+     }
+    },
+    "required": [
+     "recipients"
+    ],
+    "type": "object"
+   },
+   "SendingSettings": {
+    "description": "Campaign sending settings",
+    "properties": {
+     "isTZOptimizationEnabled": {
+      "description": "Whether timezone optimization is enabled.\nOnly available with immediate or scheduled strategy, and only in email campaigns",
+      "example": false,
+      "type": "boolean"
+     },
+     "optimizeFor": {
+      "description": "Optimization objective for personalized sends.\nPresent when strategy is personalized",
+      "enum": [
+       "opens",
+       "clicks",
+       "orders"
+      ],
+      "example": "opens",
+      "type": "string"
+     },
+     "scheduledAt": {
+      "description": "Scheduled send time in RFC 3339 format.\nPresent when strategy is scheduled or personalized",
+      "example": "2026-03-01T10:00:00Z",
+      "type": "string"
+     },
+     "strategy": {
+      "description": "Sending strategy",
+      "enum": [
+       "immediate",
+       "scheduled",
+       "personalized"
+      ],
+      "example": "immediate",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "UTMResponse": {
+    "description": "UTM settings for a campaign. Exactly one of `tags` (regular campaign) or `variants` (A/B test campaign) is present.",
+    "properties": {
+     "tags": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UTMTags"
+       }
+      ],
+      "description": "UTM tags \u2014 present for regular campaigns"
+     },
+     "variants": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UTMVariants"
+       }
+      ],
+      "description": "UTM variants \u2014 present for A/B campaigns"
+     }
+    },
+    "type": "object"
+   },
+   "UTMTags": {
+    "description": "UTM tag values. Providing empty values resets them to defaults.",
+    "properties": {
+     "campaign": {
+      "description": "UTM campaign parameter (max 250 characters)",
+      "example": "Welcome Email",
+      "maxLength": 250,
+      "type": "string"
+     },
+     "medium": {
+      "description": "UTM medium parameter (max 250 characters)",
+      "example": "email",
+      "maxLength": 250,
+      "type": "string"
+     },
+     "source": {
+      "description": "UTM source parameter (max 250 characters)",
+      "example": "omnisend",
+      "maxLength": 250,
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "UTMUpdate": {
+    "description": "UTM update request. Provide `tags` for regular campaigns or `variants` for A/B test campaigns. Exactly one must be present; providing both is a validation error.",
+    "properties": {
+     "tags": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UTMTags"
+       }
+      ],
+      "description": "Tags for a regular campaign \u2014 omit for A/B campaigns"
+     },
+     "variants": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UTMVariantsUpdate"
+       }
+      ],
+      "description": "Variants for an A/B test campaign \u2014 omit for regular campaigns"
+     }
+    },
+    "type": "object"
+   },
+   "UTMVariant": {
+    "description": "UTM variant entry for an A/B test campaign.",
+    "properties": {
+     "id": {
+      "description": "Variant campaign ID (read-only)",
+      "example": "000000000000000000000010",
+      "readOnly": true,
+      "type": "string"
+     },
+     "tags": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UTMTags"
+       }
+      ],
+      "description": "UTM tags for this variant"
+     }
+    },
+    "type": "object"
+   },
+   "UTMVariantTags": {
+    "description": "UTM variant tags for an A/B update request. Providing empty values resets them to defaults.",
+    "properties": {
+     "campaign": {
+      "description": "UTM campaign parameter (max 250 characters)",
+      "example": "Welcome A",
+      "maxLength": 250,
+      "type": "string"
+     },
+     "medium": {
+      "description": "UTM medium parameter (max 250 characters)",
+      "example": "email",
+      "maxLength": 250,
+      "type": "string"
+     },
+     "source": {
+      "description": "UTM source parameter (max 250 characters)",
+      "example": "omnisend",
+      "maxLength": 250,
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "UTMVariants": {
+    "description": "UTM variants for an A/B test campaign.",
+    "properties": {
+     "a": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UTMVariant"
+       }
+      ],
+      "description": "Variant A UTM settings"
+     },
+     "b": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UTMVariant"
+       }
+      ],
+      "description": "Variant B UTM settings"
+     }
+    },
+    "type": "object"
+   },
+   "UTMVariantsUpdate": {
+    "description": "UTM variant update entries for an A/B test campaign.",
+    "properties": {
+     "a": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UTMVariantTags"
+       }
+      ],
+      "description": "Variant A tags"
+     },
+     "b": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UTMVariantTags"
+       }
+      ],
+      "description": "Variant B tags"
+     }
+    },
+    "type": "object"
+   },
+   "UpdateABTest": {
+    "description": "A/B test update block. Full replacement semantics.",
+    "properties": {
+     "settings": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UpdateABTestSettings"
+       }
+      ],
+      "description": "A/B test settings"
+     },
+     "variants": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UpdateABTestVariants"
+       }
+      ],
+      "description": "Per-variant content fields"
+     }
+    },
+    "type": "object"
+   },
+   "UpdateABTestDecisionTime": {
+    "description": "Decision time for A/B test winner selection",
+    "properties": {
+     "amount": {
+      "description": "Amount of time units",
+      "example": 4,
+      "minimum": 1,
+      "type": "integer"
+     },
+     "unit": {
+      "description": "Time unit: \"h\" (hours, 1\u2013168) or \"d\" (days, 1\u20137)",
+      "enum": [
+       "h",
+       "d"
+      ],
+      "example": "h",
+      "type": "string"
+     }
+    },
+    "required": [
+     "amount",
+     "unit"
+    ],
+    "type": "object"
+   },
+   "UpdateABTestSettings": {
+    "description": "A/B test settings for update",
+    "properties": {
+     "decisionTime": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UpdateABTestDecisionTime"
+       }
+      ],
+      "description": "Time allowed before a winner is selected"
+     },
+     "testSizePercent": {
+      "description": "Percentage of audience used for the test (10\u2013100)",
+      "example": 20,
+      "maximum": 100,
+      "minimum": 10,
+      "type": "integer"
+     },
+     "winningMetric": {
+      "description": "Metric used to determine the winner",
+      "enum": [
+       "openRate",
+       "clickRate"
+      ],
+      "example": "openRate",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "UpdateABTestVariant": {
+    "description": "Content fields for a single A/B variant. Email fields live under `content.email`.",
+    "properties": {
+     "content": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UpdateABTestVariantContent"
+       }
+      ],
+      "description": "Variant content grouped by channel"
+     }
+    },
+    "type": "object"
+   },
+   "UpdateABTestVariantContent": {
+    "description": "Variant content grouped by channel for update.",
+    "properties": {
+     "email": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UpdateABTestVariantEmail"
+       }
+      ],
+      "description": "Email content for this variant"
+     }
+    },
+    "type": "object"
+   },
+   "UpdateABTestVariantEmail": {
+    "description": "Email content fields for an A/B test variant update.",
+    "properties": {
+     "preheader": {
+      "description": "Email preheader text",
+      "example": "Preheader for A",
+      "maxLength": 250,
+      "type": "string"
+     },
+     "replyToEmail": {
+      "description": "Reply-to email address. Omit it to keep the current value; send an empty string to clear\nit, which makes replies go to the sender address. Any address set must be verified for\nthe brand, and verification status is not exposed here, so an address that is guessed,\nor copied from another campaign, is rejected.",
+      "example": "support@example.com",
+      "type": "string"
+     },
+     "senderEmail": {
+      "description": "Sender email address. Omit it to keep the current sender, which the brand may already\nsend from. Set it only when switching to a specific required address: which addresses\na brand may send from follows from its sender setup and is not exposed here, so an\naddress that is guessed, or copied from another campaign, is rejected.",
+      "example": "hello@example.com",
+      "type": "string"
+     },
+     "senderName": {
+      "description": "Sender display name",
+      "example": "My Store",
+      "maxLength": 250,
+      "minLength": 1,
+      "type": "string"
+     },
+     "subject": {
+      "description": "Email subject line",
+      "example": "Version A subject",
+      "maxLength": 250,
+      "minLength": 1,
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "UpdateABTestVariants": {
+    "description": "Per-variant content for A/B test update",
+    "properties": {
+     "a": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UpdateABTestVariant"
+       }
+      ],
+      "description": "Variant A content"
+     },
+     "b": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UpdateABTestVariant"
+       }
+      ],
+      "description": "Variant B content"
+     }
+    },
+    "type": "object"
+   },
+   "UpdateBoosterDelay": {
+    "description": "Delay settings for booster campaign",
+    "properties": {
+     "amount": {
+      "description": "Amount of time units. Minimum 0 (SMS booster only \u2014 means \"send together with parent\").\nMaximum 240 hours (or 10 days)",
+      "example": 48,
+      "minimum": 0,
+      "type": "integer"
+     },
+     "unit": {
+      "description": "Time unit: \"h\" for hours, \"d\" for days",
+      "enum": [
+       "h",
+       "d"
+      ],
+      "example": "h",
+      "type": "string"
+     }
+    },
+    "required": [
+     "amount",
+     "unit"
+    ],
+    "type": "object"
+   },
+   "UpdateBoosterSettings": {
+    "description": "Booster-specific settings for campaign update.",
+    "properties": {
+     "delay": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UpdateBoosterDelay"
+       }
+      ],
+      "description": "Delay before sending the booster after the parent campaign is sent.\nOnly required when the parent campaign is in draft status"
+     },
+     "sendTo": {
+      "description": "Which recipients to target: \"nonOpeners\" or \"nonClickers\"",
+      "enum": [
+       "nonOpeners",
+       "nonClickers"
+      ],
+      "example": "nonOpeners",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "UpdateCampaignRequest": {
+    "description": "Campaign update request",
+    "properties": {
+     "abTest": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UpdateABTest"
+       }
+      ],
+      "description": "A/B test settings. Only applicable to A/B campaigns (campaigns with type \"abTest\").\nFull replacement \u2014 all provided variant and setting fields replace existing values.\ntemplateID / contentID are excluded: templates are set at create time and cannot\nbe changed via PATCH."
+     },
+     "audience": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/Audience"
+       }
+      ],
+      "description": "Campaign audience. Included and excluded segments must not overlap"
+     },
+     "boosterSettings": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UpdateBoosterSettings"
+       }
+      ],
+      "description": "Booster-specific settings. Only applicable to booster campaigns (campaigns with type \"booster\")."
+     },
+     "content": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UpdateContent"
+       }
+      ],
+      "description": "Campaign content. Only specified fields will be updated"
+     },
+     "language": {
+      "description": "Campaign language locale in xx_XX format. Must be a supported language",
+      "example": "en_US",
+      "type": "string"
+     },
+     "name": {
+      "description": "Campaign name",
+      "example": "Welcome Campaign",
+      "maxLength": 250,
+      "type": "string"
+     },
+     "sendingSettings": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UpdateSendingSettings"
+       }
+      ],
+      "description": "Campaign sending settings.\nFull object replacement - all fields must be provided when updating"
+     }
+    },
+    "type": "object"
+   },
+   "UpdateContent": {
+    "description": "Campaign content for update",
+    "properties": {
+     "email": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UpdateEmail"
+       }
+      ],
+      "description": "Email content. Only specified fields will be updated"
+     },
+     "sms": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UpdateSMS"
+       }
+      ],
+      "description": "SMS content. Only specified fields will be updated"
+     }
+    },
+    "type": "object"
+   },
+   "UpdateEmail": {
+    "description": "Email content for campaign update",
+    "properties": {
+     "preheader": {
+      "description": "Email preheader text",
+      "example": "Discover what we have in store for you",
+      "maxLength": 250,
+      "type": "string"
+     },
+     "replyToEmail": {
+      "description": "Reply-to email address for recipient responses. Omit it to keep the current value; send\nan empty string to clear it, which makes replies go to the sender address. Any address\nset must be verified for the brand, and verification status is not exposed here, so an\naddress that is guessed, or copied from another campaign, is rejected.",
+      "example": "support@example.com",
+      "type": "string"
+     },
+     "senderEmail": {
+      "description": "Sender email address. Omit it to keep the current sender, which the brand may already\nsend from. Set it only when switching to a specific required address: which addresses\na brand may send from follows from its sender setup and is not exposed here, so an\naddress that is guessed, or copied from another campaign, is rejected.",
+      "example": "hello@example.com",
+      "type": "string"
+     },
+     "senderName": {
+      "description": "Sender display name shown in the recipient's inbox",
+      "example": "My Store",
+      "maxLength": 250,
+      "minLength": 1,
+      "type": "string"
+     },
+     "subject": {
+      "description": "Email subject line",
+      "example": "Welcome to Omnisend!",
+      "maxLength": 250,
+      "minLength": 1,
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "UpdateSMS": {
+    "description": "SMS content for campaign update",
+    "properties": {
+     "compliance": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/UpdateSMSCompliance"
+       }
+      ],
+      "description": "Compliance text appended to every SMS"
+     },
+     "imageID": {
+      "description": "Image ID obtained from the Images API.\nWhen set, the message is delivered as MMS to US/CA recipients;\nother countries receive SMS without the image.\nImage must be JPEG, JPG, PNG, or GIF and not exceed 500 KB",
+      "example": "000000000000000000000001",
+      "type": "string"
+     },
+     "isLinkShorteningEnabled": {
+      "description": "Auto-shorten links in message body",
+      "example": true,
+      "type": "boolean"
+     },
+     "message": {
+      "description": "SMS message body.\nWhen sent as SMS, the message (including the appended\ncompliance text and unsubscribe link/keyword) must not exceed 9 SMS\nsegments for either US/CA or other-country recipients.\nWhen sent as MMS, the message (including the appended\ncompliance text) must not exceed 1600 characters for US/CA recipients.",
+      "example": "Hi! Check out our deals",
+      "minLength": 1,
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "UpdateSMSCompliance": {
+    "description": "SMS compliance text settings for update",
+    "properties": {
+     "stopKeywordText": {
+      "description": "STOP keyword text for US/CA recipients",
+      "example": "Reply STOP to opt out",
+      "maxLength": 250,
+      "minLength": 1,
+      "type": "string"
+     },
+     "unsubscribeLinkText": {
+      "description": "Unsubscribe link text for non-US/CA recipients",
+      "example": "Unsubscribe [[unsubscribe_link]]",
+      "maxLength": 250,
+      "minLength": 1,
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "UpdateSendingSettings": {
+    "description": "Sending settings for campaign update. Full object replacement - provide all fields applicable to the selected strategy (for personalized: strategy, scheduledAt, optimizeFor; omit isTZOptimizationEnabled)",
+    "properties": {
+     "isTZOptimizationEnabled": {
+      "description": "Whether timezone optimization is enabled.\nOnly available with immediate or scheduled strategy, and only in email campaigns",
+      "example": false,
+      "type": "boolean"
+     },
+     "optimizeFor": {
+      "description": "Optimization objective for personalized sends.\nRequired when strategy is \"personalized\", must not be set otherwise",
+      "enum": [
+       "opens",
+       "clicks",
+       "orders"
+      ],
+      "example": "opens",
+      "type": "string"
+     },
+     "scheduledAt": {
+      "description": "Campaign scheduled send time in RFC 3339 format.\nRequired when strategy is \"scheduled\" or \"personalized\", must not be set for \"immediate\".\nFor \"scheduled\" it must be in the future and within one year from now.\nFor \"personalized\" only the calendar date in the brand timezone is used, not the time-of-day:\nthe value is normalized to the start of that day in the brand timezone. A date resolving to today\nstarts the STO window at the next whole hour when the campaign is sent; a future date (within one\nyear) starts it at brand-local midnight. Per-contact send times are then chosen within the\nfollowing 24 hours. Responses store the start as brand-local midnight, which can appear as the\nprevious UTC calendar date",
+      "example": "2026-06-15T00:00:00+03:00",
+      "type": "string"
+     },
+     "strategy": {
+      "description": "Sending strategy.\n\"personalized\" enables send time optimization and is only available\nfor regular email campaigns in stores whose plan includes personalized send times and that are eligible for them",
+      "enum": [
+       "immediate",
+       "scheduled",
+       "personalized"
+      ],
+      "example": "immediate",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "ValidationProblem": {
+    "description": "Error response returned when the request contains invalid input. The errors array lists every field that failed validation.",
+    "properties": {
+     "detail": {
+      "description": "Human-readable explanation of this specific error occurrence",
+      "example": "A human-readable explanation of the error.",
+      "type": "string"
+     },
+     "errors": {
+      "description": "List of fields that failed validation",
+      "items": {
+       "$ref": "#/components/schemas/FieldError"
+      },
+      "type": "array"
+     },
+     "instance": {
+      "description": "Request trace identifier for support and debugging",
+      "example": "urn:omnisend:request:00000000-0000-0000-0000-000000000001",
+      "type": "string"
+     },
+     "status": {
+      "description": "HTTP status code",
+      "example": 0,
+      "type": "integer"
+     },
+     "title": {
+      "description": "Short description of the error type",
+      "example": "Problem",
+      "type": "string"
+     },
+     "type": {
+      "description": "URI that identifies the error type",
+      "example": "https://problems.omnisend.com/problem",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   }
+  }
+ }
+}

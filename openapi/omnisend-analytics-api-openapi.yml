@@ -1,65 +1,432 @@
-openapi: 3.1.0
+openapi: 3.0.0
 info:
-  title: Omnisend REST Analytics API
-  description: 'Omnisend''s REST API for managing ecommerce email and SMS marketing
-
-    automation. Exposes contacts, events, products, product categories,
-
-    segments, campaigns, batches, email templates, email content, email
-
-    universal layouts, images, brands, and analytics reports. Authentication
-
-    uses an API key passed via the `X-API-KEY` header, or OAuth 2.0 with
-
-    scopes such as `contacts.read`, `contacts.write`, `campaigns.read`,
-
-    `campaigns.write`, `analytics.read`, etc.
-
-    '
-  version: v5
-  contact:
-    name: Omnisend
-    url: https://api-docs.omnisend.com/
-servers:
-- url: https://api.omnisend.com/v5
-  description: Omnisend REST API v5
-security:
-- ApiKeyAuth: []
-- OAuth2: []
-tags:
-- name: Analytics
+  contact: {}
+  title: Analytics API
+  version: '5.0'
+  x-api-evangelist:
+    harvested: '2026-08-13'
+    method: searched
+    source: https://dash.readme.com/api/v1/api-registry/c7lis6msfxryyp
+    source-note: Published by Omnisend on its own docs host api-docs.omnisend.com (ReadMe project @omnisend,
+      branch v2026-03-15); registry document referenced by the reference page as oasPublicUrl.
 paths:
-  /analytics-reports:
+  /analytics/reports:
     post:
-      tags:
-      - Analytics
-      summary: Generate a marketing analytics report
+      description: 'Returns aggregated marketing analytics grouped by message send date. Covers delivery,
+        engagement, and revenue attribution metrics for campaigns and automations. Supports optional dimensions
+        (timestamp, channel, activity), filters, and up to 4 queries per request.
+
+
+        **Scopes:**
+
+        `analytics.read`
+
+
+        **Rate Limiting:**
+
+        This endpoint is rate limited to 10 requests per minute and 55 requests per 24 hours.
+
+        Rate limits apply per brand. See [Rate limits](https://api-docs.omnisend.com/reference/reports#rate-limits).
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/APIVersionHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/reports.ReportRequest'
+        description: Report query (queries with metrics, dimensions, date range)
+        required: true
       responses:
         '200':
-          description: Report
-  /analytics-statistics:
-    post:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reports.ReportResponse'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblem'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '415':
+          description: Unsupported media type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Service temporarily unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '524':
+          description: Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - analytics.read
+      - ApiKeyAuth: []
+      summary: Generate report
       tags:
-      - Analytics
-      summary: Generate event-based statistics report
+      - Reports
+  /analytics/statistics:
+    post:
+      description: 'Returns aggregated marketing analytics grouped by event date (when opens, clicks,
+        orders actually occurred). Covers delivery, engagement, revenue attribution, and audience growth
+        metrics. Requires a timestamp dimension. Supports a rich set of dimensions (client, click, subscription,
+        deliverability) and up to 4 queries per request.
+
+
+        **Scopes:**
+
+        `analytics.read`
+
+
+        **Rate Limiting:**
+
+        This endpoint is rate limited to 10 requests per minute and 55 requests per 24 hours.
+
+        Rate limits apply per brand. See [Rate limits](https://api-docs.omnisend.com/reference/statistics#rate-limits).
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/APIVersionHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/statistics.ReportRequest'
+        description: Report query (queries with metrics, dimensions, date range)
+        required: true
       responses:
         '200':
-          description: Statistics report
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/statistics.ReportResponse'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblem'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '415':
+          description: Unsupported media type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Service temporarily unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '524':
+          description: Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - analytics.read
+      - ApiKeyAuth: []
+      summary: Generate report
+      tags:
+      - Statistics
+servers:
+- url: https://api.omnisend.com/api
 components:
+  parameters:
+    APIVersionHeader:
+      description: API version that specifies the response format and behaviour
+      in: header
+      name: Omnisend-Version
+      required: true
+      schema:
+        type: string
+        default: '2026-03-15'
   securitySchemes:
     ApiKeyAuth:
-      type: apiKey
+      description: 'API key authentication. Use format: Omnisend-API-Key {api-key}'
       in: header
-      name: X-API-KEY
-    OAuth2:
+      name: Authorization
+      type: apiKey
+    Bearer:
       type: oauth2
       flows:
-        authorizationCode:
-          authorizationUrl: https://app.omnisend.com/oauth/authorize
-          tokenUrl: https://api.omnisend.com/v5/oauth/token
-          scopes:
-            contacts.read: Read contacts
-            contacts.write: Manage contacts
-            campaigns.read: Read campaigns
-            campaigns.write: Manage campaigns
-            analytics.read: Read analytics
+        clientCredentials:
+          tokenUrl: https://app.omnisend.com/oauth2/token
+          scopes: {}
+  schemas:
+    FieldError:
+      description: A single field validation failure within a validation error response.
+      properties:
+        code:
+          description: Error code indicating the type of failure
+          example: invalid_format
+          type: string
+        field:
+          description: Dot-separated path to the field that failed validation
+          example: content.email.subject
+          type: string
+        message:
+          description: Human-readable explanation of what is wrong with the field value
+          example: Must be a valid email address
+          type: string
+      type: object
+    Problem:
+      description: Standard error response returned by all API endpoints on failure.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    ValidationProblem:
+      description: Error response returned when the request contains invalid input. The errors array lists
+        every field that failed validation.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        errors:
+          description: List of fields that failed validation
+          items:
+            $ref: '#/components/schemas/FieldError'
+          type: array
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    analytics.Dimension:
+      properties:
+        granularity:
+          type: string
+        name:
+          type: string
+      type: object
+    analytics.DimensionHeader:
+      properties:
+        granularity:
+          type: string
+        name:
+          type: string
+      type: object
+    analytics.Filter:
+      properties:
+        name:
+          type: string
+        operator:
+          type: string
+        values:
+          items:
+            type: string
+          type: array
+      type: object
+    analytics.Metric:
+      properties:
+        name:
+          type: string
+      type: object
+    analytics.MetricHeader:
+      properties:
+        name:
+          type: string
+      type: object
+    analytics.ReportResultRow:
+      additionalProperties: {}
+      type: object
+    reports.DateRange:
+      properties:
+        from:
+          type: string
+        interval:
+          type: string
+        to:
+          type: string
+      type: object
+    reports.ReportQuery:
+      properties:
+        alias:
+          type: string
+        dateRange:
+          $ref: '#/components/schemas/reports.DateRange'
+        dimensions:
+          items:
+            $ref: '#/components/schemas/analytics.Dimension'
+          type: array
+        filters:
+          items:
+            $ref: '#/components/schemas/analytics.Filter'
+          type: array
+        metrics:
+          items:
+            $ref: '#/components/schemas/analytics.Metric'
+          type: array
+      type: object
+    reports.ReportRequest:
+      properties:
+        queries:
+          items:
+            $ref: '#/components/schemas/reports.ReportQuery'
+          type: array
+      type: object
+    reports.ReportResponse:
+      properties:
+        reports:
+          items:
+            $ref: '#/components/schemas/reports.ReportResult'
+          type: array
+      type: object
+    reports.ReportResult:
+      properties:
+        alias:
+          type: string
+        dimensions:
+          items:
+            $ref: '#/components/schemas/analytics.DimensionHeader'
+          type: array
+        metrics:
+          items:
+            $ref: '#/components/schemas/analytics.MetricHeader'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/analytics.ReportResultRow'
+          type: array
+      type: object
+    statistics.DateRange:
+      properties:
+        from:
+          description: RFC3339/ISO8601 format
+          type: string
+        to:
+          description: RFC3339/ISO8601 format
+          type: string
+      type: object
+    statistics.ReportQuery:
+      properties:
+        alias:
+          type: string
+        dateRange:
+          $ref: '#/components/schemas/statistics.DateRange'
+        dimensions:
+          items:
+            $ref: '#/components/schemas/analytics.Dimension'
+          type: array
+        filters:
+          items:
+            $ref: '#/components/schemas/analytics.Filter'
+          type: array
+        metrics:
+          items:
+            $ref: '#/components/schemas/analytics.Metric'
+          type: array
+      type: object
+    statistics.ReportRequest:
+      properties:
+        queries:
+          items:
+            $ref: '#/components/schemas/statistics.ReportQuery'
+          type: array
+      type: object
+    statistics.ReportResponse:
+      properties:
+        statistics:
+          items:
+            $ref: '#/components/schemas/statistics.ReportResult'
+          type: array
+      type: object
+    statistics.ReportResult:
+      properties:
+        alias:
+          type: string
+        dimensions:
+          items:
+            $ref: '#/components/schemas/analytics.DimensionHeader'
+          type: array
+        metrics:
+          items:
+            $ref: '#/components/schemas/analytics.MetricHeader'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/analytics.ReportResultRow'
+          type: array
+      type: object

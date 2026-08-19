@@ -1,0 +1,4240 @@
+openapi: 3.0.0
+info:
+  contact: {}
+  description: API for managing automation workflows.
+  title: Automations API
+  version: 2026-preview
+  x-api-evangelist:
+    harvested: '2026-08-13'
+    method: searched
+    source: https://dash.readme.com/api/v1/api-registry/9c1ckrq1msfxryzj
+    source-note: Published by Omnisend on its own docs host api-docs.omnisend.com (ReadMe project @omnisend,
+      branch v2026-03-15); registry document referenced by the reference page as oasPublicUrl.
+paths:
+  /automations:
+    get:
+      description: 'List automation workflows with filtering, sorting, and cursor-based pagination.
+
+
+        **Scopes:**
+
+        `automations.read`
+
+
+        **Rate Limiting:**
+
+        This endpoint is rate limited to 400 requests per minute.
+
+
+        **Pagination:**
+
+        This endpoint uses cursor-based pagination.
+
+        - Use the `paging.cursors.after` value from the response to get the next page
+
+        - Use the `paging.cursors.before` value to get the previous page
+
+        - The `paging.hasMore` field indicates if more results are available
+
+        - Maximum page size is 250 items. Default: 100'
+      parameters:
+      - $ref: '#/components/parameters/APIVersionHeader'
+      - description: 'Number of items per page. Range: 1-250. Default: 100'
+        in: query
+        name: limit
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 250
+      - description: Opaque cursor for the next page
+        in: query
+        name: after
+        schema:
+          type: string
+      - description: Opaque cursor for the previous page
+        in: query
+        name: before
+        schema:
+          type: string
+      - description: 'Sort field. Default: createdAt'
+        in: query
+        name: sort
+        schema:
+          type: string
+          enum:
+          - createdAt
+          - updatedAt
+      - description: 'Sort direction. Default: desc'
+        in: query
+        name: direction
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+      - description: If true, only enabled automations; if false, only disabled. Omit for no filter.
+        in: query
+        name: isEnabled
+        schema:
+          type: boolean
+      - description: Filter by name (partial match, max 200 characters)
+        in: query
+        name: nameContains
+        schema:
+          type: string
+          maxLength: 200
+      - description: Filter automations created after this timestamp (ISO 8601, e.g. 2026-01-01T00:00:00Z)
+        in: query
+        name: createdAtFrom
+        schema:
+          type: string
+          format: date-time
+      - description: Filter automations created before this timestamp (ISO 8601, e.g. 2026-01-01T00:00:00Z)
+        in: query
+        name: createdAtTo
+        schema:
+          type: string
+          format: date-time
+      - description: Filter automations updated after this timestamp (ISO 8601, e.g. 2026-01-01T00:00:00Z)
+        in: query
+        name: updatedAtFrom
+        schema:
+          type: string
+          format: date-time
+      - description: Filter automations updated before this timestamp (ISO 8601, e.g. 2026-01-01T00:00:00Z)
+        in: query
+        name: updatedAtTo
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: List of automations with pagination
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListAutomationsResponse'
+        '400':
+          description: Request contains invalid or missing fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblem'
+        '401':
+          description: Authentication is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Insufficient permissions for this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '410':
+          description: API version has been retired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitProblem'
+        '500':
+          description: Unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - automations.read
+      - ApiKeyAuth: []
+      summary: List automation workflows
+      tags:
+      - Automations
+    post:
+      description: "Create a new automation workflow.\n\n**Scopes:**\n`automations.write`\n\n**Rate Limiting:**\n\
+        This endpoint is rate limited to 400 requests per minute.\n\n## Trigger condition examples\n\n\
+        The `trigger.condition` field defines the event that enrolls contacts into the automation. Most\
+        \ trigger events use standard Events API event names and may require `origin`. Built-in trigger\
+        \ events, such as `\"birthday\"`, do not use `origin`.\n\nFor the `\"birthday\"` trigger, omit\
+        \ `trigger.condition.filterGroups` to enroll contacts on the day of their birthday. To shift the\
+        \ trigger time, add one filter group with exactly one filter:\n\n| Field | Operator | Value shape\
+        \ |\n|---|---|---|\n| `birthdate` | `eq` | Hour offset string from the birthday, e.g. `\"-24h\"\
+        `, `\"48h\"` |\n\n<details id=\"example-trigger-birthday-exact-day\">\n<summary>Birthday trigger\
+        \ on the contact birthday</summary>\n\n```json\n{\n  \"condition\": {\n    \"event\": \"birthday\"\
+        \n  }\n}\n```\n\n</details>\n\n<details id=\"example-trigger-birthday-before-birthday\">\n<summary>Birthday\
+        \ trigger before the contact birthday</summary>\n\n```json\n{\n  \"condition\": {\n    \"event\"\
+        : \"birthday\",\n    \"filterGroups\": [\n      {\n        \"logicalOperator\": \"and\",\n   \
+        \     \"filters\": [\n          {\"field\": \"birthdate\", \"operator\": \"eq\", \"value\": \"\
+        -24h\"}\n        ]\n      }\n    ]\n  }\n}\n```\n\n</details>\n\n<details id=\"example-trigger-birthday-after-birthday\"\
+        >\n<summary>Birthday trigger after the contact birthday</summary>\n\n```json\n{\n  \"condition\"\
+        : {\n    \"event\": \"birthday\",\n    \"filterGroups\": [\n      {\n        \"logicalOperator\"\
+        : \"and\",\n        \"filters\": [\n          {\"field\": \"birthdate\", \"operator\": \"eq\"\
+        , \"value\": \"48h\"}\n        ]\n      }\n    ]\n  }\n}\n```\n\n</details>\n\nTo trigger an automation\
+        \ when a contact enters a specific segment, use the `entered segment` event with `origin: \"omnisend\"\
+        ` and filter the trigger condition by `segment_id`. This is different from `audienceFilterGroup`,\
+        \ which only restricts who can enter after the trigger fires.\n\n<details id=\"example-trigger-entered-segment\"\
+        >\n<summary>Trigger when a contact enters a specific segment</summary>\n\n```json\n{\n  \"condition\"\
+        : {\n    \"event\": \"entered segment\",\n    \"origin\": \"omnisend\",\n    \"filterGroups\"\
+        : [\n      {\n        \"logicalOperator\": \"and\",\n        \"filters\": [\n          {\"field\"\
+        : \"segment_id\", \"operator\": \"eq\", \"value\": \"000000000000000000000001\"}\n        ]\n\
+        \      }\n    ]\n  }\n}\n```\n\n</details>\n\n## Audience filter group examples\n\nThe `trigger.audienceFilterGroup`\
+        \ field is optional. When set, only contacts matching the filters are enrolled when the trigger\
+        \ fires — omit it to enroll everyone who triggers the event.\n\n### Supported fields\n\n| Field\
+        \ | Operators | Value shape |\n|---|---|---|\n| `segmentID`  | `eq`, `neq` | Segment ID string,\
+        \ e.g. `\"000000000000000000000001\"` |\n| `tag`        | `eq`, `neq` | Tag name, e.g. `\"vip\"\
+        ` |\n| `dateAdded`  | `eq`, `neq`, `gt`, `lt` | ISO-8601 date, e.g. `\"2025-03-15\"` |\n| `firstName`\
+        \  | `eq`, `neq`, `contains`, `notContains` | Free string, e.g. `\"John\"` |\n| `lastName`   |\
+        \ `eq`, `neq`, `contains`, `notContains` | Free string, e.g. `\"Smith\"` |\n| `gender`     | `eq`\
+        \ | `\"m\"` or `\"f\"` |\n| `country`    | `eq`, `neq`, `contains`, `notContains` | ISO-2 country\
+        \ code, e.g. `\"US\"` |\n| `state`      | `eq`, `neq`, `contains`, `notContains` | State / region\
+        \ name, e.g. `\"California\"` |\n| `city`       | `eq`, `neq`, `contains`, `notContains` | City\
+        \ name, e.g. `\"New York\"` |\n| `postalCode` | `eq`, `neq`, `contains`, `notContains` | Postal\
+        \ code string, e.g. `\"10001\"` |\n\n### Where it fits\n\n`audienceFilterGroup` is a sibling of\
+        \ `condition` inside `trigger`:\n\n```json\n{\n  \"name\": \"...\",\n  \"trigger\": {\n    \"\
+        condition\": {\n      \"event\": \"...\",\n      \"origin\": \"...\"\n    },\n    \"audienceFilterGroup\"\
+        : { ... }\n  },\n  \"blocks\": [ ... ]\n}\n```\n\nEach example below shows only the `audienceFilterGroup`\
+        \ value — slot it into the skeleton above.\n\n<details id=\"example-audience-filter-by-segment\"\
+        >\n<summary>Restrict to a single segment</summary>\n\n```json\n{\n  \"logicalOperator\": \"and\"\
+        ,\n  \"filters\": [\n    {\"field\": \"segmentID\", \"operator\": \"eq\", \"value\": \"000000000000000000000001\"\
+        }\n  ]\n}\n```\n\n</details>\n\n<details id=\"example-audience-filter-by-tag-include-exclude\"\
+        >\n<summary>Include one tag, exclude another</summary>\n\n```json\n{\n  \"logicalOperator\": \"\
+        and\",\n  \"filters\": [\n    {\"field\": \"tag\", \"operator\": \"eq\",  \"value\": \"early-adopter\"\
+        },\n    {\"field\": \"tag\", \"operator\": \"neq\", \"value\": \"beta-churned\"}\n  ]\n}\n```\n\
+        \n</details>\n\n<details id=\"example-audience-filter-by-gender\">\n<summary>Gender (only `eq`,\
+        \ only `\"m\"` or `\"f\"`)</summary>\n\n```json\n{\n  \"logicalOperator\": \"and\",\n  \"filters\"\
+        : [\n    {\"field\": \"gender\", \"operator\": \"eq\", \"value\": \"f\"}\n  ]\n}\n```\n\n</details>\n\
+        \n<details id=\"example-audience-filter-by-location\">\n<summary>Country + city substring match</summary>\n\
+        \n```json\n{\n  \"logicalOperator\": \"and\",\n  \"filters\": [\n    {\"field\": \"country\",\
+        \ \"operator\": \"eq\",       \"value\": \"US\"},\n    {\"field\": \"city\",    \"operator\":\
+        \ \"contains\", \"value\": \"York\"}\n  ]\n}\n```\n\n</details>\n\n<details id=\"example-audience-filter-by-date-added\"\
+        >\n<summary>Recent contacts only (date cohort)</summary>\n\n```json\n{\n  \"logicalOperator\"\
+        : \"and\",\n  \"filters\": [\n    {\"field\": \"dateAdded\", \"operator\": \"gt\", \"value\":\
+        \ \"2025-01-01\"}\n  ]\n}\n```\n\n</details>\n\n<details id=\"example-audience-filter-combined-or\"\
+        >\n<summary>OR across multiple tags</summary>\n\n```json\n{\n  \"logicalOperator\": \"or\",\n\
+        \  \"filters\": [\n    {\"field\": \"tag\", \"operator\": \"eq\", \"value\": \"vip\"},\n    {\"\
+        field\": \"tag\", \"operator\": \"eq\", \"value\": \"beta\"}\n  ]\n}\n```\n\n</details>\n\n<details\
+        \ id=\"example-audience-filter-combined-and\">\n<summary>AND across name, country, and tag</summary>\n\
+        \n```json\n{\n  \"logicalOperator\": \"and\",\n  \"filters\": [\n    {\"field\": \"firstName\"\
+        , \"operator\": \"contains\", \"value\": \"John\"},\n    {\"field\": \"country\",   \"operator\"\
+        : \"eq\",       \"value\": \"US\"},\n    {\"field\": \"tag\",       \"operator\": \"eq\",    \
+        \   \"value\": \"vip\"}\n  ]\n}\n```\n\n</details>\n"
+      parameters:
+      - $ref: '#/components/parameters/APIVersionHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAutomationRequest'
+        description: Automation to create
+        required: true
+      responses:
+        '201':
+          description: Created automation workflow
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Automation'
+        '400':
+          description: Request contains invalid or missing fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblem'
+        '401':
+          description: Authentication is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Insufficient permissions for this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '410':
+          description: API version has been retired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitProblem'
+        '500':
+          description: Unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - automations.write
+      - ApiKeyAuth: []
+      summary: Create automation workflow
+      tags:
+      - Automations
+  /automations/{id}:
+    delete:
+      description: 'Delete a single automation workflow by ID.
+
+
+        This operation is idempotent — deleting a non-existent automation returns a success response.
+
+
+        **Scopes:**
+
+        `automations.write`
+
+
+        **Rate Limiting:**
+
+        This endpoint is rate limited to 400 requests per minute.'
+      parameters:
+      - $ref: '#/components/parameters/APIVersionHeader'
+      - description: Automation workflow ID (24 character hexadecimal)
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Automation workflow deleted successfully
+        '400':
+          description: Request contains invalid or missing fields
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ValidationProblem'
+        '401':
+          description: Authentication is missing or invalid
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Insufficient permissions for this operation
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '410':
+          description: API version has been retired
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Rate limit exceeded
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RateLimitProblem'
+        '500':
+          description: Unexpected error occurred
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - automations.write
+      - ApiKeyAuth: []
+      summary: Delete automation workflow
+      tags:
+      - Automations
+    get:
+      description: 'Get a single automation workflow by ID.
+
+
+        **Scopes:**
+
+        `automations.read`
+
+
+        **Rate Limiting:**
+
+        This endpoint is rate limited to 400 requests per minute.'
+      parameters:
+      - $ref: '#/components/parameters/APIVersionHeader'
+      - description: Automation workflow ID (24 character hexadecimal)
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Automation workflow
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Automation'
+        '400':
+          description: Request contains invalid or missing fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblem'
+        '401':
+          description: Authentication is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Insufficient permissions for this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Automation workflow not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '410':
+          description: API version has been retired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitProblem'
+        '500':
+          description: Unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - automations.read
+      - ApiKeyAuth: []
+      summary: Get automation workflow
+      tags:
+      - Automations
+    patch:
+      description: "Partially update an automation workflow. Only the fields provided in the request body\
+        \ are updated.\n\nEnabled automations cannot be patched. Disable the automation via\n`POST /automations/{id}/disable`,\
+        \ make changes, then re-enable via\n`POST /automations/{id}/enable` when ready. When disabling,\
+        \ `contactsInWorkflow`\ncontrols whether contacts already in the workflow continue through the\
+        \ remaining\nblocks (`keep`) or exit immediately (`exit`). Enable/disable state is controlled\n\
+        exclusively via the `/automations/{id}/enable` and `/automations/{id}/disable`\nendpoints.\n\n\
+        `trigger` sub-fields (condition, audienceFilterGroup, inactivitySettings) are patched\nindividually\
+        \ — each provided sub-field replaces the corresponding sub-field in full.\n`exitConditions` are\
+        \ **replaced in full** when provided. `blocks` are patched individually.\n\n**Scopes:**\n`automations.write`\n\
+        \n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n## Audience\
+        \ filter group examples\n\nThe `trigger.audienceFilterGroup` field in PATCH requests replaces\
+        \ the existing audience filter group in full (or sets it for the first time). Omit it to leave\
+        \ the existing audience filter group unchanged.\n\n### Supported fields\n\n| Field | Operators\
+        \ | Value shape |\n|---|---|---|\n| `segmentID`  | `eq`, `neq` | Segment ID string, e.g. `\"000000000000000000000001\"\
+        ` |\n| `tag`        | `eq`, `neq` | Tag name, e.g. `\"vip\"` |\n| `dateAdded`  | `eq`, `neq`,\
+        \ `gt`, `lt` | ISO-8601 date, e.g. `\"2025-03-15\"` |\n| `firstName`  | `eq`, `neq`, `contains`,\
+        \ `notContains` | Free string, e.g. `\"John\"` |\n| `lastName`   | `eq`, `neq`, `contains`, `notContains`\
+        \ | Free string, e.g. `\"Smith\"` |\n| `gender`     | `eq` | `\"m\"` or `\"f\"` |\n| `country`\
+        \    | `eq`, `neq`, `contains`, `notContains` | ISO-2 country code, e.g. `\"US\"` |\n| `state`\
+        \      | `eq`, `neq`, `contains`, `notContains` | State / region name, e.g. `\"California\"` |\n\
+        | `city`       | `eq`, `neq`, `contains`, `notContains` | City name, e.g. `\"New York\"` |\n|\
+        \ `postalCode` | `eq`, `neq`, `contains`, `notContains` | Postal code string, e.g. `\"10001\"\
+        ` |\n\n### Where it fits\n\n`audienceFilterGroup` sits inside `trigger` in the PATCH request body,\
+        \ alongside `condition` and `inactivitySettings`:\n\n```json\n{\n  \"trigger\": {\n    \"audienceFilterGroup\"\
+        : { ... }\n  }\n}\n```\n\nEach example below shows only the `audienceFilterGroup` value — slot\
+        \ it into the skeleton above.\n\n<details id=\"example-patch-replace-audience-filter\">\n<summary>Replace\
+        \ audience filter without touching trigger event or blocks</summary>\n\n```json\n{\n  \"logicalOperator\"\
+        : \"or\",\n  \"filters\": [\n    {\"field\": \"tag\", \"operator\": \"eq\", \"value\": \"vip\"\
+        },\n    {\"field\": \"tag\", \"operator\": \"eq\", \"value\": \"beta\"}\n  ]\n}\n```\n\n</details>\n\
+        \n<details id=\"example-patch-narrow-audience\">\n<summary>Narrow to US women</summary>\n\n```json\n\
+        {\n  \"logicalOperator\": \"and\",\n  \"filters\": [\n    {\"field\": \"country\", \"operator\"\
+        : \"eq\", \"value\": \"US\"},\n    {\"field\": \"gender\",  \"operator\": \"eq\", \"value\": \"\
+        f\"}\n  ]\n}\n```\n\n</details>\n\n<details id=\"example-patch-swap-segment-for-tag\">\n<summary>Swap\
+        \ a segment-based audience for a tag-based one</summary>\n\n```json\n{\n  \"logicalOperator\"\
+        : \"and\",\n  \"filters\": [\n    {\"field\": \"tag\", \"operator\": \"eq\",  \"value\": \"vip\"\
+        },\n    {\"field\": \"tag\", \"operator\": \"neq\", \"value\": \"beta-churned\"}\n  ]\n}\n```\n\
+        \n</details>\n"
+      parameters:
+      - $ref: '#/components/parameters/APIVersionHeader'
+      - description: Automation workflow ID (24 character hexadecimal)
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchAutomationRequest'
+        description: Fields to update
+        required: true
+      responses:
+        '200':
+          description: Updated automation workflow
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Automation'
+        '400':
+          description: Request contains invalid or missing fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblem'
+        '401':
+          description: Authentication is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Insufficient permissions for this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Automation workflow not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: Cannot update an enabled automation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '410':
+          description: API version has been retired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitProblem'
+        '500':
+          description: Unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - automations.write
+      - ApiKeyAuth: []
+      summary: Patch automation workflow
+      tags:
+      - Automations
+  /automations/{id}/blocks:
+    put:
+      description: 'Replace the full block tree for an automation workflow.
+
+
+        Blocks identified by `id` are updated in place.
+
+        Blocks identified by `temporaryID` are created as new blocks.
+
+        Existing blocks not included in this array are removed.
+
+
+        Enabled automations cannot be restructured. Disable the automation via
+
+        `POST /automations/{id}/disable`, send the new block tree, then re-enable via
+
+        `POST /automations/{id}/enable` when ready. When disabling, `contactsInWorkflow`
+
+        controls whether contacts already in the workflow continue through the remaining
+
+        blocks (`keep`) or exit immediately (`exit`).
+
+
+        **Scopes:**
+
+        `automations.write`
+
+
+        **Rate Limiting:**
+
+        This endpoint is rate limited to 400 requests per minute.'
+      parameters:
+      - $ref: '#/components/parameters/APIVersionHeader'
+      - description: Automation workflow ID (24 character hexadecimal)
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutBlocksRequest'
+        description: Full block tree replacement
+        required: true
+      responses:
+        '200':
+          description: Updated automation workflow
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Automation'
+        '400':
+          description: Request contains invalid or missing fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblem'
+        '401':
+          description: Authentication is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Insufficient permissions for this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Automation workflow not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: Cannot update an enabled automation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '410':
+          description: API version has been retired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitProblem'
+        '500':
+          description: Unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - automations.write
+      - ApiKeyAuth: []
+      summary: Replace automation workflow blocks
+      tags:
+      - Automations
+  /automations/{id}/blocks/{blockID}/test-email:
+    post:
+      description: 'Send the saved email content of a specific email block as a test
+
+        email to up to 5 recipients. The email is rendered and delivered
+
+        asynchronously.
+
+
+        **Scopes:**
+
+        `automations.write`
+
+
+        **Rate Limiting:**
+
+        This endpoint is rate limited to 400 requests per minute.'
+      parameters:
+      - $ref: '#/components/parameters/APIVersionHeader'
+      - description: Automation workflow ID (24 character hexadecimal)
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Block identifier
+        in: path
+        name: blockID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendTestEmailRequest'
+        description: Test email recipients
+        required: true
+      responses:
+        '204':
+          description: Test email accepted for delivery
+        '400':
+          description: Request contains invalid or missing fields
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ValidationProblem'
+        '401':
+          description: Authentication is missing or invalid
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '402':
+          description: Payment is required to send emails
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Insufficient permissions for this operation
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Automation or block not found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: Brand state or suppressed recipients prevent sending the test email
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '410':
+          description: API version has been retired
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '422':
+          description: Block does not support test emails or has no saved content
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Rate limit exceeded
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/RateLimitProblem'
+        '500':
+          description: Unexpected error occurred
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - automations.write
+      - ApiKeyAuth: []
+      summary: Send test email
+      tags:
+      - Automations
+  /automations/{id}/blocks/{blockID}/utm:
+    get:
+      description: 'Retrieve UTM tracking tags for a specific send-action block.
+
+        Missing or cleared tags are returned with their default values.
+
+
+        **Scopes:**
+
+        `automations.read`
+
+
+        **Rate Limiting:**
+
+        This endpoint is rate limited to 400 requests per minute.'
+      parameters:
+      - $ref: '#/components/parameters/APIVersionHeader'
+      - description: Automation workflow ID (24 character hexadecimal)
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Block identifier
+        in: path
+        name: blockID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: UTM tags for the block
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UTMResponse'
+        '400':
+          description: Request contains invalid or missing fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblem'
+        '401':
+          description: Authentication is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Insufficient permissions for this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Automation or block not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '410':
+          description: API version has been retired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitProblem'
+        '500':
+          description: Unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - automations.read
+      - ApiKeyAuth: []
+      summary: Get UTM tags for an automation block
+      tags:
+      - Automations
+    put:
+      description: 'Set UTM tracking tags for a specific send-action block.
+
+        All three tag fields are replaced atomically. Send an empty string
+
+        to clear a field — the next read will return its default value.
+
+
+        **Scopes:**
+
+        `automations.write`
+
+
+        **Rate Limiting:**
+
+        This endpoint is rate limited to 400 requests per minute.'
+      parameters:
+      - $ref: '#/components/parameters/APIVersionHeader'
+      - description: Automation workflow ID (24 character hexadecimal)
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Block identifier
+        in: path
+        name: blockID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUTMRequest'
+        description: UTM tag values to set
+        required: true
+      responses:
+        '200':
+          description: Updated UTM tags (with defaults applied)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UTMResponse'
+        '400':
+          description: Request contains invalid or missing fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblem'
+        '401':
+          description: Authentication is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Insufficient permissions for this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Automation or block not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '410':
+          description: API version has been retired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitProblem'
+        '500':
+          description: Unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - automations.write
+      - ApiKeyAuth: []
+      summary: Update UTM tags for an automation block
+      tags:
+      - Automations
+  /automations/{id}/copy:
+    post:
+      description: 'Create a copy of an existing automation workflow.
+
+
+        The copy is always created in a disabled state, regardless of the source automation''s status.
+
+
+        The request body is optional. When provided, you can specify a custom name for the copy.
+
+        When omitted (or when name is empty), the copy is named "Copy of: <original name>".
+
+
+        **Scopes:**
+
+        `automations.write`
+
+
+        **Rate Limiting:**
+
+        This endpoint is rate limited to 400 requests per minute.'
+      parameters:
+      - $ref: '#/components/parameters/APIVersionHeader'
+      - description: Automation workflow ID to copy (24 character hexadecimal)
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CopyAutomationRequest'
+        description: Optional copy settings
+      responses:
+        '201':
+          description: Copied automation workflow
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Automation'
+        '400':
+          description: Request contains invalid or missing fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblem'
+        '401':
+          description: Authentication is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Insufficient permissions for this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Automation workflow not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '410':
+          description: API version has been retired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitProblem'
+        '500':
+          description: Unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - automations.write
+      - ApiKeyAuth: []
+      summary: Copy automation workflow
+      tags:
+      - Automations
+  /automations/{id}/disable:
+    post:
+      description: 'Disable an automation workflow. Once disabled, the workflow stops
+
+        accepting new trigger events.
+
+
+        Use `contactsInWorkflow` to control what happens to contacts
+
+        currently progressing through the workflow:
+
+        - `keep`: contacts remain and continue through the remaining blocks
+
+        until completion. No new contacts enter.
+
+        - `exit`: all contacts are immediately removed from the workflow.
+
+        Contacts who have not yet received their messages will not receive them.
+
+
+        Disabling an already-disabled automation is idempotent — returns the
+
+        current state without side effects.
+
+
+        **Scopes:**
+
+        `automations.write`
+
+
+        **Rate Limiting:**
+
+        This endpoint is rate limited to 400 requests per minute.'
+      parameters:
+      - $ref: '#/components/parameters/APIVersionHeader'
+      - description: Automation workflow ID (24 character hexadecimal)
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DisableAutomationRequest'
+        description: Disable options
+        required: true
+      responses:
+        '200':
+          description: Automation workflow in its new disabled state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Automation'
+        '400':
+          description: Request contains invalid or missing fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblem'
+        '401':
+          description: Authentication is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Insufficient permissions for this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Automation workflow not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '410':
+          description: API version has been retired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitProblem'
+        '500':
+          description: Unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - automations.write
+      - ApiKeyAuth: []
+      summary: Disable automation workflow
+      tags:
+      - Automations
+  /automations/{id}/enable:
+    post:
+      description: 'Enable an automation workflow. Once enabled, the workflow starts
+
+        processing trigger events in real time.
+
+
+        The request body is optional. Use `enrollExisting` to also enroll
+
+        contacts who already qualify at the time of enabling. When the body is
+
+        omitted (or `enrollExisting` is omitted or false), only future trigger
+
+        events are processed.
+
+
+        Enabling an already-enabled automation is idempotent — returns the
+
+        current state without side effects.
+
+
+        **Scopes:**
+
+        `automations.write`
+
+
+        **Rate Limiting:**
+
+        This endpoint is rate limited to 400 requests per minute.'
+      parameters:
+      - $ref: '#/components/parameters/APIVersionHeader'
+      - description: Automation workflow ID (24 character hexadecimal)
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnableAutomationRequest'
+        description: Optional enable options
+      responses:
+        '200':
+          description: Automation workflow in its new enabled state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Automation'
+        '400':
+          description: Request contains invalid or missing fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblem'
+        '401':
+          description: Authentication is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Insufficient permissions for this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Automation workflow not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: Automation state prevents enabling
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictProblem'
+        '410':
+          description: API version has been retired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitProblem'
+        '500':
+          description: Unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - automations.write
+      - ApiKeyAuth: []
+      summary: Enable automation workflow
+      tags:
+      - Automations
+  /automations/{id}/utm:
+    get:
+      description: 'Retrieve UTM tracking tags for all send-action blocks in an automation.
+
+        Each block''s tags include default-value synthesis for missing fields.
+
+
+        **Scopes:**
+
+        `automations.read`
+
+
+        **Rate Limiting:**
+
+        This endpoint is rate limited to 400 requests per minute.'
+      parameters:
+      - $ref: '#/components/parameters/APIVersionHeader'
+      - description: Automation workflow ID (24 character hexadecimal)
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Aggregated UTM tags
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AggregateUTMResponse'
+        '400':
+          description: Request contains invalid or missing fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblem'
+        '401':
+          description: Authentication is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Insufficient permissions for this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Automation not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '410':
+          description: API version has been retired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitProblem'
+        '500':
+          description: Unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - automations.read
+      - ApiKeyAuth: []
+      summary: Get aggregated UTM tags for all blocks
+      tags:
+      - Automations
+servers:
+- url: https://api.omnisend.com/api
+components:
+  parameters:
+    APIVersionHeader:
+      description: API version that specifies the response format and behaviour
+      in: header
+      name: Omnisend-Version
+      required: true
+      schema:
+        type: string
+        default: '2026-03-15'
+  securitySchemes:
+    ApiKeyAuth:
+      description: 'API key authentication. Use format: Omnisend-API-Key {api-key}'
+      in: header
+      name: Authorization
+      type: apiKey
+    Bearer:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://app.omnisend.com/oauth2/token
+          scopes:
+            automations.read: Read access to automations
+            automations.write: Write access to automations
+  schemas:
+    ABTesting:
+      description: A/B testing block configuration.  Splits contacts randomly between two variants based
+        on `aBlocksPercentage`. `bBlocks` receives the remaining percentage (100 - aBlocksPercentage).
+        Each contact is assigned independently when reaching this block.  To pick a winner, set `aBlocksPercentage`
+        to 100 (all contacts go to `aBlocks`) or 0 (all contacts go to `bBlocks`).
+      properties:
+        aBlocks:
+          description: Blocks for variant A
+          items:
+            $ref: '#/components/schemas/Block'
+          type: array
+        aBlocksPercentage:
+          description: Percentage of contacts allocated to aBlocks (bBlocks gets 100 - aBlocksPercentage)
+          example: 50
+          maximum: 100
+          minimum: 0
+          type: integer
+        bBlocks:
+          description: Blocks for variant B
+          items:
+            $ref: '#/components/schemas/Block'
+          type: array
+      type: object
+    Action:
+      description: Action block configuration. Exactly one action-specific field is populated based on
+        the type discriminator.
+      properties:
+        addTag:
+          allOf:
+          - $ref: '#/components/schemas/TagAction'
+          description: Add tag action configuration
+        removeTag:
+          allOf:
+          - $ref: '#/components/schemas/TagAction'
+          description: Remove tag action configuration
+        sendEmail:
+          allOf:
+          - $ref: '#/components/schemas/SendEmail'
+          description: Send email action configuration
+        sendPush:
+          allOf:
+          - $ref: '#/components/schemas/SendPush'
+          description: Send push notification action configuration
+        sendSms:
+          allOf:
+          - $ref: '#/components/schemas/SendSms'
+          description: Send SMS action configuration
+        sendWebhook:
+          allOf:
+          - $ref: '#/components/schemas/SendWebhook'
+          description: Send webhook action configuration
+        type:
+          description: Action type discriminator
+          enum:
+          - sendEmail
+          - sendSms
+          - sendPush
+          - sendWebhook
+          - addTag
+          - removeTag
+          example: sendEmail
+          type: string
+      type: object
+    ActionRequest:
+      description: 'Action block configuration for creation. Exactly one action-specific field must be
+        populated based on the type discriminator.  The action-specific configuration **must** be nested
+        under a key matching the `type` value. For example, when `type` is `"sendPush"`, the push fields
+        go inside `"sendPush": { ... }` — placing them directly on the action object returns `400`.'
+      properties:
+        addTag:
+          allOf:
+          - $ref: '#/components/schemas/InputTagAction'
+          description: Add tag action configuration
+        removeTag:
+          allOf:
+          - $ref: '#/components/schemas/InputTagAction'
+          description: Remove tag action configuration
+        sendEmail:
+          allOf:
+          - $ref: '#/components/schemas/SendEmailRequest'
+          description: Send email action configuration
+        sendPush:
+          allOf:
+          - $ref: '#/components/schemas/SendPushRequest'
+          description: Send push notification action configuration
+        sendSms:
+          allOf:
+          - $ref: '#/components/schemas/SendSmsRequest'
+          description: Send SMS action configuration
+        sendWebhook:
+          allOf:
+          - $ref: '#/components/schemas/SendWebhookRequest'
+          description: Send webhook action configuration
+        type:
+          description: Action type discriminator
+          enum:
+          - sendEmail
+          - sendPush
+          - sendSms
+          - sendWebhook
+          - addTag
+          - removeTag
+          example: sendEmail
+          type: string
+      required:
+      - type
+      type: object
+    AggregateUTMResponse:
+      description: Aggregated UTM tracking tags for all send-action blocks in an automation.
+      properties:
+        blocks:
+          description: UTM tags per send-action block
+          items:
+            $ref: '#/components/schemas/AggregateUTMResponseBlock'
+          type: array
+      type: object
+    AggregateUTMResponseBlock:
+      description: UTM tracking tags for a single block within the aggregate response.
+      properties:
+        blockID:
+          description: Block identifier
+          example: '000000000000000000000002'
+          type: string
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/UTMTags'
+          description: UTM tag values
+      type: object
+    Automation:
+      description: Automation workflow resource
+      properties:
+        blocks:
+          description: Automation workflow blocks (actions, delays, splits, A/B tests)
+          items:
+            $ref: '#/components/schemas/Block'
+          type: array
+        brandID:
+          description: Brand identifier (read-only)
+          example: '000000000000000000000001'
+          readOnly: true
+          type: string
+        createdAt:
+          description: Automation creation timestamp (read-only)
+          example: '2026-01-15T10:30:00Z'
+          readOnly: true
+          type: string
+        disabledAt:
+          description: Timestamp when automation was disabled (read-only)
+          example: '2026-01-15T10:30:00Z'
+          readOnly: true
+          type: string
+        enabledAt:
+          description: Timestamp when automation was enabled (read-only)
+          example: '2026-01-15T10:30:00Z'
+          readOnly: true
+          type: string
+        exitConditions:
+          description: Exit conditions that remove contacts from the automation workflow (evaluated with
+            OR logic)
+          items:
+            $ref: '#/components/schemas/ExitCondition'
+          type: array
+        id:
+          description: Automation workflow unique identifier (read-only)
+          example: '000000000000000000000001'
+          readOnly: true
+          type: string
+        isEnabled:
+          description: Whether the automation workflow is enabled (read-only). Controlled via enable/disable
+            actions.
+          example: true
+          readOnly: true
+          type: boolean
+        name:
+          description: Automation workflow name
+          example: Welcome Series
+          type: string
+        settings:
+          allOf:
+          - $ref: '#/components/schemas/Settings'
+          description: Automation settings
+        trigger:
+          allOf:
+          - $ref: '#/components/schemas/Trigger'
+          description: Automation trigger configuration
+        updatedAt:
+          description: Automation last update timestamp (read-only)
+          example: '2026-01-15T10:30:00Z'
+          readOnly: true
+          type: string
+      type: object
+    Block:
+      description: Automation workflow block. Exactly one of delay, action, split, or abTesting is populated
+        based on the type discriminator.
+      properties:
+        abTesting:
+          allOf:
+          - $ref: '#/components/schemas/ABTesting'
+          description: A/B testing block configuration
+        action:
+          allOf:
+          - $ref: '#/components/schemas/Action'
+          description: Action block configuration
+        delay:
+          allOf:
+          - $ref: '#/components/schemas/Delay'
+          description: Delay block configuration
+        id:
+          description: Block identifier
+          example: '000000000000000000000002'
+          maxLength: 36
+          type: string
+        split:
+          allOf:
+          - $ref: '#/components/schemas/Split'
+          description: Conditional split block configuration
+        type:
+          description: Block type discriminator
+          enum:
+          - delay
+          - action
+          - split
+          - abTesting
+          example: action
+          type: string
+      type: object
+    ConflictProblem:
+      description: Error response returned when the automation state prevents the operation.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        errors:
+          description: Validation errors that must be resolved before the operation can proceed
+          items:
+            $ref: '#/components/schemas/FieldError'
+          type: array
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    ContactFilter:
+      description: Contact filter condition applied to contact properties.
+      properties:
+        field:
+          description: Contact property name to filter on
+          example: tag
+          type: string
+        operator:
+          description: Comparison operator
+          enum:
+          - eq
+          - neq
+          - gt
+          - gte
+          - lt
+          - lte
+          - contains
+          - notContains
+          - startsWith
+          - endsWith
+          - exists
+          - notExists
+          - any
+          example: eq
+          type: string
+        value:
+          description: Filter value — type depends on the property
+      type: object
+    ContactFilterGroup:
+      description: Contact filter group containing one or more contact filters combined by a logical operator.
+      properties:
+        filters:
+          description: Contact filters within this group
+          items:
+            $ref: '#/components/schemas/ContactFilter'
+          type: array
+        logicalOperator:
+          description: Logical operator combining filters within this group
+          enum:
+          - and
+          - or
+          example: and
+          type: string
+      type: object
+    ContactFilterGroupRequest:
+      description: Contact filter group containing one or more contact filters combined by a logical operator.
+      properties:
+        filters:
+          description: Filters within this group. At least one filter is required.
+          items:
+            $ref: '#/components/schemas/ContactFilterRequest'
+          type: array
+        logicalOperator:
+          description: Logical operator combining filters within this group
+          enum:
+          - and
+          - or
+          example: and
+          type: string
+      required:
+      - filters
+      - logicalOperator
+      type: object
+    ContactFilterRequest:
+      description: 'Contact filter condition applied to contact properties.  Each of the 10 supported
+        fields has a fixed set of allowed operators and a specific value shape:  | Field | Operators |
+        Value shape | |---|---|---| | `segmentID` | `eq`, `neq` | Segment ID string, e.g. `"000000000000000000000001"`
+        | | `tag` | `eq`, `neq` | Tag name string, e.g. `"vip"` | | `dateAdded` | `eq`, `neq`, `gt`, `lt`
+        | ISO-8601 date string, e.g. `"2025-03-15"` | | `firstName` | `eq`, `neq`, `contains`, `notContains`
+        | Free string, e.g. `"John"` | | `lastName` | `eq`, `neq`, `contains`, `notContains` | Free string,
+        e.g. `"Smith"` | | `gender` | `eq` | `"m"` or `"f"` | | `country` | `eq`, `neq`, `contains`, `notContains`
+        | ISO-2 country code, e.g. `"US"` | | `state` | `eq`, `neq`, `contains`, `notContains` | State
+        / region name, e.g. `"California"` | | `city` | `eq`, `neq`, `contains`, `notContains` | City
+        name, e.g. `"New York"` | | `postalCode` | `eq`, `neq`, `contains`, `notContains` | Postal code
+        string, e.g. `"10001"` |  See the `POST /automations` and `PATCH /automations/{id}` endpoint descriptions
+        for worked audience-filter-group request examples.'
+      properties:
+        field:
+          description: Contact property name to filter on
+          enum:
+          - segmentID
+          - tag
+          - dateAdded
+          - firstName
+          - lastName
+          - gender
+          - country
+          - state
+          - city
+          - postalCode
+          example: tag
+          type: string
+        operator:
+          description: Comparison operator — allowed values depend on the field; see the type description.
+          enum:
+          - eq
+          - neq
+          - gt
+          - lt
+          - contains
+          - notContains
+          example: eq
+          type: string
+        value:
+          description: Filter value as a string. For "gender" must be "m" or "f"; for "dateAdded" an ISO-8601
+            date in YYYY-MM-DD format. Required and non-empty for all contact filters.
+          example: vip
+          type: string
+      required:
+      - field
+      - operator
+      - value
+      type: object
+    CopyAutomationRequest:
+      description: Copy automation workflow request.
+      properties:
+        name:
+          description: 'Custom name for the copied automation workflow. When omitted, defaults to "Copy
+            of: <original name>".'
+          example: My Welcome Series (copy)
+          type: string
+      type: object
+    CreateABTestingRequest:
+      description: A/B test block configuration for creation. Contacts are randomly assigned to branch
+        A (aBlocksPercentage %) or branch B (remainder). At least one of aBlocks or bBlocks must be non-empty.
+      properties:
+        aBlocks:
+          description: Blocks executed for contacts in branch A.
+          items:
+            $ref: '#/components/schemas/CreateBlockRequest'
+          type: array
+        aBlocksPercentage:
+          description: Percentage of contacts routed to branch A. Branch B receives the remainder.
+          example: 50
+          maximum: 100
+          minimum: 0
+          type: integer
+        bBlocks:
+          description: Blocks executed for contacts in branch B.
+          items:
+            $ref: '#/components/schemas/CreateBlockRequest'
+          type: array
+      required:
+      - aBlocksPercentage
+      type: object
+    CreateAutomationRequest:
+      description: Create automation workflow request.
+      properties:
+        blocks:
+          description: Automation workflow blocks (actions, delays, splits, A/B tests). At least one block
+            is required.
+          items:
+            $ref: '#/components/schemas/CreateBlockRequest'
+          type: array
+        exitConditions:
+          description: 'Exit conditions. When a contact triggers any of these events, they are immediately
+            removed from the workflow.
+
+            Multiple exit conditions are evaluated with OR logic.'
+          items:
+            $ref: '#/components/schemas/ExitConditionRequest'
+          type: array
+        name:
+          description: Automation workflow name
+          example: Welcome Series
+          type: string
+        settings:
+          allOf:
+          - $ref: '#/components/schemas/CreateSettingsRequest'
+          description: Automation settings (sending thresholds, frequency, overlap, etc.). Omit to use
+            engine defaults.
+        trigger:
+          allOf:
+          - $ref: '#/components/schemas/CreateTriggerRequest'
+          description: Trigger configuration
+      required:
+      - blocks
+      - name
+      - trigger
+      type: object
+    CreateBlockRequest:
+      description: Automation workflow block for creation. Exactly one of the type-specific fields (action,
+        delay, split, abTesting) must be populated based on the type discriminator.  **Constraint:** A
+        `delay` block cannot end the workflow. It may be the final block inside a conditional-split branch
+        when sibling blocks follow the split; those blocks form a shared downstream sequence executed
+        by contacts from both branches. The same applies inside an `abTesting` branch when sibling blocks
+        follow the A/B test block. Otherwise, a delay at the end of a block sequence returns `400`.  Conditional-split
+        branches may contain different numbers of blocks. Blocks placed after the split are shared by
+        both branches, allowing them to reconverge into one downstream path.
+      properties:
+        abTesting:
+          allOf:
+          - $ref: '#/components/schemas/CreateABTestingRequest'
+          description: A/B test block configuration
+        action:
+          allOf:
+          - $ref: '#/components/schemas/ActionRequest'
+          description: Action block configuration
+        delay:
+          allOf:
+          - $ref: '#/components/schemas/CreateDelayRequest'
+          description: Delay block configuration
+        split:
+          allOf:
+          - $ref: '#/components/schemas/CreateSplitRequest'
+          description: Split block configuration
+        temporaryID:
+          description: 'Client-provided block identifier, scoped to this request.
+
+            Used in validation error messages and split filter cross-references.
+
+            Replaced with a server-assigned id in the response. Must be unique within the request.'
+          example: welcome-email
+          maxLength: 36
+          type: string
+        type:
+          description: Block type discriminator
+          enum:
+          - delay
+          - action
+          - split
+          - abTesting
+          example: action
+          type: string
+      required:
+      - temporaryID
+      - type
+      type: object
+    CreateDelayRequest:
+      description: Delay block configuration for creation.  **Constraint:** A delay block cannot be the
+        last block in its sequence. At least one action block must follow it. This applies at all nesting
+        levels, except a branch whose enclosing split or A/B test block has sibling blocks after it —
+        there the delay continues into the shared downstream sequence.
+      properties:
+        allowedWeekdays:
+          description: Days of the week when the delay is allowed to resolve. Omit to allow all days.
+          items:
+            enum:
+            - sunday
+            - monday
+            - tuesday
+            - wednesday
+            - thursday
+            - friday
+            - saturday
+            type: string
+          type: array
+        duration:
+          allOf:
+          - $ref: '#/components/schemas/CreateDurationRequest'
+          description: Duration configuration — required when mode is "duration"
+        mode:
+          description: Delay mode discriminator
+          enum:
+          - duration
+          - immediate
+          - specificTime
+          example: duration
+          type: string
+        time:
+          description: Time in HH:MM 24-hour format — required when mode is "specificTime"
+          example: 09:30
+          type: string
+      required:
+      - mode
+      type: object
+    CreateDurationRequest:
+      description: Duration configuration for delay creation.
+      properties:
+        amount:
+          description: Duration amount — must be at least 1
+          example: 24
+          type: integer
+        units:
+          description: Duration unit
+          enum:
+          - m
+          - h
+          - d
+          - w
+          - M
+          example: h
+          type: string
+      required:
+      - amount
+      - units
+      type: object
+    CreateSettingsRequest:
+      description: 'Automation settings configuration for create. All sub-fields are optional — omit to
+        use engine defaults. `sendingThresholds` does not accept `null` — sending `null` returns `400`.
+        `frequencyLimiter` accepts `null` (treated the same as omitted: no limiter is set). `overlapLimiter`
+        accepts `null` and is treated the same as omitting the field (engine performs no overlap check).'
+      properties:
+        frequencyLimiter:
+          allOf:
+          - $ref: '#/components/schemas/FrequencyLimiterRequest'
+          description: Frequency limiter — omit or null to leave the automation without a frequency limit.
+          x-nullable: 'true'
+        overlapLimiter:
+          allOf:
+          - $ref: '#/components/schemas/OverlapLimiterRequest'
+          description: 'Overlap limiter — omit (or send `null`) to disable the overlap check. When provided,
+
+            the contact is skipped if they are currently in (or recently completed) the listed automations.'
+          x-nullable: 'true'
+        sendingThresholds:
+          allOf:
+          - $ref: '#/components/schemas/SendingThresholdsRequest'
+          description: Sending thresholds — omit to use defaults (subscribed only).
+      type: object
+    CreateSplitRequest:
+      description: Conditional split block configuration for creation. Filter types (event, contact, message)
+        can be mixed in one group. At least one of trueBlocks or falseBlocks must be non-empty.  Sibling
+        blocks placed after a split run for contacts from both branches — the branches re-converge on
+        the shared downstream sequence.
+      properties:
+        falseBlocks:
+          description: Blocks executed when the filter group evaluates to false.
+          items:
+            $ref: '#/components/schemas/CreateBlockRequest'
+          type: array
+        filterGroup:
+          allOf:
+          - $ref: '#/components/schemas/SplitFilterGroupRequest'
+          description: Filter group evaluated when contacts reach this block. At least one filter is required.
+        trueBlocks:
+          description: Blocks executed when the filter group evaluates to true.
+          items:
+            $ref: '#/components/schemas/CreateBlockRequest'
+          type: array
+      required:
+      - filterGroup
+      type: object
+    CreateTriggerCondition:
+      description: 'Trigger condition for automation creation — specifies the event that starts the automation
+        and optional event-property filter groups evaluated before the workflow is entered.  Use the [event
+        metadata endpoint](https://api-docs.omnisend.com/v2026-preview/reference/post_event_metadata_query)
+        to look up the event names, origins, and property paths available for the brand.  The event field
+        identifies what triggers the automation workflow. Most events are standard events received via
+        the Events API (e.g. "placed order", "started checkout"). In addition, the following built-in
+        trigger events are available without the Events API: "birthday" (contact birthday anniversary),
+        "product back in stock".  To trigger an automation when a contact enters a specific segment, use
+        the `entered segment` event with `origin: "omnisend"` and filter the trigger condition by `segment_id`.
+        This is different from `audienceFilterGroup`, which only restricts who can enter after the trigger
+        fires.  Built-in event notes:  "product back in stock" — only supported for Shopify, BigCommerce,
+        and WooCommerce stores; it will have no effect for any other integration.'
+      properties:
+        event:
+          description: 'Event system name that triggers the automation workflow (e.g. "placed order",
+            "started checkout").
+
+            See the parent struct description for available built-in trigger events.'
+          example: clicked message
+          type: string
+        filterGroups:
+          description: Event filter groups — multiple groups are combined with AND logic.
+          items:
+            $ref: '#/components/schemas/EventFilterGroupRequest'
+          type: array
+        origin:
+          description: 'Integration platform that generated the event (e.g. "shopify", "omnisend", "api").
+
+            When the event supports multiple origins, this field is required and must match one of them.
+
+            When the event has a single origin, this field can be omitted — the origin is selected automatically.
+
+            Omit for built-in trigger events and for the "subscribed to marketing" event.'
+          example: omnisend
+          type: string
+      required:
+      - event
+      type: object
+    CreateTriggerRequest:
+      description: 'Trigger configuration for automation creation.  The condition.event field identifies
+        what triggers the automation workflow. Most events are standard events received via the Events
+        API (e.g. "placed order", "started checkout"). In addition, the following built-in trigger events
+        are available without the Events API: "birthday" (contact birthday anniversary), "product back
+        in stock".'
+      properties:
+        audienceFilterGroup:
+          allOf:
+          - $ref: '#/components/schemas/ContactFilterGroupRequest'
+          description: Audience filter group for contact eligibility — contacts not matching the filters
+            are not enrolled
+        condition:
+          allOf:
+          - $ref: '#/components/schemas/CreateTriggerCondition'
+          description: Trigger event condition (event name + origin)
+        inactivitySettings:
+          allOf:
+          - $ref: '#/components/schemas/InactivitySettingsRequest'
+          description: Inactivity settings — the workflow fires only after the contact has been inactive
+            for the specified period
+      required:
+      - condition
+      type: object
+    CursorsResponse:
+      description: Cursor pointers for paginating forward and backward through results
+      properties:
+        after:
+          description: Opaque cursor for fetching the next page of results
+          example: eyJpZCI6ImNhbXAtNDU2In0
+          type: string
+          nullable: true
+        before:
+          description: Opaque cursor for fetching the previous page of results
+          example: eyJpZCI6ImNhbXAtMTIzIn0
+          type: string
+          nullable: true
+      type: object
+    Delay:
+      description: 'Delay block configuration.  The `mode` field determines the delay behavior: - "duration":
+        wait for the specified amount of time units - "immediate": no wait, proceed to the next block
+        - "specificTime": wait until the specified time of day in the brand''s timezone  `allowedWeekdays`
+        is optional for all modes. When set, the delay resolution advances to the nearest matching weekday
+        (preserving the time of day).'
+      properties:
+        allowedWeekdays:
+          description: Restrict delay resolution to specific weekdays
+          items:
+            enum:
+            - sunday
+            - monday
+            - tuesday
+            - wednesday
+            - thursday
+            - friday
+            - saturday
+            type: string
+          type: array
+        duration:
+          allOf:
+          - $ref: '#/components/schemas/Duration'
+          description: Duration configuration — required when mode is "duration"
+        mode:
+          description: Delay mode discriminator
+          enum:
+          - duration
+          - immediate
+          - specificTime
+          example: duration
+          type: string
+        time:
+          description: Time of day in brand's timezone (HH:MM, 24h format) — required when mode is "specificTime".
+            If the target time has already passed today, resolves the next day.
+          example: 09:30
+          type: string
+      type: object
+    DisableAutomationRequest:
+      description: 'Disable an automation workflow. Once disabled, the workflow stops accepting new trigger
+        events.  The `contactsInWorkflow` field determines what happens to contacts currently progressing
+        through the workflow: - "keep": contacts remain in the workflow and continue through the remaining
+        blocks until completion. No new contacts enter. - "exit": all contacts are immediately removed
+        from the workflow. Contacts who have not yet received their messages will not receive them.'
+      properties:
+        contactsInWorkflow:
+          description: What to do with contacts currently in the workflow
+          enum:
+          - keep
+          - exit
+          example: keep
+          type: string
+      required:
+      - contactsInWorkflow
+      type: object
+    DiscountCombinesWith:
+      description: Discount combination rules.
+      properties:
+        isOrderCompatible:
+          description: Whether this discount is compatible with order discounts
+          example: true
+          type: boolean
+        isProductCompatible:
+          description: Whether this discount is compatible with product discounts
+          example: true
+          type: boolean
+        isShippingCompatible:
+          description: Whether this discount is compatible with shipping discounts. Not applicable when
+            discount type is "freeShipping" — always false in that case.
+          example: false
+          type: boolean
+      type: object
+    DiscountExpiry:
+      description: Discount expiry configuration.
+      properties:
+        dateFormat:
+          description: 'Date format for displaying the expiration date in the discount message.
+
+            Valid values: "MMM DD, YYYY", "YYYY-MM-DD", "DD/MM/YYYY".'
+          example: MMM DD, YYYY
+          type: string
+        expirationText:
+          description: Expiration display text shown before the expiration date in the discount message,
+            e.g. "expires on Jan 15, 2026"
+          example: expires on
+          type: string
+        expiresInDays:
+          description: Number of days until the discount expires
+          example: 14
+          minimum: 1
+          type: integer
+      type: object
+    DiscountScope:
+      description: 'Discount scope — determines what orders or products the discount applies to.  The
+        `conditions` field controls scoping behavior: - "allOrders": discount applies to all orders, no
+        extra fields needed - "minimumOrderAmount": discount requires a minimum order total, `minimumOrderAmount`
+        is required - "collection": discount applies to a specific product collection, `collectionType`
+        and `collectionID` are required'
+      properties:
+        collectionID:
+          description: Collection identifier. Required when conditions is "collection".
+          example: 123456
+          type: integer
+        collectionType:
+          description: Collection type. Required when conditions is "collection".
+          enum:
+          - smart
+          - custom
+          example: smart
+          type: string
+        conditions:
+          description: Scope conditions type.
+          enum:
+          - allOrders
+          - minimumOrderAmount
+          - collection
+          example: allOrders
+          type: string
+        minimumOrderAmount:
+          description: Minimum order amount (currency string). Required when conditions is "minimumOrderAmount".
+          example: '50.00'
+          type: string
+      type: object
+    DiscountSettings:
+      description: 'Discount configuration.  The `type` field determines the discount behavior and how
+        `value` is interpreted: - "percentage": `value` is a whole number string representing the percentage
+        (1-100), e.g. "10" - "fixedAmount": `value` is a currency amount string, e.g. "9.99" - "freeShipping":
+        `value` is omitted (no discount amount needed)  The `scope` object determines what orders or products
+        the discount applies to.'
+      properties:
+        combinesWith:
+          allOf:
+          - $ref: '#/components/schemas/DiscountCombinesWith'
+          description: 'Discount combination rules. Controls whether this discount can be combined
+
+            with other active discounts. Null when not applicable for the connected store.'
+        expiry:
+          allOf:
+          - $ref: '#/components/schemas/DiscountExpiry'
+          description: 'Discount expiry configuration. Present when the discount code has an
+
+            expiration period. Null when the discount does not expire.'
+        isItemsOnSaleExcluded:
+          description: 'Whether items already on sale are excluded from this discount.
+
+            False when not applicable for the connected store.'
+          example: false
+          type: boolean
+        scope:
+          allOf:
+          - $ref: '#/components/schemas/DiscountScope'
+          description: Discount scope — determines what orders or products the discount applies to.
+        type:
+          description: Discount type. Determines discount behavior and how `value` is interpreted.
+          enum:
+          - percentage
+          - fixedAmount
+          - freeShipping
+          example: percentage
+          type: string
+        value:
+          description: 'Discount value. Interpretation depends on `type`:
+
+            - percentage: whole number string "1" to "100" (e.g. "10" = 10% off)
+
+            - fixedAmount: currency amount string (e.g. "9.99")
+
+            - freeShipping: omitted'
+          example: '10'
+          type: string
+      type: object
+    Duration:
+      description: Duration configuration for a relative delay.
+      properties:
+        amount:
+          description: Number of time units to wait
+          example: 24
+          type: integer
+        units:
+          description: Time unit
+          enum:
+          - m
+          - h
+          - d
+          - w
+          - M
+          example: h
+          type: string
+      type: object
+    DurationRequest:
+      description: Duration amount and unit for inactivity settings.
+      properties:
+        amount:
+          description: Number of time units (must be > 0)
+          example: 1
+          type: integer
+        units:
+          description: Time unit
+          enum:
+          - m
+          - h
+          - d
+          - w
+          example: h
+          type: string
+      required:
+      - amount
+      - units
+      type: object
+    EnableAutomationRequest:
+      description: Enable an automation workflow. Once enabled, the workflow starts processing trigger
+        events in real time. Use `enrollExisting` to also enroll contacts who already qualify at the time
+        of enabling.
+      properties:
+        enrollExisting:
+          description: "Whether to enroll contacts who already meet the trigger conditions.\nWhen omitted\
+            \ or false, only future trigger events are processed.\n\nWhen `enrollExisting=true`:\n- **Event-based\
+            \ triggers** (e.g. \"placed order\", \"started checkout\"):\n  contacts whose trigger event\
+            \ occurred within the first delay block's\n  time window are enrolled. They receive messages\
+            \ based on their original\n  event time, not when the workflow was enabled (e.g. 30-day delay,\
+            \ event\n  20 days ago → message in 10 days). The workflow **must** start with a\n  delay\
+            \ block — otherwise the request is rejected with 409\n  `enroll-existing-not-applicable`.\n\
+            - **\"Entered segment\" trigger**: all contacts currently in the trigger's\n  segments are\
+            \ enrolled immediately. Takes effect only on the first\n  enable; re-enabling with `enrollExisting=true`\
+            \ is rejected with 409\n  `enroll-existing-not-applicable`. Copy the workflow if a fresh\n\
+            \  enrollment is needed.\n- **Birthday, \"Product back in stock\", and custom virtual events**:\n\
+            \  not supported; `enrollExisting=true` is rejected with 409\n  `enroll-existing-not-applicable`."
+          example: false
+          type: boolean
+      type: object
+    EventFilter:
+      description: Event filter condition applied to event properties.
+      properties:
+        field:
+          description: Event property path to filter on
+          example: app_language_code
+          type: string
+        operator:
+          description: Comparison operator
+          enum:
+          - eq
+          - neq
+          - gt
+          - gte
+          - lt
+          - lte
+          - contains
+          - notContains
+          - startsWith
+          - endsWith
+          - exists
+          - notExists
+          - in
+          - notIn
+          example: eq
+          type: string
+        value:
+          description: Filter value — type depends on the property
+      type: object
+    EventFilterGroup:
+      description: Event filter group containing one or more event filters combined by a logical operator.
+      properties:
+        filters:
+          description: Event filters within this group
+          items:
+            $ref: '#/components/schemas/EventFilter'
+          type: array
+        logicalOperator:
+          description: Logical operator combining filters within this group
+          enum:
+          - and
+          - or
+          example: and
+          type: string
+      type: object
+    EventFilterGroupRequest:
+      description: Event filter group containing one or more event property filters combined by a logical
+        operator.
+      properties:
+        filters:
+          description: Event filters within this group. At least one filter is required.
+          items:
+            $ref: '#/components/schemas/EventFilterRequest'
+          type: array
+        logicalOperator:
+          description: Logical operator combining filters within this group
+          enum:
+          - and
+          - or
+          example: and
+          type: string
+      required:
+      - filters
+      - logicalOperator
+      type: object
+    EventFilterRequest:
+      description: 'Event filter condition applied to event properties.  Use a property path returned
+        by the [event metadata endpoint](https://api-docs.omnisend.com/v2026-preview/reference/post_event_metadata_query).
+        Choose a numeric property when using numeric operators (`gt`, `gte`, `lt`, `lte`); applying them
+        to non-numeric paths will fail validation.  **Important:** The `value` field''s JSON type must
+        match the property''s data type as reported by the event metadata endpoint. For numeric properties
+        (e.g. `total_price`), send a JSON number (`"value": 50`). Sending a string (`"value": "50"`) for
+        a numeric property returns `400` with a type-mismatch error.'
+      properties:
+        field:
+          description: Event property path to filter on
+          example: total_price
+          type: string
+        operator:
+          description: Comparison operator
+          enum:
+          - eq
+          - neq
+          - gt
+          - gte
+          - lt
+          - lte
+          - contains
+          - notContains
+          - startsWith
+          - endsWith
+          - exists
+          - notExists
+          - in
+          - notIn
+          example: gte
+          type: string
+        value:
+          description: 'Filter value. Must match the property''s data type (number for numeric properties,
+
+            string for string properties). Omit for operators "exists" and "notExists".'
+      required:
+      - field
+      - operator
+      type: object
+    ExitCondition:
+      description: Exit condition that removes contacts from the automation workflow when a matching event
+        occurs.
+      properties:
+        event:
+          description: Event name that triggers the exit
+          example: placed order
+          type: string
+        filterGroup:
+          allOf:
+          - $ref: '#/components/schemas/EventFilterGroup'
+          description: Event filter group for the exit condition
+        origin:
+          description: 'Integration platform that generated the event (e.g. "shopify", "omnisend", "api").
+
+            Each event supports a specific set of origins depending on the brand''s e-commerce platform.
+
+            Empty for built-in trigger events and the "subscribed to marketing" event'
+          example: omnisend
+          type: string
+      type: object
+    ExitConditionRequest:
+      description: Exit condition configuration. When a contact triggers any exit condition event, they
+        are immediately removed from the automation workflow.
+      properties:
+        event:
+          description: 'Event system name that triggers the exit (e.g. "placed order", "started checkout").
+
+            Built-in trigger events ("birthday", "product back in stock") are not allowed.'
+          example: placed order
+          type: string
+        filterGroup:
+          allOf:
+          - $ref: '#/components/schemas/EventFilterGroupRequest'
+          description: Event filter group for the exit condition.
+        origin:
+          description: 'Integration platform that generated the event (e.g. "shopify", "omnisend", "api").
+
+            When the event supports multiple origins, this field is required and must match one of them.
+
+            When the event has a single origin, this field can be omitted — the origin is selected automatically.
+
+            Omit for the "subscribed to marketing" event.'
+          example: omnisend
+          type: string
+      required:
+      - event
+      type: object
+    FieldError:
+      description: A single field validation failure within a validation error response.
+      properties:
+        code:
+          description: Error code indicating the type of failure
+          example: invalid_format
+          type: string
+        field:
+          description: Dot-separated path to the field that failed validation
+          example: content.email.subject
+          type: string
+        message:
+          description: Human-readable explanation of what is wrong with the field value
+          example: Must be a valid email address
+          type: string
+      type: object
+    FrequencyIntervalDuration:
+      description: 'Frequency interval duration.  The response always reports the duration in the largest
+        time unit that divides it evenly: weeks when the interval is a whole number of weeks, otherwise
+        days when it is a whole number of days, otherwise hours. For example, an input of `{amount: 7,
+        units: "d"}` is returned as `{amount: 1, units: "w"}`, and `{amount: 48, units: "h"}` is returned
+        as `{amount: 2, units: "d"}`. The normalized value represents the same interval as the submitted
+        value.'
+      properties:
+        amount:
+          description: Number of time units, expressed in the normalized `units`.
+          example: 1
+          type: integer
+        units:
+          description: 'Time unit. Reflects the largest unit that evenly divides the configured
+
+            interval (`w` > `d` > `h`) and may differ from the unit submitted on write.'
+          enum:
+          - h
+          - d
+          - w
+          example: w
+          type: string
+      type: object
+    FrequencyIntervalDurationRequest:
+      description: 'Frequency interval duration. Per-unit caps: 8760 hours, 365 days, 52 weeks.'
+      properties:
+        amount:
+          description: Number of time units. Must be at least 1 and within the per-unit cap.
+          example: 7
+          type: integer
+        units:
+          description: Time unit
+          enum:
+          - h
+          - d
+          - w
+          example: d
+          type: string
+      required:
+      - amount
+      - units
+      type: object
+    FrequencyLimiter:
+      description: 'Frequency limiter controls how often the same contact can enter the automation. When
+        present, the limiter is active. Omit or set to null to disable.  The `mode` field determines the
+        limiting behavior: - "once": the contact can enter the automation only once per lifetime - "interval":
+        the contact can re-enter after the specified duration has elapsed since the last entry'
+      properties:
+        duration:
+          allOf:
+          - $ref: '#/components/schemas/FrequencyIntervalDuration'
+          description: Minimum interval before the contact can re-enter — required when mode is "interval"
+        mode:
+          description: Frequency limiter mode
+          enum:
+          - once
+          - interval
+          example: interval
+          type: string
+      type: object
+    FrequencyLimiterRequest:
+      description: 'Frequency limiter — restricts how often the same contact can re-enter the automation.
+        Provide an object to enable; omit or send `null` to disable.  The `mode` field determines the
+        limiting behavior: - "once": the contact can enter the automation only once per lifetime - "interval":
+        requires `duration`; the contact can re-enter only after the configured period has elapsed since
+        the last entry'
+      properties:
+        duration:
+          allOf:
+          - $ref: '#/components/schemas/FrequencyIntervalDurationRequest'
+          description: 'Minimum interval before the contact can re-enter — required when mode is "interval"
+
+            and forbidden when mode is "once".'
+        mode:
+          description: Frequency limiter mode
+          enum:
+          - once
+          - interval
+          example: interval
+          type: string
+      required:
+      - mode
+      type: object
+    InactivitySettings:
+      description: Trigger inactivity time defines how long a contact must remain inactive before the
+        automation triggers. The contact must first match the trigger filters. If the trigger event fires
+        again before the timer expires, the timer resets — ensuring the workflow starts only after the
+        contact has finished their activity.  For example, with an "added product to cart" trigger and
+        inactivity set to 1 hour, each cart update resets the timer. The automation triggers only after
+        the cart has not been updated for 1 hour, ensuring the email reflects the shopper's complete cart.
+      properties:
+        duration:
+          allOf:
+          - $ref: '#/components/schemas/Duration'
+          description: Inactivity period — the timer resets on each re-trigger
+      type: object
+    InactivitySettingsRequest:
+      description: 'Inactivity settings — fires the workflow only after the contact has gone quiet (no
+        new triggering events) for the given duration. Each new triggering event resets the timer.  Use
+        this for abandoned-flow patterns where you want to wait for the contact to *not* complete the
+        next step. Common pairings: abandoned cart (30m after "added to cart"), abandoned checkout (1h
+        after "started checkout"), browse abandonment (30m after "viewed product"), or win-back / re-engagement
+        (e.g. 7d after a key event).  Example: `{"duration": {"amount": 30, "units": "m"}}`'
+      properties:
+        duration:
+          allOf:
+          - $ref: '#/components/schemas/DurationRequest'
+          description: Inactivity period. Required when inactivitySettings is provided.
+      required:
+      - duration
+      type: object
+    InputActionRequest:
+      description: 'Action block configuration for full replacement. Exactly one action-specific field
+        must be populated based on the type discriminator.  The action-specific configuration **must**
+        be nested under a key matching the `type` value. For example, when `type` is `"sendPush"`, the
+        push fields go inside `"sendPush": { ... }` — placing them directly on the action object returns
+        `400`.'
+      properties:
+        addTag:
+          allOf:
+          - $ref: '#/components/schemas/InputTagAction'
+          description: Add tag action configuration
+        removeTag:
+          allOf:
+          - $ref: '#/components/schemas/InputTagAction'
+          description: Remove tag action configuration
+        sendEmail:
+          allOf:
+          - $ref: '#/components/schemas/InputSendEmail'
+          description: Send email action configuration
+        sendPush:
+          allOf:
+          - $ref: '#/components/schemas/SendPushRequest'
+          description: Send push notification action configuration. The PUT shape matches POST — re-send
+            the full block.
+        sendSms:
+          allOf:
+          - $ref: '#/components/schemas/SendSmsRequest'
+          description: Send SMS action configuration. The PUT shape matches POST — re-send the full block.
+        sendWebhook:
+          allOf:
+          - $ref: '#/components/schemas/SendWebhookRequest'
+          description: Send webhook action configuration. The PUT shape matches POST — re-send the full
+            block.
+        type:
+          description: Action type discriminator
+          enum:
+          - sendEmail
+          - sendPush
+          - sendSms
+          - sendWebhook
+          - addTag
+          - removeTag
+          example: sendEmail
+          type: string
+      required:
+      - type
+      type: object
+    InputSendEmail:
+      description: 'Send email action configuration for PUT (full replacement). For new blocks (identified
+        by temporaryID): templateID is required. For existing blocks (identified by id): templateID must
+        not be provided. `templateID` references an Email Template entity documented in the [Email Templates
+        API](https://api-docs.omnisend.com/reference/email-templates).'
+      properties:
+        isSkipAllowed:
+          description: 'Whether skipping this block is allowed when the contact is not eligible to receive
+            this message.
+
+            When true (default), the contact bypasses this block and continues to the next block in the
+            workflow.
+
+            When false, the workflow is canceled for this contact.'
+          example: true
+          type: boolean
+        language:
+          description: Email language locale in xx_XX format. Must be a supported language
+          example: en_US
+          maxLength: 10
+          type: string
+        preheader:
+          description: Email preheader text displayed after the subject line in the recipient's inbox.
+            Supports personalization tags.
+          example: Check out what we have for you
+          maxLength: 250
+          type: string
+        replyToEmail:
+          description: Reply-to email address for recipient responses. Must be a verified email
+          example: support@example.com
+          maxLength: 250
+          type: string
+        senderEmail:
+          description: 'Sender email address shown in the recipient''s inbox. For branded sending, must
+            be hosted on
+
+            a domain verified for the brand. Omit only when the brand is configured to use Omnisend''s
+
+            shared sender domain; otherwise this field is required.'
+          example: hello@example.com
+          maxLength: 250
+          type: string
+        senderName:
+          description: Sender display name shown in the recipient's inbox
+          example: My Store
+          maxLength: 250
+          type: string
+        subject:
+          description: Email subject line displayed in the recipient's inbox. Supports personalization
+            tags, e.g. [[contact.first_name]]
+          example: Welcome to our store!
+          maxLength: 250
+          type: string
+        templateID:
+          description: 'Email template unique identifier. Required for new blocks (temporaryID) — automation
+            email content is created from this template.
+
+            Not allowed for existing blocks (id). To update an existing block, omit this field. To create
+            a new block, use temporaryID instead of id.
+
+            See [Email Templates API](https://api-docs.omnisend.com/reference/email-templates).'
+          example: '000000000000000000000001'
+          type: string
+      required:
+      - language
+      - preheader
+      - senderName
+      - subject
+      type: object
+    InputTagAction:
+      description: Tag action configuration.
+      properties:
+        value:
+          description: Tag value. Case-insensitive — normalized to lowercase before persistence.
+          example: vip-customer
+          maxLength: 250
+          type: string
+      required:
+      - value
+      type: object
+    ListAutomationsResponse:
+      description: Paginated list of automations
+      properties:
+        automations:
+          description: List of automations
+          items:
+            $ref: '#/components/schemas/Automation'
+          type: array
+        paging:
+          allOf:
+          - $ref: '#/components/schemas/PagingResponse'
+          description: Pagination information
+      type: object
+    OverlapLimiter:
+      description: 'Overlap limiter prevents a contact from entering this automation when they are already
+        in, or were recently in, other specified automations. When present, the limiter is active. Omit
+        or set to null to disable.  The `mode` field determines the check: - "currentlyIn": skip the contact
+        if they are currently active in any of the specified automations - "recentlyIn": skip the contact
+        if they are currently active in, or have finished any of the specified automations within the
+        last `withinDays` days'
+      properties:
+        automationIDs:
+          description: Automation IDs to check for overlap
+          example:
+          - '000000000000000000000001'
+          items:
+            type: string
+          type: array
+        mode:
+          description: Overlap check mode
+          enum:
+          - currentlyIn
+          - recentlyIn
+          example: currentlyIn
+          type: string
+        withinDays:
+          description: Number of days to check — required when mode is "recentlyIn"
+          example: 7
+          maximum: 7
+          minimum: 1
+          type: integer
+      type: object
+    OverlapLimiterRequest:
+      description: 'Overlap limiter — prevents enrolling a contact who is already in (or recently completed)
+        one of the listed automations.  The `mode` field selects the check: - "currentlyIn": skip the
+        contact if they are currently active in any of the listed automations. `withinDays` must be omitted.
+        - "recentlyIn": skip the contact if they completed any of the listed automations within the last
+        `withinDays` days. `withinDays` is required and must be between 1 and 7.  When provided, both
+        `mode` and a non-empty `automationIDs` array are required. Each ID must reference an existing
+        automation in the same brand and must not be the automation being patched (self-reference is rejected
+        with `400`).'
+      properties:
+        automationIDs:
+          description: Automation IDs to check for overlap. Must be non-empty when an OverlapLimiter object
+            is provided.
+          example:
+          - '000000000000000000000001'
+          items:
+            type: string
+          type: array
+        mode:
+          description: Overlap check mode
+          enum:
+          - currentlyIn
+          - recentlyIn
+          example: currentlyIn
+          type: string
+        withinDays:
+          description: Number of days to check — required when mode is "recentlyIn", forbidden when mode
+            is "currentlyIn".
+          example: 7
+          maximum: 7
+          minimum: 1
+          type: integer
+      required:
+      - automationIDs
+      - mode
+      type: object
+    PagingResponse:
+      description: Cursor-based pagination metadata
+      properties:
+        cursors:
+          allOf:
+          - $ref: '#/components/schemas/CursorsResponse'
+          description: Cursor values for navigating between pages
+        hasMore:
+          description: Whether there are more items available beyond the current page
+          example: true
+          type: boolean
+        limit:
+          description: Maximum number of items returned per page
+          example: 50
+          type: integer
+      type: object
+    PatchABTestingRequest:
+      description: A/B test block configuration for PATCH — only aBlocksPercentage is patchable. Branches
+        (aBlocks, bBlocks) cannot be changed via PATCH. Use PUT /automations/{id}/blocks to restructure
+        branches.
+      properties:
+        aBlocksPercentage:
+          description: Percentage of contacts routed to branch A. Branch B receives the remainder.
+          example: 50
+          maximum: 100
+          minimum: 0
+          type: integer
+      required:
+      - aBlocksPercentage
+      type: object
+    PatchActionRequest:
+      description: Action block configuration for partial update. Only the fields explicitly provided
+        are updated.
+      properties:
+        addTag:
+          allOf:
+          - $ref: '#/components/schemas/InputTagAction'
+          description: Add tag action configuration
+        removeTag:
+          allOf:
+          - $ref: '#/components/schemas/InputTagAction'
+          description: Remove tag action configuration
+        sendEmail:
+          allOf:
+          - $ref: '#/components/schemas/PatchSendEmailRequest'
+          description: Send email action configuration. Only provided fields are updated.
+        sendPush:
+          allOf:
+          - $ref: '#/components/schemas/PatchSendPushRequest'
+          description: Send push action configuration. Only provided fields are updated.
+        sendSms:
+          allOf:
+          - $ref: '#/components/schemas/PatchSendSmsRequest'
+          description: Send SMS action configuration. Only provided fields are updated.
+        sendWebhook:
+          allOf:
+          - $ref: '#/components/schemas/PatchSendWebhookRequest'
+          description: Send webhook action configuration. Only provided fields are updated.
+        type:
+          description: Action type discriminator. Required — asserts the stored action type; cannot be
+            changed via PATCH.
+          enum:
+          - sendEmail
+          - sendPush
+          - sendSms
+          - sendWebhook
+          - addTag
+          - removeTag
+          example: sendEmail
+          type: string
+      required:
+      - type
+      type: object
+    PatchAutomationRequest:
+      description: Patch automation workflow request. All fields are optional — only provided fields are
+        updated. `trigger` fields are patched individually — only sub-fields within trigger that are provided
+        are updated. `exitConditions` are **replaced in full** when provided; send `null` or `[]` to clear,
+        omit to leave unchanged. `blocks` are patched individually by id — only fields within each block
+        that are provided are updated.
+      properties:
+        blocks:
+          description: 'Automation workflow blocks. Each entry updates an existing block matched by `id`;
+
+            fields within each block are applied as a partial update. The array does **not**
+
+            reshape the block list — adding or removing blocks is not supported through this
+
+            endpoint (use the dedicated block endpoints for that). An empty array (`[]`) is
+
+            rejected with `400`; omit the field to leave blocks unchanged.'
+          items:
+            $ref: '#/components/schemas/PatchBlockRequest'
+          type: array
+        exitConditions:
+          description: 'Exit condition list. Replaces all existing exit conditions when provided.
+
+            Send `null` or an empty array (`[]`) to clear all exit conditions; omit to leave unchanged.'
+          items:
+            $ref: '#/components/schemas/ExitConditionRequest'
+          type: array
+          x-nullable: 'true'
+        name:
+          description: Automation workflow name
+          example: Welcome Series
+          type: string
+        settings:
+          allOf:
+          - $ref: '#/components/schemas/PatchSettingsRequest'
+          description: Automation settings patch. Only provided sub-fields are updated.
+        trigger:
+          allOf:
+          - $ref: '#/components/schemas/PatchTriggerRequest'
+          description: Trigger configuration. Only provided sub-fields are updated.
+      type: object
+    PatchBlockRequest:
+      description: Automation workflow block for PATCH — updates an existing block only. id is required
+        to identify the target block. action.sendEmail is patched field-by-field (omitted fields unchanged).
+        delay is replaced as a whole object — re-send the complete delay spec when changing any field.
+        split.filterGroup is replaced in full when provided — branches (trueBlocks, falseBlocks) cannot
+        be changed via PATCH. abTesting.aBlocksPercentage is patched in place — branches (aBlocks, bBlocks)
+        cannot be changed via PATCH.
+      properties:
+        abTesting:
+          allOf:
+          - $ref: '#/components/schemas/PatchABTestingRequest'
+          description: A/B test block configuration. Only aBlocksPercentage is patchable. Branches are
+            not changed via PATCH.
+        action:
+          allOf:
+          - $ref: '#/components/schemas/PatchActionRequest'
+          description: Action block configuration. Only provided fields are updated.
+        delay:
+          allOf:
+          - $ref: '#/components/schemas/UpdateDelayRequest'
+          description: Delay block configuration. Replaced in full when provided.
+        id:
+          description: Server-assigned block ID. Required — identifies the target block to update.
+          example: '000000000000000000000001'
+          type: string
+        split:
+          allOf:
+          - $ref: '#/components/schemas/PatchSplitRequest'
+          description: Split block filterGroup. Replaced in full when provided. Branches are not changed
+            via PATCH.
+        type:
+          description: Block type discriminator. Required — asserts the stored block's type; cannot be
+            changed via PATCH.
+          enum:
+          - delay
+          - action
+          - split
+          - abTesting
+          example: action
+          type: string
+      required:
+      - id
+      - type
+      type: object
+    PatchSendEmailRequest:
+      description: Send email action configuration for partial update. All fields are optional — only
+        the fields explicitly provided are updated. `replyToEmail` accepts `null` or `""` to clear the
+        existing value.
+      properties:
+        isSkipAllowed:
+          description: Whether skipping this block is allowed when the contact is not eligible to receive
+            this message.
+          example: true
+          type: boolean
+        language:
+          description: Email language locale in xx_XX format. Must be a supported language.
+          example: en_US
+          maxLength: 10
+          type: string
+        preheader:
+          description: Email preheader text displayed after the subject line. Supports personalization
+            tags.
+          example: Check out what we have for you
+          maxLength: 250
+          type: string
+        replyToEmail:
+          description: 'Reply-to email address. Must be a verified email.
+
+            Send `null` or an empty string to clear the reply-to address.'
+          example: support@example.com
+          maxLength: 250
+          type: string
+          x-nullable: 'true'
+        senderEmail:
+          description: 'Sender email address. For branded sending, must be hosted on a domain verified
+            for the
+
+            brand. Omit only when the brand is configured to use Omnisend''s shared sender domain.'
+          example: hello@example.com
+          maxLength: 250
+          type: string
+        senderName:
+          description: Sender display name shown in the recipient's inbox
+          example: My Store
+          maxLength: 250
+          type: string
+        subject:
+          description: Email subject line. Supports personalization tags, e.g. [[contact.first_name]]
+          example: Welcome to our store!
+          maxLength: 250
+          type: string
+      type: object
+    PatchSendPushRequest:
+      description: Send push notification action configuration for partial update. All fields are optional
+        — only the fields explicitly provided are updated. `iconID` and `imageID` accept `null` or `""`
+        to clear the existing value.
+      properties:
+        body:
+          description: Push notification body. Supports personalization tags.
+          example: Track your delivery now
+          maxLength: 250
+          type: string
+        clickUrl:
+          description: Click-through URL the recipient is taken to when tapping the notification.
+          example: https://example.com/order/123
+          maxLength: 2000
+          type: string
+        iconID:
+          description: 'Optional icon image ID obtained from the Images API.
+
+            Send `null` or an empty string to remove the existing icon.'
+          example: '000000000000000000000001'
+          type: string
+          x-nullable: 'true'
+        imageID:
+          description: 'Optional image ID displayed below the push notification body.
+
+            Send `null` or an empty string to remove the existing image.'
+          example: '000000000000000000000002'
+          type: string
+          x-nullable: 'true'
+        isSkipAllowed:
+          description: 'Whether skipping this block is allowed when the contact is not eligible to receive
+            this message.
+
+            When true (default), the contact bypasses this block and continues to the next block in the
+            workflow.
+
+            When false, the workflow is canceled for this contact.'
+          example: true
+          type: boolean
+        title:
+          description: Push notification title. Supports personalization tags, e.g. [[contact.first_name]]
+          example: Your order has shipped
+          maxLength: 250
+          type: string
+      type: object
+    PatchSendSmsRequest:
+      description: SMS action configuration for partial update. All fields are optional — only the fields
+        explicitly provided are updated. `imageID` accepts `null` or `""` to remove the existing MMS image.
+        `compliance` does not accept `null` — provide an object or omit the field.
+      properties:
+        compliance:
+          allOf:
+          - $ref: '#/components/schemas/UpdateSmsCompliance'
+          description: 'Compliance settings. When provided, all four fields are replaced atomically.
+
+            Cannot be `null` — omit the field to leave compliance unchanged.'
+        imageID:
+          description: MMS image ID. Send `null` or an empty string to remove the existing image.
+          example: '000000000000000000000001'
+          type: string
+          x-nullable: 'true'
+        isLinkShorteningEnabled:
+          description: Whether link shortening is enabled.
+          example: true
+          type: boolean
+        isSkipAllowed:
+          description: Whether skipping this block is allowed when the contact is not eligible to receive
+            this message.
+          example: true
+          type: boolean
+        message:
+          description: SMS message body. Supports personalization tags, e.g. [[contact.first_name]]
+          example: Hello [[contact.first_name]]!
+          maxLength: 1600
+          type: string
+      type: object
+    PatchSendWebhookRequest:
+      description: Send webhook action configuration for partial update. All fields are optional — only
+        the fields explicitly provided are updated. Send `null` or an empty array (`[]`) to clear all
+        headers; omit `headers` to leave them unchanged.
+      properties:
+        body:
+          description: Request body template (JSON). Supports personalization tags, e.g. [[contact.email]]
+          example: '{"contactEmail": "[[contact.email]]"}'
+          maxLength: 65536
+          type: string
+        callbackUrl:
+          description: Destination URL that receives the HTTP POST request. Must be HTTPS.
+          example: https://example.com/webhook
+          maxLength: 2000
+          type: string
+        headers:
+          description: Custom HTTP headers sent with the webhook request. Replaced atomically when provided;
+            send `null` or `[]` to clear.
+          items:
+            $ref: '#/components/schemas/WebhookHeader'
+          type: array
+      type: object
+    PatchSettingsRequest:
+      description: 'Automation settings patch. Each sub-field follows partial-update semantics: omit to
+        leave unchanged, send a value to replace. `sendingThresholds` does not accept `null` — sending
+        `null` returns `400`. `frequencyLimiter` accepts `null` to clear (disable) the existing limiter.
+        `overlapLimiter` accepts `null` to clear the configured limiter (engine performs no overlap check).'
+      properties:
+        frequencyLimiter:
+          allOf:
+          - $ref: '#/components/schemas/FrequencyLimiterRequest'
+          description: 'Frequency limiter. Send `null` to clear the existing limiter; provide an object
+            to
+
+            replace it. Omit to leave the current configuration unchanged.'
+          x-nullable: 'true'
+        overlapLimiter:
+          allOf:
+          - $ref: '#/components/schemas/OverlapLimiterRequest'
+          description: 'Overlap limiter. When provided, replaces the existing limiter in full. Send `null`
+
+            to clear the limiter entirely.'
+          x-nullable: 'true'
+        sendingThresholds:
+          allOf:
+          - $ref: '#/components/schemas/SendingThresholdsRequest'
+          description: Sending thresholds. When provided, replaces the existing thresholds in full.
+      type: object
+    PatchSplitRequest:
+      description: Split block configuration for PATCH — only the filterGroup is replaced. Branches (trueBlocks,
+        falseBlocks) cannot be changed via PATCH. Use PUT /automations/{id}/blocks to restructure branches.
+      properties:
+        filterGroup:
+          allOf:
+          - $ref: '#/components/schemas/SplitFilterGroupRequest'
+          description: Filter group evaluated when contacts reach this block. At least one filter is required.
+      required:
+      - filterGroup
+      type: object
+    PatchTriggerCondition:
+      description: 'Trigger condition for PATCH. When sent, the entire trigger condition (event, origin,
+        and filter groups) is replaced in full — partial updates of individual condition fields are not
+        supported. Omit `condition` to leave the existing trigger condition unchanged.  Use the [event
+        metadata endpoint](https://api-docs.omnisend.com/v2026-preview/reference/post_event_metadata_query)
+        to look up the event names, origins, and property paths available for the brand.  The event field
+        identifies what triggers the automation workflow. Most events are standard events received via
+        the Events API (e.g. "placed order", "started checkout"). In addition, the following built-in
+        trigger events are available without the Events API: "birthday" (contact birthday anniversary),
+        "product back in stock".  Built-in event notes:  "product back in stock" — only supported for
+        Shopify, BigCommerce, and WooCommerce stores; it will have no effect for any other integration.'
+      properties:
+        event:
+          description: 'Event system name that triggers the automation workflow (e.g. "placed order",
+            "started checkout").
+
+            See the parent struct description for available built-in trigger events.'
+          example: clicked message
+          type: string
+        filterGroups:
+          description: Event filter groups — multiple groups are combined with AND logic.
+          items:
+            $ref: '#/components/schemas/EventFilterGroupRequest'
+          type: array
+        origin:
+          description: 'Integration platform that generated the event (e.g. "shopify", "omnisend", "api").
+
+            When the event supports multiple origins, this field is required and must match one of them.
+
+            When the event has a single origin, this field can be omitted — the origin is selected automatically.
+
+            Omit for built-in trigger events and for the "subscribed to marketing" event.'
+          example: omnisend
+          type: string
+      required:
+      - event
+      type: object
+    PatchTriggerRequest:
+      description: Trigger configuration for PATCH. Tri-state per field — omit to leave unchanged, send
+        a value to replace, send `null` to clear (where the schema marks the field nullable). Sending
+        `null` for `condition` returns `400`. When condition is provided, the entire trigger condition
+        (event, origin, and filter groups) is replaced in full.
+      properties:
+        audienceFilterGroup:
+          allOf:
+          - $ref: '#/components/schemas/ContactFilterGroupRequest'
+          description: Audience filter group for contact eligibility.
+          x-nullable: 'true'
+        condition:
+          allOf:
+          - $ref: '#/components/schemas/PatchTriggerCondition'
+          description: Trigger condition. When provided, replaces the entire condition (event, origin,
+            and filter groups) in full.
+        inactivitySettings:
+          allOf:
+          - $ref: '#/components/schemas/InactivitySettingsRequest'
+          description: Inactivity settings — the workflow fires only after the contact has been inactive
+            for the specified period.
+          x-nullable: 'true'
+      type: object
+    Problem:
+      description: Standard error response returned by all API endpoints on failure.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    PutBlocksRequest:
+      description: Replace all blocks in an automation workflow.
+      properties:
+        blocks:
+          description: 'Full block list. Replaces the entire block tree. At least one block is required.
+
+            Blocks with id update existing blocks; blocks with temporaryID create new ones.
+
+            Existing blocks not included in this array are removed.'
+          items:
+            $ref: '#/components/schemas/UpdateBlockRequest'
+          type: array
+      required:
+      - blocks
+      type: object
+    RateLimitProblem:
+      description: Error response returned when the rate limit is exceeded. Use the retryAfter value to
+        know when it is safe to retry the request.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        retryAfter:
+          description: Seconds to wait before retrying the request
+          example: 60
+          type: integer
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    SendEmail:
+      description: Send email action configuration. `contentID` references an Email Template entity documented
+        in the [Email Templates API](https://api-docs.omnisend.com/reference/email-templates).
+      properties:
+        contentID:
+          description: 'Email content unique identifier referencing the automation''s email design (read-only).
+
+            See [Email Templates API](https://api-docs.omnisend.com/reference/email-templates).'
+          example: '000000000000000000000001'
+          readOnly: true
+          type: string
+        isSkipAllowed:
+          description: Whether skipping this block is allowed when the contact is not eligible to receive
+            this message — for example, the contact has not opted in for this channel or does not meet
+            the automation's `sendingThresholds`. When true (default), the contact bypasses this block
+            and continues to the next block in the workflow. When false, the workflow is canceled for
+            this contact.
+          example: true
+          type: boolean
+        language:
+          description: Email language locale in xx_XX format. Must be a supported language
+          example: en_US
+          maxLength: 10
+          type: string
+        preheader:
+          description: Email preheader text displayed after the subject line in the recipient's inbox.
+            Supports personalization tags, e.g. [[contact.first_name]]
+          example: Check out what we have for you
+          maxLength: 250
+          type: string
+        replyToEmail:
+          description: Reply-to email address for recipient responses. Must be a verified email
+          example: support@example.com
+          maxLength: 250
+          type: string
+        senderEmail:
+          description: 'Sender email address shown in the recipient''s inbox. Must belong to a verified
+            brand domain.
+
+            Omit when using a shared domain — brand default will be used'
+          example: hello@example.com
+          maxLength: 250
+          type: string
+        senderName:
+          description: Sender display name shown in the recipient's inbox
+          example: My Store
+          maxLength: 250
+          type: string
+        subject:
+          description: Email subject line displayed in the recipient's inbox. Supports personalization
+            tags, e.g. [[contact.first_name]]
+          example: Welcome to our store!
+          maxLength: 250
+          type: string
+      type: object
+    SendEmailRequest:
+      description: Send email action configuration for automation creation. `templateID` references an
+        Email Template entity documented in the [Email Templates API](https://api-docs.omnisend.com/reference/email-templates).
+      properties:
+        isSkipAllowed:
+          description: 'Whether skipping this block is allowed when the contact is not eligible to receive
+            this message.
+
+            When true (default), the contact bypasses this block and continues to the next block in the
+            workflow.
+
+            When false, the workflow is canceled for this contact.'
+          example: true
+          type: boolean
+        language:
+          description: Email language locale in xx_XX format. Must be a supported language
+          example: en_US
+          maxLength: 10
+          type: string
+        preheader:
+          description: Email preheader text displayed after the subject line in the recipient's inbox.
+            Supports personalization tags, e.g. [[contact.first_name]]
+          example: Check out what we have for you
+          maxLength: 250
+          type: string
+        replyToEmail:
+          description: Reply-to email address for recipient responses. Must be a verified email
+          example: support@example.com
+          maxLength: 250
+          type: string
+        senderEmail:
+          description: 'Sender email address shown in the recipient''s inbox. For branded sending, must
+            be hosted on
+
+            a domain verified for the brand. Omit only when the brand is configured to use Omnisend''s
+
+            shared sender domain; otherwise this field is required.'
+          example: hello@example.com
+          maxLength: 250
+          type: string
+        senderName:
+          description: Sender display name shown in the recipient's inbox
+          example: My Store
+          maxLength: 250
+          type: string
+        subject:
+          description: Email subject line displayed in the recipient's inbox. Supports personalization
+            tags, e.g. [[contact.first_name]]
+          example: Welcome to our store!
+          maxLength: 250
+          type: string
+        templateID:
+          description: 'Email template unique identifier. Automation email content is created from this
+            template.
+
+            See [Email Templates API](https://api-docs.omnisend.com/reference/email-templates).'
+          example: '000000000000000000000001'
+          type: string
+      required:
+      - language
+      - preheader
+      - senderName
+      - subject
+      - templateID
+      type: object
+    SendPush:
+      description: Send push notification action configuration.
+      properties:
+        body:
+          description: Push notification body text. Supports personalization tags, e.g. [[contact.first_name]]
+          example: We have something special for you.
+          maxLength: 250
+          type: string
+        clickUrl:
+          description: Destination URL where the customer is redirected when clicking the push notification.
+            Supports personalization tags.
+          example: https://example.com/promo
+          maxLength: 2000
+          type: string
+        iconID:
+          description: 'Optional icon image ID obtained from the Images API. Recommended size: 192x192
+            pixels. When omitted, the browser default icon is used.'
+          example: '000000000000000000000001'
+          type: string
+        imageID:
+          description: 'Optional image ID obtained from the Images API displayed below the push notification
+            body. Recommended size: 360x180 pixels (2:1 aspect ratio). Not supported on iOS devices.'
+          example: '000000000000000000000001'
+          type: string
+        isSkipAllowed:
+          description: Whether skipping this block is allowed when the contact is not eligible to receive
+            this message — for example, the contact has not opted in for this channel or does not meet
+            the automation's `sendingThresholds`. When true (default), the contact bypasses this block
+            and continues to the next block in the workflow. When false, the workflow is canceled for
+            this contact.
+          example: true
+          type: boolean
+        title:
+          description: Push notification title. Supports personalization tags, e.g. [[contact.first_name]]
+          example: Check this out!
+          maxLength: 250
+          type: string
+      type: object
+    SendPushRequest:
+      description: Send push notification action configuration. Used for both POST (creation) and PUT
+        (full replacement) — the request shape is identical for both. `iconID` and `imageID` reference
+        image entities documented in the [Images API](https://api-docs.omnisend.com/reference/images).
+      properties:
+        body:
+          description: 'Push notification body shown beneath the title. Recommended up to 40 characters
+            for best lockscreen visibility.
+
+            Supports personalization tags, e.g. [[contact.first_name]]'
+          example: Track your delivery now
+          maxLength: 250
+          type: string
+        clickUrl:
+          description: Click-through URL the recipient is taken to when tapping the notification.
+          example: https://example.com/order/123
+          maxLength: 2000
+          type: string
+        iconID:
+          description: 'Optional icon image ID obtained from the Images API. Recommended size: 192×192
+            px (square).
+
+            Larger square assets (384×384, 512×512) accepted for retina displays.
+
+            Format: PNG, JPG, or GIF (non-animated). Maximum file size: 5 MB.
+
+            When uploading via the Images API, the source URL must resolve to a direct static asset
+
+            (e.g. CDN or object-storage URL). Redirect-backed or CMS-routed URLs are rejected.'
+          example: '000000000000000000000001'
+          type: string
+        imageID:
+          description: 'Optional image ID displayed below the push notification body. Recommended size:
+
+            360×180 px or larger with 2:1 aspect ratio (e.g. 720×360, 1024×512).
+
+            Format: PNG, JPG, or GIF (non-animated). Maximum file size: 5 MB.
+
+            Not supported on iOS / iPadOS / macOS Safari recipients — silently dropped on those platforms.
+
+            When uploading via the Images API, the source URL must resolve to a direct static asset
+
+            (e.g. CDN or object-storage URL). Redirect-backed or CMS-routed URLs are rejected.'
+          example: '000000000000000000000002'
+          type: string
+        isSkipAllowed:
+          description: 'Whether skipping this block is allowed when the contact is not eligible to receive
+            this message.
+
+            When true (default), the contact bypasses this block and continues to the next block in the
+            workflow.
+
+            When false, the workflow is canceled for this contact.'
+          example: true
+          type: boolean
+        title:
+          description: 'Push notification title shown to recipients. Recommended up to 40 characters for
+            best lockscreen visibility.
+
+            Supports personalization tags, e.g. [[contact.first_name]]'
+          example: Your order has shipped
+          maxLength: 250
+          type: string
+      required:
+      - body
+      - clickUrl
+      - title
+      type: object
+    SendSms:
+      description: Send SMS action configuration.
+      properties:
+        compliance:
+          allOf:
+          - $ref: '#/components/schemas/SmsCompliance'
+          description: SMS compliance text settings. Required on create.
+        discountSettings:
+          allOf:
+          - $ref: '#/components/schemas/DiscountSettings'
+          description: 'Discount configuration for this SMS block. Present when per-block discount
+
+            mode is active and a discount is configured for this block. Null when global
+
+            discount mode is active (discount is managed at the settings level) or when
+
+            no discount is configured for this block. The discount is applied at send
+
+            time only if the message contains the [[discount.code]] personalization tag.'
+        imageID:
+          description: Image ID obtained from the Images API. When set, the message is delivered as MMS
+            to US/CA recipients; other countries receive SMS without the image.
+          example: '000000000000000000000001'
+          type: string
+        isLinkShorteningEnabled:
+          description: Whether links in the SMS body are automatically shortened
+          example: true
+          type: boolean
+        isSkipAllowed:
+          description: Whether skipping this block is allowed when the contact is not eligible to receive
+            this message — for example, the contact has not opted in for this channel or does not meet
+            the automation's `sendingThresholds`. When true (default), the contact bypasses this block
+            and continues to the next block in the workflow. When false, the workflow is canceled for
+            this contact.
+          example: true
+          type: boolean
+        message:
+          description: SMS message body. Supports personalization tags, e.g. [[contact.first_name]]
+          example: Hello [[contact.first_name]]! Check out our deals
+          maxLength: 1600
+          type: string
+      type: object
+    SendSmsRequest:
+      description: SMS action configuration. Used for both POST (creation) and PUT (full replacement).
+        `imageID` references an image entity documented in the [Images API](https://api-docs.omnisend.com/reference/images).
+        MMS images must be JPEG, PNG, or GIF and must not exceed 500 KB.
+      properties:
+        compliance:
+          allOf:
+          - $ref: '#/components/schemas/SmsComplianceRequest'
+          description: Compliance settings controlling opt-out keyword and unsubscribe link inclusion.
+        imageID:
+          description: 'Optional MMS image ID obtained from the Images API. Must be JPEG, PNG, or GIF;
+            max 500 KB.
+
+            When uploading via the Images API, the source URL must resolve to a direct static asset
+
+            (e.g. CDN or object-storage URL). Redirect-backed or CMS-routed URLs are rejected.'
+          example: '000000000000000000000001'
+          type: string
+        isLinkShorteningEnabled:
+          description: Whether link shortening is enabled. Defaults to true when omitted.
+          example: true
+          type: boolean
+        isSkipAllowed:
+          description: 'Whether skipping this block is allowed when the contact is not eligible to receive
+            this message.
+
+            When true (default), the contact bypasses this block and continues to the next block in the
+            workflow.
+
+            When false, the workflow is canceled for this contact.'
+          example: true
+          type: boolean
+        message:
+          description: SMS message body. Supports personalization tags, e.g. [[contact.first_name]]
+          example: Hello [[contact.first_name]]!
+          maxLength: 1600
+          type: string
+      required:
+      - compliance
+      - message
+      type: object
+    SendTestEmailRequest:
+      description: Send a test email for an automation email block to the given recipients. The saved
+        email content is rendered and delivered asynchronously.
+      properties:
+        recipients:
+          description: Email addresses to deliver the test email to (1 to 5 recipients).
+          example:
+          - merchant@example.com
+          - teammate@example.com
+          items:
+            format: email
+            type: string
+          maxItems: 5
+          minItems: 1
+          type: array
+      required:
+      - recipients
+      type: object
+    SendWebhook:
+      description: Sends an HTTP POST request to the specified URL with the provided headers and body.
+      properties:
+        body:
+          description: Request body template (JSON). Supports personalization tags, e.g. [[contact.email]]
+          example: '{"contactEmail": "[[contact.email]]"}'
+          maxLength: 65536
+          type: string
+        callbackUrl:
+          description: Webhook callback URL — destination that receives the HTTP POST request
+          example: https://example.com/webhook
+          maxLength: 2000
+          type: string
+        headers:
+          description: Custom HTTP headers sent with the webhook request
+          items:
+            $ref: '#/components/schemas/WebhookHeader'
+          type: array
+      type: object
+    SendWebhookRequest:
+      description: Send webhook action configuration. Used for both POST (creation) and PUT (full replacement)
+        — the request shape is identical for both. Sends an HTTP POST request to the specified URL with
+        the provided headers and body.
+      properties:
+        body:
+          description: Request body template (JSON). Supports personalization tags, e.g. [[contact.email]]
+          example: '{"contactEmail": "[[contact.email]]"}'
+          maxLength: 65536
+          type: string
+        callbackUrl:
+          description: Destination URL that receives the HTTP POST request. Must be HTTPS.
+          example: https://example.com/webhook
+          maxLength: 2000
+          type: string
+        headers:
+          description: Custom HTTP headers sent with the webhook request.
+          items:
+            $ref: '#/components/schemas/WebhookHeader'
+          type: array
+      required:
+      - body
+      - callbackUrl
+      type: object
+    SendingThresholds:
+      description: 'Sending thresholds control which contacts receive messages at each send block (email,
+        SMS, push) based on their subscription status. These settings do not affect which contacts enter
+        the automation — only who receives messages when they reach a send block. Contacts who don''t
+        meet the threshold are either skipped or stopped depending on the message block configuration.  Threshold
+        levels (from most restrictive to least): - "subscribed": send only to contacts who opted in to
+        receive marketing content. Use for newsletters, promotions, and product updates. - "nonSubscribed":
+        send to subscribed and non-subscribed contacts, excluding those who explicitly unsubscribed. Use
+        for behavior-triggered messages like abandoned cart reminders and post-purchase follow-ups. -
+        "all": send to all contacts regardless of subscription status. Use for transactional content like
+        order confirmations and shipping updates.  Push notifications are always restricted to subscribed
+        contacts. When omitted, all channels default to "subscribed".  Note: due to US regulations, SMS
+        to US contacts is restricted to subscribed contacts only, regardless of this setting.'
+      properties:
+        email:
+          description: Email subscription threshold
+          enum:
+          - subscribed
+          - nonSubscribed
+          - all
+          example: subscribed
+          type: string
+        sms:
+          description: 'SMS subscription threshold. US non-subscribers are never reached on SMS regardless
+            of this value
+
+            — CTIA regulations restrict SMS to US contacts to subscribed only.'
+          enum:
+          - subscribed
+          - nonSubscribed
+          - all
+          example: subscribed
+          type: string
+      type: object
+    SendingThresholdsRequest:
+      description: 'Sending thresholds — controls which contacts receive messages at each send block (email,
+        SMS) based on subscription status. When provided, both `email` and `sms` are required. Push notifications
+        are always restricted to subscribed contacts and are not exposed here. When omitted, all channels
+        default to `subscribed`.  To deliver SMS blocks only to SMS subscribers, set `sms` to `"subscribed"`
+        (the default) — `nonSubscribed` and `all` will route SMS to non-subscribed contacts as well, which
+        is rarely desired.  Note: due to US regulations (CTIA), SMS to US contacts is always restricted
+        to subscribed contacts only — US non-subscribers will not be reached on the SMS channel regardless
+        of the `sms` value.'
+      properties:
+        email:
+          description: Email subscription threshold
+          enum:
+          - subscribed
+          - nonSubscribed
+          - all
+          example: subscribed
+          type: string
+        sms:
+          description: 'SMS subscription threshold. US non-subscribers are never reached on SMS regardless
+            of this value
+
+            — CTIA regulations restrict SMS to US contacts to subscribed only.'
+          enum:
+          - subscribed
+          - nonSubscribed
+          - all
+          example: subscribed
+          type: string
+      required:
+      - email
+      - sms
+      type: object
+    Settings:
+      description: Automation settings.
+      properties:
+        discount:
+          allOf:
+          - $ref: '#/components/schemas/DiscountSettings'
+          description: 'Global discount configuration shared across all SMS blocks and email
+
+            content in this automation. Present when global discount mode is active.
+
+            Null when discounts are managed independently per block (per-block mode).
+
+            Check this field to determine the active discount mode:
+
+            non-null = global mode, null = per-block mode.'
+        frequencyLimiter:
+          allOf:
+          - $ref: '#/components/schemas/FrequencyLimiter'
+          description: Frequency limiter configuration — omit or null to disable
+        overlapLimiter:
+          allOf:
+          - $ref: '#/components/schemas/OverlapLimiter'
+          description: Overlap limiter configuration — omit or null to disable
+        sendingThresholds:
+          allOf:
+          - $ref: '#/components/schemas/SendingThresholds'
+          description: 'Sending thresholds — always populated. Defaults to {email: "subscribed", sms:
+            "subscribed"} when no override is set.'
+      type: object
+    SmsCompliance:
+      description: SMS compliance text settings. Controls opt-out and unsubscribe text appended to the
+        SMS body. By default, both stop keyword and unsubscribe link are enabled. When enabled, the corresponding
+        text field is required.
+      properties:
+        isStopKeywordIncluded:
+          description: 'Whether stop keyword text is included in the SMS (default: true). When true, stopKeywordText
+            is required.'
+          example: true
+          type: boolean
+        isUnsubscribeLinkIncluded:
+          description: 'Whether unsubscribe link text is included in the SMS (default: true). When true,
+            unsubscribeLinkText is required.'
+          example: true
+          type: boolean
+        stopKeywordText:
+          description: STOP keyword text appended to the SMS for US/CA recipients. Required when isStopKeywordIncluded
+            is true.
+          example: Reply STOP to opt out
+          maxLength: 250
+          type: string
+        unsubscribeLinkText:
+          description: Unsubscribe link text appended to the SMS for non-US/CA recipients. Required when
+            isUnsubscribeLinkIncluded is true.
+          example: Unsubscribe [[unsubscribe_link]]
+          maxLength: 250
+          type: string
+      type: object
+    SmsComplianceRequest:
+      description: SMS compliance settings for POST / PUT. Controls whether the opt-out keyword and unsubscribe
+        link are included in the message.
+      properties:
+        isStopKeywordIncluded:
+          description: Whether to append the opt-out keyword to the message. Defaults to true when omitted.
+          example: true
+          type: boolean
+        isUnsubscribeLinkIncluded:
+          description: Whether to append an unsubscribe link to the message. Defaults to true when omitted.
+          example: true
+          type: boolean
+        stopKeywordText:
+          description: Text appended as the opt-out keyword. Supports personalization tags.
+          example: Reply STOP to opt out
+          maxLength: 250
+          type: string
+        unsubscribeLinkText:
+          description: Text used for the unsubscribe link. Must contain [[unsubscribe_link]].
+          example: Unsubscribe [[unsubscribe_link]]
+          maxLength: 250
+          type: string
+      type: object
+    Split:
+      description: Conditional split block configuration.
+      properties:
+        falseBlocks:
+          description: Blocks executed when split condition is not met (false path)
+          items:
+            $ref: '#/components/schemas/Block'
+          type: array
+        filterGroup:
+          allOf:
+          - $ref: '#/components/schemas/SplitFilterGroup'
+          description: Split evaluation filter group
+        trueBlocks:
+          description: Blocks executed when split condition is met (true path)
+          items:
+            $ref: '#/components/schemas/Block'
+          type: array
+      type: object
+    SplitFilter:
+      description: Split filter condition. The type discriminator determines the filter category. For
+        event/contact filters, field and operator follow the same rules as EventFilter/ContactFilter.
+        For message filters, field is always "blockID", value is the block ID, and operator is an engagement
+        action (e.g. "openedEmail", "clickedEmail").
+      properties:
+        field:
+          description: 'Property to filter on (event: property path; contact: property name; message:
+            always "blockID")'
+          example: app_language_code
+          type: string
+        operator:
+          description: 'Operator (event/contact: comparison operator; message: engagement operator such
+            as "openedEmail", "clickedEmail", "clickedSms", "openedPush", "clickedPush")'
+          example: eq
+          type: string
+        type:
+          description: Filter type discriminator
+          enum:
+          - event
+          - contact
+          - message
+          example: event
+          type: string
+        urlMatch:
+          allOf:
+          - $ref: '#/components/schemas/UrlMatch'
+          description: URL match condition — applies only to clicked message filters
+        value:
+          description: 'Filter value (event/contact: filter value; message: block ID)'
+      type: object
+    SplitFilterGroup:
+      description: Split filter group containing one or more filters of mixed types (event, contact, message)
+        combined by a logical operator. At least one filter is required.
+      properties:
+        filters:
+          description: Filters within this group (each filter specifies its type)
+          items:
+            $ref: '#/components/schemas/SplitFilter'
+          type: array
+        logicalOperator:
+          description: Logical operator combining filters within this group
+          enum:
+          - and
+          - or
+          example: and
+          type: string
+      type: object
+    SplitFilterGroupRequest:
+      description: Split filter group containing one or more filters of mixed types (event, contact, message)
+        combined by a logical operator.
+      properties:
+        filters:
+          description: Filters within this group (each filter specifies its type). At least one filter
+            is required.
+          items:
+            $ref: '#/components/schemas/SplitFilterRequest'
+          type: array
+        logicalOperator:
+          description: Logical operator combining filters within this group
+          enum:
+          - and
+          - or
+          example: and
+          type: string
+      required:
+      - filters
+      - logicalOperator
+      type: object
+    SplitFilterRequest:
+      description: 'Split filter — the `type` discriminator determines which fields and operators are
+        valid.  | type | field | operator | value | urlMatch | |---|---|---|---|---| | `event` | event
+        property path (e.g. `total_price`, `cart.items.price`) | `eq`, `neq`, `gt`, `gte`, `lt`, `lte`,
+        `contains`, `notContains`, `startsWith`, `endsWith`, `exists`, `notExists`, `in`, `notIn` | property
+        value | not allowed | | `contact` | contact attribute (`tag`, `country`, `dateAdded`, …) | depends
+        on field — same set as audience contact filters | attribute value | not allowed | | `message`
+        | always `"blockID"` | `openedEmail`, `clickedEmail`, `clickedSms`, `openedPush`, `clickedPush`
+        | ID of a message block above this split | optional for clicked operators (omit to match any click),
+        forbidden for opened operators |  For `event` filters, use a property path returned by the [event
+        metadata endpoint](https://api-docs.omnisend.com/v2026-preview/reference/post_event_metadata_query).
+        Choose a numeric property when using numeric operators (`gt`, `gte`, `lt`, `lte`).  **Important:**
+        For `event` filters the `value` field''s JSON type must match the property''s data type. For numeric
+        properties send a JSON number (`"value": 50`); sending a string (`"value": "50"`) returns `400`
+        with a type-mismatch error.'
+      properties:
+        field:
+          description: 'Property or attribute to filter on.
+
+            For event filters: event property path. For contact filters: contact attribute name.
+
+            For message filters: must be "blockID".'
+          example: app_language_code
+          type: string
+        operator:
+          description: Comparison or engagement operator. Allowed values depend on the filter type and
+            field.
+          example: eq
+          type: string
+        type:
+          description: Filter type discriminator
+          enum:
+          - event
+          - contact
+          - message
+          example: event
+          type: string
+        urlMatch:
+          allOf:
+          - $ref: '#/components/schemas/UrlMatchRequest'
+          description: 'URL match condition. Applies only to clicked message filters (clickedEmail, clickedSms,
+            clickedPush).
+
+            Must be omitted for event, contact, and opened message filters.'
+        value:
+          description: 'Filter value. For event filters: must match the property''s data type (number
+            for numeric
+
+            properties, string for string properties); omit only for operators "exists" and "notExists".
+
+            For contact filters: always a string. For message filters: must be the ID of a message
+
+            block (email/SMS/push) that appears above this split.'
+      required:
+      - field
+      - operator
+      - type
+      type: object
+    TagAction:
+      description: Tag action configuration. Used by both addTag and removeTag action types.
+      properties:
+        value:
+          description: Tag value. Case-insensitive — values are normalized to lowercase on create.
+          example: vip-customer
+          maxLength: 250
+          type: string
+      type: object
+    Trigger:
+      description: Automation trigger configuration.
+      properties:
+        audienceFilterGroup:
+          allOf:
+          - $ref: '#/components/schemas/ContactFilterGroup'
+          description: Audience filter group for contact eligibility
+        condition:
+          allOf:
+          - $ref: '#/components/schemas/TriggerCondition'
+          description: Trigger condition — the event (and event-property filters) that triggers the automation
+            workflow.
+        inactivitySettings:
+          allOf:
+          - $ref: '#/components/schemas/InactivitySettings'
+          description: Inactivity settings for the trigger
+      type: object
+    TriggerCondition:
+      description: 'Trigger condition — the event that triggers the automation workflow, together with
+        optional event-property filters.  The `event` field identifies what triggers the automation workflow.
+        Most events are standard events received via the Events API (e.g. "placed order", "started checkout").
+        In addition, the following built-in trigger events are available without the Events API: "birthday"
+        (contact birthday anniversary), "product back in stock".  "product back in stock" — only supported
+        for Shopify, BigCommerce, and WooCommerce stores; it will have no effect for any other integration.'
+      properties:
+        event:
+          description: Event name that triggers the automation workflow
+          example: placed order
+          type: string
+        filterGroups:
+          description: Event filter groups — multiple groups are combined with AND logic. Each group combines
+            its filters using the group's logicalOperator.
+          items:
+            $ref: '#/components/schemas/EventFilterGroup'
+          type: array
+        origin:
+          description: 'Integration platform that generated the event (e.g. "shopify", "omnisend", "api").
+
+            Always populated for events received via the Events API — reflects the resolved origin,
+
+            even when it was auto-selected because the event has a single origin.
+
+            Empty for built-in trigger events and the "subscribed to marketing" event.'
+          example: omnisend
+          type: string
+      type: object
+    UTMResponse:
+      description: UTM tracking tags for a single automation block.
+      properties:
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/UTMTags'
+          description: UTM tag values
+      type: object
+    UTMTags:
+      description: UTM tracking tag values.
+      properties:
+        campaign:
+          description: UTM campaign parameter
+          example: 'automation: Welcome Series (000000000000000000000001)'
+          type: string
+        medium:
+          description: UTM medium parameter
+          example: email
+          type: string
+        source:
+          description: UTM source parameter
+          example: omnisend
+          type: string
+      type: object
+    UTMTagsInput:
+      description: UTM tracking tag values for an update request. All three fields must be provided —
+        send an empty string to clear a field (which resets it to its default value on the next read).
+      properties:
+        campaign:
+          description: UTM campaign parameter
+          example: 'automation: Welcome Series (000000000000000000000001)'
+          maxLength: 250
+          type: string
+        medium:
+          description: UTM medium parameter
+          example: email
+          maxLength: 250
+          type: string
+        source:
+          description: UTM source parameter
+          example: omnisend
+          maxLength: 250
+          type: string
+      required:
+      - campaign
+      - medium
+      - source
+      type: object
+    UpdateABTestingRequest:
+      description: A/B test block configuration for full replacement (PUT). At least one of aBlocks or
+        bBlocks must be non-empty.
+      properties:
+        aBlocks:
+          description: Blocks executed for contacts in branch A.
+          items:
+            $ref: '#/components/schemas/UpdateBlockRequest'
+          type: array
+        aBlocksPercentage:
+          description: Percentage of contacts routed to branch A. Branch B receives the remainder.
+          example: 50
+          maximum: 100
+          minimum: 0
+          type: integer
+        bBlocks:
+          description: Blocks executed for contacts in branch B.
+          items:
+            $ref: '#/components/schemas/UpdateBlockRequest'
+          type: array
+      required:
+      - aBlocksPercentage
+      type: object
+    UpdateBlockRequest:
+      description: Automation workflow block for PUT — can create a new block (via temporaryID) or update
+        an existing one (via id). Exactly one of the type-specific fields must be populated based on the
+        type discriminator.  **Constraint:** A `delay` block cannot end the workflow. During full block-tree
+        replacement, it may be the final block inside a conditional-split branch when sibling blocks follow
+        the split; those sibling blocks are the shared downstream sequence for both branches. The same
+        applies inside an `abTesting` branch when sibling blocks follow the A/B test block. Otherwise,
+        a delay at the end of a block sequence returns `400`.  Conditional-split branches may contain
+        different numbers of blocks. Blocks placed after the split are shared by both branches, allowing
+        them to reconverge into one downstream path.
+      properties:
+        abTesting:
+          allOf:
+          - $ref: '#/components/schemas/UpdateABTestingRequest'
+          description: A/B test block configuration
+        action:
+          allOf:
+          - $ref: '#/components/schemas/InputActionRequest'
+          description: Action block configuration
+        delay:
+          allOf:
+          - $ref: '#/components/schemas/UpdateDelayRequest'
+          description: Delay block configuration
+        id:
+          description: Server-assigned block ID. Required when updating an existing block.
+          example: '000000000000000000000001'
+          type: string
+        split:
+          allOf:
+          - $ref: '#/components/schemas/UpdateSplitRequest'
+          description: Split block configuration
+        temporaryID:
+          description: 'Client-provided identifier for new blocks, scoped to this request.
+
+            Used in validation error messages. Omit when updating an existing block via blockID.
+
+            Must be unique within the request.'
+          example: welcome-email
+          maxLength: 36
+          type: string
+        type:
+          description: Block type discriminator
+          enum:
+          - delay
+          - action
+          - split
+          - abTesting
+          example: action
+          type: string
+      required:
+      - type
+      type: object
+    UpdateDelayRequest:
+      description: Delay block configuration for full replacement (PUT and PATCH). All fields of the delay
+        are replaced atomically — this is not a partial update. Re-send the complete delay spec when changing
+        any field, including mode.
+      properties:
+        allowedWeekdays:
+          description: Days of the week when the delay is allowed to resolve. Omit to allow all days.
+          items:
+            enum:
+            - sunday
+            - monday
+            - tuesday
+            - wednesday
+            - thursday
+            - friday
+            - saturday
+            type: string
+          type: array
+        duration:
+          allOf:
+          - $ref: '#/components/schemas/UpdateDurationRequest'
+          description: Duration configuration — required when mode is "duration"
+        mode:
+          description: Delay mode discriminator
+          enum:
+          - duration
+          - immediate
+          - specificTime
+          example: duration
+          type: string
+        time:
+          description: Time in HH:MM 24-hour format — required when mode is "specificTime"
+          example: 09:30
+          type: string
+      required:
+      - mode
+      type: object
+    UpdateDurationRequest:
+      description: Duration configuration for delay replacement (PUT and PATCH).
+      properties:
+        amount:
+          description: Duration amount — must be at least 1
+          example: 24
+          type: integer
+        units:
+          description: Duration unit
+          enum:
+          - m
+          - h
+          - d
+          - w
+          - M
+          example: h
+          type: string
+      required:
+      - amount
+      - units
+      type: object
+    UpdateSmsCompliance:
+      description: 'SMS compliance settings for PATCH (full replacement of the compliance object). Both
+        toggle fields are required when this object is provided. Cannot be aliased to SmsComplianceRequest:
+        PATCH toggles are required; POST/PUT toggles are optional.'
+      properties:
+        isStopKeywordIncluded:
+          description: Whether to append the opt-out keyword to the message.
+          example: true
+          type: boolean
+        isUnsubscribeLinkIncluded:
+          description: Whether to append an unsubscribe link to the message.
+          example: true
+          type: boolean
+        stopKeywordText:
+          description: Text appended as the opt-out keyword. Supports personalization tags.
+          example: Reply STOP to opt out
+          maxLength: 250
+          type: string
+        unsubscribeLinkText:
+          description: Text used for the unsubscribe link. Must contain [[unsubscribe_link]].
+          example: Unsubscribe [[unsubscribe_link]]
+          maxLength: 250
+          type: string
+      required:
+      - isStopKeywordIncluded
+      - isUnsubscribeLinkIncluded
+      type: object
+    UpdateSplitRequest:
+      description: Conditional split block configuration for full replacement (PUT). All fields of the
+        split are replaced atomically — this is not a partial update. Re-send the complete split spec
+        when changing any field. At least one of trueBlocks or falseBlocks must be non-empty.  Sibling
+        blocks placed after a split run for contacts from both branches — the branches re-converge on
+        the shared downstream sequence.
+      properties:
+        falseBlocks:
+          description: Blocks executed when the filter group evaluates to false.
+          items:
+            $ref: '#/components/schemas/UpdateBlockRequest'
+          type: array
+        filterGroup:
+          allOf:
+          - $ref: '#/components/schemas/SplitFilterGroupRequest'
+          description: Filter group evaluated when contacts reach this block. At least one filter is required.
+        trueBlocks:
+          description: Blocks executed when the filter group evaluates to true.
+          items:
+            $ref: '#/components/schemas/UpdateBlockRequest'
+          type: array
+      required:
+      - filterGroup
+      type: object
+    UpdateUTMRequest:
+      description: Update UTM tracking tags for an automation block. All three tag fields (source, medium,
+        campaign) must be provided. Send an empty string for any field to clear it — the next read will
+        return the default value for that field.
+      properties:
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/UTMTagsInput'
+          description: UTM tag values
+      required:
+      - tags
+      type: object
+    UrlMatch:
+      description: URL match condition for clicked message filters.
+      properties:
+        operator:
+          description: URL match operator
+          enum:
+          - any
+          - is
+          - contains
+          - startsWith
+          - endsWith
+          example: contains
+          type: string
+        value:
+          description: URL string to match against
+          example: https://example.com
+          type: string
+      type: object
+    UrlMatchRequest:
+      description: URL match condition for clicked message filters (clickedEmail, clickedSms, clickedPush).
+        When operator is "any", value may be omitted. For all other operators, value is required.
+      properties:
+        operator:
+          description: URL match operator
+          enum:
+          - any
+          - is
+          - contains
+          - startsWith
+          - endsWith
+          example: contains
+          type: string
+        value:
+          description: URL string to match against. Required when operator is not "any".
+          example: https://example.com/promo
+          type: string
+      required:
+      - operator
+      type: object
+    ValidationProblem:
+      description: Error response returned when the request contains invalid input. The errors array lists
+        every field that failed validation.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        errors:
+          description: List of fields that failed validation
+          items:
+            $ref: '#/components/schemas/FieldError'
+          type: array
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    WebhookHeader:
+      description: A single webhook HTTP header.
+      properties:
+        key:
+          description: Header name
+          example: X-Api-Key
+          maxLength: 256
+          type: string
+        value:
+          description: Header value. The configured value is returned verbatim under the read scope.
+          example: secret-token
+          maxLength: 10000
+          type: string
+      type: object

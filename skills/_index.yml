@@ -1,0 +1,59 @@
+generated: '2026-08-13'
+method: generated
+source: >-
+  openapi/omnisend-*-openapi.yml (harvested 2026-08-13 from Omnisend's own documentation host),
+  conventions/omnisend-conventions.yml, errors/omnisend-problem-types.yml,
+  rate-limits/omnisend-rate-limits.yml, and the Omnisend API reference at api-docs.omnisend.com
+description: >-
+  Packaged Agent Skills for the marquee Omnisend integration flows. Every step is grounded in a real
+  method + path from the harvested 2026-03-15 contracts — Omnisend declares operationId on only 3 of
+  its 82 published operations (the Event Metadata API), so these skills bind by method and path
+  rather than by operationId, and say so. Each skill carries the cross-cutting rules an agent gets
+  wrong otherwise: the required Omnisend-Version header, the absence of any idempotency key, the
+  429-without-headers contract, and the 409 state machines on campaigns, automations and segments.
+  Omnisend publishes no skills/ or AGENTS.md of its own — searched 2026-08-13, none found.
+
+skills:
+  - name: omnisend-sync-contact
+    file: omnisend-sync-contact.md
+    api: Omnisend Contacts API
+    spec: openapi/omnisend-contacts-api-openapi.yml
+    operations: [POST /contacts, GET /contacts, 'GET /contacts/{id}', PATCH /contacts, 'PATCH /contacts/{id}', POST /contacts/tags]
+    scopes: [contacts.read, contacts.write]
+  - name: omnisend-send-email-campaign
+    file: omnisend-send-email-campaign.md
+    api: Omnisend Campaigns API
+    spec: openapi/omnisend-campaigns-api-openapi.yml
+    operations: [POST /campaigns, 'GET /campaigns/{id}', 'PATCH /campaigns/{id}', 'POST /campaigns/{id}/test-email', 'POST /campaigns/{id}/send', 'POST /campaigns/{id}/copy', 'POST /campaigns/{id}/cancel', 'PUT /campaigns/{id}/utm']
+    scopes: [campaigns.read, campaigns.write]
+  - name: omnisend-build-segment
+    file: omnisend-build-segment.md
+    api: Omnisend Segments API
+    spec: openapi/omnisend-segments-api-openapi.yml
+    operations: [GET /segments, POST /segments, 'GET /segments/{segmentID}', 'PUT /segments/{segmentID}', 'DELETE /segments/{segmentID}', 'GET /segments/{segmentID}/statistics']
+    scopes: [segments.read, segments.write]
+  - name: omnisend-track-ecommerce-events
+    file: omnisend-track-ecommerce-events.md
+    api: Omnisend Events API + Event Metadata API
+    spec: openapi/omnisend-events-api-openapi.yml
+    operations: [POST /events, POST /event-metadata, PUT /event-metadata, POST /event-metadata/query]
+    scopes: [events.read, events.write]
+  - name: omnisend-automation-webhook
+    file: omnisend-automation-webhook.md
+    api: Omnisend Automations API
+    spec: openapi/omnisend-automations-api-openapi.yml
+    operations: [POST /automations, 'GET /automations/{id}', 'PATCH /automations/{id}', 'PUT /automations/{id}/blocks', 'POST /automations/{id}/enable', 'POST /automations/{id}/disable', 'POST /automations/{id}/copy', 'DELETE /automations/{id}']
+    scopes: [automations.read, automations.write]
+  - name: omnisend-sync-product-catalog
+    file: omnisend-sync-product-catalog.md
+    api: Omnisend Products API + Product Categories API + Batches API
+    spec: openapi/omnisend-products-api-openapi.yml
+    operations: [GET /products, POST /products, 'PUT /products/{productID}', 'DELETE /products/{productID}', GET /product-categories, POST /product-categories, POST /batches, 'GET /batches/{batchID}']
+    scopes: [products.read, products.write]
+
+cross_cutting:
+  required_headers: ['Authorization: Omnisend-API-Key {key} or Bearer {token}', 'Omnisend-Version: 2026-03-15']
+  idempotency: none — see conventions/omnisend-conventions.yml
+  errors: errors/omnisend-problem-types.yml
+  rate_limits: rate-limits/omnisend-rate-limits.yml
+  conventions: conventions/omnisend-conventions.yml

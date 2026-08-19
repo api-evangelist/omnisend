@@ -1,118 +1,1054 @@
-openapi: 3.1.0
+openapi: 3.0.0
 info:
-  title: Omnisend REST Analytics Segments API
-  description: 'Omnisend''s REST API for managing ecommerce email and SMS marketing
-
-    automation. Exposes contacts, events, products, product categories,
-
-    segments, campaigns, batches, email templates, email content, email
-
-    universal layouts, images, brands, and analytics reports. Authentication
-
-    uses an API key passed via the `X-API-KEY` header, or OAuth 2.0 with
-
-    scopes such as `contacts.read`, `contacts.write`, `campaigns.read`,
-
-    `campaigns.write`, `analytics.read`, etc.
-
-    '
-  version: v5
-  contact:
-    name: Omnisend
-    url: https://api-docs.omnisend.com/
-servers:
-- url: https://api.omnisend.com/v5
-  description: Omnisend REST API v5
-security:
-- ApiKeyAuth: []
-- OAuth2: []
-tags:
-- name: Segments
+  contact: {}
+  description: Manage contact segments using flexible condition-based rules.
+  title: Segments API
+  version: '5.0'
+  x-api-evangelist:
+    harvested: '2026-08-13'
+    method: searched
+    source: https://dash.readme.com/api/v1/api-registry/3p9ebqrjmseixrbd
+    source-note: Published by Omnisend on its own docs host api-docs.omnisend.com (ReadMe project @omnisend,
+      branch v2026-03-15); registry document referenced by the reference page as oasPublicUrl.
 paths:
   /segments:
     get:
-      tags:
-      - Segments
-      summary: List segments
+      description: 'List segments with sorting and cursor-based pagination support.
+
+
+        **Scopes:**
+
+        `segments.read`
+
+
+        **Pagination:**
+
+        This endpoint uses cursor-based pagination. Use the `after` cursor from the response to get the
+        next page,
+
+        or the `before` cursor to get the previous page. Do not use both `after` and `before` parameters
+        simultaneously.
+
+
+        **Sorting:**
+
+        - Only single-field sorting is supported. You cannot sort by multiple fields.
+
+        - Available sort fields: `createdAt` (default), `name`.
+
+        - When sorting by `name`, segments are sorted lexicographically (case-sensitive).
+
+        - Sort parameters are only required on the first request. Subsequent requests using a cursor
+
+        will automatically use the sort settings embedded in the cursor.
+
+
+        **Cursor Behavior:**
+
+        - Cursors are self-contained and include all parameters needed for pagination.
+
+        - Once you have a cursor, you only need to pass the cursor for subsequent pages.
+
+        - If sort parameters are provided with a cursor, they must match the cursor''s sort settings.
+
+        - Cursors may become invalid if the underlying data changes significantly (e.g., the referenced
+        segment is deleted).
+
+
+        **Rate Limiting:**
+
+        This endpoint is rate limited to 100 requests per minute.'
+      parameters:
+      - description: Page size (1-50)
+        in: query
+        name: limit
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 10
+      - description: Cursor for next page (base64-encoded, obtained from previous response)
+        in: query
+        name: after
+        schema:
+          type: string
+      - description: Cursor for previous page (base64-encoded, obtained from previous response)
+        in: query
+        name: before
+        schema:
+          type: string
+      - description: Sort field (only needed on first request)
+        in: query
+        name: sort
+        schema:
+          type: string
+          enum:
+          - createdAt
+          - name
+          default: createdAt
+      - description: Sort direction (only needed on first request)
+        in: query
+        name: direction
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - $ref: '#/components/parameters/APIVersionHeader'
       responses:
         '200':
-          description: List of segments
-    post:
+          description: Segments list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListSegmentsResponse'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '401':
+          description: Authentication is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Insufficient permissions for this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '410':
+          description: API version has been retired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitProblem'
+        '500':
+          description: Unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - segments.read
+      - ApiKeyAuth: []
+      summary: List segments
       tags:
       - Segments
-      summary: Create a segment
+    post:
+      description: "Creates a new segment.\n\n**Scopes:**\n`segments.write`\n\n**Rate Limiting:**\nThis\
+        \ endpoint is rate limited to 15 requests per minute.\n\n# Segmentation examples\n\n## Event filter\
+        \ fields reference\n\nFor `entity: \"event\"` conditions, each filter in the `filters` array supports\
+        \ the following fields:\n\n| Field | Required | Description |\n|---|---|---|\n| `name` | Yes |\
+        \ Event name (e.g., `\"placed order\"`, `\"opened message\"`) |\n| `operator` | Yes | `has` or\
+        \ `hasNot` |\n| `count` | Yes | `atLeast` or `equals` |\n| `value` | Yes | Integer threshold (e.g.,\
+        \ `1`) |\n| `origin` | No | Event source (e.g., `\"shopify\"`, `\"omnisend\"`). See the `origin`\
+        \ note below. |\n| `period` | No | Time window — see period operators below |\n| `filters` | No\
+        \ | Array of property sub-filters on the event payload |\n| `junction` | No | `and` or `or` —\
+        \ logical operator for `filters` |\n\n> **`origin` is usually optional.** Most events belong to\
+        \ a single origin, so the API resolves it for you.\n> You only need to specify `origin` when an\
+        \ event exists under multiple origins — otherwise the API returns an error with the list of valid\
+        \ values to choose from.\n\n### Period operators\n\nThe `period` object is optional on every event\
+        \ filter. When omitted, the filter matches across all time.\n\n#### Relative periods\n\nUse `value`\
+        \ (positive integer) + `unit` (`days` \\| `weeks` \\| `months` \\| `years`).\n\n| `operator` |\
+        \ Meaning | Example JSON |\n|---|---|---|\n| `inTheLast` | Event occurred within the last N units\
+        \ | `{ \"operator\": \"inTheLast\", \"unit\": \"days\", \"value\": 7 }` |\n| `notInTheLast` |\
+        \ Event did **not** occur within the last N units | `{ \"operator\": \"notInTheLast\", \"unit\"\
+        : \"months\", \"value\": 3 }` |\n\n#### Absolute periods\n\nUse ISO 8601 date strings (`YYYY-MM-DD`).\n\
+        \n| `operator` | Meaning | Example JSON |\n|---|---|---|\n| `equals` | Event occurred on an exact\
+        \ date | `{ \"operator\": \"equals\", \"value\": \"2026-01-13\" }` |\n| `before` | Event occurred\
+        \ before a date (exclusive) | `{ \"operator\": \"before\", \"value\": \"2026-01-13\" }` |\n| `after`\
+        \ | Event occurred after a date (exclusive) | `{ \"operator\": \"after\", \"value\": \"2026-04-01\"\
+        \ }` |\n| `between` | Event occurred within a date range (inclusive) | `{ \"operator\": \"between\"\
+        , \"valueFrom\": \"2025-01-01\", \"valueTo\": \"2025-01-31\" }` |\n\n---\n\n## Contact filter\
+        \ properties reference\n\nFor `entity: \"contact\"` conditions, valid `property` values are:\n\
+        \n- Text: `email`, `phoneNumber`, `firstName`, `lastName`, `gender`, `country`, `state`, `city`,\
+        \ `address`, `postalCode`, `lastDetectedCity`, `lastDetectedCountry`, `customerLifecycleStage`\n\
+        - List: `tags`, `consent`\n- Number: `averageOrderValue`, `totalSpent`\n- Date: `dateAdded`\n\
+        - Subscription status: `subscriptionStatus`\n- Variadic: `birthday` (`valueType` can be `date`\
+        \ or `text`), `custom` (`valueType` can be `text`, `number`, `bool`, or `date`)\n\n> **Important**:\n\
+        > - Use `tags` (plural), not `tag`.\n> - When `property` is `custom`, provide both `name` and\
+        \ `valueType`.\n\nThis section provides a deeper technical reference for building complex segments\
+        \ using the API segment model.\n\n---\n\n<details id=\"example-combining-contact-and-event-conditions-and-logic\"\
+        >\n<summary>Example: Combining contact and event conditions (AND logic)</summary>\n<br>\n<div\
+        \ style=\"padding-left: 1.5em;\">\n\nShows how to combine different entity types (`contact` and\
+        \ `event`) within a single group. **AND logic is automatically inferred** between multiple conditions\
+        \ inside the `conditions` array.\n<br>\n\n```json\n{\n  \"name\": \"Combining Contact and Event\
+        \ Conditions\",\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n       \
+        \   \"entity\": \"contact\",\n          \"junction\": \"and\",\n          \"filters\": [\n   \
+        \         { \"operator\": \"anyOf\", \"property\": \"country\", \"value\": [\"US\", \"Canada\"\
+        ] },\n            {\n              \"channels\": [\"email\"],\n              \"operator\": \"\
+        equals\",\n              \"property\": \"subscriptionStatus\",\n              \"value\": \"subscribed\"\
+        \n            }\n          ]\n        },\n        {\n          \"entity\": \"event\",\n      \
+        \    \"junction\": \"and\",\n          \"filters\": [\n            {\n              \"count\"\
+        : \"atLeast\",\n              \"name\": \"opened message\",\n              \"operator\": \"has\"\
+        ,\n              \"period\": { \"operator\": \"inTheLast\", \"unit\": \"days\", \"value\": 7 },\n\
+        \              \"value\": 1\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n\
+        \n**Target audience:** Contacts who are from the US and subscribed to the email channel, **AND**\
+        \ who have opened at least one message in the last 7 days.\n\n</div>\n</details>\n\n---\n\n<details\
+        \ id=\"example-multiple-event-conditions-in-a-single-group\">\n<summary>Example: Multiple event\
+        \ conditions in a single group</summary>\n<br>\n<div style=\"padding-left: 1.5em;\">\n\nMultiple\
+        \ `event` conditions within the same group, with an **OR** junction on filters within one condition.\n\
+        <br>\n\n```json\n{\n  \"name\": \"Multiple Event Conditions in a Group\",\n  \"conditionGroups\"\
+        : [\n    {\n      \"conditions\": [\n        {\n          \"entity\": \"event\",\n          \"\
+        junction\": \"and\",\n          \"filters\": [\n            {\n              \"count\": \"atLeast\"\
+        ,\n              \"name\": \"opened message\",\n              \"operator\": \"has\",\n       \
+        \       \"period\": { \"operator\": \"inTheLast\", \"unit\": \"days\", \"value\": 7 },\n     \
+        \         \"value\": 1\n            }\n          ]\n        },\n        {\n          \"entity\"\
+        : \"event\",\n          \"junction\": \"or\",\n          \"filters\": [\n            {\n     \
+        \         \"count\": \"atLeast\",\n              \"name\": \"clicked message\",\n            \
+        \  \"operator\": \"has\",\n              \"value\": 1\n            },\n            {\n       \
+        \       \"count\": \"equals\",\n              \"name\": \"marked message as spam\",\n        \
+        \      \"operator\": \"has\",\n              \"value\": 0\n            }\n          ]\n      \
+        \  },\n        {\n          \"entity\": \"contact\",\n          \"junction\": \"and\",\n     \
+        \     \"filters\": [\n            { \"operator\": \"anyOf\", \"property\": \"country\", \"value\"\
+        : [\"US\", \"Mexico\"] }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n\n**Target audience:**\
+        \ Contacts from the US who have opened a message in the last 7 days, **AND** who have either clicked\
+        \ a message **OR** have never marked a message as spam.\n\n</div>\n</details>\n\n---\n\n<details\
+        \ id=\"example-multiple-condition-groups-or-logic\">\n<summary>Example: Multiple condition groups\
+        \ (OR logic)</summary>\n<br>\n<div style=\"padding-left: 1.5em;\">\n\nDemonstrates the **OR**\
+        \ relationship between different `conditionGroups`. A contact is included if they match any of\
+        \ the groups.\n<br>\n\n```json\n{\n  \"name\": \"Multiple Condition Groups\",\n  \"conditionGroups\"\
+        : [\n    {\n      \"conditions\": [\n        {\n          \"entity\": \"contact\",\n         \
+        \ \"junction\": \"and\",\n          \"filters\": [\n            { \"operator\": \"anyOf\", \"\
+        property\": \"tags\", \"value\": [\"vip\", \"imported\"] }\n          ]\n        },\n        {\n\
+        \          \"entity\": \"event\",\n          \"junction\": \"and\",\n          \"filters\": [\n\
+        \            {\n              \"count\": \"atLeast\",\n              \"name\": \"placed order\"\
+        ,\n              \"operator\": \"has\",\n              \"origin\": \"shopify\",\n            \
+        \  \"value\": 1\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"conditions\"\
+        : [\n        {\n          \"entity\": \"contact\",\n          \"junction\": \"or\",\n        \
+        \  \"filters\": [\n            { \"operator\": \"anyOf\", \"property\": \"country\", \"value\"\
+        : [\"US\", \"Canada\"] },\n            {\n              \"channels\": [\"email\"],\n         \
+        \     \"operator\": \"equals\",\n              \"property\": \"subscriptionStatus\",\n       \
+        \       \"value\": \"subscribed\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n\
+        }\n```\n\n**Target audience:** Contacts who are either (tagged as \"vip\" **AND** have placed\
+        \ at least one Shopify order) **OR** (are from the US **OR** are subscribed to the email channel).\n\
+        \n</div>\n</details>\n\n---\n\n<details id=\"example-filtering-by-contact-properties\">\n<summary>Example:\
+        \ Filtering by contact properties</summary>\n<br>\n<div style=\"padding-left: 1.5em;\">\n\nCommon\
+        \ contact property filters, including text matching, subscription status, and location.\n<br>\n\
+        \n```json\n{\n  \"name\": \"Contact Property Filters\",\n  \"conditionGroups\": [\n    {\n   \
+        \   \"conditions\": [\n        {\n          \"entity\": \"contact\",\n          \"junction\":\
+        \ \"and\",\n          \"filters\": [\n            { \"operator\": \"anyOf\", \"property\": \"\
+        firstName\", \"value\": [\"Jane\", \"John\"] },\n            { \"operator\": \"contains\", \"\
+        property\": \"lastName\", \"value\": [\"Smith\"] },\n            {\n              \"channels\"\
+        : [\"email\", \"browserPush\", \"sms\"],\n              \"operator\": \"equals\",\n          \
+        \    \"property\": \"subscriptionStatus\",\n              \"value\": \"subscribed\"\n        \
+        \    },\n            { \"operator\": \"anyOf\", \"property\": \"tags\", \"value\": [\"vip\"] },\n\
+        \            { \"operator\": \"noneOf\", \"property\": \"tags\", \"value\": [\"excluded\"] },\n\
+        \            { \"operator\": \"anyOf\", \"property\": \"country\", \"value\": [\"US\", \"Canada\"\
+        ] },\n            { \"operator\": \"doesNotExist\", \"property\": \"postalCode\" }\n         \
+        \ ]\n        },\n        {\n          \"entity\": \"contact\",\n          \"junction\": \"or\"\
+        ,\n          \"filters\": [\n            { \"operator\": \"anyOf\", \"property\": \"gender\",\
+        \ \"value\": [\"f\"] },\n            { \"operator\": \"anyOf\", \"property\": \"lastDetectedCity\"\
+        , \"value\": [\"New York\"] }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n\n**Target\
+        \ audience:** Contacts who match all the primary criteria (named Jane/John Smith, subscribed on\
+        \ all channels, tagged \"vip\", not tagged \"excluded\", from US, no zip code) **AND** who are\
+        \ also either female **OR** located in New York.\n\n</div>\n</details>\n\n---\n\n<details id=\"\
+        example-filtering-by-birthday\">\n<summary>Example: Filtering by birthday</summary>\n<br>\n<div\
+        \ style=\"padding-left: 1.5em;\">\n\nDate-based filtering for birthdays, including date ranges,\
+        \ upcoming anniversaries, and month matching.\n<br>\n\n```json\n{\n  \"name\": \"Birthday Filters\"\
+        ,\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"entity\":\
+        \ \"contact\",\n          \"junction\": \"or\",\n          \"filters\": [\n            {\n   \
+        \           \"operator\": \"between\",\n              \"property\": \"birthday\",\n          \
+        \    \"valueFrom\": \"2000-01-01\",\n              \"valueTo\": \"2005-01-15\",\n            \
+        \  \"valueType\": \"date\"\n            },\n            {\n              \"operator\": \"anniversaryIsInTheNext\"\
+        ,\n              \"property\": \"birthday\",\n              \"unit\": \"days\",\n            \
+        \  \"value\": 7,\n              \"valueType\": \"date\"\n            },\n            {\n     \
+        \         \"operator\": \"contains\",\n              \"property\": \"birthday\",\n           \
+        \   \"value\": [\"-05-\"],\n              \"valueType\": \"text\"\n            }\n          ]\n\
+        \        }\n      ]\n    }\n  ]\n}\n```\n\n**Target audience:** Contacts whose birth date falls\
+        \ between January 1, 2000 and January 15, 2005, **OR** whose birthday anniversary is in the next\
+        \ 7 days, **OR** whose birthday is in the month of May.\n\n</div>\n</details>\n\n---\n\n\n<details\
+        \ id=\"example-lifecycle-stages-and-computed-metrics\">\n<summary>Example: Lifecycle stages and\
+        \ computed metrics</summary>\n<br>\n<div style=\"padding-left: 1.5em;\">\n\nFiltering contacts\
+        \ based on their RFM lifecycle stage and financial metrics like average order value.\n<br>\n\n\
+        ```json\n{\n  \"name\": \"Lifecycle and Metrics\",\n  \"conditionGroups\": [\n    {\n      \"\
+        conditions\": [\n        {\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\
+        ,\n          \"filters\": [\n            {\n              \"property\": \"customerLifecycleStage\"\
+        ,\n              \"operator\": \"anyOf\",\n              \"value\": [\"champions\", \"loyalists\"\
+        , \"highPotential\"]\n            },\n            { \"operator\": \"moreThan\", \"property\":\
+        \ \"averageOrderValue\", \"value\": 50 },\n            { \"operator\": \"between\", \"property\"\
+        : \"totalSpent\", \"valueFrom\": 100, \"valueTo\": 500 }\n          ]\n        }\n      ]\n  \
+        \  }\n  ]\n}\n```\n\n**Target audience:** High-value contacts (Champions, Loyalists, or High Potential)\
+        \ with an average order value over 50 and a total lifetime spend between 100 and 500.\n\n</div>\n\
+        </details>\n\n---\n\n<details id=\"example-filtering-by-custom-fields\">\n<summary>Example: Filtering\
+        \ by custom fields</summary>\n<br>\n<div style=\"padding-left: 1.5em;\">\n\nFiltering by user-defined\
+        \ custom fields, which require an explicit `valueType`.\n<br>\n\n```json\n{\n  \"name\": \"Custom\
+        \ Field Filters\",\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n    \
+        \      \"entity\": \"contact\",\n          \"junction\": \"and\",\n          \"filters\": [\n\
+        \            { \"name\": \"is_vip\", \"operator\": \"equals\", \"property\": \"custom\", \"value\"\
+        : true, \"valueType\": \"bool\" },\n            { \"name\": \"favorite_category\", \"operator\"\
+        : \"anyOf\", \"property\": \"custom\", \"value\": [\"Electronics\"], \"valueType\": \"text\" },\n\
+        \            { \"name\": \"lifetime_orders\", \"operator\": \"moreThan\", \"property\": \"custom\"\
+        , \"value\": 5, \"valueType\": \"number\" },\n            {\n              \"name\": \"first_purchase_date\"\
+        ,\n              \"operator\": \"inTheLast\",\n              \"property\": \"custom\",\n     \
+        \         \"unit\": \"days\",\n              \"value\": 30,\n              \"valueType\": \"date\"\
+        \n            }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n\n**Target audience:** Contacts\
+        \ who are marked as VIP in custom fields, whose favorite category is Electronics, who have more\
+        \ than 5 lifetime orders, and who made their first purchase in the last 30 days.\n\n</div>\n</details>\n\
+        \n---\n\n<details id=\"example-behavioral-events-engagement\">\n<summary>Example: Behavioral events\
+        \ (engagement)</summary>\n<br>\n<div style=\"padding-left: 1.5em;\">\n\nBehavioral segmentation\
+        \ based on message engagement (clicks, opens) and page views.\n<br>\n\n```json\n{\n  \"name\"\
+        : \"Behavioral Engagement\",\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n     \
+        \   {\n          \"entity\": \"event\",\n          \"junction\": \"and\",\n          \"filters\"\
+        : [\n            {\n              \"count\": \"atLeast\",\n              \"name\": \"clicked message\"\
+        ,\n              \"operator\": \"has\",\n              \"value\": 1\n            },\n        \
+        \    {\n              \"count\": \"atLeast\",\n              \"name\": \"opened message\",\n \
+        \             \"operator\": \"has\",\n              \"period\": { \"operator\": \"inTheLast\"\
+        , \"unit\": \"days\", \"value\": 7 },\n              \"value\": 1\n            },\n          \
+        \  {\n              \"count\": \"equals\",\n              \"name\": \"marked message as spam\"\
+        ,\n              \"operator\": \"has\",\n              \"period\": { \"operator\": \"before\"\
+        , \"value\": \"2026-01-13\" },\n              \"value\": 0\n            }\n          ]\n     \
+        \   }\n      ]\n    }\n  ]\n}\n```\n\n**Target audience:** Contacts who have clicked a message,\
+        \ opened a message in the last 7 days, viewed a page in the last month, **AND** have never marked\
+        \ a message as spam (prior to Jan 13, 2026).\n\n</div>\n</details>\n\n---\n\n<details id=\"example-platform-event-property-filters\"\
+        >\n<summary>Example: Platform event property filters</summary>\n<br>\n<div style=\"padding-left:\
+        \ 1.5em;\">\n\nDeep filtering on properties of platform-defined events, such as Shopify order\
+        \ details.\n\n> **Note**: Use the `[]` wildcard syntax to match any element within an array. This\
+        \ can be chained for nested arrays; for example, `raw.fulfillments.[].line_items.[].title` matches\
+        \ any line item title within any fulfillment in the order.\n\n> **Important**: When using events\
+        \ defined by other platforms (e.g., Shopify, Omnisend), you must use predefined event names and\
+        \ their specific properties. Filter values must strictly match the predefined `valueType` for\
+        \ each property.\n<br>\n\n```json\n{\n  \"name\": \"Platform Event Filters\",\n  \"conditionGroups\"\
+        : [\n    {\n      \"conditions\": [\n        {\n          \"entity\": \"event\",\n          \"\
+        junction\": \"and\",\n          \"filters\": [\n            {\n              \"count\": \"atLeast\"\
+        ,\n              \"name\": \"placed order\",\n              \"operator\": \"has\",\n         \
+        \     \"origin\": \"shopify\",\n              \"value\": 1,\n              \"filters\": [\n  \
+        \              { \"operator\": \"moreThan\", \"property\": \"raw._total_price\", \"value\": 50\
+        \ },\n                { \"operator\": \"contains\", \"property\": \"raw.fulfillments.[].line_items.[].title\"\
+        , \"value\": [\"Book\"] }\n              ],\n              \"junction\": \"and\"\n           \
+        \ }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n\n**Target audience:** Contacts who\
+        \ have placed at least one Shopify order where the total price was over 50 **AND** the order contained\
+        \ an item with \"Book\" in the title.\n\n</div>\n</details>\n\n---\n\n<details id=\"example-custom-event-property-filters\"\
+        >\n<summary>Example: Custom event property filters</summary>\n<br>\n<div style=\"padding-left:\
+        \ 1.5em;\">\n\nFiltering custom events based on their specific properties.\n\n> **Important**:\
+        \ Mandatory `valueType` must be provided for every property filter (e.g., `text`, `number`). The\
+        \ event and its properties must have been sent at least once before they can be used in a segment\
+        \ filter.\n<br>\n\n```json\n{\n  \"name\": \"Custom Event Filters\",\n  \"conditionGroups\": [\n\
+        \    {\n      \"conditions\": [\n        {\n          \"entity\": \"event\",\n          \"junction\"\
+        : \"and\",\n          \"filters\": [\n            {\n              \"count\": \"atLeast\",\n \
+        \             \"name\": \"app_feature_used\",\n              \"origin\": \"my_mobile_app\",\n\
+        \              \"operator\": \"has\",\n              \"value\": 5,\n              \"junction\"\
+        : \"and\",\n              \"filters\": [\n                {\n                  \"operator\": \"\
+        equals\",\n                  \"property\": \"feature_name\",\n                  \"value\": [\"\
+        dark_mode_toggle\"],\n                  \"valueType\": \"text\"\n                },\n        \
+        \        {\n                  \"operator\": \"moreThan\",\n                  \"property\": \"\
+        session_duration\",\n                  \"value\": 120,\n                  \"valueType\": \"number\"\
+        \n                }\n              ]\n            }\n          ]\n        }\n      ]\n    }\n\
+        \  ]\n}\n```\n\n**Target audience:** Contacts who have used the \"dark_mode_toggle\" feature in\
+        \ the custom \"my_mobile_app\" at least 5 times, where the session duration was greater than 120\
+        \ seconds.\n\n</div>\n</details>\n\n---\n\n<details id=\"example-filtering-events-by-date-range\"\
+        >\n<summary>Example: Filtering events by date range</summary>\n<br>\n<div style=\"padding-left:\
+        \ 1.5em;\">\n\nFiltering events using a specific date range with the `between` period operator.\
+        \ Uses `valueFrom` and `valueTo` to define the time window.\n<br>\n\n```json\n{\n  \"name\": \"\
+        Shopify Orders in Date Range\",\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n  \
+        \      {\n          \"entity\": \"event\",\n          \"junction\": \"and\",\n          \"filters\"\
+        : [\n            {\n              \"count\": \"atLeast\",\n              \"name\": \"placed order\"\
+        ,\n              \"operator\": \"has\",\n              \"origin\": \"shopify\",\n            \
+        \  \"value\": 1,\n              \"period\": {\n                \"operator\": \"between\",\n  \
+        \              \"valueFrom\": \"2025-01-01\",\n                \"valueTo\": \"2025-01-31\"\n \
+        \             },\n              \"filters\": [\n                {\n                  \"operator\"\
+        : \"contains\",\n                  \"property\": \"raw.line_items.[].title\",\n              \
+        \    \"value\": [\"Summer T-Shirt\"],\n                  \"valueType\": \"text\"\n           \
+        \     }\n              ],\n              \"junction\": \"and\"\n            }\n          ]\n \
+        \       }\n      ]\n    }\n  ]\n}\n```\n\n**Target audience:** Contacts who placed at least one\
+        \ Shopify order between January 1 and January 31, 2025, where the order contained an item with\
+        \ \"Summer T-Shirt\" in the title.\n\n</div>\n</details>\n\n---\n\n<details id=\"example-filtering-events-by-exact-date\"\
+        >\n<summary>Example: Filtering events by exact date</summary>\n<br>\n<div style=\"padding-left:\
+        \ 1.5em;\">\n\nFiltering contacts who did not view a page on a specific date using the `equals`\
+        \ period operator.\n<br>\n\n```json\n{\n  \"name\": \"Did Not View Page on April 13\",\n  \"conditionGroups\"\
+        : [\n    {\n      \"conditions\": [\n        {\n          \"entity\": \"event\",\n          \"\
+        junction\": \"and\",\n          \"filters\": [\n            {\n              \"count\": \"atLeast\"\
+        ,\n              \"name\": \"viewed page\",\n              \"operator\": \"hasNot\",\n       \
+        \       \"value\": 1,\n              \"period\": {\n                \"operator\": \"equals\",\n\
+        \                \"value\": \"2026-04-13\"\n              }\n            }\n          ]\n    \
+        \    }\n      ]\n    }\n  ]\n}\n```\n\n**Target audience:** Contacts who did not view a page on\
+        \ April 13, 2026.\n\n</div>\n</details>\n\n---\n\n- [Events and Properties Reference](/docs/segments-events-properties)\
+        \ — Explore available event names and properties to build powerful segment filters."
+      parameters:
+      - $ref: '#/components/parameters/APIVersionHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSegmentRequest'
+        description: Segment creation request
+        required: true
       responses:
         '201':
-          description: Segment created
-  /segments/{segmentId}:
-    get:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSegmentResponse'
+        '400':
+          description: Invalid request body or validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '401':
+          description: Authentication is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Insufficient permissions for this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '410':
+          description: API version has been retired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitProblem'
+        '500':
+          description: Unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - segments.write
+      - ApiKeyAuth: []
+      summary: Create segment
       tags:
       - Segments
-      summary: Get a segment
-      parameters:
-      - in: path
-        name: segmentId
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Segment
-    put:
-      tags:
-      - Segments
-      summary: Update a segment
-      parameters:
-      - in: path
-        name: segmentId
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Segment updated
+  /segments/{segmentID}:
     delete:
-      tags:
-      - Segments
-      summary: Delete a segment
+      description: 'Permanently deletes a segment by its unique identifier.
+
+        The segment must not be in a building state to be deleted.
+
+        If the segment is currently being built, a `409 Conflict` error is returned.
+
+
+        **Scopes:**
+
+        `segments.write`
+
+
+        **Rate Limiting:**
+
+        This endpoint is rate limited to 100 requests per minute.'
       parameters:
-      - in: path
-        name: segmentId
+      - description: Segment ID
+        in: path
+        name: segmentID
         required: true
         schema:
           type: string
+      - $ref: '#/components/parameters/APIVersionHeader'
       responses:
         '204':
-          description: Segment deleted
-  /segments/{segmentId}/statistics:
-    get:
+          description: No Content
+        '400':
+          description: Request contains invalid or missing fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblem'
+        '401':
+          description: Authentication is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Insufficient permissions for this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: Segment is currently being built and cannot be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '410':
+          description: API version has been retired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitProblem'
+        '500':
+          description: Unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - segments.write
+      - ApiKeyAuth: []
+      summary: Delete segment
       tags:
       - Segments
-      summary: Get segment statistics
+    get:
+      description: 'Returns a segment by its unique identifier.
+
+
+        **Scopes:**
+
+        `segments.read`
+
+
+        **Rate Limiting:**
+
+        This endpoint is rate limited to 100 requests per minute.'
       parameters:
-      - in: path
-        name: segmentId
+      - description: Segment ID (24 character hexadecimal)
+        in: path
+        name: segmentID
         required: true
         schema:
           type: string
+      - $ref: '#/components/parameters/APIVersionHeader'
+      responses:
+        '200':
+          description: Segment resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSegmentResponse'
+        '400':
+          description: Request contains invalid or missing fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblem'
+        '401':
+          description: Authentication is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Insufficient permissions for this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Segment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '410':
+          description: API version has been retired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitProblem'
+        '500':
+          description: Unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - segments.read
+      - ApiKeyAuth: []
+      summary: Get segment
+      tags:
+      - Segments
+    put:
+      description: 'Updates an existing segment by ID.
+
+        The segment must not be in a building state to be updated.
+
+        If the segment is currently being built, a `409 Conflict` error is returned.
+
+
+        **Scopes:**
+
+        `segments.write`
+
+
+        **Rate Limiting:**
+
+        This endpoint is rate limited to 15 requests per minute.
+
+
+        The request body structure (`name` and `conditionGroups`) is identical to [Create segment](post_segments).
+
+        See the Create segment endpoint for detailed examples of condition groups, filters, and advanced
+        segmentation patterns.'
+      parameters:
+      - description: Segment ID
+        in: path
+        name: segmentID
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/APIVersionHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSegmentRequest'
+        description: Segment update request
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSegmentResponse'
+        '400':
+          description: Invalid request body or validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '401':
+          description: Authentication is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Insufficient permissions for this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Segment with the given ID was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: Segment is currently being built and cannot be updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '410':
+          description: API version has been retired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitProblem'
+        '500':
+          description: Unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - segments.write
+      - ApiKeyAuth: []
+      summary: Update segment
+      tags:
+      - Segments
+  /segments/{segmentID}/statistics:
+    get:
+      description: 'Returns statistics for a segment, including the total number of matching contacts.
+
+
+        **Scopes:**
+
+        `segments.read`
+
+
+        **Rate Limiting:**
+
+        This endpoint is rate limited to 100 requests per minute.'
+      parameters:
+      - description: Segment ID (24 character hexadecimal)
+        in: path
+        name: segmentID
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/APIVersionHeader'
       responses:
         '200':
           description: Segment statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSegmentStatisticsResponse'
+        '400':
+          description: Request contains invalid or missing fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblem'
+        '401':
+          description: Authentication is missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Insufficient permissions for this operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Segment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '410':
+          description: API version has been retired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitProblem'
+        '500':
+          description: Unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - segments.read
+      - ApiKeyAuth: []
+      summary: Get segment statistics
+      tags:
+      - Segments
+servers:
+- url: https://api.omnisend.com/api
 components:
+  parameters:
+    APIVersionHeader:
+      description: API version that specifies the response format and behaviour (e.g., 2026-preview)
+      in: header
+      name: Omnisend-Version
+      required: true
+      schema:
+        type: string
+        default: '2026-03-15'
   securitySchemes:
     ApiKeyAuth:
-      type: apiKey
+      description: 'API Key authentication. Value format: ''Omnisend-API-Key {api-key}'''
       in: header
-      name: X-API-KEY
-    OAuth2:
+      name: Authorization
+      type: apiKey
+      x-default: Omnisend-API-Key your-api-key
+    Bearer:
       type: oauth2
       flows:
-        authorizationCode:
-          authorizationUrl: https://app.omnisend.com/oauth/authorize
-          tokenUrl: https://api.omnisend.com/v5/oauth/token
+        clientCredentials:
+          tokenUrl: https://app.omnisend.com/oauth2/token
           scopes:
-            contacts.read: Read contacts
-            contacts.write: Manage contacts
-            campaigns.read: Read campaigns
-            campaigns.write: Manage campaigns
-            analytics.read: Read analytics
+            segments.read: Read segments
+            segments.write: Create, update and delete segments
+  schemas:
+    CreateSegmentRequest:
+      description: Request body for creating a new segment.
+      properties:
+        conditionGroups:
+          description: Condition groups defining the segment rules
+          items:
+            $ref: '#/components/schemas/SegmentConditionGroup'
+          type: array
+        name:
+          description: Name of the segment
+          example: My Segment
+          maxLength: 256
+          type: string
+      required:
+      - conditionGroups
+      - name
+      type: object
+    CursorsResponse:
+      description: Cursor pointers for paginating forward and backward through results
+      properties:
+        after:
+          description: Opaque cursor for fetching the next page of results
+          example: eyJpZCI6ImNhbXAtNDU2In0
+          type: string
+          nullable: true
+        before:
+          description: Opaque cursor for fetching the previous page of results
+          example: eyJpZCI6ImNhbXAtMTIzIn0
+          type: string
+          nullable: true
+      type: object
+    FieldError:
+      description: A single field validation failure within a validation error response.
+      properties:
+        code:
+          description: Error code indicating the type of failure
+          example: invalid_format
+          type: string
+        field:
+          description: Dot-separated path to the field that failed validation
+          example: content.email.subject
+          type: string
+        message:
+          description: Human-readable explanation of what is wrong with the field value
+          example: Must be a valid email address
+          type: string
+      type: object
+    GetSegmentResponse:
+      description: Segment resource representation.
+      properties:
+        archivedAt:
+          description: Segment archival timestamp, null if not archived (read-only)
+          example: '2026-06-01T00:00:00Z'
+          readOnly: true
+          type: string
+          nullable: true
+        conditionGroups:
+          description: Condition groups defining the segment rules
+          items:
+            $ref: '#/components/schemas/SegmentConditionGroup'
+          type: array
+        createdAt:
+          description: Segment creation timestamp (read-only)
+          example: '2026-01-15T10:30:00Z'
+          readOnly: true
+          type: string
+        isStarred:
+          description: Whether the segment is marked as a favourite
+          example: false
+          type: boolean
+        name:
+          description: Segment name
+          example: VIP Customers
+          type: string
+        segmentID:
+          description: Segment unique identifier (read-only)
+          example: '000000000000000000000001'
+          readOnly: true
+          type: string
+        status:
+          description: Segment processing status (read-only)
+          enum:
+          - ready
+          - building
+          - archived
+          example: ready
+          readOnly: true
+          type: string
+        updatedAt:
+          description: Segment last update timestamp (read-only)
+          example: '2026-01-20T14:45:00Z'
+          readOnly: true
+          type: string
+      type: object
+    GetSegmentStatisticsResponse:
+      description: Segment statistics resource.
+      properties:
+        contactsCount:
+          description: Segment contacts count (read-only)
+          example: 1234
+          readOnly: true
+          type: integer
+      type: object
+    ListSegmentsResponse:
+      description: Paginated list of segments.
+      properties:
+        paging:
+          allOf:
+          - $ref: '#/components/schemas/PagingResponse'
+          description: Pagination metadata for navigating results
+        segments:
+          description: List of segments on the current page
+          items:
+            $ref: '#/components/schemas/GetSegmentResponse'
+          type: array
+      type: object
+    PagingResponse:
+      description: Cursor-based pagination metadata
+      properties:
+        cursors:
+          allOf:
+          - $ref: '#/components/schemas/CursorsResponse'
+          description: Cursor values for navigating between pages
+        hasMore:
+          description: Whether there are more items available beyond the current page
+          example: true
+          type: boolean
+        limit:
+          description: Maximum number of items returned per page
+          example: 50
+          type: integer
+      type: object
+    Problem:
+      description: Standard error response returned by all API endpoints on failure.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    RateLimitProblem:
+      description: Error response returned when the rate limit is exceeded. Use the retryAfter value to
+        know when it is safe to retry the request.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        retryAfter:
+          description: Seconds to wait before retrying the request
+          example: 60
+          type: integer
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    SegmentCondition:
+      description: A single filter condition applied to a specific entity.
+      properties:
+        entity:
+          description: Entity type this condition applies to
+          example: contact
+          type: string
+        filters:
+          description: List of filter criteria. Must contain at least one item.
+          items: {}
+          minItems: 1
+          type: array
+        junction:
+          description: Logical operator combining the filters within this condition
+          example: and
+          type: string
+      required:
+      - filters
+      type: object
+    SegmentConditionGroup:
+      description: Group of conditions combined with a logical junction.
+      properties:
+        conditions:
+          description: List of conditions in this group
+          items:
+            $ref: '#/components/schemas/SegmentCondition'
+          type: array
+      type: object
+    UpdateSegmentRequest:
+      description: Request body for updating an existing segment.
+      properties:
+        conditionGroups:
+          description: Condition groups defining the segment rules
+          items:
+            $ref: '#/components/schemas/SegmentConditionGroup'
+          type: array
+        name:
+          description: Name of the segment
+          example: My Segment
+          maxLength: 256
+          type: string
+      required:
+      - conditionGroups
+      - name
+      type: object
+    ValidationProblem:
+      description: Error response returned when the request contains invalid input. The errors array lists
+        every field that failed validation.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        errors:
+          description: List of fields that failed validation
+          items:
+            $ref: '#/components/schemas/FieldError'
+          type: array
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object

@@ -1,0 +1,95 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Omnisend emailtemplates-api
+  version: 1.0.0
+  x-generated: '2026-08-13'
+  x-method: generated
+  x-source: openapi/omnisend-emailtemplates-api-openapi.yml
+  x-note: 'Records API Evangelist enhancements over the contract Omnisend publishes. It is never applied to the harvested
+    file — openapi/ stays verbatim. The gaps captured here are real and measured: 7 of 7 operations carry no operationId,
+    0 carry no tag, and the document declares securitySchemes without ever applying them.'
+extends: omnisend-emailtemplates-api-openapi.yml
+actions:
+- target: $
+  description: Apply the two declared security schemes at the document root. The published contract defines ApiKeyAuth and
+    Bearer in components.securitySchemes but never applies them, so no operation states its auth requirement.
+  update:
+    security:
+    - ApiKeyAuth: []
+    - Bearer: []
+- target: $
+  description: Declare a document-level tag so every operation can be grouped. The published contract declares none.
+  update:
+    tags:
+    - name: Emailtemplates
+      description: API for managing email content, templates and universal layouts
+- target: $.paths['/email-templates'].get
+  description: Tag GET /email-templates as Emailtemplates.
+  update:
+    tags:
+    - Emailtemplates
+- target: $.paths['/email-templates'].post
+  description: Tag POST /email-templates as Emailtemplates.
+  update:
+    tags:
+    - Emailtemplates
+- target: $.paths['/email-templates/{id}'].delete
+  description: Tag DELETE /email-templates/{id} as Emailtemplates.
+  update:
+    tags:
+    - Emailtemplates
+- target: $.paths['/email-templates/{id}'].get
+  description: Tag GET /email-templates/{id} as Emailtemplates.
+  update:
+    tags:
+    - Emailtemplates
+- target: $.paths['/email-templates/{id}'].put
+  description: Tag PUT /email-templates/{id} as Emailtemplates.
+  update:
+    tags:
+    - Emailtemplates
+- target: $.paths['/email-templates/{id}/render'].post
+  description: Tag POST /email-templates/{id}/render as Emailtemplates.
+  update:
+    tags:
+    - Emailtemplates
+- target: $.paths['/email-templates/import'].post
+  description: Tag POST /email-templates/import as Emailtemplates.
+  update:
+    tags:
+    - Emailtemplates
+- target: $.paths['/email-templates'].get
+  description: Add a stable operationId for GET /email-templates; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: get_email_templates
+- target: $.paths['/email-templates'].post
+  description: Add a stable operationId for POST /email-templates; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: post_email_templates
+- target: $.paths['/email-templates/{id}'].delete
+  description: Add a stable operationId for DELETE /email-templates/{id}; the published contract omits it, which blocks code
+    generation and tool binding.
+  update:
+    operationId: delete_email_templates_id
+- target: $.paths['/email-templates/{id}'].get
+  description: Add a stable operationId for GET /email-templates/{id}; the published contract omits it, which blocks code
+    generation and tool binding.
+  update:
+    operationId: get_email_templates_id
+- target: $.paths['/email-templates/{id}'].put
+  description: Add a stable operationId for PUT /email-templates/{id}; the published contract omits it, which blocks code
+    generation and tool binding.
+  update:
+    operationId: put_email_templates_id
+- target: $.paths['/email-templates/{id}/render'].post
+  description: Add a stable operationId for POST /email-templates/{id}/render; the published contract omits it, which blocks
+    code generation and tool binding.
+  update:
+    operationId: post_email_templates_id_render
+- target: $.paths['/email-templates/import'].post
+  description: Add a stable operationId for POST /email-templates/import; the published contract omits it, which blocks code
+    generation and tool binding.
+  update:
+    operationId: post_email_templates_import

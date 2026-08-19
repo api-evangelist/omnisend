@@ -1,0 +1,1422 @@
+{
+  "item": [
+    {
+      "id": "41f3c9a0-ed09-4970-ae8d-eb605f335fd9",
+      "name": "Batch",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "73e0f619-16c4-41c4-aa92-234d96a740e3",
+          "name": "Get batches",
+          "request": {
+            "name": "Get batches",
+            "description": {
+              "content": "Get batches\n\n**Scopes:**\n`products.read`, `contacts.read`, `events.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "batches"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Offset (minimum 0)"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Limit (1-250)"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Status"
+                },
+                {
+                  "disabled": false,
+                  "key": "dateFrom",
+                  "value": "<string>",
+                  "description": "Date from (format: yyyy-mm-dd)"
+                },
+                {
+                  "disabled": false,
+                  "key": "dateTo",
+                  "value": "<string>",
+                  "description": "Date to (format: yyyy-mm-dd)"
+                },
+                {
+                  "disabled": false,
+                  "key": "endpoint",
+                  "value": "<string>",
+                  "description": "(Required) Endpoint"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7e855f0f-ef82-4e9b-a14d-12c87d102ccb",
+              "name": "List of batches",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dateFrom",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dateTo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endpoint",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"batches\": [\n    {\n      \"batchID\": \"5f92cbf10cf217478ba93561\",\n      \"createdAt\": \"2021-01-01T00:00:00Z\",\n      \"endedAt\": \"2021-01-01T00:00:00Z\",\n      \"endpoint\": \"contacts\",\n      \"errors\": [\n        {\n          \"itemID\": \"5f92cbf10cf217478ba93561\",\n          \"request\": \"\",\n          \"response\": \"\",\n          \"responseCode\": 200,\n          \"status\": \"finished\"\n        },\n        {\n          \"itemID\": \"5f92cbf10cf217478ba93561\",\n          \"request\": \"\",\n          \"response\": \"\",\n          \"responseCode\": 200,\n          \"status\": \"finished\"\n        }\n      ],\n      \"errorsCount\": 0,\n      \"eventID\": \"5f92cbf10cf217478ba93561\",\n      \"finishedCount\": 100,\n      \"method\": \"POST\",\n      \"origin\": \"api\",\n      \"responses\": [\n        {\n          \"itemID\": \"5f92cbf10cf217478ba93561\",\n          \"request\": \"\",\n          \"response\": \"\",\n          \"responseCode\": 200,\n          \"status\": \"finished\"\n        },\n        {\n          \"itemID\": \"5f92cbf10cf217478ba93561\",\n          \"request\": \"\",\n          \"response\": \"\",\n          \"responseCode\": 200,\n          \"status\": \"finished\"\n        }\n      ],\n      \"startedAt\": \"2021-01-01T00:00:00Z\",\n      \"status\": \"finished\",\n      \"totalCount\": 100\n    },\n    {\n      \"batchID\": \"5f92cbf10cf217478ba93561\",\n      \"createdAt\": \"2021-01-01T00:00:00Z\",\n      \"endedAt\": \"2021-01-01T00:00:00Z\",\n      \"endpoint\": \"contacts\",\n      \"errors\": [\n        {\n          \"itemID\": \"5f92cbf10cf217478ba93561\",\n          \"request\": \"\",\n          \"response\": \"\",\n          \"responseCode\": 200,\n          \"status\": \"finished\"\n        },\n        {\n          \"itemID\": \"5f92cbf10cf217478ba93561\",\n          \"request\": \"\",\n          \"response\": \"\",\n          \"responseCode\": 200,\n          \"status\": \"finished\"\n        }\n      ],\n      \"errorsCount\": 0,\n      \"eventID\": \"5f92cbf10cf217478ba93561\",\n      \"finishedCount\": 100,\n      \"method\": \"POST\",\n      \"origin\": \"api\",\n      \"responses\": [\n        {\n          \"itemID\": \"5f92cbf10cf217478ba93561\",\n          \"request\": \"\",\n          \"response\": \"\",\n          \"responseCode\": 200,\n          \"status\": \"finished\"\n        },\n        {\n          \"itemID\": \"5f92cbf10cf217478ba93561\",\n          \"request\": \"\",\n          \"response\": \"\",\n          \"responseCode\": 200,\n          \"status\": \"finished\"\n        }\n      ],\n      \"startedAt\": \"2021-01-01T00:00:00Z\",\n      \"status\": \"finished\",\n      \"totalCount\": 100\n    }\n  ],\n  \"paging\": {\n    \"limit\": 100,\n    \"next\": \"https://api.omnisend.com/api/batches?limit=100&offset=105\",\n    \"offset\": 5,\n    \"previous\": \"https://api.omnisend.com/api/batches?limit=100&offset=5\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b0e8caa-6b64-4010-a6b8-f25e8cf60763",
+              "name": "Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dateFrom",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dateTo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endpoint",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58be97d6-ccc2-49ed-88fa-c92ca3ed5f6e",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dateFrom",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dateTo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endpoint",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a8a6655-5a15-4f3b-bf26-8c6afcfe20ea",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dateFrom",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dateTo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endpoint",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "00b5aff4-2512-4dde-8b11-8b45bd39eb52",
+          "name": "Create batch",
+          "request": {
+            "name": "Create batch",
+            "description": {
+              "content": "Batch operations allow for multiple actions of a similar type to be executed in a single request. Utilizing the batch endpoint is recommended to avoid hitting rate limits and to enhance overall performance.\n\nCreating batches is an asynchronous process that initiates the creation or updating of the specified items.\n\n* POST batch operations to create multiple items simultaneously.\n* PUT batch operations to apply multiple updates to multiple items.\nEach batch operation can include up to 100 actions.\n\nThe required scopes depend on the type of batch operation being performed.\n\n\n**WARNING**: Before sending a batch of **events**, ensure there are no automations configured in Omnisend that could send messages to customers based on the imported data. This could result in duplicate messages being sent to customers.\n\n**Scopes:**\n\n`products.write`, `contacts.write`, `events.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "batches"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"endpoint\": \"<string>\",\n  \"items\": [],\n  \"method\": \"<string>\",\n  \"origin\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7d45a1d3-8c1d-4d04-b537-9259b25069ac",
+              "name": "Batch created successfully with the given ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpoint\": \"contacts\",\n  \"items\": [],\n  \"method\": \"POST\",\n  \"origin\": \"omnisend\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"batchID\": \"string\",\n  \"totalCount\": 452\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b719e40-09ac-4bf1-afe8-6487bfd72d49",
+              "name": "Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpoint\": \"contacts\",\n  \"items\": [],\n  \"method\": \"POST\",\n  \"origin\": \"omnisend\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65477fed-d47a-4171-b9ca-0845149b2ec8",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpoint\": \"contacts\",\n  \"items\": [],\n  \"method\": \"POST\",\n  \"origin\": \"omnisend\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "118a0584-9a1e-416f-8cd0-f44471bafccc",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endpoint\": \"contacts\",\n  \"items\": [],\n  \"method\": \"POST\",\n  \"origin\": \"omnisend\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0d32d6a1-fedc-46b9-bbe7-11b43ece83fd",
+          "name": "Get batch information",
+          "request": {
+            "name": "Get batch information",
+            "description": {
+              "content": "Get batch information\n\n**Scopes:**\n`products.read`, `contacts.read`, `events.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "batches",
+                ":batchID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batchID",
+                  "description": "(Required) Batch ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "00fda9ec-f3f3-4d83-8716-3b500266134b",
+              "name": "Batch information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batchID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batchID",
+                      "description": "(Required) Batch ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"batchID\": \"5f92cbf10cf217478ba93561\",\n  \"createdAt\": \"2021-01-01T00:00:00Z\",\n  \"endedAt\": \"2021-01-01T00:00:00Z\",\n  \"endpoint\": \"contacts\",\n  \"errors\": [\n    {\n      \"itemID\": \"5f92cbf10cf217478ba93561\",\n      \"request\": \"\",\n      \"response\": \"\",\n      \"responseCode\": 200,\n      \"status\": \"finished\"\n    },\n    {\n      \"itemID\": \"5f92cbf10cf217478ba93561\",\n      \"request\": \"\",\n      \"response\": \"\",\n      \"responseCode\": 200,\n      \"status\": \"finished\"\n    }\n  ],\n  \"errorsCount\": 0,\n  \"eventID\": \"5f92cbf10cf217478ba93561\",\n  \"finishedCount\": 100,\n  \"method\": \"POST\",\n  \"origin\": \"api\",\n  \"responses\": [\n    {\n      \"itemID\": \"5f92cbf10cf217478ba93561\",\n      \"request\": \"\",\n      \"response\": \"\",\n      \"responseCode\": 200,\n      \"status\": \"finished\"\n    },\n    {\n      \"itemID\": \"5f92cbf10cf217478ba93561\",\n      \"request\": \"\",\n      \"response\": \"\",\n      \"responseCode\": 200,\n      \"status\": \"finished\"\n    }\n  ],\n  \"startedAt\": \"2021-01-01T00:00:00Z\",\n  \"status\": \"finished\",\n  \"totalCount\": 100\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4aa876e4-079a-48ae-9a5b-8dd7f6d5b546",
+              "name": "Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batchID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batchID",
+                      "description": "(Required) Batch ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d968f31-28fb-4837-a1e3-621505f1f15e",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batchID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batchID",
+                      "description": "(Required) Batch ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d6b4c2e-55ea-4201-a94d-e167583ae3c4",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batchID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batchID",
+                      "description": "(Required) Batch ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e08d03d1-63e4-4b59-a05c-c62972d63b38",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batchID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batchID",
+                      "description": "(Required) Batch ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dadb3947-6d62-4893-9595-1ce3c9ef4375",
+          "name": "Get batch items",
+          "request": {
+            "name": "Get batch items",
+            "description": {
+              "content": "Get batch items\n\n**Scopes:**\n`products.read`, `contacts.read`, `events.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "batches",
+                ":batchID",
+                "items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "batchID",
+                  "description": "(Required) Batch ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1fb4137a-88c9-42e7-8b50-69d969107759",
+              "name": "Batch items for a given batch ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batchID",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batchID",
+                      "description": "(Required) Batch ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"batchID\": \"5f92cbf10cf217478ba93561\",\n  \"createdAt\": \"2021-01-01T00:00:00Z\",\n  \"endedAt\": \"2021-01-01T00:00:00Z\",\n  \"endpoint\": \"contacts\",\n  \"errors\": [\n    {\n      \"itemID\": \"5f92cbf10cf217478ba93561\",\n      \"request\": \"\",\n      \"response\": \"\",\n      \"responseCode\": 200,\n      \"status\": \"finished\"\n    },\n    {\n      \"itemID\": \"5f92cbf10cf217478ba93561\",\n      \"request\": \"\",\n      \"response\": \"\",\n      \"responseCode\": 200,\n      \"status\": \"finished\"\n    }\n  ],\n  \"errorsCount\": 0,\n  \"eventID\": \"5f92cbf10cf217478ba93561\",\n  \"finishedCount\": 100,\n  \"method\": \"POST\",\n  \"origin\": \"api\",\n  \"responses\": [\n    {\n      \"itemID\": \"5f92cbf10cf217478ba93561\",\n      \"request\": \"\",\n      \"response\": \"\",\n      \"responseCode\": 200,\n      \"status\": \"finished\"\n    },\n    {\n      \"itemID\": \"5f92cbf10cf217478ba93561\",\n      \"request\": \"\",\n      \"response\": \"\",\n      \"responseCode\": 200,\n      \"status\": \"finished\"\n    }\n  ],\n  \"startedAt\": \"2021-01-01T00:00:00Z\",\n  \"status\": \"finished\",\n  \"totalCount\": 100\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b38352e-7908-4bf4-85b0-ccdf0a3262da",
+              "name": "Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batchID",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batchID",
+                      "description": "(Required) Batch ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab8cfd7f-80e5-452d-8c84-c94e09c0735d",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batchID",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batchID",
+                      "description": "(Required) Batch ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "068d5a8f-072d-42f9-9855-8b4cdbcb0cd2",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batchID",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batchID",
+                      "description": "(Required) Batch ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "505062e1-cbb6-428b-af3e-a47496175513",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batches",
+                    ":batchID",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "batchID",
+                      "description": "(Required) Batch ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.omnisend.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d04b1d4d-037f-48ea-b65e-169567af7368",
+    "name": "Batches API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,312 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Contacts API",
+    "version": "2026"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Contacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/contacts",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page. Range: 1-250. Default: 100"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Opaque cursor for fetching the next page (from paging.cursors.after)"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Opaque cursor for fetching the previous page (from paging.cursors.before)"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort field. Default: createdAt"
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction. Default: desc"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter by email address"
+              },
+              {
+                "name": "phone",
+                "value": "",
+                "type": "query",
+                "description": "Filter by phone number"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Contact subscription status filter. Cannot be combined with tag"
+              },
+              {
+                "name": "segmentID",
+                "value": "",
+                "type": "query",
+                "description": "Filter by segment ID"
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "Filter by tag. Cannot be combined with status"
+              },
+              {
+                "name": "updatedAtFrom",
+                "value": "",
+                "type": "query",
+                "description": "Filter contacts updated at or after this RFC3339 timestamp. Cannot be combined with email, phone, status, segmentID, or tag"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a paginated list of contacts filtered by the provided query parameters.\n\n**Scopes:**\n`contacts.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n**Filter restrictions:**\n- `tag` and `status` cannot be used together in the same request.\n- `updatedAtFrom` cannot be combined with `email`, `phone`, `status`, `segmentID`, or `tag`.\n"
+        },
+        {
+          "info": {
+            "name": "Create or update existing contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/contacts",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates a new contact. If a contact with the provided email identifier already exists, it will be updated instead.\nReturns `201 Created` for new contacts and `200 OK` when an existing contact was updated.\n\n**Scopes:**\n`contacts.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Update contact by email",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.omnisend.com/api/contacts",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Contact email address"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Updates the contact matching the provided email address.\n\n**Scopes:**\n`contacts.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Get contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/contacts/:id",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contact ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns the contact with the specified ID.\n\n**Scopes:**\n`contacts.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Update contact by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.omnisend.com/api/contacts/:id",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Contact ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Updates the contact with the specified ID.\n\n**Scopes:**\n`contacts.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Batch add tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/contacts/tags",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Adds the specified tags to contacts selected by contact IDs, emails, phone numbers or a segment.\nAt least one of `contactIDs`, `emails`, `phones` or `segmentID` is required.\nSelectors can be combined and are applied additively — the union of all matched contacts is tagged:\nevery contact in `contactIDs`, every contact matched by an address in `emails`, every contact matched\nby a number in `phones` and every member of `segmentID`. A contact matched by more than one selector\nis tagged once. Emails "
+        },
+        {
+          "info": {
+            "name": "Batch remove tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.omnisend.com/api/contacts/tags",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Removes the specified tags from contacts selected by contact IDs, emails, phone numbers or a segment.\nAt least one of `contactIDs`, `emails`, `phones` or `segmentID` is required.\nSelectors can be combined and are applied additively — the tags are removed from the union of all\nmatched contacts: every contact in `contactIDs`, every contact matched by an address in `emails`,\nevery contact matched by a number in `phones` and every member of `segmentID`. A contact matched by\nmore than one selector is"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

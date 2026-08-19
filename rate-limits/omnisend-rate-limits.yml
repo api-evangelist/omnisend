@@ -3,110 +3,137 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Omnisend
 providerId: omnisend
+generated: '2026-08-13'
+method: searched
+source: https://api-docs.omnisend.com/reference/rate-limit-timeouts-errors
 created: '2026-05-25'
-modified: '2026-05-25'
+modified: '2026-08-13'
 reconciled: true
 tags:
   - Rate Limiting
   - Quotas
   - Email Marketing
 description: >-
-  Documented rate limits for the Omnisend REST API. Most resources share a
-  default request-per-minute budget; Segments resource has explicit per-method
-  caps; Batch operations are bounded to 100 actions per batch.
+  Published rate limits for the Omnisend API at version 2026-03-15, read from the provider's own
+  rate-limit reference page and cross-checked against the per-operation "Rate Limiting" notes in
+  llms.txt. Limits are enforced at the API gateway PER BRAND on a sliding window — every request made
+  on behalf of the same brand counts toward the same budget regardless of which API key, OAuth token
+  or integration sent it. The runtime signal is the finding: Omnisend publishes NO rate-limit
+  response headers at all.
 sources:
-  - https://api-docs.omnisend.com/reference/overview
-  - https://api-docs.omnisend.com/reference/authentication
+  - https://api-docs.omnisend.com/reference/rate-limit-timeouts-errors
   - https://api-docs.omnisend.com/llms.txt
-algorithm: fixed-window
+  - https://api-docs.omnisend.com/reference/overview
+
+algorithm: sliding-window
+scope: per-brand
+enforcement_point: API gateway
+default_limit:
+  rpm: 400
+  note: Applies to every endpoint not named in the exceptions below.
+
 responseCodes:
   throttled: 429
   quotaExceeded: 429
   conflict: 409
+
 headers:
-  retryAfter: Retry-After
+  rate_limit_headers_published: false
+  x_ratelimit: null
+  ratelimit: null
+  retry_after: null
+  note: >-
+    NO rate-limit response headers are documented — no X-RateLimit-Limit/Remaining/Reset, no
+    RFC-draft RateLimit-*, and no Retry-After. A client cannot see its remaining budget before it is
+    exhausted. The only runtime signal is the 429 body.
+
+throttled_response:
+  status: 429
+  media_type: application/json
+  format: rfc9457
+  body:
+    type: https://problems.omnisend.com/rate-limit-exceeded
+    title: Rate limit exceeded
+    status: 429
+    retryAfter: 'integer seconds — present on SOME endpoints only ("Some endpoints include a retryAfter field")'
+  schema: RateLimitProblem (declared in every harvested OpenAPI contract)
+
 limits:
+  - resource: '*'
+    endpoint: all endpoints (default)
+    method: any
+    rpm: 400
+  - resource: segments
+    endpoint: /segments
+    method: [GET, DELETE]
+    rpm: 100
+  - resource: segments
+    endpoint: /segments
+    method: [POST, PUT]
+    rpm: 15
+    note: The strictest per-minute limit Omnisend publishes. Segment authoring must be batched, not looped.
   - resource: contacts
-    method: any
-    rpm: 400
-    note: Default contact endpoint budget. Filtering restrictions apply (`tag`/`status` are mutually exclusive; `updatedAtFrom` cannot be combined with email/phone/status/segmentID/tag).
-  - resource: events
-    method: POST
-    rpm: 400
-    note: Customer event ingestion. Before sending bulk events, ensure no automations are configured that would trigger messages from imported historic data.
-  - resource: products
-    method: any
-    rpm: 400
-  - resource: product-categories
-    method: any
-    rpm: 400
-  - resource: segments
-    method: GET
-    rpm: 100
-    note: Segments list and statistics reads.
-  - resource: segments
-    method: POST
-    rpm: 15
-    note: Segment create.
-  - resource: segments
-    method: PUT
-    rpm: 15
-    note: Segment update — returns 409 if segment is in building state.
-  - resource: segments
-    method: DELETE
-    rpm: 100
-  - resource: campaigns
-    method: any
-    rpm: 400
-    note: Campaign list/get/create/update/delete/send/cancel/copy.
-  - resource: batches
-    method: any
-    rpm: 100
-    note: Up to 100 actions per batch operation.
+    endpoint: /contacts/tags
+    method: [POST, DELETE]
+    rpm: 60
+    note: Bulk tag add/remove. Asynchronous — the tag may not be visible on the next read.
   - resource: email-templates
-    method: any
-    rpm: 400
-    note: Import limited to 1 MB file size.
+    endpoint: '/email-templates/{id}/render'
+    method: POST
+    rpm: 40
   - resource: email-content
-    method: any
-    rpm: 400
-  - resource: email-universal-layouts
-    method: any
-    rpm: 400
-  - resource: images
+    endpoint: '/email-content/{id}/render'
     method: POST
-    rpm: 100
-    note: JPEG, PNG, GIF, WebP; max 5MB per upload.
-  - resource: brands
-    method: any
-    rpm: 100
-    note: Store-connection (`POST /brands/current`) is only possible via OAuth flow.
-  - resource: analytics-reports
+    rpm: 40
+  - resource: analytics
+    endpoint: [/analytics/reports, /analytics/statistics]
     method: POST
-    rpm: 60
-  - resource: analytics-statistics
-    method: POST
-    rpm: 60
+    rpm: 10
+    daily: 55
+    daily_window: 24 hours (sliding)
+    note: The only endpoints with a daily quota. Up to 4 queries per request, so budget query batching accordingly.
+
+payload_limits:
+  - endpoint: POST /batches
+    limit: 100 actions per batch
+  - endpoint: POST /email-templates/import
+    limit: 1 MB request body
+    error: 413
+  - endpoint: POST /email-content/{id} (PUT)
+    limit: 1 MB request body
+    error: 413
+  - endpoint: [POST /images, POST /images/upload]
+    limit: 5 MB per file
+    formats: [JPEG, PNG, GIF, WebP]
+    error: '413 (size), 415 (format)'
+  - endpoint:
+      - 'POST /campaigns/{id}/test-email'
+      - 'POST /automations/{id}/blocks/{blockID}/test-email'
+    limit: 5 recipients
+
 pagination:
   style: cursor
-  parameters:
-    - paging.cursors.after
-    - paging.cursors.before
-    - paging.hasMore
+  parameters: [limit, after, before]
+  response_fields: [paging.limit, paging.hasMore, paging.cursors.after, paging.cursors.before]
   defaults:
-    campaigns: { default: 100, max: 250 }
-    email-templates: { default: 50, max: 100 }
-    email-universal-layouts: { default: 100, max: 250 }
-    segments: { default: 100, max: 250 }
+    general: {default: 100, max: 250}
+    email-templates: {default: 50, max: 100}
+
 policies:
+  - name: Sliding window
+    description: The counter tracks requests over the last minute (or 24 hours for daily quotas) rather than resetting at fixed intervals, so bursts at window boundaries are not possible.
+  - name: Per-brand aggregation
+    description: All API keys, OAuth tokens and integrations acting for one brand share a single budget. A partner app and the merchant's own scripts throttle each other.
   - name: 429 handling
-    description: Clients should honor Retry-After when present, and otherwise back off exponentially.
+    description: Read `retryAfter` from the RFC 9457 body when present; otherwise back off exponentially. There is no header to read.
+  - name: Prefer batches
+    description: Omnisend recommends POST /batches explicitly as the way to avoid hitting rate limits on bulk work.
   - name: Building-state segments
-    description: Segments in building state return 409 Conflict for modifying methods.
-  - name: Batch sizing
-    description: Batch endpoint capped at 100 actions per batch; larger imports should be chunked.
-  - name: OAuth-required endpoints
-    description: Store connection (`POST /brands/current`) requires OAuth 2.0; API key alone is insufficient.
-notes:
-  - Omnisend does not publish a single global RPM; the limits above are consolidated from the API reference (api-docs.omnisend.com) and the llms.txt index. Treat them as starting guidance and consult support for high-volume integrations.
-  - Per-endpoint Retry-After headers may differ; always honor the response header value when present.
+    description: A segment in `building` state returns 409 Conflict for update and delete — a state error, not a rate-limit error.
+
+error_logging:
+  url: https://app.omnisend.com/integrations/api-access-logs
+  path: Store Settings > API > API Issues
+  note: Every API error for the brand is recorded in-app, which is the only per-request diagnostic surface Omnisend offers.
+
+limit_count: 7

@@ -1,0 +1,3980 @@
+{
+  "item": [
+    {
+      "id": "ec0e1947-7af7-441a-bf9c-add7862ab9cd",
+      "name": "Contacts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "72ec3c27-a1fb-4990-99c3-946b6f73777a",
+          "name": "List contacts",
+          "request": {
+            "name": "List contacts",
+            "description": {
+              "content": "Returns a paginated list of contacts filtered by the provided query parameters.\n\n**Scopes:**\n`contacts.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n**Filter restrictions:**\n- `tag` and `status` cannot be used together in the same request.\n- `updatedAtFrom` cannot be combined with `email`, `phone`, `status`, `segmentID`, or `tag`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of items per page. Range: 1-250. Default: 100"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "Opaque cursor for fetching the next page (from paging.cursors.after)"
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "Opaque cursor for fetching the previous page (from paging.cursors.before)"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Sort field. Default: createdAt"
+                },
+                {
+                  "disabled": false,
+                  "key": "direction",
+                  "value": "<string>",
+                  "description": "Sort direction. Default: desc"
+                },
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<string>",
+                  "description": "Filter by email address"
+                },
+                {
+                  "disabled": false,
+                  "key": "phone",
+                  "value": "<string>",
+                  "description": "Filter by phone number"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Contact subscription status filter. Cannot be combined with tag"
+                },
+                {
+                  "disabled": false,
+                  "key": "segmentID",
+                  "value": "<string>",
+                  "description": "Filter by segment ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "tag",
+                  "value": "<string>",
+                  "description": "Filter by tag. Cannot be combined with status"
+                },
+                {
+                  "disabled": false,
+                  "key": "updatedAtFrom",
+                  "value": "<string>",
+                  "description": "Filter contacts updated at or after this RFC3339 timestamp. Cannot be combined with email, phone, status, segmentID, or tag"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "contacts.read contacts.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0c9681a8-feba-41a0-b9f1-93d3d0eabcf2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "segmentID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "updatedAtFrom",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"contacts\": [\n    {\n      \"address\": \"1234 Main St\",\n      \"birthdate\": \"1990-01-01\",\n      \"city\": \"Los Angeles\",\n      \"consents\": [\n        {\n          \"channel\": \"email\",\n          \"createdAt\": \"2021-05-20T12:00:00Z\",\n          \"ip\": \"161.1.1.1\",\n          \"source\": \"api\",\n          \"userAgent\": \"Mozilla/5.0\"\n        },\n        {\n          \"channel\": \"email\",\n          \"createdAt\": \"2021-05-20T12:00:00Z\",\n          \"ip\": \"161.1.1.1\",\n          \"source\": \"api\",\n          \"userAgent\": \"Mozilla/5.0\"\n        }\n      ],\n      \"country\": \"United States\",\n      \"countryCode\": \"US\",\n      \"createdAt\": \"2021-05-20T12:00:00Z\",\n      \"customProperties\": {\n        \"key_0\": 6819\n      },\n      \"email\": \"example@example.com\",\n      \"firstName\": \"John\",\n      \"gender\": \"m\",\n      \"id\": \"60a6170920d91c215e949b5c\",\n      \"identifiers\": [\n        {\n          \"channels\": {\n            \"key_0\": {\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"statusChangedAt\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"key_1\": {\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"statusChangedAt\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          \"id\": \"example@example.com\",\n          \"type\": \"email\"\n        },\n        {\n          \"channels\": {\n            \"key_0\": {\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"statusChangedAt\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          \"id\": \"example@example.com\",\n          \"type\": \"email\"\n        }\n      ],\n      \"lastName\": \"Doe\",\n      \"optIns\": [\n        {\n          \"channel\": \"email\",\n          \"optInAt\": \"2021-05-20T12:00:00Z\"\n        },\n        {\n          \"channel\": \"email\",\n          \"optInAt\": \"2021-05-20T12:00:00Z\"\n        }\n      ],\n      \"phone\": [\n        \"+1234567890\"\n      ],\n      \"postalCode\": \"90001\",\n      \"segments\": [\n        \"string\",\n        \"string\"\n      ],\n      \"state\": \"New York\",\n      \"status\": \"subscribed\",\n      \"statuses\": [\n        {\n          \"channel\": \"email\",\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2021-05-20T12:00:00Z\"\n        },\n        {\n          \"channel\": \"email\",\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2021-05-20T12:00:00Z\"\n        }\n      ],\n      \"tags\": [\n        \"tag1\",\n        \"tag2\",\n        \"tag3\"\n      ],\n      \"updatedAt\": \"2021-05-20T12:30:00Z\"\n    },\n    {\n      \"address\": \"1234 Main St\",\n      \"birthdate\": \"1990-01-01\",\n      \"city\": \"Los Angeles\",\n      \"consents\": [\n        {\n          \"channel\": \"email\",\n          \"createdAt\": \"2021-05-20T12:00:00Z\",\n          \"ip\": \"161.1.1.1\",\n          \"source\": \"api\",\n          \"userAgent\": \"Mozilla/5.0\"\n        },\n        {\n          \"channel\": \"email\",\n          \"createdAt\": \"2021-05-20T12:00:00Z\",\n          \"ip\": \"161.1.1.1\",\n          \"source\": \"api\",\n          \"userAgent\": \"Mozilla/5.0\"\n        }\n      ],\n      \"country\": \"United States\",\n      \"countryCode\": \"US\",\n      \"createdAt\": \"2021-05-20T12:00:00Z\",\n      \"customProperties\": {\n        \"key_0\": 9910.766369777411,\n        \"key_1\": \"string\",\n        \"key_2\": 5641.769444615707,\n        \"key_3\": true\n      },\n      \"email\": \"example@example.com\",\n      \"firstName\": \"John\",\n      \"gender\": \"m\",\n      \"id\": \"60a6170920d91c215e949b5c\",\n      \"identifiers\": [\n        {\n          \"channels\": {\n            \"key_0\": {\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"statusChangedAt\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"key_1\": {\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"statusChangedAt\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"key_2\": {\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"statusChangedAt\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          \"id\": \"example@example.com\",\n          \"type\": \"email\"\n        },\n        {\n          \"channels\": {\n            \"key_0\": {\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"statusChangedAt\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          \"id\": \"example@example.com\",\n          \"type\": \"email\"\n        }\n      ],\n      \"lastName\": \"Doe\",\n      \"optIns\": [\n        {\n          \"channel\": \"email\",\n          \"optInAt\": \"2021-05-20T12:00:00Z\"\n        },\n        {\n          \"channel\": \"email\",\n          \"optInAt\": \"2021-05-20T12:00:00Z\"\n        }\n      ],\n      \"phone\": [\n        \"+1234567890\"\n      ],\n      \"postalCode\": \"90001\",\n      \"segments\": [\n        \"string\",\n        \"string\"\n      ],\n      \"state\": \"New York\",\n      \"status\": \"subscribed\",\n      \"statuses\": [\n        {\n          \"channel\": \"email\",\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2021-05-20T12:00:00Z\"\n        },\n        {\n          \"channel\": \"email\",\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2021-05-20T12:00:00Z\"\n        }\n      ],\n      \"tags\": [\n        \"tag1\",\n        \"tag2\",\n        \"tag3\"\n      ],\n      \"updatedAt\": \"2021-05-20T12:30:00Z\"\n    }\n  ],\n  \"paging\": {\n    \"cursors\": {\n      \"after\": \"eyJpZCI6ImNhbXAtNDU2In0\",\n      \"before\": \"eyJpZCI6ImNhbXAtMTIzIn0\"\n    },\n    \"hasMore\": true,\n    \"limit\": 50\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c2c6c44-8d90-4d17-a28a-b8074f34efe7",
+              "name": "Request contains invalid or missing fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "segmentID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "updatedAtFrom",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f206f3d5-0048-4cbc-ae42-9b0819bfe28f",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "segmentID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "updatedAtFrom",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "726ebafb-2326-4932-a786-10549d7bd935",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "segmentID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "updatedAtFrom",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "436265c0-81db-4cb4-b7be-546bb057d4d9",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "segmentID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "updatedAtFrom",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bad047c7-043d-4b12-9362-25c863797811",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "segmentID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "updatedAtFrom",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"retryAfter\": 60,\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73d68f5a-8817-4826-bff1-cce3688656bd",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "phone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "segmentID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "updatedAtFrom",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "748b3dd8-bb73-443b-910c-3679374282f0",
+          "name": "Update contact by email",
+          "request": {
+            "name": "Update contact by email",
+            "description": {
+              "content": "Updates the contact matching the provided email address.\n\n**Scopes:**\n`contacts.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<string>",
+                  "description": "(Required) Contact email address"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "contacts.read contacts.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": \"<string>\",\n  \"birthdate\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"countryCode\": \"<string>\",\n  \"createdAt\": \"<string>\",\n  \"customProperties\": {\n    \"key_0\": 7432,\n    \"key_1\": 9252.846823860886,\n    \"key_2\": \"string\"\n  },\n  \"firstName\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"identifiers\": [\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"<string>\",\n          \"statusChangedAt\": \"<string>\"\n        },\n        \"key_1\": {\n          \"status\": \"<string>\",\n          \"statusChangedAt\": \"<string>\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"<string>\",\n        \"ip\": \"<string>\",\n        \"source\": \"<string>\",\n        \"userAgent\": \"<string>\"\n      },\n      \"sendWelcomeMessage\": \"<boolean>\",\n      \"source\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"<string>\",\n          \"statusChangedAt\": \"<string>\"\n        },\n        \"key_1\": {\n          \"status\": \"<string>\",\n          \"statusChangedAt\": \"<string>\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"<string>\",\n        \"ip\": \"<string>\",\n        \"source\": \"<string>\",\n        \"userAgent\": \"<string>\"\n      },\n      \"sendWelcomeMessage\": \"<boolean>\",\n      \"source\": \"<string>\"\n    }\n  ],\n  \"lastName\": \"<string>\",\n  \"postalCode\": \"<string>\",\n  \"state\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e9a623d1-d3bc-4822-a7c6-ec06caf227e0",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"address\": \"1234 Main St\",\n  \"birthdate\": \"1990-01-01\",\n  \"city\": \"Los Angeles\",\n  \"consents\": [\n    {\n      \"channel\": \"email\",\n      \"createdAt\": \"2021-05-20T12:00:00Z\",\n      \"ip\": \"161.1.1.1\",\n      \"source\": \"api\",\n      \"userAgent\": \"Mozilla/5.0\"\n    },\n    {\n      \"channel\": \"email\",\n      \"createdAt\": \"2021-05-20T12:00:00Z\",\n      \"ip\": \"161.1.1.1\",\n      \"source\": \"api\",\n      \"userAgent\": \"Mozilla/5.0\"\n    }\n  ],\n  \"country\": \"United States\",\n  \"countryCode\": \"US\",\n  \"createdAt\": \"2021-05-20T12:00:00Z\",\n  \"customProperties\": {\n    \"key_0\": 2889.238004164727,\n    \"key_1\": 4284.372423720612,\n    \"key_2\": 124.96266284591884\n  },\n  \"email\": \"example@example.com\",\n  \"firstName\": \"John\",\n  \"gender\": \"m\",\n  \"id\": \"60a6170920d91c215e949b5c\",\n  \"identifiers\": [\n    {\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2023-05-22T10:25:14.263Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2023-05-22T10:25:14.263Z\"\n        }\n      },\n      \"id\": \"example@example.com\",\n      \"type\": \"email\"\n    },\n    {\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2023-05-22T10:25:14.263Z\"\n        }\n      },\n      \"id\": \"example@example.com\",\n      \"type\": \"email\"\n    }\n  ],\n  \"lastName\": \"Doe\",\n  \"optIns\": [\n    {\n      \"channel\": \"email\",\n      \"optInAt\": \"2021-05-20T12:00:00Z\"\n    },\n    {\n      \"channel\": \"email\",\n      \"optInAt\": \"2021-05-20T12:00:00Z\"\n    }\n  ],\n  \"phone\": [\n    \"+1234567890\"\n  ],\n  \"postalCode\": \"90001\",\n  \"segments\": [\n    \"string\",\n    \"string\"\n  ],\n  \"state\": \"New York\",\n  \"status\": \"subscribed\",\n  \"statuses\": [\n    {\n      \"channel\": \"email\",\n      \"status\": \"subscribed\",\n      \"statusChangedAt\": \"2021-05-20T12:00:00Z\"\n    },\n    {\n      \"channel\": \"email\",\n      \"status\": \"subscribed\",\n      \"statusChangedAt\": \"2021-05-20T12:00:00Z\"\n    }\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"updatedAt\": \"2021-05-20T12:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e9b980f-5cd1-49c8-8e25-36d8ea6a7c0f",
+              "name": "Request contains invalid or missing fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca5ad2f2-1bca-41ef-9367-510778bd0131",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "334464c4-f054-4421-a0b2-0c8fec9bd652",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "060e49b6-4ab6-4b92-9c29-90d465aed447",
+              "name": "Contact not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "833b6ca6-46ca-46b0-bb23-3658bdac01a6",
+              "name": "Contact identifier already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6d9d7c6-083a-4d20-8a8b-912018ff5663",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d7af570-9fdb-447f-940f-2a6c99ab73bf",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"retryAfter\": 60,\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0691e3fe-8a13-4d6e-baaa-0b3ed47c887c",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "306a23e4-ab50-4ecd-9309-dddfb04128fb",
+          "name": "Create or update existing contact",
+          "request": {
+            "name": "Create or update existing contact",
+            "description": {
+              "content": "Creates a new contact. If a contact with the provided email identifier already exists, it will be updated instead.\nReturns `201 Created` for new contacts and `200 OK` when an existing contact was updated.\n\n**Scopes:**\n`contacts.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "contacts.read contacts.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": \"<string>\",\n  \"birthdate\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"countryCode\": \"<string>\",\n  \"createdAt\": \"<string>\",\n  \"customProperties\": {\n    \"key_0\": 5760,\n    \"key_1\": true\n  },\n  \"firstName\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"identifiers\": [\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"<string>\",\n          \"statusChangedAt\": \"<string>\"\n        },\n        \"key_1\": {\n          \"status\": \"<string>\",\n          \"statusChangedAt\": \"<string>\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"<string>\",\n        \"ip\": \"<string>\",\n        \"source\": \"<string>\",\n        \"userAgent\": \"<string>\"\n      },\n      \"sendWelcomeMessage\": \"<boolean>\",\n      \"source\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"<string>\",\n          \"statusChangedAt\": \"<string>\"\n        },\n        \"key_1\": {\n          \"status\": \"<string>\",\n          \"statusChangedAt\": \"<string>\"\n        },\n        \"key_2\": {\n          \"status\": \"<string>\",\n          \"statusChangedAt\": \"<string>\"\n        },\n        \"key_3\": {\n          \"status\": \"<string>\",\n          \"statusChangedAt\": \"<string>\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"<string>\",\n        \"ip\": \"<string>\",\n        \"source\": \"<string>\",\n        \"userAgent\": \"<string>\"\n      },\n      \"sendWelcomeMessage\": \"<boolean>\",\n      \"source\": \"<string>\"\n    }\n  ],\n  \"lastName\": \"<string>\",\n  \"postalCode\": \"<string>\",\n  \"state\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9fbca28a-ca71-4ad3-9669-e10b99969ba6",
+              "name": "Existing contact updated (upsert by email)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"1234 Main St\",\n  \"birthdate\": \"1990-01-01\",\n  \"city\": \"Los Angeles\",\n  \"country\": \"United States\",\n  \"countryCode\": \"US\",\n  \"createdAt\": \"2024-01-01T00:00:00Z\",\n  \"customProperties\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": 7036.01096776033,\n    \"key_3\": false,\n    \"key_4\": false\n  },\n  \"firstName\": \"John\",\n  \"gender\": \"m\",\n  \"identifiers\": [\n    {\n      \"id\": \"example@example.com\",\n      \"type\": \"email\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_2\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"2026-01-01T00:00:00Z\",\n        \"ip\": \"192.168.1.1\",\n        \"source\": \"omnisend-form\",\n        \"userAgent\": \"Mozilla/5.0\"\n      },\n      \"sendWelcomeMessage\": true,\n      \"source\": \"api\"\n    },\n    {\n      \"id\": \"example@example.com\",\n      \"type\": \"email\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"2026-01-01T00:00:00Z\",\n        \"ip\": \"192.168.1.1\",\n        \"source\": \"omnisend-form\",\n        \"userAgent\": \"Mozilla/5.0\"\n      },\n      \"sendWelcomeMessage\": true,\n      \"source\": \"api\"\n    }\n  ],\n  \"lastName\": \"Doe\",\n  \"postalCode\": \"90001\",\n  \"state\": \"New York\",\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"address\": \"1234 Main St\",\n  \"birthdate\": \"1990-01-01\",\n  \"city\": \"Los Angeles\",\n  \"consents\": [\n    {\n      \"channel\": \"email\",\n      \"createdAt\": \"2021-05-20T12:00:00Z\",\n      \"ip\": \"161.1.1.1\",\n      \"source\": \"api\",\n      \"userAgent\": \"Mozilla/5.0\"\n    },\n    {\n      \"channel\": \"email\",\n      \"createdAt\": \"2021-05-20T12:00:00Z\",\n      \"ip\": \"161.1.1.1\",\n      \"source\": \"api\",\n      \"userAgent\": \"Mozilla/5.0\"\n    }\n  ],\n  \"country\": \"United States\",\n  \"countryCode\": \"US\",\n  \"createdAt\": \"2021-05-20T12:00:00Z\",\n  \"customProperties\": {\n    \"key_0\": 2889.238004164727,\n    \"key_1\": 4284.372423720612,\n    \"key_2\": 124.96266284591884\n  },\n  \"email\": \"example@example.com\",\n  \"firstName\": \"John\",\n  \"gender\": \"m\",\n  \"id\": \"60a6170920d91c215e949b5c\",\n  \"identifiers\": [\n    {\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2023-05-22T10:25:14.263Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2023-05-22T10:25:14.263Z\"\n        }\n      },\n      \"id\": \"example@example.com\",\n      \"type\": \"email\"\n    },\n    {\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2023-05-22T10:25:14.263Z\"\n        }\n      },\n      \"id\": \"example@example.com\",\n      \"type\": \"email\"\n    }\n  ],\n  \"lastName\": \"Doe\",\n  \"optIns\": [\n    {\n      \"channel\": \"email\",\n      \"optInAt\": \"2021-05-20T12:00:00Z\"\n    },\n    {\n      \"channel\": \"email\",\n      \"optInAt\": \"2021-05-20T12:00:00Z\"\n    }\n  ],\n  \"phone\": [\n    \"+1234567890\"\n  ],\n  \"postalCode\": \"90001\",\n  \"segments\": [\n    \"string\",\n    \"string\"\n  ],\n  \"state\": \"New York\",\n  \"status\": \"subscribed\",\n  \"statuses\": [\n    {\n      \"channel\": \"email\",\n      \"status\": \"subscribed\",\n      \"statusChangedAt\": \"2021-05-20T12:00:00Z\"\n    },\n    {\n      \"channel\": \"email\",\n      \"status\": \"subscribed\",\n      \"statusChangedAt\": \"2021-05-20T12:00:00Z\"\n    }\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"updatedAt\": \"2021-05-20T12:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6cbcee5b-f631-4f34-9665-45b9804e49d5",
+              "name": "Contact created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"1234 Main St\",\n  \"birthdate\": \"1990-01-01\",\n  \"city\": \"Los Angeles\",\n  \"country\": \"United States\",\n  \"countryCode\": \"US\",\n  \"createdAt\": \"2024-01-01T00:00:00Z\",\n  \"customProperties\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": 7036.01096776033,\n    \"key_3\": false,\n    \"key_4\": false\n  },\n  \"firstName\": \"John\",\n  \"gender\": \"m\",\n  \"identifiers\": [\n    {\n      \"id\": \"example@example.com\",\n      \"type\": \"email\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_2\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"2026-01-01T00:00:00Z\",\n        \"ip\": \"192.168.1.1\",\n        \"source\": \"omnisend-form\",\n        \"userAgent\": \"Mozilla/5.0\"\n      },\n      \"sendWelcomeMessage\": true,\n      \"source\": \"api\"\n    },\n    {\n      \"id\": \"example@example.com\",\n      \"type\": \"email\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"2026-01-01T00:00:00Z\",\n        \"ip\": \"192.168.1.1\",\n        \"source\": \"omnisend-form\",\n        \"userAgent\": \"Mozilla/5.0\"\n      },\n      \"sendWelcomeMessage\": true,\n      \"source\": \"api\"\n    }\n  ],\n  \"lastName\": \"Doe\",\n  \"postalCode\": \"90001\",\n  \"state\": \"New York\",\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"address\": \"1234 Main St\",\n  \"birthdate\": \"1990-01-01\",\n  \"city\": \"Los Angeles\",\n  \"consents\": [\n    {\n      \"channel\": \"email\",\n      \"createdAt\": \"2021-05-20T12:00:00Z\",\n      \"ip\": \"161.1.1.1\",\n      \"source\": \"api\",\n      \"userAgent\": \"Mozilla/5.0\"\n    },\n    {\n      \"channel\": \"email\",\n      \"createdAt\": \"2021-05-20T12:00:00Z\",\n      \"ip\": \"161.1.1.1\",\n      \"source\": \"api\",\n      \"userAgent\": \"Mozilla/5.0\"\n    }\n  ],\n  \"country\": \"United States\",\n  \"countryCode\": \"US\",\n  \"createdAt\": \"2021-05-20T12:00:00Z\",\n  \"customProperties\": {\n    \"key_0\": 2889.238004164727,\n    \"key_1\": 4284.372423720612,\n    \"key_2\": 124.96266284591884\n  },\n  \"email\": \"example@example.com\",\n  \"firstName\": \"John\",\n  \"gender\": \"m\",\n  \"id\": \"60a6170920d91c215e949b5c\",\n  \"identifiers\": [\n    {\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2023-05-22T10:25:14.263Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2023-05-22T10:25:14.263Z\"\n        }\n      },\n      \"id\": \"example@example.com\",\n      \"type\": \"email\"\n    },\n    {\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2023-05-22T10:25:14.263Z\"\n        }\n      },\n      \"id\": \"example@example.com\",\n      \"type\": \"email\"\n    }\n  ],\n  \"lastName\": \"Doe\",\n  \"optIns\": [\n    {\n      \"channel\": \"email\",\n      \"optInAt\": \"2021-05-20T12:00:00Z\"\n    },\n    {\n      \"channel\": \"email\",\n      \"optInAt\": \"2021-05-20T12:00:00Z\"\n    }\n  ],\n  \"phone\": [\n    \"+1234567890\"\n  ],\n  \"postalCode\": \"90001\",\n  \"segments\": [\n    \"string\",\n    \"string\"\n  ],\n  \"state\": \"New York\",\n  \"status\": \"subscribed\",\n  \"statuses\": [\n    {\n      \"channel\": \"email\",\n      \"status\": \"subscribed\",\n      \"statusChangedAt\": \"2021-05-20T12:00:00Z\"\n    },\n    {\n      \"channel\": \"email\",\n      \"status\": \"subscribed\",\n      \"statusChangedAt\": \"2021-05-20T12:00:00Z\"\n    }\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"updatedAt\": \"2021-05-20T12:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67721623-b240-41d4-84b5-f8f902755979",
+              "name": "Request contains invalid or missing fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"1234 Main St\",\n  \"birthdate\": \"1990-01-01\",\n  \"city\": \"Los Angeles\",\n  \"country\": \"United States\",\n  \"countryCode\": \"US\",\n  \"createdAt\": \"2024-01-01T00:00:00Z\",\n  \"customProperties\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": 7036.01096776033,\n    \"key_3\": false,\n    \"key_4\": false\n  },\n  \"firstName\": \"John\",\n  \"gender\": \"m\",\n  \"identifiers\": [\n    {\n      \"id\": \"example@example.com\",\n      \"type\": \"email\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_2\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"2026-01-01T00:00:00Z\",\n        \"ip\": \"192.168.1.1\",\n        \"source\": \"omnisend-form\",\n        \"userAgent\": \"Mozilla/5.0\"\n      },\n      \"sendWelcomeMessage\": true,\n      \"source\": \"api\"\n    },\n    {\n      \"id\": \"example@example.com\",\n      \"type\": \"email\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"2026-01-01T00:00:00Z\",\n        \"ip\": \"192.168.1.1\",\n        \"source\": \"omnisend-form\",\n        \"userAgent\": \"Mozilla/5.0\"\n      },\n      \"sendWelcomeMessage\": true,\n      \"source\": \"api\"\n    }\n  ],\n  \"lastName\": \"Doe\",\n  \"postalCode\": \"90001\",\n  \"state\": \"New York\",\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16b066e2-9710-4ccc-aeef-6b260c4a1a84",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"1234 Main St\",\n  \"birthdate\": \"1990-01-01\",\n  \"city\": \"Los Angeles\",\n  \"country\": \"United States\",\n  \"countryCode\": \"US\",\n  \"createdAt\": \"2024-01-01T00:00:00Z\",\n  \"customProperties\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": 7036.01096776033,\n    \"key_3\": false,\n    \"key_4\": false\n  },\n  \"firstName\": \"John\",\n  \"gender\": \"m\",\n  \"identifiers\": [\n    {\n      \"id\": \"example@example.com\",\n      \"type\": \"email\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_2\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"2026-01-01T00:00:00Z\",\n        \"ip\": \"192.168.1.1\",\n        \"source\": \"omnisend-form\",\n        \"userAgent\": \"Mozilla/5.0\"\n      },\n      \"sendWelcomeMessage\": true,\n      \"source\": \"api\"\n    },\n    {\n      \"id\": \"example@example.com\",\n      \"type\": \"email\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"2026-01-01T00:00:00Z\",\n        \"ip\": \"192.168.1.1\",\n        \"source\": \"omnisend-form\",\n        \"userAgent\": \"Mozilla/5.0\"\n      },\n      \"sendWelcomeMessage\": true,\n      \"source\": \"api\"\n    }\n  ],\n  \"lastName\": \"Doe\",\n  \"postalCode\": \"90001\",\n  \"state\": \"New York\",\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2dd890e8-6a43-47c4-90ac-3f058810b2e3",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"1234 Main St\",\n  \"birthdate\": \"1990-01-01\",\n  \"city\": \"Los Angeles\",\n  \"country\": \"United States\",\n  \"countryCode\": \"US\",\n  \"createdAt\": \"2024-01-01T00:00:00Z\",\n  \"customProperties\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": 7036.01096776033,\n    \"key_3\": false,\n    \"key_4\": false\n  },\n  \"firstName\": \"John\",\n  \"gender\": \"m\",\n  \"identifiers\": [\n    {\n      \"id\": \"example@example.com\",\n      \"type\": \"email\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_2\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"2026-01-01T00:00:00Z\",\n        \"ip\": \"192.168.1.1\",\n        \"source\": \"omnisend-form\",\n        \"userAgent\": \"Mozilla/5.0\"\n      },\n      \"sendWelcomeMessage\": true,\n      \"source\": \"api\"\n    },\n    {\n      \"id\": \"example@example.com\",\n      \"type\": \"email\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"2026-01-01T00:00:00Z\",\n        \"ip\": \"192.168.1.1\",\n        \"source\": \"omnisend-form\",\n        \"userAgent\": \"Mozilla/5.0\"\n      },\n      \"sendWelcomeMessage\": true,\n      \"source\": \"api\"\n    }\n  ],\n  \"lastName\": \"Doe\",\n  \"postalCode\": \"90001\",\n  \"state\": \"New York\",\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc177dce-df1e-42d6-8de3-0408c4470dbd",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"1234 Main St\",\n  \"birthdate\": \"1990-01-01\",\n  \"city\": \"Los Angeles\",\n  \"country\": \"United States\",\n  \"countryCode\": \"US\",\n  \"createdAt\": \"2024-01-01T00:00:00Z\",\n  \"customProperties\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": 7036.01096776033,\n    \"key_3\": false,\n    \"key_4\": false\n  },\n  \"firstName\": \"John\",\n  \"gender\": \"m\",\n  \"identifiers\": [\n    {\n      \"id\": \"example@example.com\",\n      \"type\": \"email\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_2\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"2026-01-01T00:00:00Z\",\n        \"ip\": \"192.168.1.1\",\n        \"source\": \"omnisend-form\",\n        \"userAgent\": \"Mozilla/5.0\"\n      },\n      \"sendWelcomeMessage\": true,\n      \"source\": \"api\"\n    },\n    {\n      \"id\": \"example@example.com\",\n      \"type\": \"email\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"2026-01-01T00:00:00Z\",\n        \"ip\": \"192.168.1.1\",\n        \"source\": \"omnisend-form\",\n        \"userAgent\": \"Mozilla/5.0\"\n      },\n      \"sendWelcomeMessage\": true,\n      \"source\": \"api\"\n    }\n  ],\n  \"lastName\": \"Doe\",\n  \"postalCode\": \"90001\",\n  \"state\": \"New York\",\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "944e5652-83e2-4ffd-ba81-26acbca3b26c",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"1234 Main St\",\n  \"birthdate\": \"1990-01-01\",\n  \"city\": \"Los Angeles\",\n  \"country\": \"United States\",\n  \"countryCode\": \"US\",\n  \"createdAt\": \"2024-01-01T00:00:00Z\",\n  \"customProperties\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": 7036.01096776033,\n    \"key_3\": false,\n    \"key_4\": false\n  },\n  \"firstName\": \"John\",\n  \"gender\": \"m\",\n  \"identifiers\": [\n    {\n      \"id\": \"example@example.com\",\n      \"type\": \"email\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_2\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"2026-01-01T00:00:00Z\",\n        \"ip\": \"192.168.1.1\",\n        \"source\": \"omnisend-form\",\n        \"userAgent\": \"Mozilla/5.0\"\n      },\n      \"sendWelcomeMessage\": true,\n      \"source\": \"api\"\n    },\n    {\n      \"id\": \"example@example.com\",\n      \"type\": \"email\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"2026-01-01T00:00:00Z\",\n        \"ip\": \"192.168.1.1\",\n        \"source\": \"omnisend-form\",\n        \"userAgent\": \"Mozilla/5.0\"\n      },\n      \"sendWelcomeMessage\": true,\n      \"source\": \"api\"\n    }\n  ],\n  \"lastName\": \"Doe\",\n  \"postalCode\": \"90001\",\n  \"state\": \"New York\",\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"retryAfter\": 60,\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2753cc50-423a-4489-baf3-2bfecba4c8db",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"address\": \"1234 Main St\",\n  \"birthdate\": \"1990-01-01\",\n  \"city\": \"Los Angeles\",\n  \"country\": \"United States\",\n  \"countryCode\": \"US\",\n  \"createdAt\": \"2024-01-01T00:00:00Z\",\n  \"customProperties\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": 7036.01096776033,\n    \"key_3\": false,\n    \"key_4\": false\n  },\n  \"firstName\": \"John\",\n  \"gender\": \"m\",\n  \"identifiers\": [\n    {\n      \"id\": \"example@example.com\",\n      \"type\": \"email\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_2\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"2026-01-01T00:00:00Z\",\n        \"ip\": \"192.168.1.1\",\n        \"source\": \"omnisend-form\",\n        \"userAgent\": \"Mozilla/5.0\"\n      },\n      \"sendWelcomeMessage\": true,\n      \"source\": \"api\"\n    },\n    {\n      \"id\": \"example@example.com\",\n      \"type\": \"email\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2024-01-01T00:00:00Z\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"2026-01-01T00:00:00Z\",\n        \"ip\": \"192.168.1.1\",\n        \"source\": \"omnisend-form\",\n        \"userAgent\": \"Mozilla/5.0\"\n      },\n      \"sendWelcomeMessage\": true,\n      \"source\": \"api\"\n    }\n  ],\n  \"lastName\": \"Doe\",\n  \"postalCode\": \"90001\",\n  \"state\": \"New York\",\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4900cf88-cc3f-4e63-850d-05be0fc7b264",
+          "name": "Get contact",
+          "request": {
+            "name": "Get contact",
+            "description": {
+              "content": "Returns the contact with the specified ID.\n\n**Scopes:**\n`contacts.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Contact ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "contacts.read contacts.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "993d3b1e-de2b-4ccf-9dc6-cb15a4de6a71",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Contact ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"address\": \"1234 Main St\",\n  \"birthdate\": \"1990-01-01\",\n  \"city\": \"Los Angeles\",\n  \"consents\": [\n    {\n      \"channel\": \"email\",\n      \"createdAt\": \"2021-05-20T12:00:00Z\",\n      \"ip\": \"161.1.1.1\",\n      \"source\": \"api\",\n      \"userAgent\": \"Mozilla/5.0\"\n    },\n    {\n      \"channel\": \"email\",\n      \"createdAt\": \"2021-05-20T12:00:00Z\",\n      \"ip\": \"161.1.1.1\",\n      \"source\": \"api\",\n      \"userAgent\": \"Mozilla/5.0\"\n    }\n  ],\n  \"country\": \"United States\",\n  \"countryCode\": \"US\",\n  \"createdAt\": \"2021-05-20T12:00:00Z\",\n  \"customProperties\": {\n    \"key_0\": 2889.238004164727,\n    \"key_1\": 4284.372423720612,\n    \"key_2\": 124.96266284591884\n  },\n  \"email\": \"example@example.com\",\n  \"firstName\": \"John\",\n  \"gender\": \"m\",\n  \"id\": \"60a6170920d91c215e949b5c\",\n  \"identifiers\": [\n    {\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2023-05-22T10:25:14.263Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2023-05-22T10:25:14.263Z\"\n        }\n      },\n      \"id\": \"example@example.com\",\n      \"type\": \"email\"\n    },\n    {\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2023-05-22T10:25:14.263Z\"\n        }\n      },\n      \"id\": \"example@example.com\",\n      \"type\": \"email\"\n    }\n  ],\n  \"lastName\": \"Doe\",\n  \"optIns\": [\n    {\n      \"channel\": \"email\",\n      \"optInAt\": \"2021-05-20T12:00:00Z\"\n    },\n    {\n      \"channel\": \"email\",\n      \"optInAt\": \"2021-05-20T12:00:00Z\"\n    }\n  ],\n  \"phone\": [\n    \"+1234567890\"\n  ],\n  \"postalCode\": \"90001\",\n  \"segments\": [\n    \"string\",\n    \"string\"\n  ],\n  \"state\": \"New York\",\n  \"status\": \"subscribed\",\n  \"statuses\": [\n    {\n      \"channel\": \"email\",\n      \"status\": \"subscribed\",\n      \"statusChangedAt\": \"2021-05-20T12:00:00Z\"\n    },\n    {\n      \"channel\": \"email\",\n      \"status\": \"subscribed\",\n      \"statusChangedAt\": \"2021-05-20T12:00:00Z\"\n    }\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"updatedAt\": \"2021-05-20T12:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2bfed792-85a6-4075-ade9-cb8e986a83f7",
+              "name": "Request contains invalid or missing fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Contact ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a862ae10-91b6-4c60-aef1-687a49b138c7",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Contact ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee1751e6-ed09-4f94-9b29-39b85367bada",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Contact ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6eeaaa8e-af50-4543-b18e-66aca8a075fa",
+              "name": "Contact not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Contact ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0acf571b-9dd7-4e83-baf7-6787075b3b0c",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Contact ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "156fe930-252c-4d20-a0bd-768e783a6d7c",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Contact ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"retryAfter\": 60,\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "206ea52b-1812-495e-bb04-4b98725c667e",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Contact ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "21659f9a-d9ac-4405-bc4d-4a93d8432e02",
+          "name": "Update contact by ID",
+          "request": {
+            "name": "Update contact by ID",
+            "description": {
+              "content": "Updates the contact with the specified ID.\n\n**Scopes:**\n`contacts.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Contact ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "contacts.read contacts.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": \"<string>\",\n  \"birthdate\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"countryCode\": \"<string>\",\n  \"createdAt\": \"<string>\",\n  \"customProperties\": {\n    \"key_0\": 5760,\n    \"key_1\": true\n  },\n  \"firstName\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"identifiers\": [\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"<string>\",\n          \"statusChangedAt\": \"<string>\"\n        },\n        \"key_1\": {\n          \"status\": \"<string>\",\n          \"statusChangedAt\": \"<string>\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"<string>\",\n        \"ip\": \"<string>\",\n        \"source\": \"<string>\",\n        \"userAgent\": \"<string>\"\n      },\n      \"sendWelcomeMessage\": \"<boolean>\",\n      \"source\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"<string>\",\n          \"statusChangedAt\": \"<string>\"\n        },\n        \"key_1\": {\n          \"status\": \"<string>\",\n          \"statusChangedAt\": \"<string>\"\n        },\n        \"key_2\": {\n          \"status\": \"<string>\",\n          \"statusChangedAt\": \"<string>\"\n        },\n        \"key_3\": {\n          \"status\": \"<string>\",\n          \"statusChangedAt\": \"<string>\"\n        }\n      },\n      \"consent\": {\n        \"createdAt\": \"<string>\",\n        \"ip\": \"<string>\",\n        \"source\": \"<string>\",\n        \"userAgent\": \"<string>\"\n      },\n      \"sendWelcomeMessage\": \"<boolean>\",\n      \"source\": \"<string>\"\n    }\n  ],\n  \"lastName\": \"<string>\",\n  \"postalCode\": \"<string>\",\n  \"state\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8d9df113-76f8-45fa-a203-bac7fab6ad3c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Contact ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"address\": \"1234 Main St\",\n  \"birthdate\": \"1990-01-01\",\n  \"city\": \"Los Angeles\",\n  \"consents\": [\n    {\n      \"channel\": \"email\",\n      \"createdAt\": \"2021-05-20T12:00:00Z\",\n      \"ip\": \"161.1.1.1\",\n      \"source\": \"api\",\n      \"userAgent\": \"Mozilla/5.0\"\n    },\n    {\n      \"channel\": \"email\",\n      \"createdAt\": \"2021-05-20T12:00:00Z\",\n      \"ip\": \"161.1.1.1\",\n      \"source\": \"api\",\n      \"userAgent\": \"Mozilla/5.0\"\n    }\n  ],\n  \"country\": \"United States\",\n  \"countryCode\": \"US\",\n  \"createdAt\": \"2021-05-20T12:00:00Z\",\n  \"customProperties\": {\n    \"key_0\": 2889.238004164727,\n    \"key_1\": 4284.372423720612,\n    \"key_2\": 124.96266284591884\n  },\n  \"email\": \"example@example.com\",\n  \"firstName\": \"John\",\n  \"gender\": \"m\",\n  \"id\": \"60a6170920d91c215e949b5c\",\n  \"identifiers\": [\n    {\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2023-05-22T10:25:14.263Z\"\n        },\n        \"key_1\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2023-05-22T10:25:14.263Z\"\n        }\n      },\n      \"id\": \"example@example.com\",\n      \"type\": \"email\"\n    },\n    {\n      \"channels\": {\n        \"key_0\": {\n          \"status\": \"subscribed\",\n          \"statusChangedAt\": \"2023-05-22T10:25:14.263Z\"\n        }\n      },\n      \"id\": \"example@example.com\",\n      \"type\": \"email\"\n    }\n  ],\n  \"lastName\": \"Doe\",\n  \"optIns\": [\n    {\n      \"channel\": \"email\",\n      \"optInAt\": \"2021-05-20T12:00:00Z\"\n    },\n    {\n      \"channel\": \"email\",\n      \"optInAt\": \"2021-05-20T12:00:00Z\"\n    }\n  ],\n  \"phone\": [\n    \"+1234567890\"\n  ],\n  \"postalCode\": \"90001\",\n  \"segments\": [\n    \"string\",\n    \"string\"\n  ],\n  \"state\": \"New York\",\n  \"status\": \"subscribed\",\n  \"statuses\": [\n    {\n      \"channel\": \"email\",\n      \"status\": \"subscribed\",\n      \"statusChangedAt\": \"2021-05-20T12:00:00Z\"\n    },\n    {\n      \"channel\": \"email\",\n      \"status\": \"subscribed\",\n      \"statusChangedAt\": \"2021-05-20T12:00:00Z\"\n    }\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"updatedAt\": \"2021-05-20T12:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02e7e644-e68a-44d4-9f65-cca94a6c9ceb",
+              "name": "Request contains invalid or missing fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Contact ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc82d2bd-4519-4d4a-96a1-88544e68d827",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Contact ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef1a017f-22fe-4915-8990-71dfd7d73ebc",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Contact ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d0edd6f-0e2a-440c-aa8f-ee29f9b327cc",
+              "name": "Contact not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Contact ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ee63e60-1f83-4771-b6e1-1339de9038ba",
+              "name": "Contact identifier already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Contact ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "961523eb-c001-45f1-9eb7-6d4f0fadf2c4",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Contact ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34302f23-d441-4e98-9d74-78c99c3f83a4",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Contact ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"retryAfter\": 60,\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "198b0fae-e24f-4b09-9048-05b961f0dd67",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Contact ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5da6a268-da86-40b5-afdc-69b64c699a13",
+          "name": "Batch remove tags",
+          "request": {
+            "name": "Batch remove tags",
+            "description": {
+              "content": "Removes the specified tags from contacts selected by contact IDs, emails, phone numbers or a segment.\nAt least one of `contactIDs`, `emails`, `phones` or `segmentID` is required.\nSelectors can be combined and are applied additively — the tags are removed from the union of all\nmatched contacts: every contact in `contactIDs`, every contact matched by an address in `emails`,\nevery contact matched by a number in `phones` and every member of `segmentID`. A contact matched by\nmore than one selector is processed once. Emails and phones with no matching contact are silently ignored.\nUntagging is performed asynchronously, so the tags may not disappear immediately.\n\n**Scopes:**\n`contacts.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 60 requests per minute.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                "tags"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "contacts.read contacts.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tags\": [\n    \"<string>\"\n  ],\n  \"contactIDs\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"segmentID\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "53fde8a7-4d13-4e66-bec3-3b324029bbdd",
+              "name": "Untagging accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ],\n  \"contactIDs\": [\n    \"60a6170920d91c215e949b5c\"\n  ],\n  \"emails\": [\n    \"contact@omnisend.com\"\n  ],\n  \"phones\": [\n    \"+1234567890\"\n  ],\n  \"segmentID\": \"60a6170920d91c215e949b5c\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "93b06ff3-9034-4a34-9db6-dbb3326f8c8a",
+              "name": "Request contains invalid or missing fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ],\n  \"contactIDs\": [\n    \"60a6170920d91c215e949b5c\"\n  ],\n  \"emails\": [\n    \"contact@omnisend.com\"\n  ],\n  \"phones\": [\n    \"+1234567890\"\n  ],\n  \"segmentID\": \"60a6170920d91c215e949b5c\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cb1577a2-ae5c-42f2-8b9c-107db52903b0",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ],\n  \"contactIDs\": [\n    \"60a6170920d91c215e949b5c\"\n  ],\n  \"emails\": [\n    \"contact@omnisend.com\"\n  ],\n  \"phones\": [\n    \"+1234567890\"\n  ],\n  \"segmentID\": \"60a6170920d91c215e949b5c\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "95e05b8e-0789-4fcb-a388-317c08acf0b9",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ],\n  \"contactIDs\": [\n    \"60a6170920d91c215e949b5c\"\n  ],\n  \"emails\": [\n    \"contact@omnisend.com\"\n  ],\n  \"phones\": [\n    \"+1234567890\"\n  ],\n  \"segmentID\": \"60a6170920d91c215e949b5c\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c2dc5ca-da35-4163-a9c2-c09863a2613a",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ],\n  \"contactIDs\": [\n    \"60a6170920d91c215e949b5c\"\n  ],\n  \"emails\": [\n    \"contact@omnisend.com\"\n  ],\n  \"phones\": [\n    \"+1234567890\"\n  ],\n  \"segmentID\": \"60a6170920d91c215e949b5c\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1927e28-bd3b-4f43-a987-06910626560f",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ],\n  \"contactIDs\": [\n    \"60a6170920d91c215e949b5c\"\n  ],\n  \"emails\": [\n    \"contact@omnisend.com\"\n  ],\n  \"phones\": [\n    \"+1234567890\"\n  ],\n  \"segmentID\": \"60a6170920d91c215e949b5c\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"retryAfter\": 60,\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a29b0de8-219b-4971-a801-086851e1debd",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ],\n  \"contactIDs\": [\n    \"60a6170920d91c215e949b5c\"\n  ],\n  \"emails\": [\n    \"contact@omnisend.com\"\n  ],\n  \"phones\": [\n    \"+1234567890\"\n  ],\n  \"segmentID\": \"60a6170920d91c215e949b5c\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bda7cca6-6c73-4e1b-94e1-cd136cb5ada3",
+          "name": "Batch add tags",
+          "request": {
+            "name": "Batch add tags",
+            "description": {
+              "content": "Adds the specified tags to contacts selected by contact IDs, emails, phone numbers or a segment.\nAt least one of `contactIDs`, `emails`, `phones` or `segmentID` is required.\nSelectors can be combined and are applied additively — the union of all matched contacts is tagged:\nevery contact in `contactIDs`, every contact matched by an address in `emails`, every contact matched\nby a number in `phones` and every member of `segmentID`. A contact matched by more than one selector\nis tagged once. Emails and phones with no matching contact are silently ignored.\nTagging is performed asynchronously, so the tags may not be visible immediately.\n\n**Scopes:**\n`contacts.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 60 requests per minute.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts",
+                "tags"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "contacts.read contacts.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tags\": [\n    \"<string>\"\n  ],\n  \"contactIDs\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"emails\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"phones\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"segmentID\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "438a340c-b099-4cc9-8cfb-781f769062d1",
+              "name": "Tagging accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ],\n  \"contactIDs\": [\n    \"60a6170920d91c215e949b5c\"\n  ],\n  \"emails\": [\n    \"contact@omnisend.com\"\n  ],\n  \"phones\": [\n    \"+1234567890\"\n  ],\n  \"segmentID\": \"60a6170920d91c215e949b5c\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "032bb545-6112-4b66-b6e2-0041412835ee",
+              "name": "Request contains invalid or missing fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ],\n  \"contactIDs\": [\n    \"60a6170920d91c215e949b5c\"\n  ],\n  \"emails\": [\n    \"contact@omnisend.com\"\n  ],\n  \"phones\": [\n    \"+1234567890\"\n  ],\n  \"segmentID\": \"60a6170920d91c215e949b5c\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "be3fdab3-4ac4-46bd-865e-562a1c4eabd1",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ],\n  \"contactIDs\": [\n    \"60a6170920d91c215e949b5c\"\n  ],\n  \"emails\": [\n    \"contact@omnisend.com\"\n  ],\n  \"phones\": [\n    \"+1234567890\"\n  ],\n  \"segmentID\": \"60a6170920d91c215e949b5c\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64950b1a-368c-4ebd-942b-17b37878932e",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ],\n  \"contactIDs\": [\n    \"60a6170920d91c215e949b5c\"\n  ],\n  \"emails\": [\n    \"contact@omnisend.com\"\n  ],\n  \"phones\": [\n    \"+1234567890\"\n  ],\n  \"segmentID\": \"60a6170920d91c215e949b5c\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4039ba13-834d-4b4e-9400-46ae1eb5c178",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ],\n  \"contactIDs\": [\n    \"60a6170920d91c215e949b5c\"\n  ],\n  \"emails\": [\n    \"contact@omnisend.com\"\n  ],\n  \"phones\": [\n    \"+1234567890\"\n  ],\n  \"segmentID\": \"60a6170920d91c215e949b5c\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52a1aeb0-f353-4ce4-a7d6-a6f47ddeb681",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ],\n  \"contactIDs\": [\n    \"60a6170920d91c215e949b5c\"\n  ],\n  \"emails\": [\n    \"contact@omnisend.com\"\n  ],\n  \"phones\": [\n    \"+1234567890\"\n  ],\n  \"segmentID\": \"60a6170920d91c215e949b5c\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"retryAfter\": 60,\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a16a0bec-0e2f-42f2-bb5d-1d23c24c590c",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"tag1\",\n    \"tag2\"\n  ],\n  \"contactIDs\": [\n    \"60a6170920d91c215e949b5c\"\n  ],\n  \"emails\": [\n    \"contact@omnisend.com\"\n  ],\n  \"phones\": [\n    \"+1234567890\"\n  ],\n  \"segmentID\": \"60a6170920d91c215e949b5c\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.omnisend.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "fa928434-76ef-47d7-86db-811d92aec49d",
+    "name": "Contacts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage contacts.",
+      "type": "text/plain"
+    }
+  }
+}

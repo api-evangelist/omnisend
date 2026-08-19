@@ -1,0 +1,108 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://api-docs.omnisend.com/docs/how-to-send-webhooks-from-automations,
+  https://api-docs.omnisend.com/reference/events-overview,
+  https://api-docs.omnisend.com/reference/event-tracking,
+  https://api-docs.omnisend.com/llms.txt,
+  and openapi/omnisend-automations-api-openapi.yml
+asyncapi_published: false
+description: >-
+  Omnisend has a real, two-directional event surface but publishes NO AsyncAPI document for it.
+  Inbound, customer events are POSTed to /events (and declared through the Event Metadata API).
+  Outbound, Omnisend does not offer a subscribable webhook registry at all — instead a webhook is a
+  BLOCK inside an automation workflow: you create an automation whose trigger is an event and whose
+  action is `sendWebhook`, and Omnisend POSTs your payload to your callbackUrl when a contact
+  reaches that block. The consequence is that the outbound event catalog is not a fixed list an
+  integrator can subscribe to; it is whatever set of trigger events the integrator wires up.
+
+outbound:
+  model: automation-action webhook (no subscription registry)
+  configured_via:
+    api: POST https://api.omnisend.com/api/automations
+    spec: openapi/omnisend-automations-api-openapi.yml
+    block_type: action
+    action_type: sendWebhook
+  scope_required: automations.write
+  plan_required: paid — webhooks in automations are not available on the free plan
+  transport:
+    method: POST
+    url_field: callbackUrl
+    constraints:
+      - callbackUrl must be HTTPS
+      - IP literals rejected
+      - non-443 ports rejected
+      - non-FQDN hosts rejected
+      - internal/private IP addresses rejected
+    custom_headers: 'headers[] of {key, value} — the documented example uses X-Webhook-Secret as a shared secret'
+    body: >-
+      Caller-authored JSON string. Supports personalization tags — [[contact.email]],
+      [[contact.first_name]], [[event.raw.<property>]].
+  security:
+    signature: false
+    note: >-
+      Omnisend does NOT sign outbound webhooks. There is no HMAC signature header, no timestamp and
+      no published verification procedure. The only integrity mechanism offered is a static shared
+      secret the integrator puts in a custom header. There is also no documented retry or delivery
+      guarantee for a failed callback.
+  trigger_events_documented:
+    - subscribed to marketing
+    - added product to cart
+    - started checkout
+    - placed order
+    - paid for order
+    - ordered product
+    - order refunded
+    - order fulfilled
+    - order canceled
+    - viewed product
+    - viewed page
+    - opened message
+    - clicked message
+    - marked message as spam
+  note: >-
+    Some trigger events (for example "placed order") require an `origin` naming the source platform,
+    because the same event name can exist under several origins.
+
+inbound:
+  model: customer event ingest
+  endpoint: POST https://api.omnisend.com/api/events
+  spec: openapi/omnisend-events-api-openapi.yml
+  scope_required: events.write
+  rate_limit: 400 requests/minute
+  browser_transport:
+    snippet: https://omnisnippet1.com/inshop/launcher-v2.js
+    api: 'omnisend.push(["track", "<eventName>", {...}])'
+    docs: https://api-docs.omnisend.com/reference/javascript-snippet
+  custom_events:
+    declare: POST https://api.omnisend.com/api/event-metadata
+    update: PUT https://api.omnisend.com/api/event-metadata
+    query: POST https://api.omnisend.com/api/event-metadata/query
+    spec: openapi/omnisend-event-metadata-api-openapi.yml
+    note: >-
+      A brand-custom event is identified by name + origin and must be declared (with at least one
+      top-level property) before its properties can be used in segment filters.
+  warning: >-
+    Omnisend's own docs warn that importing a batch of historic events can fire live automations and
+    send duplicate messages to real customers. Combined with the absence of any idempotency key,
+    replaying event ingest is unsafe.
+
+event_reference_pages:
+  - https://api-docs.omnisend.com/reference/events-overview
+  - https://api-docs.omnisend.com/reference/added-product-to-cart
+  - https://api-docs.omnisend.com/reference/started-checkout
+  - https://api-docs.omnisend.com/reference/placed-order
+  - https://api-docs.omnisend.com/reference/paid-for-order
+  - https://api-docs.omnisend.com/reference/ordered-product
+  - https://api-docs.omnisend.com/reference/order-refunded
+  - https://api-docs.omnisend.com/reference/order-fulfilled
+  - https://api-docs.omnisend.com/reference/order-cancelled
+  - https://api-docs.omnisend.com/reference/viewed-product
+  - https://api-docs.omnisend.com/reference/omnisend-forms-events
+  - https://api-docs.omnisend.com/docs/segments-events-properties
+
+gaps:
+  - No AsyncAPI document. Probed /asyncapi.yaml and /asyncapi.json on api.omnisend.com and api-docs.omnisend.com — no spec.
+  - No webhook subscription API — an integrator cannot list, create or delete a webhook endpoint as a first-class resource.
+  - No webhook signing or verification. A shared header secret is the only offered mechanism.
+  - No published delivery/retry semantics for a failing callbackUrl.

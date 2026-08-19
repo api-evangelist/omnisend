@@ -1,0 +1,2595 @@
+{
+  "item": [
+    {
+      "id": "ac53f6d3-20bf-49e6-8d90-cd3ddfe4c008",
+      "name": "Products",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7e675105-6649-433b-90d8-905401a71d30",
+          "name": "List products",
+          "request": {
+            "name": "List products",
+            "description": {
+              "content": "List products\n\n**Scopes:**\n`products.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br>Guide: <a href=\"https://api-docs.omnisend.com/docs/how-to-sync-products-catalog-categories\" target=\"_blank\">Sync products catalog, categories</a>\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "products"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Offset"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Limit"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Sort by"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "246c1e87-d75f-4242-a4db-935335a3171e",
+              "name": "List of products",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"paging\": {\n    \"limit\": 100,\n    \"next\": \"https://api.omnisend.com/api/products?limit=100&offset=105\",\n    \"offset\": 5,\n    \"previous\": \"https://api.omnisend.com/api/products?limit=100&offset=5\"\n  },\n  \"products\": [\n    {\n      \"currency\": \"USD\",\n      \"id\": \"1234567890\",\n      \"status\": \"inStock\",\n      \"title\": \"My Product\",\n      \"url\": \"https://example.com/product\",\n      \"categoryIDs\": [\n        \"1234567890\",\n        \"99934567890\"\n      ],\n      \"createdAt\": \"2021-01-01T00:00:00Z\",\n      \"defaultImageUrl\": \"https://example.com/image.jpg\",\n      \"description\": \"My product description\",\n      \"images\": [\n        \"https://example.com/image.jpg\",\n        \"https://example.com/image2.jpg\"\n      ],\n      \"tags\": [\n        \"tag1\",\n        \"tag2\",\n        \"tag3\"\n      ],\n      \"type\": \"Super Product\",\n      \"updatedAt\": \"2021-01-01T00:00:00Z\",\n      \"variants\": [\n        {\n          \"id\": \"1234567890\",\n          \"price\": 9.99,\n          \"title\": \"My Variant\",\n          \"url\": \"https://example.com/variant\",\n          \"defaultImageUrl\": \"https://example.com/variantImage.jpg\",\n          \"description\": \"My variant description\",\n          \"images\": [\n            \"https://example.com/variant/image.jpg\",\n            \"https://example.com/variant/image2.jpg\"\n          ],\n          \"sku\": \"SKU1234567890\",\n          \"status\": \"inStock\",\n          \"strikeThroughPrice\": 19.99\n        }\n      ],\n      \"vendor\": \"My Vendor\"\n    },\n    {\n      \"currency\": \"USD\",\n      \"id\": \"1234567890\",\n      \"status\": \"inStock\",\n      \"title\": \"My Product\",\n      \"url\": \"https://example.com/product\",\n      \"categoryIDs\": [\n        \"1234567890\",\n        \"99934567890\"\n      ],\n      \"createdAt\": \"2021-01-01T00:00:00Z\",\n      \"defaultImageUrl\": \"https://example.com/image.jpg\",\n      \"description\": \"My product description\",\n      \"images\": [\n        \"https://example.com/image.jpg\",\n        \"https://example.com/image2.jpg\"\n      ],\n      \"tags\": [\n        \"tag1\",\n        \"tag2\",\n        \"tag3\"\n      ],\n      \"type\": \"Super Product\",\n      \"updatedAt\": \"2021-01-01T00:00:00Z\",\n      \"variants\": [\n        {\n          \"id\": \"1234567890\",\n          \"price\": 9.99,\n          \"title\": \"My Variant\",\n          \"url\": \"https://example.com/variant\",\n          \"defaultImageUrl\": \"https://example.com/variantImage.jpg\",\n          \"description\": \"My variant description\",\n          \"images\": [\n            \"https://example.com/variant/image.jpg\",\n            \"https://example.com/variant/image2.jpg\"\n          ],\n          \"sku\": \"SKU1234567890\",\n          \"status\": \"inStock\",\n          \"strikeThroughPrice\": 19.99\n        }\n      ],\n      \"vendor\": \"My Vendor\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1548af23-6fbc-40ca-be1e-f4fc1b3de89b",
+              "name": "Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21f719c9-e92c-4bb9-8166-4a296dcf1b33",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5782e27-989a-499c-8d21-31a1e5eb9697",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "849dbefd-6e83-4ed1-a99c-04ff3f34df55",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d0de777c-ea45-41f0-b2d4-b98bc297288e",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "168f2d76-b826-46a0-89a2-72ae1380f37d",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "41996853-98e8-4834-b0a0-f3e17f5c5c60",
+          "name": "Create product",
+          "request": {
+            "name": "Create product",
+            "description": {
+              "content": "Creates a new product\n\n**Scopes:**\n`products.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "products"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currency\": \"<string>\",\n  \"id\": \"<string>\",\n  \"status\": \"<string>\",\n  \"title\": \"<string>\",\n  \"url\": \"<string>\",\n  \"categoryIDs\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"createdAt\": \"<string>\",\n  \"defaultImageUrl\": \"<string>\",\n  \"description\": \"<string>\",\n  \"images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"type\": \"<string>\",\n  \"updatedAt\": \"<string>\",\n  \"variants\": [\n    {\n      \"id\": \"<string>\",\n      \"price\": \"<number>\",\n      \"title\": \"<string>\",\n      \"url\": \"<string>\",\n      \"defaultImageUrl\": \"<string>\",\n      \"description\": \"<string>\",\n      \"images\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"sku\": \"<string>\",\n      \"status\": \"<string>\",\n      \"strikeThroughPrice\": \"<number>\"\n    }\n  ],\n  \"vendor\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8351b55d-12cf-47a8-8ec8-50d64aa24f5c",
+              "name": "Product created successfully with the given ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currency\": \"USD\",\n  \"id\": \"1234567890\",\n  \"status\": \"inStock\",\n  \"title\": \"My Product\",\n  \"url\": \"https://example.com/product\",\n  \"categoryIDs\": [\n    \"1234567890\",\n    \"99934567890\"\n  ],\n  \"createdAt\": \"2021-01-01T00:00:00Z\",\n  \"defaultImageUrl\": \"https://example.com/image.jpg\",\n  \"description\": \"My product description\",\n  \"images\": [\n    \"https://example.com/image.jpg\",\n    \"https://example.com/image2.jpg\"\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"type\": \"Super Product\",\n  \"updatedAt\": \"2021-01-01T00:00:00Z\",\n  \"variants\": [\n    {\n      \"id\": \"1234567890\",\n      \"price\": 9.99,\n      \"title\": \"My Variant\",\n      \"url\": \"https://example.com/variant\",\n      \"defaultImageUrl\": \"https://example.com/variantImage.jpg\",\n      \"description\": \"My variant description\",\n      \"images\": [\n        \"https://example.com/variant/image.jpg\",\n        \"https://example.com/variant/image2.jpg\"\n      ],\n      \"sku\": \"SKU1234567890\",\n      \"status\": \"inStock\",\n      \"strikeThroughPrice\": 19.99\n    }\n  ],\n  \"vendor\": \"My Vendor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"shoes-blue-123\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ceea7ba-2f64-413b-ac0c-787ff10261fb",
+              "name": "Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currency\": \"USD\",\n  \"id\": \"1234567890\",\n  \"status\": \"inStock\",\n  \"title\": \"My Product\",\n  \"url\": \"https://example.com/product\",\n  \"categoryIDs\": [\n    \"1234567890\",\n    \"99934567890\"\n  ],\n  \"createdAt\": \"2021-01-01T00:00:00Z\",\n  \"defaultImageUrl\": \"https://example.com/image.jpg\",\n  \"description\": \"My product description\",\n  \"images\": [\n    \"https://example.com/image.jpg\",\n    \"https://example.com/image2.jpg\"\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"type\": \"Super Product\",\n  \"updatedAt\": \"2021-01-01T00:00:00Z\",\n  \"variants\": [\n    {\n      \"id\": \"1234567890\",\n      \"price\": 9.99,\n      \"title\": \"My Variant\",\n      \"url\": \"https://example.com/variant\",\n      \"defaultImageUrl\": \"https://example.com/variantImage.jpg\",\n      \"description\": \"My variant description\",\n      \"images\": [\n        \"https://example.com/variant/image.jpg\",\n        \"https://example.com/variant/image2.jpg\"\n      ],\n      \"sku\": \"SKU1234567890\",\n      \"status\": \"inStock\",\n      \"strikeThroughPrice\": 19.99\n    }\n  ],\n  \"vendor\": \"My Vendor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c5858ebc-f95b-482b-bf39-8760fe63998e",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currency\": \"USD\",\n  \"id\": \"1234567890\",\n  \"status\": \"inStock\",\n  \"title\": \"My Product\",\n  \"url\": \"https://example.com/product\",\n  \"categoryIDs\": [\n    \"1234567890\",\n    \"99934567890\"\n  ],\n  \"createdAt\": \"2021-01-01T00:00:00Z\",\n  \"defaultImageUrl\": \"https://example.com/image.jpg\",\n  \"description\": \"My product description\",\n  \"images\": [\n    \"https://example.com/image.jpg\",\n    \"https://example.com/image2.jpg\"\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"type\": \"Super Product\",\n  \"updatedAt\": \"2021-01-01T00:00:00Z\",\n  \"variants\": [\n    {\n      \"id\": \"1234567890\",\n      \"price\": 9.99,\n      \"title\": \"My Variant\",\n      \"url\": \"https://example.com/variant\",\n      \"defaultImageUrl\": \"https://example.com/variantImage.jpg\",\n      \"description\": \"My variant description\",\n      \"images\": [\n        \"https://example.com/variant/image.jpg\",\n        \"https://example.com/variant/image2.jpg\"\n      ],\n      \"sku\": \"SKU1234567890\",\n      \"status\": \"inStock\",\n      \"strikeThroughPrice\": 19.99\n    }\n  ],\n  \"vendor\": \"My Vendor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10d8eec5-11a0-4e99-b15b-ce08138e4c60",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currency\": \"USD\",\n  \"id\": \"1234567890\",\n  \"status\": \"inStock\",\n  \"title\": \"My Product\",\n  \"url\": \"https://example.com/product\",\n  \"categoryIDs\": [\n    \"1234567890\",\n    \"99934567890\"\n  ],\n  \"createdAt\": \"2021-01-01T00:00:00Z\",\n  \"defaultImageUrl\": \"https://example.com/image.jpg\",\n  \"description\": \"My product description\",\n  \"images\": [\n    \"https://example.com/image.jpg\",\n    \"https://example.com/image2.jpg\"\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"type\": \"Super Product\",\n  \"updatedAt\": \"2021-01-01T00:00:00Z\",\n  \"variants\": [\n    {\n      \"id\": \"1234567890\",\n      \"price\": 9.99,\n      \"title\": \"My Variant\",\n      \"url\": \"https://example.com/variant\",\n      \"defaultImageUrl\": \"https://example.com/variantImage.jpg\",\n      \"description\": \"My variant description\",\n      \"images\": [\n        \"https://example.com/variant/image.jpg\",\n        \"https://example.com/variant/image2.jpg\"\n      ],\n      \"sku\": \"SKU1234567890\",\n      \"status\": \"inStock\",\n      \"strikeThroughPrice\": 19.99\n    }\n  ],\n  \"vendor\": \"My Vendor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41ae79b1-3516-4727-91b3-5982ec01ac42",
+              "name": "Product already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currency\": \"USD\",\n  \"id\": \"1234567890\",\n  \"status\": \"inStock\",\n  \"title\": \"My Product\",\n  \"url\": \"https://example.com/product\",\n  \"categoryIDs\": [\n    \"1234567890\",\n    \"99934567890\"\n  ],\n  \"createdAt\": \"2021-01-01T00:00:00Z\",\n  \"defaultImageUrl\": \"https://example.com/image.jpg\",\n  \"description\": \"My product description\",\n  \"images\": [\n    \"https://example.com/image.jpg\",\n    \"https://example.com/image2.jpg\"\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"type\": \"Super Product\",\n  \"updatedAt\": \"2021-01-01T00:00:00Z\",\n  \"variants\": [\n    {\n      \"id\": \"1234567890\",\n      \"price\": 9.99,\n      \"title\": \"My Variant\",\n      \"url\": \"https://example.com/variant\",\n      \"defaultImageUrl\": \"https://example.com/variantImage.jpg\",\n      \"description\": \"My variant description\",\n      \"images\": [\n        \"https://example.com/variant/image.jpg\",\n        \"https://example.com/variant/image2.jpg\"\n      ],\n      \"sku\": \"SKU1234567890\",\n      \"status\": \"inStock\",\n      \"strikeThroughPrice\": 19.99\n    }\n  ],\n  \"vendor\": \"My Vendor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f798d33c-462c-458b-bed2-a3de33bc83a8",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currency\": \"USD\",\n  \"id\": \"1234567890\",\n  \"status\": \"inStock\",\n  \"title\": \"My Product\",\n  \"url\": \"https://example.com/product\",\n  \"categoryIDs\": [\n    \"1234567890\",\n    \"99934567890\"\n  ],\n  \"createdAt\": \"2021-01-01T00:00:00Z\",\n  \"defaultImageUrl\": \"https://example.com/image.jpg\",\n  \"description\": \"My product description\",\n  \"images\": [\n    \"https://example.com/image.jpg\",\n    \"https://example.com/image2.jpg\"\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"type\": \"Super Product\",\n  \"updatedAt\": \"2021-01-01T00:00:00Z\",\n  \"variants\": [\n    {\n      \"id\": \"1234567890\",\n      \"price\": 9.99,\n      \"title\": \"My Variant\",\n      \"url\": \"https://example.com/variant\",\n      \"defaultImageUrl\": \"https://example.com/variantImage.jpg\",\n      \"description\": \"My variant description\",\n      \"images\": [\n        \"https://example.com/variant/image.jpg\",\n        \"https://example.com/variant/image2.jpg\"\n      ],\n      \"sku\": \"SKU1234567890\",\n      \"status\": \"inStock\",\n      \"strikeThroughPrice\": 19.99\n    }\n  ],\n  \"vendor\": \"My Vendor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f10a0365-dcfa-447d-9324-67fb7e162cbb",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currency\": \"USD\",\n  \"id\": \"1234567890\",\n  \"status\": \"inStock\",\n  \"title\": \"My Product\",\n  \"url\": \"https://example.com/product\",\n  \"categoryIDs\": [\n    \"1234567890\",\n    \"99934567890\"\n  ],\n  \"createdAt\": \"2021-01-01T00:00:00Z\",\n  \"defaultImageUrl\": \"https://example.com/image.jpg\",\n  \"description\": \"My product description\",\n  \"images\": [\n    \"https://example.com/image.jpg\",\n    \"https://example.com/image2.jpg\"\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"type\": \"Super Product\",\n  \"updatedAt\": \"2021-01-01T00:00:00Z\",\n  \"variants\": [\n    {\n      \"id\": \"1234567890\",\n      \"price\": 9.99,\n      \"title\": \"My Variant\",\n      \"url\": \"https://example.com/variant\",\n      \"defaultImageUrl\": \"https://example.com/variantImage.jpg\",\n      \"description\": \"My variant description\",\n      \"images\": [\n        \"https://example.com/variant/image.jpg\",\n        \"https://example.com/variant/image2.jpg\"\n      ],\n      \"sku\": \"SKU1234567890\",\n      \"status\": \"inStock\",\n      \"strikeThroughPrice\": 19.99\n    }\n  ],\n  \"vendor\": \"My Vendor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd43892d-8913-45c1-8471-d5b2a1f7d9ca",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currency\": \"USD\",\n  \"id\": \"1234567890\",\n  \"status\": \"inStock\",\n  \"title\": \"My Product\",\n  \"url\": \"https://example.com/product\",\n  \"categoryIDs\": [\n    \"1234567890\",\n    \"99934567890\"\n  ],\n  \"createdAt\": \"2021-01-01T00:00:00Z\",\n  \"defaultImageUrl\": \"https://example.com/image.jpg\",\n  \"description\": \"My product description\",\n  \"images\": [\n    \"https://example.com/image.jpg\",\n    \"https://example.com/image2.jpg\"\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"type\": \"Super Product\",\n  \"updatedAt\": \"2021-01-01T00:00:00Z\",\n  \"variants\": [\n    {\n      \"id\": \"1234567890\",\n      \"price\": 9.99,\n      \"title\": \"My Variant\",\n      \"url\": \"https://example.com/variant\",\n      \"defaultImageUrl\": \"https://example.com/variantImage.jpg\",\n      \"description\": \"My variant description\",\n      \"images\": [\n        \"https://example.com/variant/image.jpg\",\n        \"https://example.com/variant/image2.jpg\"\n      ],\n      \"sku\": \"SKU1234567890\",\n      \"status\": \"inStock\",\n      \"strikeThroughPrice\": 19.99\n    }\n  ],\n  \"vendor\": \"My Vendor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8ca9d59c-1157-432d-9020-eee57288d09f",
+          "name": "Delete product",
+          "request": {
+            "name": "Delete product",
+            "description": {
+              "content": "Delete product by ID\n\n**Scopes:**\n`products.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "products",
+                ":productID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "productID",
+                  "description": "(Required) Product ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a10cb18f-d4f8-4775-b47a-da1bc9c377e5",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "09e8c760-093b-4454-b85f-abbffd9e3563",
+              "name": "Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e117039d-78d5-49cf-a741-3f45ab0c88d1",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26ac45ef-b02e-44e0-be27-4ffced039bd3",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e613bec-0c4b-4c20-b31f-39bcc2044189",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9207a2a7-7655-492f-916c-284c39d04f90",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "062397db-6974-4826-88b2-a42b39176b1b",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c7331438-d536-427e-8188-34d53e04f150",
+          "name": "Get product",
+          "request": {
+            "name": "Get product",
+            "description": {
+              "content": "Get product by ID\n\n**Scopes:**\n`products.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "products",
+                ":productID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "productID",
+                  "description": "(Required) Product ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2b2f6b43-d3eb-402e-8f89-f5d2751944bd",
+              "name": "Product found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"currency\": \"USD\",\n  \"id\": \"1234567890\",\n  \"status\": \"inStock\",\n  \"title\": \"My Product\",\n  \"url\": \"https://example.com/product\",\n  \"categoryIDs\": [\n    \"1234567890\",\n    \"99934567890\"\n  ],\n  \"createdAt\": \"2021-01-01T00:00:00Z\",\n  \"defaultImageUrl\": \"https://example.com/image.jpg\",\n  \"description\": \"My product description\",\n  \"images\": [\n    \"https://example.com/image.jpg\",\n    \"https://example.com/image2.jpg\"\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"type\": \"Super Product\",\n  \"updatedAt\": \"2021-01-01T00:00:00Z\",\n  \"variants\": [\n    {\n      \"id\": \"1234567890\",\n      \"price\": 9.99,\n      \"title\": \"My Variant\",\n      \"url\": \"https://example.com/variant\",\n      \"defaultImageUrl\": \"https://example.com/variantImage.jpg\",\n      \"description\": \"My variant description\",\n      \"images\": [\n        \"https://example.com/variant/image.jpg\",\n        \"https://example.com/variant/image2.jpg\"\n      ],\n      \"sku\": \"SKU1234567890\",\n      \"status\": \"inStock\",\n      \"strikeThroughPrice\": 19.99\n    }\n  ],\n  \"vendor\": \"My Vendor\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b405dc33-9545-434a-8640-30e9bfd635e6",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e03c2a45-a2dd-461e-b0b2-b7f711b381bd",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2af0f1fe-b80b-47e5-a37e-4988ced745d1",
+              "name": "Product not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7600f84c-44f1-4c39-bc82-4c6d53385d7d",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9a63aca-72f2-4818-9b67-6fbfd556a4bf",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7d5b25d-065b-482a-8623-b5919764749b",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b2094bc7-04e1-44b6-af4b-c9f738860040",
+          "name": "Replace product",
+          "request": {
+            "name": "Replace product",
+            "description": {
+              "content": "Replace product by ID\n\n**Scopes:**\n`products.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "products",
+                ":productID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "productID",
+                  "description": "(Required) Product ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currency\": \"<string>\",\n  \"id\": \"<string>\",\n  \"status\": \"<string>\",\n  \"title\": \"<string>\",\n  \"url\": \"<string>\",\n  \"categoryIDs\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"createdAt\": \"<string>\",\n  \"defaultImageUrl\": \"<string>\",\n  \"description\": \"<string>\",\n  \"images\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"type\": \"<string>\",\n  \"updatedAt\": \"<string>\",\n  \"variants\": [\n    {\n      \"id\": \"<string>\",\n      \"price\": \"<number>\",\n      \"title\": \"<string>\",\n      \"url\": \"<string>\",\n      \"defaultImageUrl\": \"<string>\",\n      \"description\": \"<string>\",\n      \"images\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"sku\": \"<string>\",\n      \"status\": \"<string>\",\n      \"strikeThroughPrice\": \"<number>\"\n    }\n  ],\n  \"vendor\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "26c3fa87-01a3-42f5-b9f5-08c2dd8fe12c",
+              "name": "Product replaced successfully with the given ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currency\": \"USD\",\n  \"id\": \"1234567890\",\n  \"status\": \"inStock\",\n  \"title\": \"My Product\",\n  \"url\": \"https://example.com/product\",\n  \"categoryIDs\": [\n    \"1234567890\",\n    \"99934567890\"\n  ],\n  \"createdAt\": \"2021-01-01T00:00:00Z\",\n  \"defaultImageUrl\": \"https://example.com/image.jpg\",\n  \"description\": \"My product description\",\n  \"images\": [\n    \"https://example.com/image.jpg\",\n    \"https://example.com/image2.jpg\"\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"type\": \"Super Product\",\n  \"updatedAt\": \"2021-01-01T00:00:00Z\",\n  \"variants\": [\n    {\n      \"id\": \"1234567890\",\n      \"price\": 9.99,\n      \"title\": \"My Variant\",\n      \"url\": \"https://example.com/variant\",\n      \"defaultImageUrl\": \"https://example.com/variantImage.jpg\",\n      \"description\": \"My variant description\",\n      \"images\": [\n        \"https://example.com/variant/image.jpg\",\n        \"https://example.com/variant/image2.jpg\"\n      ],\n      \"sku\": \"SKU1234567890\",\n      \"status\": \"inStock\",\n      \"strikeThroughPrice\": 19.99\n    }\n  ],\n  \"vendor\": \"My Vendor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"shoes-blue-123\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43ce8b9d-00c3-457b-ac95-7976b1063991",
+              "name": "Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currency\": \"USD\",\n  \"id\": \"1234567890\",\n  \"status\": \"inStock\",\n  \"title\": \"My Product\",\n  \"url\": \"https://example.com/product\",\n  \"categoryIDs\": [\n    \"1234567890\",\n    \"99934567890\"\n  ],\n  \"createdAt\": \"2021-01-01T00:00:00Z\",\n  \"defaultImageUrl\": \"https://example.com/image.jpg\",\n  \"description\": \"My product description\",\n  \"images\": [\n    \"https://example.com/image.jpg\",\n    \"https://example.com/image2.jpg\"\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"type\": \"Super Product\",\n  \"updatedAt\": \"2021-01-01T00:00:00Z\",\n  \"variants\": [\n    {\n      \"id\": \"1234567890\",\n      \"price\": 9.99,\n      \"title\": \"My Variant\",\n      \"url\": \"https://example.com/variant\",\n      \"defaultImageUrl\": \"https://example.com/variantImage.jpg\",\n      \"description\": \"My variant description\",\n      \"images\": [\n        \"https://example.com/variant/image.jpg\",\n        \"https://example.com/variant/image2.jpg\"\n      ],\n      \"sku\": \"SKU1234567890\",\n      \"status\": \"inStock\",\n      \"strikeThroughPrice\": 19.99\n    }\n  ],\n  \"vendor\": \"My Vendor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "591effd4-722d-47bf-97c7-ab9e1d6f66a6",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currency\": \"USD\",\n  \"id\": \"1234567890\",\n  \"status\": \"inStock\",\n  \"title\": \"My Product\",\n  \"url\": \"https://example.com/product\",\n  \"categoryIDs\": [\n    \"1234567890\",\n    \"99934567890\"\n  ],\n  \"createdAt\": \"2021-01-01T00:00:00Z\",\n  \"defaultImageUrl\": \"https://example.com/image.jpg\",\n  \"description\": \"My product description\",\n  \"images\": [\n    \"https://example.com/image.jpg\",\n    \"https://example.com/image2.jpg\"\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"type\": \"Super Product\",\n  \"updatedAt\": \"2021-01-01T00:00:00Z\",\n  \"variants\": [\n    {\n      \"id\": \"1234567890\",\n      \"price\": 9.99,\n      \"title\": \"My Variant\",\n      \"url\": \"https://example.com/variant\",\n      \"defaultImageUrl\": \"https://example.com/variantImage.jpg\",\n      \"description\": \"My variant description\",\n      \"images\": [\n        \"https://example.com/variant/image.jpg\",\n        \"https://example.com/variant/image2.jpg\"\n      ],\n      \"sku\": \"SKU1234567890\",\n      \"status\": \"inStock\",\n      \"strikeThroughPrice\": 19.99\n    }\n  ],\n  \"vendor\": \"My Vendor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9449d9eb-b3fb-4177-aec5-aa3cf21c3c4a",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currency\": \"USD\",\n  \"id\": \"1234567890\",\n  \"status\": \"inStock\",\n  \"title\": \"My Product\",\n  \"url\": \"https://example.com/product\",\n  \"categoryIDs\": [\n    \"1234567890\",\n    \"99934567890\"\n  ],\n  \"createdAt\": \"2021-01-01T00:00:00Z\",\n  \"defaultImageUrl\": \"https://example.com/image.jpg\",\n  \"description\": \"My product description\",\n  \"images\": [\n    \"https://example.com/image.jpg\",\n    \"https://example.com/image2.jpg\"\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"type\": \"Super Product\",\n  \"updatedAt\": \"2021-01-01T00:00:00Z\",\n  \"variants\": [\n    {\n      \"id\": \"1234567890\",\n      \"price\": 9.99,\n      \"title\": \"My Variant\",\n      \"url\": \"https://example.com/variant\",\n      \"defaultImageUrl\": \"https://example.com/variantImage.jpg\",\n      \"description\": \"My variant description\",\n      \"images\": [\n        \"https://example.com/variant/image.jpg\",\n        \"https://example.com/variant/image2.jpg\"\n      ],\n      \"sku\": \"SKU1234567890\",\n      \"status\": \"inStock\",\n      \"strikeThroughPrice\": 19.99\n    }\n  ],\n  \"vendor\": \"My Vendor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ccf32bf6-dd25-4b73-85d9-b1262b86d7e8",
+              "name": "Product not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currency\": \"USD\",\n  \"id\": \"1234567890\",\n  \"status\": \"inStock\",\n  \"title\": \"My Product\",\n  \"url\": \"https://example.com/product\",\n  \"categoryIDs\": [\n    \"1234567890\",\n    \"99934567890\"\n  ],\n  \"createdAt\": \"2021-01-01T00:00:00Z\",\n  \"defaultImageUrl\": \"https://example.com/image.jpg\",\n  \"description\": \"My product description\",\n  \"images\": [\n    \"https://example.com/image.jpg\",\n    \"https://example.com/image2.jpg\"\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"type\": \"Super Product\",\n  \"updatedAt\": \"2021-01-01T00:00:00Z\",\n  \"variants\": [\n    {\n      \"id\": \"1234567890\",\n      \"price\": 9.99,\n      \"title\": \"My Variant\",\n      \"url\": \"https://example.com/variant\",\n      \"defaultImageUrl\": \"https://example.com/variantImage.jpg\",\n      \"description\": \"My variant description\",\n      \"images\": [\n        \"https://example.com/variant/image.jpg\",\n        \"https://example.com/variant/image2.jpg\"\n      ],\n      \"sku\": \"SKU1234567890\",\n      \"status\": \"inStock\",\n      \"strikeThroughPrice\": 19.99\n    }\n  ],\n  \"vendor\": \"My Vendor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e75bafff-cfa9-406b-a153-249509aa9505",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currency\": \"USD\",\n  \"id\": \"1234567890\",\n  \"status\": \"inStock\",\n  \"title\": \"My Product\",\n  \"url\": \"https://example.com/product\",\n  \"categoryIDs\": [\n    \"1234567890\",\n    \"99934567890\"\n  ],\n  \"createdAt\": \"2021-01-01T00:00:00Z\",\n  \"defaultImageUrl\": \"https://example.com/image.jpg\",\n  \"description\": \"My product description\",\n  \"images\": [\n    \"https://example.com/image.jpg\",\n    \"https://example.com/image2.jpg\"\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"type\": \"Super Product\",\n  \"updatedAt\": \"2021-01-01T00:00:00Z\",\n  \"variants\": [\n    {\n      \"id\": \"1234567890\",\n      \"price\": 9.99,\n      \"title\": \"My Variant\",\n      \"url\": \"https://example.com/variant\",\n      \"defaultImageUrl\": \"https://example.com/variantImage.jpg\",\n      \"description\": \"My variant description\",\n      \"images\": [\n        \"https://example.com/variant/image.jpg\",\n        \"https://example.com/variant/image2.jpg\"\n      ],\n      \"sku\": \"SKU1234567890\",\n      \"status\": \"inStock\",\n      \"strikeThroughPrice\": 19.99\n    }\n  ],\n  \"vendor\": \"My Vendor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d39ffc0f-216a-4e0c-81a8-faef48cf1427",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currency\": \"USD\",\n  \"id\": \"1234567890\",\n  \"status\": \"inStock\",\n  \"title\": \"My Product\",\n  \"url\": \"https://example.com/product\",\n  \"categoryIDs\": [\n    \"1234567890\",\n    \"99934567890\"\n  ],\n  \"createdAt\": \"2021-01-01T00:00:00Z\",\n  \"defaultImageUrl\": \"https://example.com/image.jpg\",\n  \"description\": \"My product description\",\n  \"images\": [\n    \"https://example.com/image.jpg\",\n    \"https://example.com/image2.jpg\"\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"type\": \"Super Product\",\n  \"updatedAt\": \"2021-01-01T00:00:00Z\",\n  \"variants\": [\n    {\n      \"id\": \"1234567890\",\n      \"price\": 9.99,\n      \"title\": \"My Variant\",\n      \"url\": \"https://example.com/variant\",\n      \"defaultImageUrl\": \"https://example.com/variantImage.jpg\",\n      \"description\": \"My variant description\",\n      \"images\": [\n        \"https://example.com/variant/image.jpg\",\n        \"https://example.com/variant/image2.jpg\"\n      ],\n      \"sku\": \"SKU1234567890\",\n      \"status\": \"inStock\",\n      \"strikeThroughPrice\": 19.99\n    }\n  ],\n  \"vendor\": \"My Vendor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe23e0a1-6676-456b-b79f-b11a04b062e3",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    ":productID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "productID",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currency\": \"USD\",\n  \"id\": \"1234567890\",\n  \"status\": \"inStock\",\n  \"title\": \"My Product\",\n  \"url\": \"https://example.com/product\",\n  \"categoryIDs\": [\n    \"1234567890\",\n    \"99934567890\"\n  ],\n  \"createdAt\": \"2021-01-01T00:00:00Z\",\n  \"defaultImageUrl\": \"https://example.com/image.jpg\",\n  \"description\": \"My product description\",\n  \"images\": [\n    \"https://example.com/image.jpg\",\n    \"https://example.com/image2.jpg\"\n  ],\n  \"tags\": [\n    \"tag1\",\n    \"tag2\",\n    \"tag3\"\n  ],\n  \"type\": \"Super Product\",\n  \"updatedAt\": \"2021-01-01T00:00:00Z\",\n  \"variants\": [\n    {\n      \"id\": \"1234567890\",\n      \"price\": 9.99,\n      \"title\": \"My Variant\",\n      \"url\": \"https://example.com/variant\",\n      \"defaultImageUrl\": \"https://example.com/variantImage.jpg\",\n      \"description\": \"My variant description\",\n      \"images\": [\n        \"https://example.com/variant/image.jpg\",\n        \"https://example.com/variant/image2.jpg\"\n      ],\n      \"sku\": \"SKU1234567890\",\n      \"status\": \"inStock\",\n      \"strikeThroughPrice\": 19.99\n    }\n  ],\n  \"vendor\": \"My Vendor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.omnisend.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "203dde17-83a6-42d8-abfa-974b8fbf7eeb",
+    "name": "Products API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

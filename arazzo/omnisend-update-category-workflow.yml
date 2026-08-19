@@ -11,7 +11,7 @@ info:
   version: 1.0.0
 sourceDescriptions:
 - name: omnisendApi
-  url: ../openapi/omnisend-openapi.yml
+  url: ../openapi/_original/_superseded/omnisend-openapi-scaffold-v5.yml
   type: openapi
 workflows:
 - workflowId: update-category
@@ -72,3 +72,13 @@ workflows:
       categoryId: $response.body#/categoryID
   outputs:
     categoryId: $steps.updateCategory.outputs.categoryId
+x-provenance:
+  reviewed: '2026-08-13'
+  status: stale
+  note: >-
+    Authored against the pre-2026-03-15 Omnisend contract (base https://api.omnisend.com/v5,
+    X-API-KEY header) using a documentation-derived scaffold spec, which the 2026-08-13 enrichment
+    pass superseded with 15 OpenAPI documents harvested from Omnisend's own docs host. The current
+    contract uses base https://api.omnisend.com/api, a required Omnisend-Version: 2026-03-15 header
+    and Authorization: Omnisend-API-Key {key}. This workflow needs regenerating against
+    openapi/omnisend-*-openapi.yml before it will execute.

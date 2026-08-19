@@ -1,0 +1,55 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Omnisend emailcontent-api
+  version: 1.0.0
+  x-generated: '2026-08-13'
+  x-method: generated
+  x-source: openapi/omnisend-emailcontent-api-openapi.yml
+  x-note: 'Records API Evangelist enhancements over the contract Omnisend publishes. It is never applied to the harvested
+    file — openapi/ stays verbatim. The gaps captured here are real and measured: 3 of 3 operations carry no operationId,
+    0 carry no tag, and the document declares securitySchemes without ever applying them.'
+extends: omnisend-emailcontent-api-openapi.yml
+actions:
+- target: $
+  description: Apply the two declared security schemes at the document root. The published contract defines ApiKeyAuth and
+    Bearer in components.securitySchemes but never applies them, so no operation states its auth requirement.
+  update:
+    security:
+    - ApiKeyAuth: []
+    - Bearer: []
+- target: $
+  description: Declare a document-level tag so every operation can be grouped. The published contract declares none.
+  update:
+    tags:
+    - name: Emailcontent
+      description: API for managing email content, templates and universal layouts
+- target: $.paths['/email-content/{id}'].get
+  description: Tag GET /email-content/{id} as Emailcontent.
+  update:
+    tags:
+    - Emailcontent
+- target: $.paths['/email-content/{id}'].put
+  description: Tag PUT /email-content/{id} as Emailcontent.
+  update:
+    tags:
+    - Emailcontent
+- target: $.paths['/email-content/{id}/render'].post
+  description: Tag POST /email-content/{id}/render as Emailcontent.
+  update:
+    tags:
+    - Emailcontent
+- target: $.paths['/email-content/{id}'].get
+  description: Add a stable operationId for GET /email-content/{id}; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: get_email_content_id
+- target: $.paths['/email-content/{id}'].put
+  description: Add a stable operationId for PUT /email-content/{id}; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: put_email_content_id
+- target: $.paths['/email-content/{id}/render'].post
+  description: Add a stable operationId for POST /email-content/{id}/render; the published contract omits it, which blocks
+    code generation and tool binding.
+  update:
+    operationId: post_email_content_id_render

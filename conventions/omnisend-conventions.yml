@@ -1,0 +1,158 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://api-docs.omnisend.com/reference/overview,
+  https://api-docs.omnisend.com/reference/authentication,
+  https://api-docs.omnisend.com/reference/responses,
+  https://api-docs.omnisend.com/reference/pagination,
+  https://api-docs.omnisend.com/reference/sorting,
+  https://api-docs.omnisend.com/reference/http-methods,
+  https://api-docs.omnisend.com/reference/rate-limit-timeouts-errors,
+  and the harvested openapi/omnisend-*-openapi.yml contracts
+description: >-
+  Cross-cutting runtime semantics for the Omnisend REST API at version 2026-03-15. Omnisend moved
+  from URL-path versioning (/v3, /v5) to a required request header on a single /api base, standardised
+  every error on RFC 9457 Problem Details, and made every list endpoint cursor-paginated.
+
+base_url: https://api.omnisend.com/api
+required_headers:
+  - name: Omnisend-Version
+    required: true
+    example: '2026-03-15'
+    note: >-
+      Declared in every harvested spec as components.parameters.APIVersionHeader with
+      required: true and default 2026-03-15. A retired version returns 410.
+  - name: Authorization
+    required: true
+
+authentication:
+  styles:
+    - kind: api-key
+      header: Authorization
+      format: 'Omnisend-API-Key {api-key}'
+      issued_at: https://app.omnisend.com/integrations/api-keys
+      note: >-
+        Changed at 2026-03-15. The older v3/v5 contract used a bare `X-API-KEY` header; the current
+        contract carries the key inside Authorization with an `Omnisend-API-Key` prefix.
+    - kind: oauth2
+      header: Authorization
+      format: 'Bearer {access-token}'
+      grant: authorization_code
+      pkce: S256
+      note: >-
+        Client credentials are issued by hand — the OAuth page asks integrators to fill a Google Form
+        and promises credentials in 1-3 business days. Access tokens do not expire unless revoked.
+        The MCP hosts additionally advertise RFC 7591 dynamic client registration.
+  detail: authentication/omnisend-authentication.yml
+  scopes: scopes/omnisend-scopes.yml
+
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    Omnisend publishes no idempotency key. No Idempotency-Key (or equivalent) header appears in any
+    of the 15 harvested OpenAPI contracts, and the documentation never mentions safe retry of a
+    write. Two narrower guarantees are documented and are NOT the same thing:
+      - POST /contacts is an upsert keyed on the email identifier — it returns 201 for a new contact
+        and 200 when an existing contact was updated.
+      - DELETE /automations/{id} is documented as idempotent (deleting a non-existent automation
+        returns success).
+    Everything else — POST /campaigns, POST /events, POST /batches, POST /campaigns/{id}/send — will
+    duplicate on a retried request. This matters most on POST /batches (up to 100 actions) and on
+    event ingest, where the docs themselves warn that replaying events can send duplicate customer
+    messages.
+
+pagination:
+  style: cursor
+  opaque: true
+  parameters:
+    - {name: limit, in: query, default: 100, max: 250, note: Per-endpoint defaults vary — email-templates defaults to 50 with max 100.}
+    - {name: after, in: query, note: 'Cursor from paging.cursors.after — next page'}
+    - {name: before, in: query, note: 'Cursor from paging.cursors.before — previous page'}
+  response_envelope:
+    paging:
+      limit: current page size
+      hasMore: boolean, true when more items exist after this page
+      cursors.after: pass as ?after=; null on the last page
+      cursors.before: pass as ?before=; null on the first page
+  rules:
+    - Do not send `after` and `before` together.
+    - Cursors are self-contained — filters and sort are encoded inside them.
+    - Changing filters mid-pagination returns 400 Bad Request.
+    - Stop when paging.hasMore is false or paging.cursors.after is null.
+    - Cursors can become invalid if the underlying data changes significantly.
+
+sorting:
+  parameters: [sort, direction]
+  direction_values: [asc, desc]
+  default_direction: desc
+  default_sort: createdAt
+  rules:
+    - '`direction` is only valid together with `sort`.'
+    - Single-field sorting only.
+    - Sort parameters are only needed on the first request; a cursor carries them forward.
+    - Segments sorted by name are ordered lexicographically and case-sensitively.
+
+http_methods:
+  GET: read only
+  POST: create
+  PATCH: partial update
+  PUT: full replace
+  DELETE: remove
+  note: Omnisend documents PATCH vs PUT explicitly — PATCH for partial updates, PUT for full replacement.
+
+errors:
+  format: rfc9457
+  media_type: application/json
+  envelope: {type: URI identifying the problem type, title: short description, status: HTTP status code, detail: human-readable explanation, instance: 'trace id, urn:omnisend:request:{uuid}'}
+  validation:
+    field: errors
+    shape: 'array of {field, code, message}'
+    behaviour: All validation errors are returned at once — the API does not stop at the first failure.
+  problem_namespace: https://problems.omnisend.com/
+  catalog: errors/omnisend-problem-types.yml
+
+request_tracing:
+  field: instance
+  format: 'urn:omnisend:request:{uuid}'
+  note: >-
+    Trace identity is carried in the RFC 9457 body, not in a response header. No X-Request-Id header
+    is documented, so a successful (2xx) call has no published correlation id at all — tracing is
+    only available on failure. Errors are additionally logged to the account's API Issues screen at
+    https://app.omnisend.com/integrations/api-access-logs.
+
+rate_limit_signaling:
+  documented_headers: []
+  runtime_signal: >-
+    NOT a header. Omnisend publishes no X-RateLimit-* / RateLimit-* / Retry-After header contract.
+    On 429 the API returns an RFC 9457 body of type https://problems.omnisend.com/rate-limit-exceeded,
+    and "some endpoints" include a `retryAfter` integer (seconds) in the body. The RateLimitProblem
+    schema in the harvested contracts confirms retryAfter as a body property.
+  enforcement: sliding window, per brand, across every key and token for that brand
+  detail: rate-limits/omnisend-rate-limits.yml
+
+versioning:
+  style: header
+  header: Omnisend-Version
+  current: '2026-03-15'
+  legacy: [v3, v5]
+  retired_response: 410
+  detail: lifecycle/omnisend-lifecycle.yml
+
+field_expansion:
+  supported: false
+  note: No sparse-fieldset or expand parameter is documented. The one adjacent control is `includeProperties` on the event-metadata query, which toggles the nested property tree.
+
+metadata:
+  custom_fields: >-
+    Contacts carry arbitrary custom properties, filterable in segments with an explicit valueType
+    (text, number, bool, date). Custom events are declared through the Event Metadata API before
+    their properties can be used in segment filters.
+
+batching:
+  endpoint: POST /batches
+  max_actions: 100
+  async: true
+  note: >-
+    Batch creation is asynchronous; poll GET /batches/{batchID} and GET /batches/{batchID}/items.
+    The docs warn to disable message-sending automations before importing a batch of historic events.

@@ -1,0 +1,155 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Omnisend automations-api
+  version: 1.0.0
+  x-generated: '2026-08-13'
+  x-method: generated
+  x-source: openapi/omnisend-automations-api-openapi.yml
+  x-note: 'Records API Evangelist enhancements over the contract Omnisend publishes. It is never applied to the harvested
+    file — openapi/ stays verbatim. The gaps captured here are real and measured: 13 of 13 operations carry no operationId,
+    0 carry no tag, and the document declares securitySchemes without ever applying them.'
+extends: omnisend-automations-api-openapi.yml
+actions:
+- target: $
+  description: Apply the two declared security schemes at the document root. The published contract defines ApiKeyAuth and
+    Bearer in components.securitySchemes but never applies them, so no operation states its auth requirement.
+  update:
+    security:
+    - ApiKeyAuth: []
+    - Bearer: []
+- target: $
+  description: Declare a document-level tag so every operation can be grouped. The published contract declares none.
+  update:
+    tags:
+    - name: Automations
+      description: API for managing automation workflows.
+- target: $.paths['/automations'].get
+  description: Tag GET /automations as Automations.
+  update:
+    tags:
+    - Automations
+- target: $.paths['/automations'].post
+  description: Tag POST /automations as Automations.
+  update:
+    tags:
+    - Automations
+- target: $.paths['/automations/{id}'].delete
+  description: Tag DELETE /automations/{id} as Automations.
+  update:
+    tags:
+    - Automations
+- target: $.paths['/automations/{id}'].get
+  description: Tag GET /automations/{id} as Automations.
+  update:
+    tags:
+    - Automations
+- target: $.paths['/automations/{id}'].patch
+  description: Tag PATCH /automations/{id} as Automations.
+  update:
+    tags:
+    - Automations
+- target: $.paths['/automations/{id}/blocks'].put
+  description: Tag PUT /automations/{id}/blocks as Automations.
+  update:
+    tags:
+    - Automations
+- target: $.paths['/automations/{id}/blocks/{blockID}/test-email'].post
+  description: Tag POST /automations/{id}/blocks/{blockID}/test-email as Automations.
+  update:
+    tags:
+    - Automations
+- target: $.paths['/automations/{id}/blocks/{blockID}/utm'].get
+  description: Tag GET /automations/{id}/blocks/{blockID}/utm as Automations.
+  update:
+    tags:
+    - Automations
+- target: $.paths['/automations/{id}/blocks/{blockID}/utm'].put
+  description: Tag PUT /automations/{id}/blocks/{blockID}/utm as Automations.
+  update:
+    tags:
+    - Automations
+- target: $.paths['/automations/{id}/copy'].post
+  description: Tag POST /automations/{id}/copy as Automations.
+  update:
+    tags:
+    - Automations
+- target: $.paths['/automations/{id}/disable'].post
+  description: Tag POST /automations/{id}/disable as Automations.
+  update:
+    tags:
+    - Automations
+- target: $.paths['/automations/{id}/enable'].post
+  description: Tag POST /automations/{id}/enable as Automations.
+  update:
+    tags:
+    - Automations
+- target: $.paths['/automations/{id}/utm'].get
+  description: Tag GET /automations/{id}/utm as Automations.
+  update:
+    tags:
+    - Automations
+- target: $.paths['/automations'].get
+  description: Add a stable operationId for GET /automations; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: get_automations
+- target: $.paths['/automations'].post
+  description: Add a stable operationId for POST /automations; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: post_automations
+- target: $.paths['/automations/{id}'].delete
+  description: Add a stable operationId for DELETE /automations/{id}; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: delete_automations_id
+- target: $.paths['/automations/{id}'].get
+  description: Add a stable operationId for GET /automations/{id}; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: get_automations_id
+- target: $.paths['/automations/{id}'].patch
+  description: Add a stable operationId for PATCH /automations/{id}; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: patch_automations_id
+- target: $.paths['/automations/{id}/blocks'].put
+  description: Add a stable operationId for PUT /automations/{id}/blocks; the published contract omits it, which blocks code
+    generation and tool binding.
+  update:
+    operationId: put_automations_id_blocks
+- target: $.paths['/automations/{id}/blocks/{blockID}/test-email'].post
+  description: Add a stable operationId for POST /automations/{id}/blocks/{blockID}/test-email; the published contract omits
+    it, which blocks code generation and tool binding.
+  update:
+    operationId: post_automations_id_blocks_blockID_test_email
+- target: $.paths['/automations/{id}/blocks/{blockID}/utm'].get
+  description: Add a stable operationId for GET /automations/{id}/blocks/{blockID}/utm; the published contract omits it, which
+    blocks code generation and tool binding.
+  update:
+    operationId: get_automations_id_blocks_blockID_utm
+- target: $.paths['/automations/{id}/blocks/{blockID}/utm'].put
+  description: Add a stable operationId for PUT /automations/{id}/blocks/{blockID}/utm; the published contract omits it, which
+    blocks code generation and tool binding.
+  update:
+    operationId: put_automations_id_blocks_blockID_utm
+- target: $.paths['/automations/{id}/copy'].post
+  description: Add a stable operationId for POST /automations/{id}/copy; the published contract omits it, which blocks code
+    generation and tool binding.
+  update:
+    operationId: post_automations_id_copy
+- target: $.paths['/automations/{id}/disable'].post
+  description: Add a stable operationId for POST /automations/{id}/disable; the published contract omits it, which blocks
+    code generation and tool binding.
+  update:
+    operationId: post_automations_id_disable
+- target: $.paths['/automations/{id}/enable'].post
+  description: Add a stable operationId for POST /automations/{id}/enable; the published contract omits it, which blocks code
+    generation and tool binding.
+  update:
+    operationId: post_automations_id_enable
+- target: $.paths['/automations/{id}/utm'].get
+  description: Add a stable operationId for GET /automations/{id}/utm; the published contract omits it, which blocks code
+    generation and tool binding.
+  update:
+    operationId: get_automations_id_utm

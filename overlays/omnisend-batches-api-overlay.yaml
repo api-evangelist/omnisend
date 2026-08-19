@@ -1,0 +1,65 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Omnisend batches-api
+  version: 1.0.0
+  x-generated: '2026-08-13'
+  x-method: generated
+  x-source: openapi/omnisend-batches-api-openapi.yml
+  x-note: 'Records API Evangelist enhancements over the contract Omnisend publishes. It is never applied to the harvested
+    file — openapi/ stays verbatim. The gaps captured here are real and measured: 4 of 4 operations carry no operationId,
+    0 carry no tag, and the document declares securitySchemes without ever applying them.'
+extends: omnisend-batches-api-openapi.yml
+actions:
+- target: $
+  description: Apply the two declared security schemes at the document root. The published contract defines ApiKeyAuth and
+    Bearer in components.securitySchemes but never applies them, so no operation states its auth requirement.
+  update:
+    security:
+    - ApiKeyAuth: []
+    - Bearer: []
+- target: $
+  description: Declare a document-level tag so every operation can be grouped. The published contract declares none.
+  update:
+    tags:
+    - name: Batches
+      description: ''
+- target: $.paths['/batches'].get
+  description: Tag GET /batches as Batches.
+  update:
+    tags:
+    - Batches
+- target: $.paths['/batches'].post
+  description: Tag POST /batches as Batches.
+  update:
+    tags:
+    - Batches
+- target: $.paths['/batches/{batchID}'].get
+  description: Tag GET /batches/{batchID} as Batches.
+  update:
+    tags:
+    - Batches
+- target: $.paths['/batches/{batchID}/items'].get
+  description: Tag GET /batches/{batchID}/items as Batches.
+  update:
+    tags:
+    - Batches
+- target: $.paths['/batches'].get
+  description: Add a stable operationId for GET /batches; the published contract omits it, which blocks code generation and
+    tool binding.
+  update:
+    operationId: get_batches
+- target: $.paths['/batches'].post
+  description: Add a stable operationId for POST /batches; the published contract omits it, which blocks code generation and
+    tool binding.
+  update:
+    operationId: post_batches
+- target: $.paths['/batches/{batchID}'].get
+  description: Add a stable operationId for GET /batches/{batchID}; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: get_batches_batchID
+- target: $.paths['/batches/{batchID}/items'].get
+  description: Add a stable operationId for GET /batches/{batchID}/items; the published contract omits it, which blocks code
+    generation and tool binding.
+  update:
+    operationId: get_batches_batchID_items

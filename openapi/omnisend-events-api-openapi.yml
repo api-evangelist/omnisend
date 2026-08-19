@@ -1,64 +1,345 @@
-openapi: 3.1.0
+openapi: 3.0.0
 info:
-  title: Omnisend REST Analytics Events API
-  description: 'Omnisend''s REST API for managing ecommerce email and SMS marketing
-
-    automation. Exposes contacts, events, products, product categories,
-
-    segments, campaigns, batches, email templates, email content, email
-
-    universal layouts, images, brands, and analytics reports. Authentication
-
-    uses an API key passed via the `X-API-KEY` header, or OAuth 2.0 with
-
-    scopes such as `contacts.read`, `contacts.write`, `campaigns.read`,
-
-    `campaigns.write`, `analytics.read`, etc.
-
-    '
-  version: v5
-  contact:
-    name: Omnisend
-    url: https://api-docs.omnisend.com/
-servers:
-- url: https://api.omnisend.com/v5
-  description: Omnisend REST API v5
-security:
-- ApiKeyAuth: []
-- OAuth2: []
-tags:
-- name: Events
+  contact: {}
+  title: Events API
+  version: '2026'
+  x-api-evangelist:
+    harvested: '2026-08-13'
+    method: searched
+    source: https://dash.readme.com/api/v1/api-registry/9c1ckrq8msfxrbme
+    source-note: Published by Omnisend on its own docs host api-docs.omnisend.com (ReadMe project @omnisend,
+      branch v2026-03-15); registry document referenced by the reference page as oasPublicUrl.
 paths:
   /events:
     post:
-      tags:
-      - Events
-      summary: Send a customer event
+      description: 'With this endpoint you can send customer events to Omnisend. Customer events are used
+        to track customer behavior and trigger automations based on that behavior.
+
+        You can either format and send custom customer events or use predefined events.
+
+
+        **Scopes:**
+
+        `events.write`
+
+
+        **Rate Limiting:**
+
+        This endpoint is rate limited to 400 requests per minute.
+
+
+        <br><a href="https://www.postman.com/omnisend-api/workspace/omnisend/overview" target="_blank">Open
+        Postman collection</a>
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/APIVersionHeader'
       requestBody:
-        required: true
         content:
           application/json:
             schema:
-              type: object
-              additionalProperties: true
+              $ref: '#/components/schemas/EventRequest'
+        description: event information
+        required: true
       responses:
         '202':
-          description: Event accepted
+          description: Accepted
+        '400':
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblem'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+      - Bearer:
+        - events.write
+      - ApiKeyAuth: []
+      summary: Send Customer event
+      tags:
+      - Events
+servers:
+- url: https://api.omnisend.com/api
 components:
+  parameters:
+    APIVersionHeader:
+      description: API version that specifies the response format and behaviour
+      in: header
+      name: Omnisend-Version
+      required: true
+      schema:
+        type: string
+        default: '2026-03-15'
   securitySchemes:
     ApiKeyAuth:
-      type: apiKey
       in: header
-      name: X-API-KEY
-    OAuth2:
+      name: Authorization
+      type: apiKey
+    Bearer:
       type: oauth2
       flows:
-        authorizationCode:
-          authorizationUrl: https://app.omnisend.com/oauth/authorize
-          tokenUrl: https://api.omnisend.com/v5/oauth/token
-          scopes:
-            contacts.read: Read contacts
-            contacts.write: Manage contacts
-            campaigns.read: Read campaigns
-            campaigns.write: Manage campaigns
-            analytics.read: Read analytics
+        clientCredentials:
+          tokenUrl: https://app.omnisend.com/oauth2/token
+          scopes: {}
+  schemas:
+    EventRequest:
+      properties:
+        contact:
+          allOf:
+          - $ref: '#/components/schemas/contactDto.Contact'
+          description: Contact information, contact will be created or updated based on the data provided
+            here.
+        eventID:
+          description: UUID of the event (v4, v5, v6, v7). Along with 'eventTime' used for historical
+            event deduplication (not working on real-time events used for automations). If not provided,
+            it will be generated automatically.
+          example: 9afca57b-d157-478b-adde-b9506322b16f
+          type: string
+        eventName:
+          description: Check event documentation to find what event names you need to specify for each
+            event.
+          example: my custom event
+          type: string
+        eventTime:
+          description: ISO 8601 timestamp. Accepts RFC 3339 (e.g. "2021-07-01T00:00:00Z") and the space-separated
+            form "YYYY-MM-DD HH:MM:SS±HH:MM" (e.g. "2021-07-01 00:00:00+02:00"). Optional; defaults to
+            current time.
+          example: '2021-07-01T00:00:00Z'
+          type: string
+        eventVersion:
+          description: Required ONLY for recommended events. Check event documentation to find what version
+            you need to specify for each event. For custom events you should leave it empty.
+          example: ''
+          type: string
+        origin:
+          description: It should be based on the source of event API. If you are building platform or
+            app integration it should have dedicated origin. Otherwise it should be "api".
+          example: api
+          type: string
+        properties:
+          additionalProperties: true
+          description: Event properties, you can check events guides section to see what recommended properties
+            you should provide for each event. Not providing recommending properties can result some of
+            the features not working properly.
+          type: object
+      type: object
+    FieldError:
+      description: A single field validation failure within a validation error response.
+      properties:
+        code:
+          description: Error code indicating the type of failure
+          example: invalid_format
+          type: string
+        field:
+          description: Dot-separated path to the field that failed validation
+          example: content.email.subject
+          type: string
+        message:
+          description: Human-readable explanation of what is wrong with the field value
+          example: Must be a valid email address
+          type: string
+      type: object
+    Problem:
+      description: Standard error response returned by all API endpoints on failure.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    ValidationProblem:
+      description: Error response returned when the request contains invalid input. The errors array lists
+        every field that failed validation.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        errors:
+          description: List of fields that failed validation
+          items:
+            $ref: '#/components/schemas/FieldError'
+          type: array
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    contactDto.Channel:
+      enum:
+      - email
+      - sms
+      type: string
+      x-enum-varnames:
+      - ChannelTypeEmail
+      - ChannelTypeSms
+    contactDto.Consent:
+      properties:
+        channel:
+          allOf:
+          - $ref: '#/components/schemas/contactDto.Channel'
+          enum:
+          - email
+          - sms
+        createdAt:
+          description: RFC3339 format
+          type: string
+        ip:
+          description: IP address of the user
+          type: string
+        source:
+          maxLength: 100
+          type: string
+        userAgent:
+          description: User agent of the device that user used to give consent
+          maxLength: 200
+          type: string
+      type: object
+    contactDto.Contact:
+      properties:
+        address:
+          description: Street, house number, apartment
+          example: 123 Main St.
+          maxLength: 500
+          type: string
+        birthdate:
+          description: 'Format: YYYY-MM-DD. Example: 1990-01-01'
+          example: '1990-01-01'
+          format: date
+          type: string
+        city:
+          example: New York
+          maxLength: 100
+          type: string
+        consents:
+          items:
+            $ref: '#/components/schemas/contactDto.Consent'
+          maxItems: 100
+          type: array
+        country:
+          example: United States
+          maxLength: 100
+          type: string
+        countryCode:
+          description: ISO Country code. You can find all country codes in Guides part.
+          example: US
+          maxLength: 3
+          type: string
+        customProperties:
+          additionalProperties: true
+          description: You can add your own custom properties. Read more in https://api-docs.omnisend.com/reference/contacts#custom-properties
+          type: object
+        email:
+          example: john.smoth@example.com
+          type: string
+        firstName:
+          example: John
+          maxLength: 50
+          type: string
+        gender:
+          enum:
+          - m
+          - f
+          type: string
+        id:
+          type: string
+        lastName:
+          example: Doe
+          maxLength: 50
+          type: string
+        optIns:
+          items:
+            $ref: '#/components/schemas/contactDto.OptIn'
+          maxItems: 10
+          type: array
+        optOuts:
+          items:
+            $ref: '#/components/schemas/contactDto.OptOut'
+          maxItems: 10
+          type: array
+        phone:
+          example: '+1234567890'
+          maxLength: 15
+          type: string
+        postalCode:
+          example: '10001'
+          maxLength: 20
+          type: string
+        state:
+          example: NY
+          maxLength: 100
+          type: string
+        tags:
+          description: Tags are labels you create to organize and manage your audience.
+          example:
+          - tag1
+          - tag2
+          items:
+            type: string
+          maxItems: 100
+          type: array
+      type: object
+    contactDto.OptIn:
+      properties:
+        channel:
+          allOf:
+          - $ref: '#/components/schemas/contactDto.Channel'
+          enum:
+          - email
+          - sms
+        createdAt:
+          type: string
+        source:
+          maxLength: 100
+          type: string
+      type: object
+    contactDto.OptOut:
+      properties:
+        channel:
+          allOf:
+          - $ref: '#/components/schemas/contactDto.Channel'
+          enum:
+          - email
+          - sms
+        createdAt:
+          type: string
+        reason:
+          maxLength: 100
+          type: string
+        source:
+          maxLength: 100
+          type: string
+      type: object

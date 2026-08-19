@@ -1,0 +1,877 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "contact": {},
+  "description": "Manage product categories for your Omnisend store.",
+  "title": "Product Categories API",
+  "version": "2026"
+ },
+ "paths": {
+  "/product-categories": {
+   "get": {
+    "description": "List products categories\n\n**Scopes:**\n`products.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br>Guide: <a href=\"https://api-docs.omnisend.com/docs/how-to-sync-products-catalog-categories\" target=\"_blank\">Sync products catalog, categories</a>\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Check POSTMAN documentation</a>",
+    "parameters": [
+     {
+      "description": "Offset",
+      "in": "query",
+      "name": "offset",
+      "schema": {
+       "type": "integer",
+       "default": 0
+      }
+     },
+     {
+      "description": "Limit",
+      "in": "query",
+      "name": "limit",
+      "schema": {
+       "type": "integer",
+       "default": 100
+      }
+     },
+     {
+      "description": "Sort by",
+      "in": "query",
+      "name": "sort",
+      "schema": {
+       "type": "string",
+       "enum": [
+        "title",
+        "updatedAt",
+        "createdAt"
+       ]
+      }
+     },
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "List of product categories",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/GetCategoriesResponse"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "products.read"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "List product categories",
+    "tags": [
+     "Product Categories"
+    ]
+   },
+   "post": {
+    "description": "Creates a new product category\n\n**Scopes:**\n`products.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Check POSTMAN documentation</a>",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/CreateCategoryRequest"
+       }
+      }
+     },
+     "description": "Product category to create",
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Product category created successfully with the given ID",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CreateCategoryResponse"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "409": {
+      "description": "Category already exists",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "products.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Create product category",
+    "tags": [
+     "Product Categories"
+    ]
+   }
+  },
+  "/product-categories/{categoryID}": {
+   "delete": {
+    "description": "With this endpoint you can delete product category.\n\n**Scopes:**\n`products.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Check POSTMAN documentation</a>",
+    "parameters": [
+     {
+      "description": "Product category ID",
+      "in": "path",
+      "name": "categoryID",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "No Content"
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "products.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Delete product category",
+    "tags": [
+     "Product Categories"
+    ]
+   },
+   "get": {
+    "description": "Get product category by ID.\n\n**Scopes:**\n`products.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Check POSTMAN documentation</a>",
+    "parameters": [
+     {
+      "description": "Product category ID",
+      "in": "path",
+      "name": "categoryID",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Product category found",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/GetCategoryResponse"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Product category not found",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "products.read"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Get product category",
+    "tags": [
+     "Product Categories"
+    ]
+   },
+   "patch": {
+    "description": "Update product category by ID.\n\n**Scopes:**\n`products.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Check POSTMAN documentation</a>",
+    "parameters": [
+     {
+      "description": "Product category ID",
+      "in": "path",
+      "name": "categoryID",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/UpdateCategoryRequest"
+       }
+      }
+     },
+     "description": "Product category title to update",
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Product category updated successfully with the given ID",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/UpdateCategoryResponse"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Request contains invalid or missing fields",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Product category not found",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "products.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Update product category",
+    "tags": [
+     "Product Categories"
+    ]
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "https://api.omnisend.com/api"
+  }
+ ],
+ "components": {
+  "parameters": {
+   "APIVersionHeader": {
+    "description": "API version that specifies the response format and behaviour",
+    "in": "header",
+    "name": "Omnisend-Version",
+    "required": true,
+    "schema": {
+     "type": "string",
+     "default": "2026-03-15"
+    }
+   }
+  },
+  "securitySchemes": {
+   "ApiKeyAuth": {
+    "in": "header",
+    "name": "Authorization",
+    "type": "apiKey"
+   },
+   "Bearer": {
+    "type": "oauth2",
+    "flows": {
+     "clientCredentials": {
+      "tokenUrl": "https://app.omnisend.com/oauth2/token",
+      "scopes": {
+       "products.read": "Grants read access to product data",
+       "products.write": "Grants write access to product data"
+      }
+     }
+    }
+   }
+  },
+  "schemas": {
+   "CategoryListItem": {
+    "description": "A single product category entry in a list response",
+    "properties": {
+     "categoryID": {
+      "description": "Product category unique identifier (read-only)",
+      "example": "C1234",
+      "type": "string"
+     },
+     "createdAt": {
+      "description": "Product category creation timestamp (read-only)",
+      "example": "2024-01-15T10:30:00Z",
+      "type": "string"
+     },
+     "title": {
+      "description": "Product category name",
+      "example": "Beauty products",
+      "type": "string"
+     },
+     "updatedAt": {
+      "description": "Product category last update timestamp (read-only)",
+      "example": "2024-01-16T14:45:00Z",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "CreateCategoryRequest": {
+    "description": "Payload for creating a product category",
+    "properties": {
+     "categoryID": {
+      "description": "Product category unique identifier. Range: 1-100 characters",
+      "example": "C1234",
+      "maxLength": 100,
+      "minLength": 1,
+      "type": "string"
+     },
+     "title": {
+      "description": "Product category name. Max 255 characters",
+      "example": "Beauty products",
+      "maxLength": 255,
+      "type": "string"
+     }
+    },
+    "required": [
+     "categoryID",
+     "title"
+    ],
+    "type": "object"
+   },
+   "CreateCategoryResponse": {
+    "description": "Response returned after successfully creating a product category",
+    "properties": {
+     "categoryID": {
+      "description": "Product category unique identifier",
+      "example": "C1234",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "FieldError": {
+    "description": "A single field validation failure within a validation error response.",
+    "properties": {
+     "code": {
+      "description": "Error code indicating the type of failure",
+      "example": "invalid_format",
+      "type": "string"
+     },
+     "field": {
+      "description": "Dot-separated path to the field that failed validation",
+      "example": "content.email.subject",
+      "type": "string"
+     },
+     "message": {
+      "description": "Human-readable explanation of what is wrong with the field value",
+      "example": "Must be a valid email address",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "GetCategoriesResponse": {
+    "description": "Response containing a paginated list of product categories",
+    "properties": {
+     "categories": {
+      "description": "List of product categories",
+      "items": {
+       "$ref": "#/components/schemas/CategoryListItem"
+      },
+      "type": "array"
+     },
+     "paging": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/Paging"
+       }
+      ],
+      "description": "Pagination information"
+     }
+    },
+    "type": "object"
+   },
+   "GetCategoryResponse": {
+    "description": "Product category details",
+    "properties": {
+     "categoryID": {
+      "description": "Product category unique identifier (read-only)",
+      "example": "C1234",
+      "type": "string"
+     },
+     "createdAt": {
+      "description": "Product category creation timestamp (read-only)",
+      "example": "2024-01-15T10:30:00Z",
+      "type": "string"
+     },
+     "title": {
+      "description": "Product category name",
+      "example": "Beauty products",
+      "type": "string"
+     },
+     "updatedAt": {
+      "description": "Product category last update timestamp (read-only)",
+      "example": "2024-01-16T14:45:00Z",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Paging": {
+    "description": "Pagination metadata for list responses",
+    "properties": {
+     "limit": {
+      "description": "Number of items per page. Range: 1-250. Default: 100",
+      "example": 100,
+      "type": "integer"
+     },
+     "next": {
+      "description": "URL to the next page of results",
+      "example": "https://api.omnisend.com/api/product-categories?limit=100&offset=105",
+      "type": "string"
+     },
+     "offset": {
+      "description": "Current page offset",
+      "example": 5,
+      "type": "integer"
+     },
+     "previous": {
+      "description": "URL to the previous page of results",
+      "example": "https://api.omnisend.com/api/product-categories?limit=100&offset=5",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Problem": {
+    "description": "Standard error response returned by all API endpoints on failure.",
+    "properties": {
+     "detail": {
+      "description": "Human-readable explanation of this specific error occurrence",
+      "example": "A human-readable explanation of the error.",
+      "type": "string"
+     },
+     "instance": {
+      "description": "Request trace identifier for support and debugging",
+      "example": "urn:omnisend:request:00000000-0000-0000-0000-000000000001",
+      "type": "string"
+     },
+     "status": {
+      "description": "HTTP status code",
+      "example": 0,
+      "type": "integer"
+     },
+     "title": {
+      "description": "Short description of the error type",
+      "example": "Problem",
+      "type": "string"
+     },
+     "type": {
+      "description": "URI that identifies the error type",
+      "example": "https://problems.omnisend.com/problem",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "UpdateCategoryRequest": {
+    "description": "Payload for updating a product category",
+    "properties": {
+     "title": {
+      "description": "Product category name. Max 255 characters",
+      "example": "Beauty products",
+      "maxLength": 255,
+      "type": "string"
+     }
+    },
+    "required": [
+     "title"
+    ],
+    "type": "object"
+   },
+   "UpdateCategoryResponse": {
+    "description": "Response returned after successfully updating a product category",
+    "properties": {
+     "categoryID": {
+      "description": "Product category unique identifier (read-only)",
+      "example": "shirts-1234",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "ValidationProblem": {
+    "description": "Error response returned when the request contains invalid input. The errors array lists every field that failed validation.",
+    "properties": {
+     "detail": {
+      "description": "Human-readable explanation of this specific error occurrence",
+      "example": "A human-readable explanation of the error.",
+      "type": "string"
+     },
+     "errors": {
+      "description": "List of fields that failed validation",
+      "items": {
+       "$ref": "#/components/schemas/FieldError"
+      },
+      "type": "array"
+     },
+     "instance": {
+      "description": "Request trace identifier for support and debugging",
+      "example": "urn:omnisend:request:00000000-0000-0000-0000-000000000001",
+      "type": "string"
+     },
+     "status": {
+      "description": "HTTP status code",
+      "example": 0,
+      "type": "integer"
+     },
+     "title": {
+      "description": "Short description of the error type",
+      "example": "Problem",
+      "type": "string"
+     },
+     "type": {
+      "description": "URI that identifies the error type",
+      "example": "https://problems.omnisend.com/problem",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   }
+  }
+ }
+}

@@ -1,0 +1,95 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Omnisend contacts-api
+  version: 1.0.0
+  x-generated: '2026-08-13'
+  x-method: generated
+  x-source: openapi/omnisend-contacts-api-openapi.yml
+  x-note: 'Records API Evangelist enhancements over the contract Omnisend publishes. It is never applied to the harvested
+    file — openapi/ stays verbatim. The gaps captured here are real and measured: 7 of 7 operations carry no operationId,
+    0 carry no tag, and the document declares securitySchemes without ever applying them.'
+extends: omnisend-contacts-api-openapi.yml
+actions:
+- target: $
+  description: Apply the two declared security schemes at the document root. The published contract defines ApiKeyAuth and
+    Bearer in components.securitySchemes but never applies them, so no operation states its auth requirement.
+  update:
+    security:
+    - ApiKeyAuth: []
+    - Bearer: []
+- target: $
+  description: Declare a document-level tag so every operation can be grouped. The published contract declares none.
+  update:
+    tags:
+    - name: Contacts
+      description: Manage contacts.
+- target: $.paths['/contacts'].get
+  description: Tag GET /contacts as Contacts.
+  update:
+    tags:
+    - Contacts
+- target: $.paths['/contacts'].patch
+  description: Tag PATCH /contacts as Contacts.
+  update:
+    tags:
+    - Contacts
+- target: $.paths['/contacts'].post
+  description: Tag POST /contacts as Contacts.
+  update:
+    tags:
+    - Contacts
+- target: $.paths['/contacts/{id}'].get
+  description: Tag GET /contacts/{id} as Contacts.
+  update:
+    tags:
+    - Contacts
+- target: $.paths['/contacts/{id}'].patch
+  description: Tag PATCH /contacts/{id} as Contacts.
+  update:
+    tags:
+    - Contacts
+- target: $.paths['/contacts/tags'].delete
+  description: Tag DELETE /contacts/tags as Contacts.
+  update:
+    tags:
+    - Contacts
+- target: $.paths['/contacts/tags'].post
+  description: Tag POST /contacts/tags as Contacts.
+  update:
+    tags:
+    - Contacts
+- target: $.paths['/contacts'].get
+  description: Add a stable operationId for GET /contacts; the published contract omits it, which blocks code generation and
+    tool binding.
+  update:
+    operationId: get_contacts
+- target: $.paths['/contacts'].patch
+  description: Add a stable operationId for PATCH /contacts; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: patch_contacts
+- target: $.paths['/contacts'].post
+  description: Add a stable operationId for POST /contacts; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: post_contacts
+- target: $.paths['/contacts/{id}'].get
+  description: Add a stable operationId for GET /contacts/{id}; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: get_contacts_id
+- target: $.paths['/contacts/{id}'].patch
+  description: Add a stable operationId for PATCH /contacts/{id}; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: patch_contacts_id
+- target: $.paths['/contacts/tags'].delete
+  description: Add a stable operationId for DELETE /contacts/tags; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: delete_contacts_tags
+- target: $.paths['/contacts/tags'].post
+  description: Add a stable operationId for POST /contacts/tags; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: post_contacts_tags

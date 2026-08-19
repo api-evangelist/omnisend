@@ -1,0 +1,948 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "contact": {},
+  "title": "Products API",
+  "version": "2026"
+ },
+ "paths": {
+  "/products": {
+   "get": {
+    "description": "List products\n\n**Scopes:**\n`products.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br>Guide: <a href=\"https://api-docs.omnisend.com/docs/how-to-sync-products-catalog-categories\" target=\"_blank\">Sync products catalog, categories</a>\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>",
+    "parameters": [
+     {
+      "description": "Offset",
+      "in": "query",
+      "name": "offset",
+      "schema": {
+       "type": "integer",
+       "default": 0
+      }
+     },
+     {
+      "description": "Limit",
+      "in": "query",
+      "name": "limit",
+      "schema": {
+       "type": "integer",
+       "default": 100
+      }
+     },
+     {
+      "description": "Sort by",
+      "in": "query",
+      "name": "sort",
+      "schema": {
+       "type": "string",
+       "enum": [
+        "date",
+        "updatedAt",
+        "createdAt"
+       ]
+      }
+     },
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "List of products",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ListProductsResponse"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Validation failed",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Internal server error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "products.read"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "List products",
+    "tags": [
+     "Products"
+    ]
+   },
+   "post": {
+    "description": "Creates a new product\n\n**Scopes:**\n`products.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/Product"
+       }
+      }
+     },
+     "description": "Product to create",
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Product created successfully with the given ID",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CreateProductResponse"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Validation failed",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "409": {
+      "description": "Product already exists",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Internal server error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "products.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Create product",
+    "tags": [
+     "Products"
+    ]
+   }
+  },
+  "/products/{productID}": {
+   "delete": {
+    "description": "Delete product by ID\n\n**Scopes:**\n`products.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>",
+    "parameters": [
+     {
+      "description": "Product ID",
+      "in": "path",
+      "name": "productID",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "No Content"
+     },
+     "400": {
+      "description": "Validation failed",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Internal server error",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "products.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Delete product",
+    "tags": [
+     "Products"
+    ]
+   },
+   "get": {
+    "description": "Get product by ID\n\n**Scopes:**\n`products.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>",
+    "parameters": [
+     {
+      "description": "Product ID",
+      "in": "path",
+      "name": "productID",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Product found",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Product"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Product not found",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Internal server error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "products.read"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Get product",
+    "tags": [
+     "Products"
+    ]
+   },
+   "put": {
+    "description": "Replace product by ID\n\n**Scopes:**\n`products.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>",
+    "parameters": [
+     {
+      "description": "Product ID",
+      "in": "path",
+      "name": "productID",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/Product"
+       }
+      }
+     },
+     "description": "Product to replace",
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Product replaced successfully with the given ID",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ReplaceProductResponse"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Validation failed",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ValidationProblem"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Product not found",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Internal server error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Problem"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "products.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Replace product",
+    "tags": [
+     "Products"
+    ]
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "https://api.omnisend.com/api"
+  }
+ ],
+ "components": {
+  "parameters": {
+   "APIVersionHeader": {
+    "description": "API version that specifies the response format and behaviour",
+    "in": "header",
+    "name": "Omnisend-Version",
+    "required": true,
+    "schema": {
+     "type": "string",
+     "default": "2026-03-15"
+    }
+   }
+  },
+  "securitySchemes": {
+   "ApiKeyAuth": {
+    "in": "header",
+    "name": "Authorization",
+    "type": "apiKey"
+   },
+   "Bearer": {
+    "type": "oauth2",
+    "flows": {
+     "clientCredentials": {
+      "tokenUrl": "https://app.omnisend.com/oauth2/token",
+      "scopes": {}
+     }
+    }
+   }
+  },
+  "schemas": {
+   "CreateProductResponse": {
+    "properties": {
+     "id": {
+      "example": "shoes-blue-123",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "FieldError": {
+    "description": "A single field validation failure within a validation error response.",
+    "properties": {
+     "code": {
+      "description": "Error code indicating the type of failure",
+      "example": "invalid_format",
+      "type": "string"
+     },
+     "field": {
+      "description": "Dot-separated path to the field that failed validation",
+      "example": "content.email.subject",
+      "type": "string"
+     },
+     "message": {
+      "description": "Human-readable explanation of what is wrong with the field value",
+      "example": "Must be a valid email address",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "ListProductsResponse": {
+    "properties": {
+     "paging": {
+      "$ref": "#/components/schemas/Paging"
+     },
+     "products": {
+      "items": {
+       "$ref": "#/components/schemas/Product"
+      },
+      "type": "array"
+     }
+    },
+    "type": "object"
+   },
+   "Paging": {
+    "properties": {
+     "limit": {
+      "example": 100,
+      "type": "integer"
+     },
+     "next": {
+      "example": "https://api.omnisend.com/api/products?limit=100&offset=105",
+      "type": "string"
+     },
+     "offset": {
+      "example": 5,
+      "type": "integer"
+     },
+     "previous": {
+      "example": "https://api.omnisend.com/api/products?limit=100&offset=5",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Problem": {
+    "description": "Standard error response returned by all API endpoints on failure.",
+    "properties": {
+     "detail": {
+      "description": "Human-readable explanation of this specific error occurrence",
+      "example": "A human-readable explanation of the error.",
+      "type": "string"
+     },
+     "instance": {
+      "description": "Request trace identifier for support and debugging",
+      "example": "urn:omnisend:request:00000000-0000-0000-0000-000000000001",
+      "type": "string"
+     },
+     "status": {
+      "description": "HTTP status code",
+      "example": 0,
+      "type": "integer"
+     },
+     "title": {
+      "description": "Short description of the error type",
+      "example": "Problem",
+      "type": "string"
+     },
+     "type": {
+      "description": "URI that identifies the error type",
+      "example": "https://problems.omnisend.com/problem",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Product": {
+    "properties": {
+     "categoryIDs": {
+      "example": [
+       "1234567890",
+       "99934567890"
+      ],
+      "items": {
+       "type": "string"
+      },
+      "maxItems": 100,
+      "type": "array"
+     },
+     "createdAt": {
+      "example": "2021-01-01T00:00:00Z",
+      "type": "string"
+     },
+     "currency": {
+      "example": "USD",
+      "type": "string"
+     },
+     "defaultImageUrl": {
+      "description": "DefaultImageUrl is recommended if more than one image is needed. Other product images should be added to the Images array.",
+      "example": "https://example.com/image.jpg",
+      "maxLength": 1000,
+      "type": "string"
+     },
+     "description": {
+      "description": "Description is a short description of the product. It can be used in the email body.",
+      "example": "My product description",
+      "maxLength": 1000,
+      "type": "string"
+     },
+     "id": {
+      "example": "1234567890",
+      "maxLength": 100,
+      "type": "string"
+     },
+     "images": {
+      "example": [
+       "https://example.com/image.jpg",
+       "https://example.com/image2.jpg"
+      ],
+      "items": {
+       "type": "string"
+      },
+      "maxItems": 300,
+      "type": "array"
+     },
+     "status": {
+      "description": "Status can be inStock, outOfStock, or notAvailable. We recommended to keep it in sync with your shop product to ensure that Omnisend can avoid sending out-of-stock products to your customers.",
+      "enum": [
+       "inStock",
+       "outOfStock",
+       "notAvailable"
+      ],
+      "example": "inStock",
+      "type": "string"
+     },
+     "tags": {
+      "description": "Tags can be used to categorize products.",
+      "example": [
+       "tag1",
+       "tag2",
+       "tag3"
+      ],
+      "items": {
+       "type": "string"
+      },
+      "maxItems": 100,
+      "type": "array"
+     },
+     "title": {
+      "example": "My Product",
+      "maxLength": 255,
+      "type": "string"
+     },
+     "type": {
+      "description": "Product type can be used to categorize products.",
+      "example": "Super Product",
+      "maxLength": 100,
+      "type": "string"
+     },
+     "updatedAt": {
+      "example": "2021-01-01T00:00:00Z",
+      "type": "string"
+     },
+     "url": {
+      "description": "Url should point to the product page on the website.",
+      "example": "https://example.com/product",
+      "maxLength": 1000,
+      "type": "string"
+     },
+     "variants": {
+      "description": "Product variants are different versions of the same product. For example, a T-shirt can have different sizes and colors.",
+      "items": {
+       "$ref": "#/components/schemas/Variant"
+      },
+      "maxItems": 500,
+      "minItems": 1,
+      "type": "array"
+     },
+     "vendor": {
+      "description": "Vendor is the manufacturer or the brand of the product.",
+      "example": "My Vendor",
+      "maxLength": 100,
+      "type": "string"
+     }
+    },
+    "required": [
+     "currency",
+     "id",
+     "status",
+     "title",
+     "url"
+    ],
+    "type": "object"
+   },
+   "ReplaceProductResponse": {
+    "properties": {
+     "id": {
+      "example": "shoes-blue-123",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "ValidationProblem": {
+    "description": "Error response returned when the request contains invalid input. The errors array lists every field that failed validation.",
+    "properties": {
+     "detail": {
+      "description": "Human-readable explanation of this specific error occurrence",
+      "example": "A human-readable explanation of the error.",
+      "type": "string"
+     },
+     "errors": {
+      "description": "List of fields that failed validation",
+      "items": {
+       "$ref": "#/components/schemas/FieldError"
+      },
+      "type": "array"
+     },
+     "instance": {
+      "description": "Request trace identifier for support and debugging",
+      "example": "urn:omnisend:request:00000000-0000-0000-0000-000000000001",
+      "type": "string"
+     },
+     "status": {
+      "description": "HTTP status code",
+      "example": 0,
+      "type": "integer"
+     },
+     "title": {
+      "description": "Short description of the error type",
+      "example": "Problem",
+      "type": "string"
+     },
+     "type": {
+      "description": "URI that identifies the error type",
+      "example": "https://problems.omnisend.com/problem",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Variant": {
+    "properties": {
+     "defaultImageUrl": {
+      "description": "DefaultImageUrl is recommended if more than one image is needed. Other product images should be added to the Images array.",
+      "example": "https://example.com/variantImage.jpg",
+      "maxLength": 1000,
+      "type": "string"
+     },
+     "description": {
+      "description": "Description is a short description of the product. It can be used in the email body.",
+      "example": "My variant description",
+      "maxLength": 1000,
+      "type": "string"
+     },
+     "id": {
+      "example": "1234567890",
+      "maxLength": 100,
+      "type": "string"
+     },
+     "images": {
+      "example": [
+       "https://example.com/variant/image.jpg",
+       "https://example.com/variant/image2.jpg"
+      ],
+      "items": {
+       "type": "string"
+      },
+      "maxItems": 300,
+      "type": "array"
+     },
+     "price": {
+      "example": 9.99,
+      "type": "number"
+     },
+     "sku": {
+      "example": "SKU1234567890",
+      "maxLength": 255,
+      "type": "string"
+     },
+     "status": {
+      "description": "Status can be inStock, outOfStock, or notAvailable. We recommended to keep it in sync with your shop product to ensure that Omnisend can avoid sending out-of-stock products to your customers.",
+      "enum": [
+       "inStock",
+       "outOfStock",
+       "notAvailable"
+      ],
+      "example": "inStock",
+      "type": "string"
+     },
+     "strikeThroughPrice": {
+      "description": "StrikeThroughPrice is the price before the discount.",
+      "example": 19.99,
+      "type": "number"
+     },
+     "title": {
+      "example": "My Variant",
+      "maxLength": 255,
+      "type": "string"
+     },
+     "url": {
+      "example": "https://example.com/variant",
+      "maxLength": 1000,
+      "type": "string"
+     }
+    },
+    "required": [
+     "id",
+     "price",
+     "title",
+     "url"
+    ],
+    "type": "object"
+   }
+  }
+ }
+}

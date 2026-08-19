@@ -1,0 +1,2673 @@
+{
+  "item": [
+    {
+      "id": "d7139512-adc0-4297-8d20-96d4e4e2de4c",
+      "name": "Product Categories",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "46cb511d-3633-40cd-8f97-62bf00c0e97e",
+          "name": "List product categories",
+          "request": {
+            "name": "List product categories",
+            "description": {
+              "content": "List products categories\n\n**Scopes:**\n`products.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br>Guide: <a href=\"https://api-docs.omnisend.com/docs/how-to-sync-products-catalog-categories\" target=\"_blank\">Sync products catalog, categories</a>\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Check POSTMAN documentation</a>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "product-categories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Offset"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Limit"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Sort by"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "products.read products.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "619f3b69-b248-4da0-8b4c-b70779081269",
+              "name": "List of product categories",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"categories\": [\n    {\n      \"categoryID\": \"C1234\",\n      \"createdAt\": \"2024-01-15T10:30:00Z\",\n      \"title\": \"Beauty products\",\n      \"updatedAt\": \"2024-01-16T14:45:00Z\"\n    },\n    {\n      \"categoryID\": \"C1234\",\n      \"createdAt\": \"2024-01-15T10:30:00Z\",\n      \"title\": \"Beauty products\",\n      \"updatedAt\": \"2024-01-16T14:45:00Z\"\n    }\n  ],\n  \"paging\": {\n    \"limit\": 100,\n    \"next\": \"https://api.omnisend.com/api/product-categories?limit=100&offset=105\",\n    \"offset\": 5,\n    \"previous\": \"https://api.omnisend.com/api/product-categories?limit=100&offset=5\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97d1c035-ae25-4ec2-b396-df4237e9b470",
+              "name": "Request contains invalid or missing fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b5198f2-cc72-4115-9ccd-aa0ec4d208bc",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97c66764-c58d-4bbe-a5cc-6ec396734e13",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8702b475-7d8f-4d63-96d1-ab3c83fd7365",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2fc0b1de-ec16-4a49-aa15-e7763923399e",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92258d00-6bdf-4d9a-b08e-21c707a16b2a",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c89845aa-86ea-439a-83ec-fe6d3f52118f",
+          "name": "Create product category",
+          "request": {
+            "name": "Create product category",
+            "description": {
+              "content": "Creates a new product category\n\n**Scopes:**\n`products.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Check POSTMAN documentation</a>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "product-categories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "products.read products.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categoryID\": \"<string>\",\n  \"title\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4dfea2aa-4db3-407b-9d43-e06cc89d19d6",
+              "name": "Product category created successfully with the given ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"categoryID\": \"C1234\",\n  \"title\": \"Beauty products\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"categoryID\": \"C1234\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c010a9c-f4b1-4d80-817c-a4e14107a943",
+              "name": "Request contains invalid or missing fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"categoryID\": \"C1234\",\n  \"title\": \"Beauty products\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5312222c-accc-47af-b047-760646d7988b",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"categoryID\": \"C1234\",\n  \"title\": \"Beauty products\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd04f021-b6b7-4a5a-bcbf-0a5b19fd0e26",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"categoryID\": \"C1234\",\n  \"title\": \"Beauty products\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9aaf01f-52bc-4a4b-8cb5-dd68a7b33c2c",
+              "name": "Category already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"categoryID\": \"C1234\",\n  \"title\": \"Beauty products\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55448318-310f-42d2-bf96-c0a26f1b9c03",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"categoryID\": \"C1234\",\n  \"title\": \"Beauty products\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8216988-0dd6-4f3e-bdde-ef799898c0f2",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"categoryID\": \"C1234\",\n  \"title\": \"Beauty products\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c8ff7df-05db-4a20-ac98-b152ff498239",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"categoryID\": \"C1234\",\n  \"title\": \"Beauty products\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "081191b7-a6b9-46c2-8514-84f4cb744f5e",
+          "name": "Delete product category",
+          "request": {
+            "name": "Delete product category",
+            "description": {
+              "content": "With this endpoint you can delete product category.\n\n**Scopes:**\n`products.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Check POSTMAN documentation</a>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "product-categories",
+                ":categoryID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "categoryID",
+                  "description": "(Required) Product category ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "products.read products.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "adf597b4-1a34-4152-adf2-a59b5a446e41",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2e075928-effa-49b4-92f5-753c9ca3ed08",
+              "name": "Request contains invalid or missing fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc0423b6-b551-42f7-8ed6-5f5e40cbe888",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96ce1846-7f71-4cec-ad2b-154647f7347f",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ecf6bf3-a631-4374-a454-584089b38fac",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d955a710-f66a-48b1-a0ef-082887a0c6fa",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5bf35c22-09e0-4166-a35b-1e1f369217a6",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1ba9efb3-8184-4fb4-a2df-e97004f27ba8",
+          "name": "Get product category",
+          "request": {
+            "name": "Get product category",
+            "description": {
+              "content": "Get product category by ID.\n\n**Scopes:**\n`products.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Check POSTMAN documentation</a>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "product-categories",
+                ":categoryID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "categoryID",
+                  "description": "(Required) Product category ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "products.read products.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6a0da53e-4cbc-42ce-947b-9cb71d30ec01",
+              "name": "Product category found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"categoryID\": \"C1234\",\n  \"createdAt\": \"2024-01-15T10:30:00Z\",\n  \"title\": \"Beauty products\",\n  \"updatedAt\": \"2024-01-16T14:45:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3076c927-c2fe-4080-949e-fb658311d820",
+              "name": "Request contains invalid or missing fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43972673-a2a5-47ea-857e-bec19be79560",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db956573-a8c7-484b-b038-4999a8ebcb02",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "710b2041-3c78-4df3-84be-5e098f27ea6c",
+              "name": "Product category not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7dd9ff2e-120c-4e98-9d62-508fb1d0ec33",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6360366f-5a65-474e-a3b8-2cef2306a36d",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b555993d-6c15-4123-8949-e6569b7998c0",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c08bd2f0-da0f-4c06-9586-7c4cafbe43bf",
+          "name": "Update product category",
+          "request": {
+            "name": "Update product category",
+            "description": {
+              "content": "Update product category by ID.\n\n**Scopes:**\n`products.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Check POSTMAN documentation</a>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "product-categories",
+                ":categoryID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "categoryID",
+                  "description": "(Required) Product category ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "products.read products.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0967f150-5dd4-453b-bfa1-55742e64ae8a",
+              "name": "Product category updated successfully with the given ID",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Beauty products\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"categoryID\": \"shirts-1234\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "922760c8-52ed-43e9-ad45-3a097e673dae",
+              "name": "Request contains invalid or missing fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Beauty products\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce07c0d4-8e3e-4c9a-99de-2d3b318581dd",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Beauty products\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "22b61498-d620-470e-8ac6-9cec193f409a",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Beauty products\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf221ad8-8e59-447a-8db2-1a9b889758e6",
+              "name": "Product category not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Beauty products\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b782515-f1f6-40c9-92bc-b04d9c85e1f8",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Beauty products\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8625d87a-71c1-43a0-9901-cd117c3b933c",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Beauty products\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30b1357f-4c94-4c8a-9a49-1100d2f030b7",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "product-categories",
+                    ":categoryID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "categoryID",
+                      "description": "(Required) Product category ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Beauty products\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.omnisend.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "dc042408-7a87-4d14-8908-749fe3ee7b35",
+    "name": "Product Categories API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage product categories for your Omnisend store.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,584 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Campaigns API",
+    "version": "2026-preview"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Campaigns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List campaigns with filtering, sorting, and cursor pagination",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/campaigns",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page. Range: 1-250. Default: 100"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Opaque cursor for the next page"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Opaque cursor for the previous page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort field. Default: createdAt"
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction. Default: desc"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by status (repeatable for OR logic)"
+              },
+              {
+                "name": "nameContains",
+                "value": "",
+                "type": "query",
+                "description": "Filter by name (partial match, max 200 characters)"
+              },
+              {
+                "name": "channel",
+                "value": "",
+                "type": "query",
+                "description": "Filter by message channel (repeatable for OR logic)"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by campaign type. Use `booster` to list only boosters, `abTest` to list only A/B test parents."
+              },
+              {
+                "name": "parentCampaignID",
+                "value": "",
+                "type": "query",
+                "description": "Filter to boosters of the given parent campaign ID. Implies type=booster."
+              },
+              {
+                "name": "createdAtFrom",
+                "value": "",
+                "type": "query",
+                "description": "Filter campaigns created after this timestamp (ISO 8601, e.g. 2026-01-01T00:00:00Z)"
+              },
+              {
+                "name": "createdAtTo",
+                "value": "",
+                "type": "query",
+                "description": "Filter campaigns created before this timestamp (ISO 8601, e.g. 2026-01-01T00:00:00Z)"
+              },
+              {
+                "name": "updatedAtFrom",
+                "value": "",
+                "type": "query",
+                "description": "Filter campaigns updated after this timestamp (ISO 8601, e.g. 2026-01-01T00:00:00Z)"
+              },
+              {
+                "name": "updatedAtTo",
+                "value": "",
+                "type": "query",
+                "description": "Filter campaigns updated before this timestamp (ISO 8601, e.g. 2026-01-01T00:00:00Z)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "List campaigns with filtering, sorting, and cursor-based pagination.\n\n**Scopes:**\n`campaigns.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n**Filtering & sorting:**\nSupported query parameters: `nameContains`, `status`, `channel`, `type`, `parentCampaignID`, `createdAtFrom`/`createdAtTo`, `updatedAtFrom`/`updatedAtTo`, `sort`, `direction`, `limit`, `after`, `before`. Only these documented parameters are accepted; any unknown parameter returns 400.\n- `sort` ac"
+        },
+        {
+          "info": {
+            "name": "Create campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/campaigns",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create a new campaign draft.\n\n**Boosters (`type: booster`):**\n- The parent campaign (`boosterSettings.campaignID`) must be a regular email campaign in 'draft' or 'sent' status; 'scheduled' and 'started' parents return 409.\n- Each parent campaign supports at most one booster; creating another returns 409. Delete the existing booster first to replace it.\n- `sendingSettings` is only allowed when the parent is already sent; for a draft parent provide `boosterSettings.delay` instead (max 240 hours) a"
+        },
+        {
+          "info": {
+            "name": "Get campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/campaigns/:id",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Campaign ID (24 character hexadecimal)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get a single campaign by ID.\n\n**Scopes:**\n`campaigns.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Update campaign (draft status only)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.omnisend.com/api/campaigns/:id",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Campaign ID (24 character hexadecimal)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update a campaign draft. Only campaigns in 'draft' status can be updated; any other status returns 409.\nTo change a campaign that is no longer a draft, copy it and edit the new draft copy.\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Delete campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.omnisend.com/api/campaigns/:id",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Campaign ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Delete a campaign.\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Resume A/B test",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/campaigns/:id/ab-test/resume",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Campaign ID (24 character hexadecimal)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Resume a stopped A/B test. Automatic winner selection becomes eligible to pick this campaign again.\n\nAvailable only while the campaign is in `stopped` status.\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Stop A/B test",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/campaigns/:id/ab-test/stop",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Campaign ID (24 character hexadecimal)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Halt the A/B test winner-selection phase. While stopped, automatic winner selection no longer considers this campaign until it is resumed.\n\nAvailable only while the campaign is in `started` status.\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Select A/B test winner",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/campaigns/:id/ab-test/winner",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Campaign ID (24 character hexadecimal)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Manually pick a variant as the winner. The chosen variant is routed into the send pipeline immediately.\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Cancel campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/campaigns/:id/cancel",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Campaign ID (24 character hexadecimal)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Cancel a campaign and mark it as canceled.\n\n**Cancelable source states:** `scheduled` or `paused` (all channel types), or `started` (email only). Any other status (e.g. `draft`, `sent`, `canceled`) returns 409.\n\nSupported cases:\n- Any scheduled or paused campaign (all channel types)\n- Started email campaigns\n\n**Note:** For started campaigns, cancellation is best-effort — messages already in flight may still be delivered.\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate li"
+        },
+        {
+          "info": {
+            "name": "Copy campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/campaigns/:id/copy",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Campaign ID to copy (24 character hexadecimal)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create a draft copy of an existing campaign, copying content, audience, and settings from the original.\nThe copy is a new draft campaign with its own ID; the original campaign is left unchanged.\nThe copied campaign name will be prefixed with \"Copy of: \".\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Send campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/campaigns/:id/send",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Campaign ID (24 character hexadecimal)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Submit a campaign draft for sending. Only campaigns in 'draft' status can be sent; to send a campaign again, copy it and send the copy.\nSupports both email and SMS campaigns. Behavior depends on the campaign's sending strategy:\n\n- **Immediate**: Campaign will be sent immediately\n- **Scheduled**: Campaign will be queued for the scheduled time with optional timezone optimization\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Send campaign test email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/campaigns/:id/test-email",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Campaign ID (24 character hexadecimal)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Render the campaign draft and email it to up to 5 recipients so the merchant (or their AI tool) can preview it without leaving the API. The test uses the campaign's saved subject, sender, and content; only email campaigns are supported.\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Get campaign UTM settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/campaigns/:id/utm",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Campaign ID (24 character hexadecimal)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get UTM tag settings for a campaign. The response shape is the same for all\ncampaign types: `tags` is populated for regular campaigns, `variants` for A/B\ncampaigns. The absent field is omitted.\n\n**Scopes:**\n`campaigns.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Update campaign UTM settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.omnisend.com/api/campaigns/:id/utm",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Campaign ID (24 character hexadecimal)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Replace UTM tag settings for a campaign. For regular campaigns send a\n`tags` object. For A/B test campaigns send a `variants` object. The campaign\nmust be in draft status.\n\n**Scopes:**\n`campaigns.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,67 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://api-docs.omnisend.com/reference/javascript-snippet,
+  https://api-docs.omnisend.com/reference/omnisend-forms-events,
+  https://api-docs.omnisend.com/reference/omnisend-forms-custom-trigger,
+  https://api-docs.omnisend.com/reference/cookie-consent,
+  https://api-docs.omnisend.com/reference/event-tracking
+description: >-
+  Omnisend's client-side surface is a single browser launcher script plus the hosted UI it renders —
+  forms, popups, flyouts, landing pages and the product picker. There is no npm-distributed embed
+  library and no web-component package: everything is loaded from omnisnippet1.com by a script tag
+  and driven through a global `omnisend` command queue. Distinct from packages/ (server SDKs) and
+  from the internal @omnisend-ui React design system, which is not a customer-facing embed.
+
+families:
+  - name: Launcher script
+    kind: browser-snippet
+    loader: https://omnisnippet1.com/inshop/launcher-v2.js
+    install: >-
+      Script tag before the closing </body> tag on every page, seeded with
+      omnisend.push(["brandID", "<YOUR_BRAND_ID>"]).
+    versioned: false
+    note: >-
+      Unpinned URL — always resolves to the current build, so consumers cannot pin or diff a version.
+      Installed automatically when a store is connected through a native platform integration.
+    unlocks:
+      - Omnisend Forms
+      - Browse abandonment automation
+      - Contact identification and client-side event sending
+      - Omnisend Product picker
+
+  - name: Forms / popups
+    kind: hosted-ui
+    surfaces: [Popup, Flyout, Embedded, Landing page, Fullscreen, Wheel of Fortune, Teaser]
+    rendered_by: launcher-v2.js
+    events_api: https://api-docs.omnisend.com/reference/omnisend-forms-events
+    custom_trigger: https://api-docs.omnisend.com/reference/omnisend-forms-custom-trigger
+    note: >-
+      Form definitions are authored in the Omnisend app, not in the host page. Omnisend exposes a
+      forms-reports API definition on the docs host but publishes no reference page for it, so the
+      Forms read surface is reachable through MCP and not through any published OpenAPI.
+
+  - name: JavaScript command API
+    kind: browser-api
+    global: window.omnisend
+    style: command queue — omnisend.push([...])
+    methods:
+      - name: omnisend.identifyContact
+        signature: 'omnisend.identifyContact({ email, phone })'
+        note: At least one of email or phone required; phone in E.164 format.
+      - name: 'omnisend.push(["track", "<eventName>", {...}])'
+        note: Client-side event tracking; supports callbacks.onSuccess and callbacks.onError.
+      - name: 'omnisend.push(["brandID", "<YOUR_BRAND_ID>"])'
+      - name: 'omnisend.push(["track", "$pageViewed"])'
+        note: Live View website tracking; removable if page-view tracking is not wanted.
+
+  - name: Cookie consent bridge
+    kind: browser-api
+    docs: https://api-docs.omnisend.com/reference/cookie-consent
+    note: Passes the host site's cookie consent state to Omnisend.
+
+not_published:
+  - No npm package for the embeddable surface — the launcher is CDN-only.
+  - No web components / custom elements.
+  - No embedded-dashboard or hosted-report iframe product.
+  - '@omnisend-ui/ui-react and @omnisend-ui/ui-theme on npm are Omnisend''s internal design system, not a customer embed library.'

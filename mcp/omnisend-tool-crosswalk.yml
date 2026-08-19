@@ -1,0 +1,874 @@
+generated: '2026-08-13'
+method: derived
+source: https://api-docs.omnisend.com/reference/mcp-server-v2 + openapi/omnisend-*-openapi.yml
+description: 'Binds every operation Omnisend publishes on its MCP server v2 to the REST operation it fronts in the
+  harvested OpenAPI contract. Omnisend uses a compact MCP design: 7 generic tools rather than one tool per operation,
+  so the binding is action-tool -> REST operation rather than tool -> operationId. The live MCP tool schemas are
+  OAuth-gated (401 on anonymous tools/list), so the operation list is the provider''s own published table, and confidence
+  is set honestly per row.'
+surfaces:
+  openapi:
+    files: 15
+    operations: 82
+    base: https://api.omnisend.com/api
+    gated: false
+  mcp:
+    url: https://mcp.omnisend.com/v2/mcp
+    tools: 7
+    operations: 68
+    gated: true
+    gate: HTTP 401 + RFC 9728 resource_metadata challenge on anonymous tools/list
+  graphql: null
+tools:
+- name: omnisend_search
+  kind: discovery
+  rest: null
+  note: Server-side operation index; no REST equivalent.
+- name: omnisend_tool_schema
+  kind: discovery
+  rest: null
+  note: Returns the JSON Schema for one operation; the OpenAPI equivalent is the operation parameters + requestBody.
+- name: omnisend_reference
+  kind: discovery
+  rest: null
+  note: Serves 12 embedded documentation topics; no REST equivalent.
+- name: omnisend_query
+  kind: read
+- name: omnisend_create
+  kind: write
+- name: omnisend_update
+  kind: write
+- name: omnisend_delete
+  kind: destructive
+crosswalk:
+- tool: omnisend_query
+  mcp_operation: post_analytics_reports
+  category: Analytics
+  rest:
+  - file: omnisend-analytics-api-openapi.yml
+    method: POST
+    path: /analytics/reports
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: post_analytics_statistics
+  category: Analytics
+  rest:
+  - file: omnisend-analytics-api-openapi.yml
+    method: POST
+    path: /analytics/statistics
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_automations
+  category: Automations
+  rest:
+  - file: omnisend-automations-api-openapi.yml
+    method: GET
+    path: /automations
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: medium
+  note: MCP still routes this operation through the legacy /v5 base while the published contract serves it at /api.
+    Version divergence between the agent surface and the REST contract. Backing OpenAPI operation has no operationId;
+    bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_batch_id
+  category: Batches
+  rest:
+  - file: omnisend-batches-api-openapi.yml
+    method: GET
+    path: /batches/{batchID}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_batches
+  category: Batches
+  rest:
+  - file: omnisend-batches-api-openapi.yml
+    method: GET
+    path: /batches
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_batches_batch_id_items
+  category: Batches
+  rest:
+  - file: omnisend-batches-api-openapi.yml
+    method: GET
+    path: /batches/{batchID}/items
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_create
+  mcp_operation: post_batches
+  category: Batches
+  rest:
+  - file: omnisend-batches-api-openapi.yml
+    method: POST
+    path: /batches
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_brands_current
+  category: Brands
+  rest:
+  - file: omnisend-brands-api-openapi.yml
+    method: GET
+    path: /brands/current
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_create
+  mcp_operation: post_brands_current
+  category: Brands
+  rest:
+  - file: omnisend-brands-api-openapi.yml
+    method: POST
+    path: /brands/current
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_delete
+  mcp_operation: delete_campaigns_id
+  category: Campaigns
+  rest:
+  - file: omnisend-campaigns-api-openapi.yml
+    method: DELETE
+    path: /campaigns/{id}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_campaigns
+  category: Campaigns
+  rest:
+  - file: omnisend-campaigns-api-openapi.yml
+    method: GET
+    path: /campaigns
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_campaigns_id
+  category: Campaigns
+  rest:
+  - file: omnisend-campaigns-api-openapi.yml
+    method: GET
+    path: /campaigns/{id}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_update
+  mcp_operation: patch_campaigns_id
+  category: Campaigns
+  rest:
+  - file: omnisend-campaigns-api-openapi.yml
+    method: PATCH
+    path: /campaigns/{id}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_create
+  mcp_operation: post_campaigns
+  category: Campaigns
+  rest:
+  - file: omnisend-campaigns-api-openapi.yml
+    method: POST
+    path: /campaigns
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_update
+  mcp_operation: post_campaigns_id_cancel
+  category: Campaigns
+  rest:
+  - file: omnisend-campaigns-api-openapi.yml
+    method: POST
+    path: /campaigns/{id}/cancel
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_update
+  mcp_operation: post_campaigns_id_copy
+  category: Campaigns
+  rest:
+  - file: omnisend-campaigns-api-openapi.yml
+    method: POST
+    path: /campaigns/{id}/copy
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_update
+  mcp_operation: post_campaigns_id_send
+  category: Campaigns
+  rest:
+  - file: omnisend-campaigns-api-openapi.yml
+    method: POST
+    path: /campaigns/{id}/send
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_delete
+  mcp_operation: delete_contacts_tags
+  category: Contacts
+  rest:
+  - file: omnisend-contacts-api-openapi.yml
+    method: DELETE
+    path: /contacts/tags
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_contacts
+  category: Contacts
+  rest:
+  - file: omnisend-contacts-api-openapi.yml
+    method: GET
+    path: /contacts
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_contacts_id
+  category: Contacts
+  rest:
+  - file: omnisend-contacts-api-openapi.yml
+    method: GET
+    path: /contacts/{id}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_update
+  mcp_operation: patch_contacts
+  category: Contacts
+  rest:
+  - file: omnisend-contacts-api-openapi.yml
+    method: PATCH
+    path: /contacts
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_update
+  mcp_operation: patch_contacts_id
+  category: Contacts
+  rest:
+  - file: omnisend-contacts-api-openapi.yml
+    method: PATCH
+    path: /contacts/{id}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_create
+  mcp_operation: post_contacts
+  category: Contacts
+  rest:
+  - file: omnisend-contacts-api-openapi.yml
+    method: POST
+    path: /contacts
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_update
+  mcp_operation: post_contacts_tags
+  category: Contacts
+  rest:
+  - file: omnisend-contacts-api-openapi.yml
+    method: POST
+    path: /contacts/tags
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_email_content_id
+  category: Email Content
+  rest:
+  - file: omnisend-emailcontent-api-openapi.yml
+    method: GET
+    path: /email-content/{id}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_update
+  mcp_operation: put_email_content_id
+  category: Email Content
+  rest:
+  - file: omnisend-emailcontent-api-openapi.yml
+    method: PUT
+    path: /email-content/{id}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_update
+  mcp_operation: post_email_content_id_render
+  category: Email Content
+  rest:
+  - file: omnisend-emailcontent-api-openapi.yml
+    method: POST
+    path: /email-content/{id}/render
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_delete
+  mcp_operation: delete_email_templates_id
+  category: Email Templates
+  rest:
+  - file: omnisend-emailtemplates-api-openapi.yml
+    method: DELETE
+    path: /email-templates/{id}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_email_templates
+  category: Email Templates
+  rest:
+  - file: omnisend-emailtemplates-api-openapi.yml
+    method: GET
+    path: /email-templates
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_email_templates_id
+  category: Email Templates
+  rest:
+  - file: omnisend-emailtemplates-api-openapi.yml
+    method: GET
+    path: /email-templates/{id}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_create
+  mcp_operation: post_email_templates
+  category: Email Templates
+  rest:
+  - file: omnisend-emailtemplates-api-openapi.yml
+    method: POST
+    path: /email-templates
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_update
+  mcp_operation: post_email_templates_id_render
+  category: Email Templates
+  rest:
+  - file: omnisend-emailtemplates-api-openapi.yml
+    method: POST
+    path: /email-templates/{id}/render
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_update
+  mcp_operation: post_email_templates_import
+  category: Email Templates
+  rest:
+  - file: omnisend-emailtemplates-api-openapi.yml
+    method: POST
+    path: /email-templates/import
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_update
+  mcp_operation: put_email_templates_id
+  category: Email Templates
+  rest:
+  - file: omnisend-emailtemplates-api-openapi.yml
+    method: PUT
+    path: /email-templates/{id}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_delete
+  mcp_operation: delete_email_universal_layouts_id
+  category: Email Universal Layouts
+  rest:
+  - file: omnisend-emailuniversallayouts-api-openapi.yml
+    method: DELETE
+    path: /email-universal-layouts/{id}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_email_universal_layouts
+  category: Email Universal Layouts
+  rest:
+  - file: omnisend-emailuniversallayouts-api-openapi.yml
+    method: GET
+    path: /email-universal-layouts
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_email_universal_layouts_id
+  category: Email Universal Layouts
+  rest:
+  - file: omnisend-emailuniversallayouts-api-openapi.yml
+    method: GET
+    path: /email-universal-layouts/{id}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_create
+  mcp_operation: post_email_universal_layouts
+  category: Email Universal Layouts
+  rest:
+  - file: omnisend-emailuniversallayouts-api-openapi.yml
+    method: POST
+    path: /email-universal-layouts
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_update
+  mcp_operation: put_email_universal_layouts_id
+  category: Email Universal Layouts
+  rest:
+  - file: omnisend-emailuniversallayouts-api-openapi.yml
+    method: PUT
+    path: /email-universal-layouts/{id}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_create
+  mcp_operation: post_event_metadata_query
+  category: Events
+  rest:
+  - file: omnisend-event-metadata-api-openapi.yml
+    method: POST
+    path: /event-metadata
+    operationId: post_event_metadata
+  binding: action-tool routes to REST operation
+  confidence: low
+  note: MCP table lists POST /api/event-metadata for the query operation; the published OpenAPI puts query at POST
+    /event-metadata/query and uses POST /event-metadata to CREATE custom event metadata. Bound by name, not by path.
+- tool: omnisend_delete
+  mcp_operation: delete_images_id
+  category: Images
+  rest:
+  - file: omnisend-images-api-openapi.yml
+    method: DELETE
+    path: /images/{id}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_images
+  category: Images
+  rest:
+  - file: omnisend-images-api-openapi.yml
+    method: GET
+    path: /images
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_images_id
+  category: Images
+  rest:
+  - file: omnisend-images-api-openapi.yml
+    method: GET
+    path: /images/{id}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_create
+  mcp_operation: post_images
+  category: Images
+  rest:
+  - file: omnisend-images-api-openapi.yml
+    method: POST
+    path: /images
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_update
+  mcp_operation: post_images_upload
+  category: Images
+  rest:
+  - file: omnisend-images-api-openapi.yml
+    method: POST
+    path: /images/upload
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_delete
+  mcp_operation: delete_category_id
+  category: Product Categories
+  rest:
+  - file: omnisend-productcategories-api-openapi.yml
+    method: DELETE
+    path: /product-categories/{categoryID}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_category_id
+  category: Product Categories
+  rest:
+  - file: omnisend-productcategories-api-openapi.yml
+    method: GET
+    path: /product-categories/{categoryID}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_product_categories
+  category: Product Categories
+  rest:
+  - file: omnisend-productcategories-api-openapi.yml
+    method: GET
+    path: /product-categories
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_update
+  mcp_operation: patch_category_id
+  category: Product Categories
+  rest:
+  - file: omnisend-productcategories-api-openapi.yml
+    method: PATCH
+    path: /product-categories/{categoryID}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_create
+  mcp_operation: post_product_categories
+  category: Product Categories
+  rest:
+  - file: omnisend-productcategories-api-openapi.yml
+    method: POST
+    path: /product-categories
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_delete
+  mcp_operation: delete_product_id
+  category: Products
+  rest:
+  - file: omnisend-products-api-openapi.yml
+    method: DELETE
+    path: /products/{productID}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_product_id
+  category: Products
+  rest:
+  - file: omnisend-products-api-openapi.yml
+    method: GET
+    path: /products/{productID}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_products
+  category: Products
+  rest:
+  - file: omnisend-products-api-openapi.yml
+    method: GET
+    path: /products
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_create
+  mcp_operation: post_products
+  category: Products
+  rest:
+  - file: omnisend-products-api-openapi.yml
+    method: POST
+    path: /products
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_update
+  mcp_operation: put_product_id
+  category: Products
+  rest:
+  - file: omnisend-products-api-openapi.yml
+    method: PUT
+    path: /products/{productID}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_delete
+  mcp_operation: delete_segment_id
+  category: Segments
+  rest:
+  - file: omnisend-segments-api-openapi.yml
+    method: DELETE
+    path: /segments/{segmentID}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_segment_id
+  category: Segments
+  rest:
+  - file: omnisend-segments-api-openapi.yml
+    method: GET
+    path: /segments/{segmentID}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_segments
+  category: Segments
+  rest:
+  - file: omnisend-segments-api-openapi.yml
+    method: GET
+    path: /segments
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_query
+  mcp_operation: get_segments_segment_id_statistics
+  category: Segments
+  rest:
+  - file: omnisend-segments-api-openapi.yml
+    method: GET
+    path: /segments/{segmentID}/statistics
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_create
+  mcp_operation: post_segments
+  category: Segments
+  rest:
+  - file: omnisend-segments-api-openapi.yml
+    method: POST
+    path: /segments
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+- tool: omnisend_update
+  mcp_operation: put_segment_id
+  category: Segments
+  rest:
+  - file: omnisend-segments-api-openapi.yml
+    method: PUT
+    path: /segments/{segmentID}
+    operationId: null
+  binding: action-tool routes to REST operation
+  confidence: high
+  note: Backing OpenAPI operation has no operationId; bound by method + path.
+mcp_only:
+- tool: omnisend_query
+  operation: get_forms
+  method: GET
+  path: /api/forms
+  reason: Forms API is exposed through MCP but Omnisend publishes no OpenAPI for it — the forms-reports-api.yml
+    definition is listed on the docs host but has no public reference page
+- tool: omnisend_query
+  operation: get_forms_form_id_ab_setup_reports
+  method: GET
+  path: /api/forms/{formID}/ab-setup/reports
+  reason: Forms API is exposed through MCP but Omnisend publishes no OpenAPI for it — the forms-reports-api.yml
+    definition is listed on the docs host but has no public reference page
+- tool: omnisend_query
+  operation: get_forms_form_id_contacts
+  method: GET
+  path: /api/forms/{formID}/contacts
+  reason: Forms API is exposed through MCP but Omnisend publishes no OpenAPI for it — the forms-reports-api.yml
+    definition is listed on the docs host but has no public reference page
+- tool: omnisend_query
+  operation: get_forms_form_id_report
+  method: GET
+  path: /api/forms/{formID}/report
+  reason: Forms API is exposed through MCP but Omnisend publishes no OpenAPI for it — the forms-reports-api.yml
+    definition is listed on the docs host but has no public reference page
+- tool: omnisend_query
+  operation: get_forms_form_id_report_periodic
+  method: GET
+  path: /api/forms/{formID}/report/periodic
+  reason: Forms API is exposed through MCP but Omnisend publishes no OpenAPI for it — the forms-reports-api.yml
+    definition is listed on the docs host but has no public reference page
+- tool: omnisend_query
+  operation: get_reference_topics
+  method: GET
+  path: /_reference/topics
+  reason: MCP server-internal documentation endpoint; not part of the public REST API
+- tool: omnisend_query
+  operation: get_reference_documentation
+  method: GET
+  path: /_reference/documentation
+  reason: MCP server-internal documentation endpoint; not part of the public REST API
+rest_only:
+- method: DELETE
+  path: /automations/{id}
+  file: omnisend-automations-api-openapi.yml
+  operationId: null
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+- method: GET
+  path: /automations/{id}
+  file: omnisend-automations-api-openapi.yml
+  operationId: null
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+- method: GET
+  path: /automations/{id}/blocks/{blockID}/utm
+  file: omnisend-automations-api-openapi.yml
+  operationId: null
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+- method: GET
+  path: /automations/{id}/utm
+  file: omnisend-automations-api-openapi.yml
+  operationId: null
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+- method: GET
+  path: /campaigns/{id}/utm
+  file: omnisend-campaigns-api-openapi.yml
+  operationId: null
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+- method: PATCH
+  path: /automations/{id}
+  file: omnisend-automations-api-openapi.yml
+  operationId: null
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+- method: POST
+  path: /automations
+  file: omnisend-automations-api-openapi.yml
+  operationId: null
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+- method: POST
+  path: /automations/{id}/blocks/{blockID}/test-email
+  file: omnisend-automations-api-openapi.yml
+  operationId: null
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+- method: POST
+  path: /automations/{id}/copy
+  file: omnisend-automations-api-openapi.yml
+  operationId: null
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+- method: POST
+  path: /automations/{id}/disable
+  file: omnisend-automations-api-openapi.yml
+  operationId: null
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+- method: POST
+  path: /automations/{id}/enable
+  file: omnisend-automations-api-openapi.yml
+  operationId: null
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+- method: POST
+  path: /campaigns/{id}/ab-test/resume
+  file: omnisend-campaigns-api-openapi.yml
+  operationId: null
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+- method: POST
+  path: /campaigns/{id}/ab-test/stop
+  file: omnisend-campaigns-api-openapi.yml
+  operationId: null
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+- method: POST
+  path: /campaigns/{id}/ab-test/winner
+  file: omnisend-campaigns-api-openapi.yml
+  operationId: null
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+- method: POST
+  path: /campaigns/{id}/test-email
+  file: omnisend-campaigns-api-openapi.yml
+  operationId: null
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+- method: POST
+  path: /event-metadata/query
+  file: omnisend-event-metadata-api-openapi.yml
+  operationId: post_event_metadata_query
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+- method: POST
+  path: /events
+  file: omnisend-events-api-openapi.yml
+  operationId: null
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+- method: PUT
+  path: /automations/{id}/blocks
+  file: omnisend-automations-api-openapi.yml
+  operationId: null
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+- method: PUT
+  path: /automations/{id}/blocks/{blockID}/utm
+  file: omnisend-automations-api-openapi.yml
+  operationId: null
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+- method: PUT
+  path: /campaigns/{id}/utm
+  file: omnisend-campaigns-api-openapi.yml
+  operationId: null
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+- method: PUT
+  path: /event-metadata
+  file: omnisend-event-metadata-api-openapi.yml
+  operationId: put_event_metadata
+  reason: Published in the OpenAPI contract but absent from the MCP server v2 published operation table.
+coverage:
+  rest_operations: 82
+  mcp_operations: 68
+  bound: 61
+  mcp_only: 7
+  rest_only: 21
+  note: The agent surface and the REST contract are not the same product. 21 published REST operations — nearly
+    the whole Automations write surface, campaign A/B-test control, UTM settings and the events ingest endpoint
+    — are not reachable through MCP v2; 7 MCP operations (the Forms read surface and two server-internal reference
+    endpoints) have no published OpenAPI.

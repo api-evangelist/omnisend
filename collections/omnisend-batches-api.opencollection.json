@@ -1,0 +1,180 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Batches API",
+    "version": "2026"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Batch",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get batches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/batches",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset (minimum 0)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit (1-250)"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Status"
+              },
+              {
+                "name": "dateFrom",
+                "value": "",
+                "type": "query",
+                "description": "Date from (format: yyyy-mm-dd)"
+              },
+              {
+                "name": "dateTo",
+                "value": "",
+                "type": "query",
+                "description": "Date to (format: yyyy-mm-dd)"
+              },
+              {
+                "name": "endpoint",
+                "value": "",
+                "type": "query",
+                "description": "Endpoint"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get batches\n\n**Scopes:**\n`products.read`, `contacts.read`, `events.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>"
+        },
+        {
+          "info": {
+            "name": "Create batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/batches",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Batch operations allow for multiple actions of a similar type to be executed in a single request. Utilizing the batch endpoint is recommended to avoid hitting rate limits and to enhance overall performance.\n\nCreating batches is an asynchronous process that initiates the creation or updating of the specified items.\n\n* POST batch operations to create multiple items simultaneously.\n* PUT batch operations to apply multiple updates to multiple items.\nEach batch operation can include up to 100 actions"
+        },
+        {
+          "info": {
+            "name": "Get batch information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/batches/:batchID",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "batchID",
+                "value": "",
+                "type": "path",
+                "description": "Batch ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get batch information\n\n**Scopes:**\n`products.read`, `contacts.read`, `events.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>"
+        },
+        {
+          "info": {
+            "name": "Get batch items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/batches/:batchID/items",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "batchID",
+                "value": "",
+                "type": "path",
+                "description": "Batch ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get batch items\n\n**Scopes:**\n`products.read`, `contacts.read`, `events.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

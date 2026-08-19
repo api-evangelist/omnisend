@@ -1,0 +1,253 @@
+{
+  "item": [
+    {
+      "id": "489f64fe-8f4d-425f-a115-70a1b33e939a",
+      "name": "Brands",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "83caacb5-79be-41e8-be85-9c1fa6694ae4",
+          "name": "Get information about brand",
+          "request": {
+            "name": "Get information about brand",
+            "description": {
+              "content": "With this endpoint you can get brand's information.\n\n**Scopes:**\n`brands.read`\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "brands",
+                "current"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-03-15)",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ed21b57e-069c-49cd-a089-5e8284ecc344",
+              "name": "Brand details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brands",
+                    "current"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-03-15)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"brandID\": \"string\",\n  \"connected\": false,\n  \"currency\": \"string\",\n  \"name\": \"string\",\n  \"platform\": \"string\",\n  \"timezone\": \"string\",\n  \"version\": \"string\",\n  \"website\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f462a45e-73c4-4fac-85f5-ce7e34651deb",
+          "name": "Connect brand",
+          "request": {
+            "name": "Connect brand",
+            "description": {
+              "content": "With this endpoint you can connect your site to Omnisend.\nNote it's only possible to connect store with [oAuth flow](https://api-docs.omnisend.com/reference/oauth).\n\n**Scopes:**\n`brands.write`\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "brands",
+                "current"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-03-15)",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"platform\": \"<string>\",\n  \"version\": \"<string>\",\n  \"website\": \"<string>\",\n  \"currency\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c5dfb51a-4e08-4ded-a06c-c1895944c0b3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brands",
+                    "current"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-03-15)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"platform\": \"wordpress\",\n  \"version\": \"2\",\n  \"website\": \"https://www.example.com\",\n  \"currency\": \"USD\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.omnisend.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3f3098c0-baf5-422a-926f-a0f7df55dced",
+    "name": "Brands API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

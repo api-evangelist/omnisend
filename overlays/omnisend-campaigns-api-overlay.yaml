@@ -1,0 +1,165 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Omnisend campaigns-api
+  version: 1.0.0
+  x-generated: '2026-08-13'
+  x-method: generated
+  x-source: openapi/omnisend-campaigns-api-openapi.yml
+  x-note: 'Records API Evangelist enhancements over the contract Omnisend publishes. It is never applied to the harvested
+    file — openapi/ stays verbatim. The gaps captured here are real and measured: 14 of 14 operations carry no operationId,
+    0 carry no tag, and the document declares securitySchemes without ever applying them.'
+extends: omnisend-campaigns-api-openapi.yml
+actions:
+- target: $
+  description: Apply the two declared security schemes at the document root. The published contract defines ApiKeyAuth and
+    Bearer in components.securitySchemes but never applies them, so no operation states its auth requirement.
+  update:
+    security:
+    - ApiKeyAuth: []
+    - Bearer: []
+- target: $
+  description: Declare a document-level tag so every operation can be grouped. The published contract declares none.
+  update:
+    tags:
+    - name: Campaigns
+      description: API for managing campaigns.
+- target: $.paths['/campaigns'].get
+  description: Tag GET /campaigns as Campaigns.
+  update:
+    tags:
+    - Campaigns
+- target: $.paths['/campaigns'].post
+  description: Tag POST /campaigns as Campaigns.
+  update:
+    tags:
+    - Campaigns
+- target: $.paths['/campaigns/{id}'].delete
+  description: Tag DELETE /campaigns/{id} as Campaigns.
+  update:
+    tags:
+    - Campaigns
+- target: $.paths['/campaigns/{id}'].get
+  description: Tag GET /campaigns/{id} as Campaigns.
+  update:
+    tags:
+    - Campaigns
+- target: $.paths['/campaigns/{id}'].patch
+  description: Tag PATCH /campaigns/{id} as Campaigns.
+  update:
+    tags:
+    - Campaigns
+- target: $.paths['/campaigns/{id}/ab-test/resume'].post
+  description: Tag POST /campaigns/{id}/ab-test/resume as Campaigns.
+  update:
+    tags:
+    - Campaigns
+- target: $.paths['/campaigns/{id}/ab-test/stop'].post
+  description: Tag POST /campaigns/{id}/ab-test/stop as Campaigns.
+  update:
+    tags:
+    - Campaigns
+- target: $.paths['/campaigns/{id}/ab-test/winner'].post
+  description: Tag POST /campaigns/{id}/ab-test/winner as Campaigns.
+  update:
+    tags:
+    - Campaigns
+- target: $.paths['/campaigns/{id}/cancel'].post
+  description: Tag POST /campaigns/{id}/cancel as Campaigns.
+  update:
+    tags:
+    - Campaigns
+- target: $.paths['/campaigns/{id}/copy'].post
+  description: Tag POST /campaigns/{id}/copy as Campaigns.
+  update:
+    tags:
+    - Campaigns
+- target: $.paths['/campaigns/{id}/send'].post
+  description: Tag POST /campaigns/{id}/send as Campaigns.
+  update:
+    tags:
+    - Campaigns
+- target: $.paths['/campaigns/{id}/test-email'].post
+  description: Tag POST /campaigns/{id}/test-email as Campaigns.
+  update:
+    tags:
+    - Campaigns
+- target: $.paths['/campaigns/{id}/utm'].get
+  description: Tag GET /campaigns/{id}/utm as Campaigns.
+  update:
+    tags:
+    - Campaigns
+- target: $.paths['/campaigns/{id}/utm'].put
+  description: Tag PUT /campaigns/{id}/utm as Campaigns.
+  update:
+    tags:
+    - Campaigns
+- target: $.paths['/campaigns'].get
+  description: Add a stable operationId for GET /campaigns; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: get_campaigns
+- target: $.paths['/campaigns'].post
+  description: Add a stable operationId for POST /campaigns; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: post_campaigns
+- target: $.paths['/campaigns/{id}'].delete
+  description: Add a stable operationId for DELETE /campaigns/{id}; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: delete_campaigns_id
+- target: $.paths['/campaigns/{id}'].get
+  description: Add a stable operationId for GET /campaigns/{id}; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: get_campaigns_id
+- target: $.paths['/campaigns/{id}'].patch
+  description: Add a stable operationId for PATCH /campaigns/{id}; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: patch_campaigns_id
+- target: $.paths['/campaigns/{id}/ab-test/resume'].post
+  description: Add a stable operationId for POST /campaigns/{id}/ab-test/resume; the published contract omits it, which blocks
+    code generation and tool binding.
+  update:
+    operationId: post_campaigns_id_ab_test_resume
+- target: $.paths['/campaigns/{id}/ab-test/stop'].post
+  description: Add a stable operationId for POST /campaigns/{id}/ab-test/stop; the published contract omits it, which blocks
+    code generation and tool binding.
+  update:
+    operationId: post_campaigns_id_ab_test_stop
+- target: $.paths['/campaigns/{id}/ab-test/winner'].post
+  description: Add a stable operationId for POST /campaigns/{id}/ab-test/winner; the published contract omits it, which blocks
+    code generation and tool binding.
+  update:
+    operationId: post_campaigns_id_ab_test_winner
+- target: $.paths['/campaigns/{id}/cancel'].post
+  description: Add a stable operationId for POST /campaigns/{id}/cancel; the published contract omits it, which blocks code
+    generation and tool binding.
+  update:
+    operationId: post_campaigns_id_cancel
+- target: $.paths['/campaigns/{id}/copy'].post
+  description: Add a stable operationId for POST /campaigns/{id}/copy; the published contract omits it, which blocks code
+    generation and tool binding.
+  update:
+    operationId: post_campaigns_id_copy
+- target: $.paths['/campaigns/{id}/send'].post
+  description: Add a stable operationId for POST /campaigns/{id}/send; the published contract omits it, which blocks code
+    generation and tool binding.
+  update:
+    operationId: post_campaigns_id_send
+- target: $.paths['/campaigns/{id}/test-email'].post
+  description: Add a stable operationId for POST /campaigns/{id}/test-email; the published contract omits it, which blocks
+    code generation and tool binding.
+  update:
+    operationId: post_campaigns_id_test_email
+- target: $.paths['/campaigns/{id}/utm'].get
+  description: Add a stable operationId for GET /campaigns/{id}/utm; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: get_campaigns_id_utm
+- target: $.paths['/campaigns/{id}/utm'].put
+  description: Add a stable operationId for PUT /campaigns/{id}/utm; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: put_campaigns_id_utm

@@ -1,0 +1,174 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "contact": {},
+  "title": "Brands API",
+  "version": "2026-03-15"
+ },
+ "paths": {
+  "/brands/current": {
+   "get": {
+    "description": "With this endpoint you can get brand's information.\n\n**Scopes:**\n`brands.read`\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Brand details",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/internal_handler_http_v5_getBrand.response"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "brands.read"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Get information about brand",
+    "tags": [
+     "Brands"
+    ]
+   },
+   "post": {
+    "description": "With this endpoint you can connect your site to Omnisend.\nNote it's only possible to connect store with [oAuth flow](https://api-docs.omnisend.com/reference/oauth).\n\n**Scopes:**\n`brands.write`\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>\n",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/github_com_omnisend_brand_settings_internal_domain_storeConnection.ConnectBrandRequest"
+       }
+      }
+     },
+     "description": "brand information",
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "OK"
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "brands.write"
+      ]
+     }
+    ],
+    "summary": "Connect brand",
+    "tags": [
+     "Brands"
+    ]
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "https://api.omnisend.com/api"
+  }
+ ],
+ "components": {
+  "parameters": {
+   "APIVersionHeader": {
+    "description": "API version that specifies the response format and behaviour (e.g., 2026-03-15)",
+    "in": "header",
+    "name": "Omnisend-Version",
+    "required": true,
+    "schema": {
+     "type": "string",
+     "default": "2026-03-15"
+    }
+   }
+  },
+  "securitySchemes": {
+   "ApiKeyAuth": {
+    "in": "header",
+    "name": "Authorization",
+    "type": "apiKey"
+   },
+   "Bearer": {
+    "type": "oauth2",
+    "flows": {
+     "clientCredentials": {
+      "tokenUrl": "https://app.omnisend.com/oauth2/token",
+      "scopes": {}
+     }
+    }
+   }
+  },
+  "schemas": {
+   "github_com_omnisend_brand_settings_internal_domain_storeConnection.ConnectBrandRequest": {
+    "properties": {
+     "currency": {
+      "example": "USD",
+      "type": "string"
+     },
+     "platform": {
+      "example": "wordpress",
+      "type": "string"
+     },
+     "version": {
+      "example": "2",
+      "maxLength": 10,
+      "type": "string"
+     },
+     "website": {
+      "example": "https://www.example.com",
+      "type": "string"
+     }
+    },
+    "required": [
+     "platform",
+     "version",
+     "website"
+    ],
+    "type": "object"
+   },
+   "internal_handler_http_v5_getBrand.response": {
+    "properties": {
+     "brandID": {
+      "type": "string"
+     },
+     "connected": {
+      "type": "boolean"
+     },
+     "currency": {
+      "type": "string"
+     },
+     "name": {
+      "type": "string"
+     },
+     "platform": {
+      "type": "string"
+     },
+     "timezone": {
+      "type": "string"
+     },
+     "version": {
+      "type": "string"
+     },
+     "website": {
+      "type": "string"
+     }
+    },
+    "type": "object"
+   }
+  }
+ }
+}

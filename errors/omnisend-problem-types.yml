@@ -1,0 +1,145 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/omnisend-*-openapi.yml (4xx/5xx responses across all 82 harvested operations) enriched from
+  https://api-docs.omnisend.com/reference/responses and
+  https://api-docs.omnisend.com/reference/rate-limit-timeouts-errors
+format: rfc9457
+media_type: application/json
+description: >-
+  Omnisend standardised every failure on RFC 9457 Problem Details at API version 2026-03-15. Problem
+  type URIs live under https://problems.omnisend.com/. Three response schemas carry them: Problem
+  (the base envelope), ValidationProblem (adds a field-level errors array) and RateLimitProblem
+  (adds retryAfter seconds).
+
+envelope:
+  type: URI identifying the problem type
+  title: Short description of the error type
+  status: HTTP status code
+  detail: Human-readable explanation of this specific occurrence
+  instance: 'Request trace identifier — urn:omnisend:request:{uuid}. Quote it to support.'
+
+schemas:
+  - name: Problem
+    used_for: every non-validation, non-rate-limit failure
+  - name: ValidationProblem
+    used_for: 400 validation failures
+    extra_field: 'errors[] of {field, code, message} — every invalid field is returned at once, the API does not stop at the first failure'
+  - name: RateLimitProblem
+    used_for: 429
+    extra_field: 'retryAfter — integer seconds to wait before retrying'
+
+known_type_uris:
+  - uri: https://problems.omnisend.com/validation-failed
+    title: Validation failed
+    status: 400
+    source: https://api-docs.omnisend.com/reference/responses
+  - uri: https://problems.omnisend.com/not-found
+    title: Not found
+    status: 404
+    source: https://api-docs.omnisend.com/reference/responses
+  - uri: https://problems.omnisend.com/rate-limit-exceeded
+    title: Rate limit exceeded
+    status: 429
+    source: https://api-docs.omnisend.com/reference/rate-limit-timeouts-errors
+  - uri: https://problems.omnisend.com/problem
+    title: Problem
+    status: null
+    note: The generic example URI carried in the Problem schema. Omnisend does not publish a full registry of problem type URIs — only these are documented by example.
+
+problem_types:
+  - status: 400
+    title: Bad Request
+    schema: ValidationProblem
+    operations: 79
+    remediation: Read the `errors` array; each entry names the offending `field`, a machine `code` and a message. Unknown query parameters also return 400 — Omnisend rejects undocumented parameters rather than ignoring them. Changing filters mid-cursor-pagination returns 400.
+  - status: 401
+    title: Unauthorized
+    schema: Problem
+    operations: 73
+    meaning: Authentication is missing or invalid.
+    remediation: 'Send Authorization: Omnisend-API-Key {key} or Authorization: Bearer {token}, plus the required Omnisend-Version header.'
+  - status: 402
+    title: Payment Required
+    schema: Problem
+    operations: 3
+    meaning: Payment is required to send emails / to send this campaign.
+    remediation: A commercial gate, not a technical one — the brand's plan or balance does not permit sending. Seen on campaign send and test-email operations.
+  - status: 403
+    title: Forbidden
+    schema: Problem
+    operations: 76
+    meaning: Insufficient permissions for this operation.
+    remediation: The token is valid but lacks the scope the operation requires (see scopes/omnisend-scopes.yml).
+  - status: 404
+    title: Not Found
+    schema: Problem
+    operations: 43
+    remediation: The resource does not exist for this brand. Campaign booster operations also 404 when the PARENT campaign is missing.
+  - status: 409
+    title: Conflict
+    schema: Problem
+    operations: 23
+    meaning: Resource state prevents this action.
+    remediation: >-
+      The busiest state-machine error in this API. Documented cases — a segment in `building` state
+      cannot be updated or deleted; a campaign not in `draft` cannot be updated; a campaign not in
+      `scheduled`/`paused`/`started` cannot be cancelled; a parent campaign already carrying a booster
+      cannot take another; an enabled automation cannot be patched or restructured (disable first).
+  - status: 410
+    title: Gone
+    schema: Problem
+    operations: 73
+    meaning: API version has been retired.
+    remediation: >-
+      Emitted when the Omnisend-Version header names a retired version. This is Omnisend's version
+      sunset signal and it is a hard failure, not a warning — see lifecycle/omnisend-lifecycle.yml.
+  - status: 413
+    title: Payload Too Large
+    schema: Problem
+    operations: 6
+    meaning: Request body exceeds the 1 MB limit.
+    remediation: Applies to email template HTML import and content update. Images are capped separately at 5 MB.
+  - status: 415
+    title: Unsupported Media Type
+    schema: Problem
+    operations: 2
+    remediation: Image upload accepts JPEG, PNG, GIF and WebP only.
+  - status: 422
+    title: Unprocessable Entity
+    schema: Problem
+    operations: 10
+    meaning: Operation incompatible with this resource type.
+    remediation: >-
+      Distinct from 409 — the resource is in a legal state but is the wrong KIND of thing for this
+      call. Examples: A/B-test control called on a campaign that is not an A/B test; test-email
+      called on a block that does not support test emails; a campaign channel that is unsupported.
+  - status: 429
+    title: Too Many Requests
+    schema: RateLimitProblem
+    operations: 75
+    remediation: >-
+      Back off. `retryAfter` (seconds) is present in the body on some endpoints — there is no
+      Retry-After or RateLimit-* response header. Limits are per brand on a sliding window.
+  - status: 500
+    title: Internal Server Error
+    schema: Problem
+    operations: 80
+    remediation: Retry with backoff; quote `instance` to support.
+  - status: 503
+    title: Service Unavailable
+    schema: Problem
+    operations: 4
+    remediation: >-
+      Also used for optimistic-concurrency loss — "The event metadata was modified concurrently;
+      retry the request" on the Event Metadata API. Retry is safe for that case.
+  - status: 524
+    title: Timeout
+    schema: Problem
+    operations: 2
+    note: A Cloudflare-origin status surfaced in the contract on two operations. Because the API publishes no idempotency key, a 524 on a write leaves the caller unable to safely retry.
+
+gaps:
+  - No published registry of problem `type` URIs — only three are documented by example, so an agent cannot enumerate failure modes ahead of time.
+  - No machine-readable list of the `code` values that appear inside ValidationProblem.errors[].
+  - 429 carries no response headers, so a client cannot see its remaining budget before it is exhausted.

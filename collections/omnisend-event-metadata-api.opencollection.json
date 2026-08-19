@@ -1,0 +1,99 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Event Metadata API",
+    "version": "2026-preview"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Event Metadata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create custom event metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/event-metadata",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Declares a new brand-custom event schema. The event identity is the\ncombination of `name` and `origin`; `displayName` and at least one\ntop-level property are required. Optional metadata fields must be\nomitted rather than sent as null. The created event is returned with\nevery node flagged `explicitlyDefined`.\n\n**Scopes:**\n`events.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Update custom event metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.omnisend.com/api/event-metadata",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Merges changes into an existing brand-custom event, identified by\n`name` and `origin`. Only supplied fields are applied: omitted\nmetadata and omitted properties are preserved, and no property is\ndeleted. The type of an already explicitly-defined property cannot\nchange. Optional metadata fields must be omitted rather than sent as\nnull. The merged event is returned.\n\n**Scopes:**\n`events.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Query events metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/event-metadata/query",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns event metadata entries for the given category, optionally filtered\nby event names and/or origins.\n\n**Supported categories:** `automations`, `events`, `segments`\n\n**API version scoping:**\nThe events a category exposes depend on the requested `Omnisend-Version`; a date\nbetween releases resolves to the nearest earlier supported version. Brand-custom\nevents are not version-scoped.\n\n**Event name filtering:**\nWhen `events` are provided, only events whose system name matches one of the\ngiven va"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

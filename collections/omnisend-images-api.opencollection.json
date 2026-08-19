@@ -1,0 +1,221 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Images API",
+    "version": "5.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Images",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List images",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/images",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of images per page (1-250)"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for next page (base64-encoded, from previous response)"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for previous page (base64-encoded, from previous response)"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by"
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query",
+                "description": "Sort order"
+              },
+              {
+                "name": "nameContains",
+                "value": "",
+                "type": "query",
+                "description": "Filter images by name (partial match, case-insensitive, max 200 characters)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "With this endpoint you can get a paginated list of images for a brand.\n\n**Sorting:**\nSupported sort fields: `createdAt` (default), `name`\nSupported directions: `asc`, `desc` (default)\n\n**Filtering:**\nUse `nameContains` to filter images by name (case-insensitive, partial match)\n\n**Pagination:**\nThis endpoint uses cursor-based pagination for efficient traversal of large datasets.\n- Use the `cursors.after` value from the response to get the next page\n- Use the `cursors.before` value from the respon"
+        },
+        {
+          "info": {
+            "name": "Upload image by URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/images",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "With this endpoint you can upload an image from a publicly accessible URL.\nIf the name is not provided, the filename will be extracted from the URL.\n\n**Scopes:**\n`images.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Get image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/images/:id",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Image ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "With this endpoint you can get a single image by ID.\n\n**Scopes:**\n`images.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Delete image",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.omnisend.com/api/images/:id",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Image ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "With this endpoint you can delete an image by ID.\n\n**Scopes:**\n`images.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Upload image file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/images/upload",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "name",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "With this endpoint you can upload an image file directly from your computer.\n\n**File Requirements:**\n- Supported formats: JPEG, PNG, GIF, WebP\n- Maximum file size: 5MB\n\n**Scopes:**\n`images.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,105 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://api-docs.omnisend.com/reference/overview,
+  https://api-docs.omnisend.com/docs/migrate-from-v5-to-v2026-03-15,
+  https://api-docs.omnisend.com/docs/migrate-from-v3-to-v2026-03-15,
+  https://api-docs.omnisend.com/docs/migrate-from-v3-with-an-ai-agent,
+  https://status.omnisend.com, https://www.omnisend.com/changelog/,
+  and the harvested openapi/omnisend-*-openapi.yml contracts
+description: >-
+  Omnisend re-cut its API lifecycle at version 2026-03-15: version moved out of the URL path and into
+  a required `Omnisend-Version` request header, the base path became https://api.omnisend.com/api,
+  and every operation now declares a 410 "API version has been retired" response. Three earlier
+  URL-path versions (v3, v4.0, v5) remain published as branches on the documentation host.
+
+versioning:
+  scheme: date-based, header-negotiated
+  header: Omnisend-Version
+  current: '2026-03-15'
+  current_base: https://api.omnisend.com/api
+  required: true
+  default_in_spec: '2026-03-15'
+  resolution: >-
+    A date between releases resolves to the nearest earlier supported version (documented on the
+    event-metadata query operation).
+  history:
+    - version: v3
+      base: https://api.omnisend.com/v3
+      status: legacy
+      migration: https://api-docs.omnisend.com/docs/migrate-from-v3-to-v2026-03-15
+    - version: '4.0'
+      base: https://api.omnisend.com/v4
+      status: legacy
+      note: Published as a documentation branch; no migration guide.
+    - version: v5
+      base: https://api.omnisend.com/v5
+      status: legacy
+      migration: https://api-docs.omnisend.com/docs/migrate-from-v5-to-v2026-03-15
+      note: >-
+        Still live — https://api.omnisend.com/v5 answers 400 "API key or access token not provided"
+        rather than 404 or 410. Omnisend's own MCP server v2 still routes GET automations through
+        /v5/automations while the published contract serves it at /api/automations.
+    - version: '2026-preview'
+      status: preview
+      note: A documentation branch carrying preview definitions (campaigns, automations, event metadata, forms) ahead of a dated release.
+    - version: '2026-03-15'
+      status: current
+
+deprecation:
+  policy_published: true
+  policy_url: https://api-docs.omnisend.com/docs/migrate-from-v5-to-v2026-03-15
+  mechanism: >-
+    Version retirement is signalled in-band as HTTP 410 Gone with an RFC 9457 body titled
+    "API version has been retired". The response is declared on 73 of 82 operations in the harvested
+    contracts, so it is a contract guarantee, not a footnote.
+  headers:
+    sunset: false
+    deprecation: false
+    note: >-
+      Omnisend does NOT emit RFC 8594 `Sunset` or the `Deprecation` header. There is no advance
+      machine-readable warning — a client learns a version is gone only when it starts failing with
+      410. Migration guides carry no published retirement date for v3/v4/v5.
+  migration_guides:
+    - https://api-docs.omnisend.com/docs/migrate-from-v5-to-v2026-03-15
+    - https://api-docs.omnisend.com/docs/migrate-from-v3-to-v2026-03-15
+    - https://api-docs.omnisend.com/docs/migrate-from-v3-with-an-ai-agent
+  note: >-
+    The third guide is notable — Omnisend publishes an agent-driven migration path, telling
+    integrators to hand the migration to an AI agent.
+
+deprecated_operations:
+  count: 0
+  note: >-
+    No operation in any of the 15 harvested specs carries `deprecated: true`. Deprecation is
+    expressed at the version level, not per operation.
+
+status_page:
+  url: https://status.omnisend.com
+  status: 200
+  probed: '2026-08-13'
+  note: Live status page linked from the site footer.
+
+changelog:
+  url: https://www.omnisend.com/changelog/
+  detail: changelog/omnisend-changelog.yml
+  note: >-
+    apis.yml previously pointed at https://api-docs.omnisend.com/changelog, which returns 404. The
+    real dated changelog is on the marketing host.
+
+roadmap:
+  url: https://www.omnisend.com/changelog/#roadmap
+  note: A Roadmap tab on the same page as the changelog; its content is loaded client-side.
+
+sla:
+  published: false
+  note: >-
+    No public SLA or uptime commitment. Omnisend's pricing page describes an Enterprise tier with a
+    "Custom SLA" negotiated per contract; nothing is published for self-serve plans.
+
+support:
+  channels:
+    - https://support.omnisend.com
+    - https://www.omnisend.com/contact-us/support
+    - mailto:integrations@omnisend.com
+  api_error_log: https://app.omnisend.com/integrations/api-access-logs

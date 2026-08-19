@@ -1,0 +1,85 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Omnisend segments-api
+  version: 1.0.0
+  x-generated: '2026-08-13'
+  x-method: generated
+  x-source: openapi/omnisend-segments-api-openapi.yml
+  x-note: 'Records API Evangelist enhancements over the contract Omnisend publishes. It is never applied to the harvested
+    file — openapi/ stays verbatim. The gaps captured here are real and measured: 6 of 6 operations carry no operationId,
+    0 carry no tag, and the document declares securitySchemes without ever applying them.'
+extends: omnisend-segments-api-openapi.yml
+actions:
+- target: $
+  description: Apply the two declared security schemes at the document root. The published contract defines ApiKeyAuth and
+    Bearer in components.securitySchemes but never applies them, so no operation states its auth requirement.
+  update:
+    security:
+    - ApiKeyAuth: []
+    - Bearer: []
+- target: $
+  description: Declare a document-level tag so every operation can be grouped. The published contract declares none.
+  update:
+    tags:
+    - name: Segments
+      description: Manage contact segments using flexible condition-based rules.
+- target: $.paths['/segments'].get
+  description: Tag GET /segments as Segments.
+  update:
+    tags:
+    - Segments
+- target: $.paths['/segments'].post
+  description: Tag POST /segments as Segments.
+  update:
+    tags:
+    - Segments
+- target: $.paths['/segments/{segmentID}'].delete
+  description: Tag DELETE /segments/{segmentID} as Segments.
+  update:
+    tags:
+    - Segments
+- target: $.paths['/segments/{segmentID}'].get
+  description: Tag GET /segments/{segmentID} as Segments.
+  update:
+    tags:
+    - Segments
+- target: $.paths['/segments/{segmentID}'].put
+  description: Tag PUT /segments/{segmentID} as Segments.
+  update:
+    tags:
+    - Segments
+- target: $.paths['/segments/{segmentID}/statistics'].get
+  description: Tag GET /segments/{segmentID}/statistics as Segments.
+  update:
+    tags:
+    - Segments
+- target: $.paths['/segments'].get
+  description: Add a stable operationId for GET /segments; the published contract omits it, which blocks code generation and
+    tool binding.
+  update:
+    operationId: get_segments
+- target: $.paths['/segments'].post
+  description: Add a stable operationId for POST /segments; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: post_segments
+- target: $.paths['/segments/{segmentID}'].delete
+  description: Add a stable operationId for DELETE /segments/{segmentID}; the published contract omits it, which blocks code
+    generation and tool binding.
+  update:
+    operationId: delete_segments_segmentID
+- target: $.paths['/segments/{segmentID}'].get
+  description: Add a stable operationId for GET /segments/{segmentID}; the published contract omits it, which blocks code
+    generation and tool binding.
+  update:
+    operationId: get_segments_segmentID
+- target: $.paths['/segments/{segmentID}'].put
+  description: Add a stable operationId for PUT /segments/{segmentID}; the published contract omits it, which blocks code
+    generation and tool binding.
+  update:
+    operationId: put_segments_segmentID
+- target: $.paths['/segments/{segmentID}/statistics'].get
+  description: Add a stable operationId for GET /segments/{segmentID}/statistics; the published contract omits it, which blocks
+    code generation and tool binding.
+  update:
+    operationId: get_segments_segmentID_statistics

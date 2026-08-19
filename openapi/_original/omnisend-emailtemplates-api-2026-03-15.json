@@ -1,0 +1,4302 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+  "contact": {},
+  "description": "API for managing email content, templates and universal layouts",
+  "title": "Email Content API",
+  "version": "5.0"
+ },
+ "paths": {
+  "/email-content/{id}": {
+   "get": {
+    "description": "With this endpoint you can get email content by ID.\n\n**Scopes:**\n`email-templates.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "description": "Content ID (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Content",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Content"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Invalid content ID or missing brand ID",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Content not found",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "email-templates.read"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Get email content",
+    "tags": [
+     "Email Content"
+    ]
+   },
+   "put": {
+    "description": "With this endpoint you can update (fully replace) email content by ID.\nThe full content structure must be provided in the request body.\n\n**Scopes:**\n`email-templates.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "description": "Content ID (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/Content"
+       }
+      }
+     },
+     "description": "Email content to update",
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Updated Content",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Content"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Invalid content ID, missing brand ID, invalid content structure, or validation errors",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Content not found",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "409": {
+      "description": "Content is locked and cannot be modified",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "413": {
+      "description": "Request body too large - exceeds 1 MB limit",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "email-templates.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Update email content",
+    "tags": [
+     "Email Content"
+    ]
+   }
+  },
+  "/email-content/{id}/render": {
+   "post": {
+    "description": "With this endpoint you can render email content to HTML by ID.\nThe content is rendered with an empty data context (no contact, no marketing activity).\n\n**Scopes:**\n`email-templates.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 40 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     },
+     {
+      "description": "Content ID (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Rendered HTML body",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": {
+          "type": "string"
+         },
+         "type": "object"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Invalid content ID or missing brand ID",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Content not found",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Liquid syntax error in template",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "email-templates.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Render email content",
+    "tags": [
+     "Email Content"
+    ]
+   }
+  },
+  "/email-templates": {
+   "get": {
+    "description": "With this endpoint you can get a paginated list of email templates.\n\n**Sorting:**\nUse `sort` and `direction` to control the order of results.\nSupported sort fields: `createdAt` (default), `name`.\nSupported directions: `asc`, `desc` (default).\n\n**Filtering:**\nUse `nameContains` to filter templates by name (case-insensitive partial match, max 200 characters)\n\n**Pagination:**\nThis endpoint uses cursor-based pagination for efficient traversal of large datasets.\n- Use the `paging.cursors.after` value from the response to get the next page\n- Use the `paging.cursors.before` value from the response to get the previous page\n- The `paging.hasMore` field indicates if more results are available\n- Do not use both `after` and `before` parameters simultaneously\n- Maximum page size is 100 items (default 50)\n- If `limit` is less than 1 or greater than 100, returns 400 Bad Request\n\n**Scopes:**\n`email-templates.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "description": "Number of items per page (1-100, default 50)",
+      "in": "query",
+      "name": "limit",
+      "schema": {
+       "type": "integer",
+       "minimum": 1,
+       "maximum": 100
+      }
+     },
+     {
+      "description": "Cursor for next page (base64-encoded, from previous response)",
+      "in": "query",
+      "name": "after",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "description": "Cursor for previous page (base64-encoded, from previous response)",
+      "in": "query",
+      "name": "before",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "description": "Sort field (createdAt, name; default createdAt)",
+      "in": "query",
+      "name": "sort",
+      "schema": {
+       "type": "string",
+       "enum": [
+        "createdAt",
+        "name"
+       ]
+      }
+     },
+     {
+      "description": "Sort direction (asc, desc; default desc)",
+      "in": "query",
+      "name": "direction",
+      "schema": {
+       "type": "string",
+       "enum": [
+        "asc",
+        "desc"
+       ]
+      }
+     },
+     {
+      "description": "Filter templates by name (case-insensitive partial match, max 200 characters)",
+      "in": "query",
+      "name": "nameContains",
+      "schema": {
+       "type": "string",
+       "maxLength": 200
+      }
+     },
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "List of email templates with pagination",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TemplateListResponse"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Invalid query parameters or missing brand ID",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "email-templates.read"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Get email templates",
+    "tags": [
+     "Email Templates"
+    ]
+   },
+   "post": {
+    "description": "With this endpoint you can create a new email template.\n\n**Scopes:**\n`email-templates.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/Template"
+       }
+      }
+     },
+     "description": "Template to create",
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Created Template",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Template"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Invalid request body, missing brand ID, invalid template structure, or validation errors",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "413": {
+      "description": "Request body too large - exceeds 1 MB limit",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "email-templates.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Create email template",
+    "tags": [
+     "Email Templates"
+    ]
+   }
+  },
+  "/email-templates/{id}": {
+   "delete": {
+    "description": "With this endpoint you can delete email template by ID.\n\n**Scopes:**\n`email-templates.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "description": "Email Template ID (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "No Content"
+     },
+     "400": {
+      "description": "Invalid template ID or missing brand ID",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "email-templates.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Delete email template",
+    "tags": [
+     "Email Templates"
+    ]
+   },
+   "get": {
+    "description": "With this endpoint you can get email template by ID.\n\n**Scopes:**\n`email-templates.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "description": "Email Template ID (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Template",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Template"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Invalid template ID or missing brand ID",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Template not found",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "email-templates.read"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Get email template",
+    "tags": [
+     "Email Templates"
+    ]
+   },
+   "put": {
+    "description": "With this endpoint you can update (fully replace) an email template by ID.\n\n**Scopes:**\n`email-templates.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "description": "Email Template ID (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/Template"
+       }
+      }
+     },
+     "description": "Template to update",
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Updated Template",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Template"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Invalid template ID, request body, missing brand ID, invalid template structure, or validation errors",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Template not found",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "413": {
+      "description": "Request body too large - exceeds 1 MB limit",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "email-templates.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Update email template",
+    "tags": [
+     "Email Templates"
+    ]
+   }
+  },
+  "/email-templates/{id}/render": {
+   "post": {
+    "description": "With this endpoint you can render an email template by ID and get the full HTML body for preview purposes.\n\n**Scopes:**\n`email-templates.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 40 requests per minute.",
+    "parameters": [
+     {
+      "description": "Email Template ID (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Rendered HTML body",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": {
+          "type": "string"
+         },
+         "type": "object"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Invalid template ID or missing brand ID",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Template not found",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "email-templates.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Render email template",
+    "tags": [
+     "Email Templates"
+    ]
+   }
+  },
+  "/email-templates/import": {
+   "post": {
+    "description": "With this endpoint you can import email template from raw HTML content.\nThe HTML will be parsed, styles extracted, and structured into a template.\n\n**Request body size limit:** 1 MB\n\n**Scopes:**\n`email-templates.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ImportTemplateRequest"
+       }
+      }
+     },
+     "description": "Template name and HTML content to import",
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Imported Template",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Template"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Invalid request body or missing brand ID",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "413": {
+      "description": "Request body too large - exceeds 1 MB limit",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "email-templates.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Import email template from HTML",
+    "tags": [
+     "Email Templates"
+    ]
+   }
+  },
+  "/email-universal-layouts": {
+   "get": {
+    "description": "With this endpoint you can get a paginated list of universal layouts.\n\n**Sorting:**\nItems are returned in descending order by creation time (newest first).\nThis is based on the internal document ID which contains a timestamp.\n\n**Pagination:**\nThis endpoint uses cursor-based pagination for efficient traversal of large datasets.\n- Use the `paging.cursors.after` value from the response to get the next page\n- Use the `paging.cursors.before` value from the response to get the previous page\n- The `paging.hasMore` field indicates if more results are available\n- Do not use both `after` and `before` parameters simultaneously\n- Maximum page size is 250 items (default 100)\n- If `limit` is less than 1 or greater than 250, returns 400 Bad Request\n\n**Filtering:**\nUse `nameContains` to filter layouts by name (case-insensitive partial match, max 200 characters)\n\n**Scopes:**\n`email-templates.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "description": "Number of items per page (1-250, default 100)",
+      "in": "query",
+      "name": "limit",
+      "schema": {
+       "type": "integer",
+       "minimum": 1,
+       "maximum": 250
+      }
+     },
+     {
+      "description": "Cursor for next page (base64-encoded, from previous response)",
+      "in": "query",
+      "name": "after",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "description": "Cursor for previous page (base64-encoded, from previous response)",
+      "in": "query",
+      "name": "before",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "description": "Filter layouts by name (case-insensitive partial match, max 200 characters)",
+      "in": "query",
+      "name": "nameContains",
+      "schema": {
+       "type": "string",
+       "maxLength": 200
+      }
+     },
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "List of universal layouts with pagination",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ListUniversalLayoutsResponse"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Invalid query parameters or missing brand ID",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "email-templates.read"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Get universal layouts",
+    "tags": [
+     "Email Universal Layouts"
+    ]
+   },
+   "post": {
+    "description": "With this endpoint you can create a new universal layout.\n\n**Scopes:**\n`email-templates.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/UniversalLayout"
+       }
+      }
+     },
+     "description": "Universal layout to create",
+     "required": true
+    },
+    "responses": {
+     "201": {
+      "description": "Created Universal Layout",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/UniversalLayout"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Invalid request body, missing brand ID, invalid layout structure, or validation errors",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "413": {
+      "description": "Request body too large - exceeds 1 MB limit",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "email-templates.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Create universal layout",
+    "tags": [
+     "Email Universal Layouts"
+    ]
+   }
+  },
+  "/email-universal-layouts/{id}": {
+   "delete": {
+    "description": "With this endpoint you can delete a universal layout by ID.\n\n**Scopes:**\n`email-templates.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "description": "Universal Layout ID (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Universal layout deleted successfully"
+     },
+     "400": {
+      "description": "Invalid layout ID or missing brand ID",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "*/*": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "email-templates.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Delete universal layout",
+    "tags": [
+     "Email Universal Layouts"
+    ]
+   },
+   "get": {
+    "description": "With this endpoint you can get a universal layout by ID.\n\n**Scopes:**\n`email-templates.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "description": "Universal Layout ID (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Universal Layout",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/UniversalLayout"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Invalid layout ID or missing brand ID",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Universal layout not found",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "email-templates.read"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Get universal layout",
+    "tags": [
+     "Email Universal Layouts"
+    ]
+   },
+   "put": {
+    "description": "With this endpoint you can update (fully replace) a universal layout by ID.\n\n**Scopes:**\n`email-templates.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+    "parameters": [
+     {
+      "description": "Universal Layout ID (24 character hexadecimal)",
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "$ref": "#/components/parameters/APIVersionHeader"
+     }
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/UniversalLayout"
+       }
+      }
+     },
+     "description": "Universal layout to update",
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Updated Universal Layout",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/UniversalLayout"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Invalid layout ID, request body, missing brand ID, invalid layout structure, or validation errors",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Authentication is missing or invalid",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "403": {
+      "description": "Insufficient permissions for this operation",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Universal layout not found",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "410": {
+      "description": "API version has been retired",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "413": {
+      "description": "Request body too large - exceeds 1 MB limit",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "429": {
+      "description": "Rate limit exceeded",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Unexpected error occurred",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/APIErrorResponse"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "Bearer": [
+       "email-templates.write"
+      ]
+     },
+     {
+      "ApiKeyAuth": []
+     }
+    ],
+    "summary": "Update universal layout",
+    "tags": [
+     "Email Universal Layouts"
+    ]
+   }
+  }
+ },
+ "servers": [
+  {
+   "url": "https://api.omnisend.com/api"
+  }
+ ],
+ "components": {
+  "parameters": {
+   "APIVersionHeader": {
+    "description": "API version that specifies the response format and behaviour",
+    "in": "header",
+    "name": "Omnisend-Version",
+    "required": true,
+    "schema": {
+     "type": "string",
+     "default": "2026-03-15"
+    }
+   }
+  },
+  "securitySchemes": {
+   "ApiKeyAuth": {
+    "in": "header",
+    "name": "Authorization",
+    "type": "apiKey"
+   },
+   "Bearer": {
+    "type": "oauth2",
+    "flows": {
+     "clientCredentials": {
+      "tokenUrl": "https://app.omnisend.com/oauth2/token",
+      "scopes": {
+       "email-templates.read": "Allows reading email templates and universal layouts",
+       "email-templates.write": "Allows create, update, delete email templates and universal layouts"
+      }
+     }
+    }
+   }
+  },
+  "schemas": {
+   "APIErrorResponse": {
+    "description": "RFC 9457 Problem Details error response",
+    "properties": {
+     "detail": {
+      "description": "Human-readable explanation specific to this occurrence",
+      "example": "One or more fields are invalid.",
+      "type": "string"
+     },
+     "errors": {
+      "description": "List of field-level validation errors",
+      "items": {
+       "$ref": "#/components/schemas/FieldError"
+      },
+      "type": "array"
+     },
+     "instance": {
+      "description": "URI reference identifying the specific occurrence",
+      "example": "urn:omnisend:request:abc123",
+      "type": "string"
+     },
+     "status": {
+      "description": "HTTP status code",
+      "example": 400,
+      "type": "integer"
+     },
+     "title": {
+      "description": "Short human-readable summary of the problem",
+      "example": "Validation failed",
+      "type": "string"
+     },
+     "type": {
+      "description": "URI reference identifying the problem type",
+      "example": "https://problems.omnisend.com/validation-failed",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Annotation": {
+    "description": "Gmail annotation settings",
+    "properties": {
+     "discountDescription": {
+      "description": "Gmail discount description - description of the discount or promotion to display in Gmail promotion tab together with the discount code.",
+      "example": "15% off",
+      "type": "string"
+     },
+     "isEnabled": {
+      "description": "Gmail annotation enabled",
+      "example": true,
+      "type": "boolean"
+     }
+    },
+    "type": "object"
+   },
+   "Block": {
+    "description": "Block is a single element in the email template",
+    "properties": {
+     "button": {
+      "$ref": "#/components/schemas/Button"
+     },
+     "components": {
+      "description": "Components - the parts a block renders that are not covered by its own content field.\nSome blocks tag each part with a 'role', and which roles they need is decided by their 'type':\na 'discount' block holds the code, the redeem button and the expiry date, a 'menu' block holds\nits items, a 'product' block holds the product's image, title, description, prices and button.\nOther blocks nest components without a role, and blocks that render everything from a dedicated\ncontent field have no components at all. See BlockComponent.",
+      "items": {
+       "$ref": "#/components/schemas/BlockComponent"
+      },
+      "type": "array"
+     },
+     "discount": {
+      "$ref": "#/components/schemas/Discount"
+     },
+     "dynamicDiscount": {
+      "$ref": "#/components/schemas/Discount"
+     },
+     "html": {
+      "description": "Deprecated: use HTMLCode instead. Read-only, will be removed in future versions.",
+      "example": "<p>Hello</p>",
+      "readOnly": true,
+      "type": "string"
+     },
+     "htmlCode": {
+      "$ref": "#/components/schemas/HTMLCode"
+     },
+     "id": {
+      "description": "Block unique identifier - must be unique within the template",
+      "example": "6699a0000000000000000000",
+      "maxLength": 24,
+      "minLength": 24,
+      "type": "string"
+     },
+     "image": {
+      "$ref": "#/components/schemas/Image"
+     },
+     "lineSpace": {
+      "$ref": "#/components/schemas/LineSpace"
+     },
+     "logo": {
+      "$ref": "#/components/schemas/Logo"
+     },
+     "orderAddresses": {
+      "$ref": "#/components/schemas/OrderAddresses"
+     },
+     "orderProducts": {
+      "$ref": "#/components/schemas/OrderProducts"
+     },
+     "orderSummary": {
+      "$ref": "#/components/schemas/OrderSummary"
+     },
+     "orderTotal": {
+      "$ref": "#/components/schemas/OrderTotal"
+     },
+     "preheader": {
+      "$ref": "#/components/schemas/Preheader"
+     },
+     "product": {
+      "$ref": "#/components/schemas/Product"
+     },
+     "role": {
+      "description": "Block role",
+      "enum": [
+       "product_image",
+       "product_title",
+       "product_description",
+       "product_prices",
+       "product_price",
+       "product_button",
+       "discount_code",
+       "discount_button",
+       "discount_expiration_date",
+       "product_current_price",
+       "product_old_price",
+       "menu_text"
+      ],
+      "example": "product_title",
+      "type": "string"
+     },
+     "secondaryStylePresetID": {
+      "description": "Secondary style preset ID - ID of the secondary style preset. Used for order blocks styling as smaller text style.",
+      "example": "paragraph",
+      "type": "string"
+     },
+     "social": {
+      "$ref": "#/components/schemas/Social"
+     },
+     "staticDiscount": {
+      "$ref": "#/components/schemas/Discount"
+     },
+     "stylePresetID": {
+      "description": "Style preset ID - ID of the style preset. Used for Button or Text block styling.\nID must be present in template General Settings.",
+      "example": "paragraph",
+      "type": "string"
+     },
+     "styleProperties": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/StyleProperties"
+       }
+      ],
+      "description": "Style properties - style properties of the block"
+     },
+     "text": {
+      "description": "Text content of the block - supports HTML formatting and personalization tags",
+      "example": "<p>Hello [[contact.first_name]]</p>",
+      "type": "string"
+     },
+     "type": {
+      "description": "Block type.\nNotes:\n  - 'html' is read-only and cannot be set on create/update.\n  - 'menu' is a container block with no dedicated content field \u2014 items must be provided via 'components' as text blocks with role 'menu_text', and styling is configured through 'stylePresetID' and 'styleProperties'.\n  - 'discount' is the block for an offer. The offer is configured in the 'discount' object, and everything the recipient sees must be provided via 'components' as role-tagged blocks \u2014 a text block with role 'discount_code' (required, exactly one), plus an optional button with role 'discount_button' and an optional text block with role 'discount_expiration_date'. The store issues a code per recipient when the email is sent, so 'discount.code' carries the placeholder XXXX-XXXX-XXXX. Writing the offer as plain text instead leaves a code that was never created in the store, so the recipient cannot redeem it.\n  - 'dynamicDiscount' is the WooCommerce equivalent of 'discount' \u2014 same object, same components and placeholder, except that the 'discount_button' component is required. A 'discount' block on a WooCommerce store is skipped when the email is sent, so it ships the placeholder to the recipient as the code.\n  - 'staticDiscount' (WooCommerce) instead carries one fixed code that already exists in the store, and gets no code at send time. It does not accept a 'discount_button'. Use it only when the brand explicitly asked for a fixed code.",
+      "enum": [
+       "html",
+       "htmlCode",
+       "text",
+       "image",
+       "video",
+       "logo",
+       "menu",
+       "social",
+       "button",
+       "product",
+       "discount",
+       "staticDiscount",
+       "dynamicDiscount",
+       "orderSummary",
+       "orderProducts",
+       "orderTotal",
+       "orderAddresses",
+       "lineSpace",
+       "preheader",
+       "price"
+      ],
+      "example": "text",
+      "type": "string"
+     },
+     "video": {
+      "$ref": "#/components/schemas/Video"
+     }
+    },
+    "type": "object"
+   },
+   "BlockComponent": {
+    "description": "BlockComponent is a block nested inside a parent block, carrying one part of what that parent renders. Some parent blocks assign a 'role' to each of their parts, and then the parent's 'type' decides which roles it needs: a 'discount' block requires text/discount_code and accepts button/discount_button and text/discount_expiration_date; its WooCommerce equivalents take the same roles, except that 'dynamicDiscount' requires the button and 'staticDiscount' does not accept one. A 'menu' block holds its items as text/menu_text. The product_* roles belong to a 'product' block, whose price/product_prices component nests text/product_current_price and text/product_old_price components of its own. Blocks that do not assign roles nest their components without one.",
+    "properties": {
+     "button": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/Button"
+       }
+      ],
+      "description": "Button content of the component - used by roles 'discount_button' and 'product_button'."
+     },
+     "components": {
+      "description": "Components nested inside this component. Only role 'product_prices' uses them.",
+      "items": {
+       "$ref": "#/components/schemas/BlockComponent"
+      },
+      "type": "array"
+     },
+     "html": {
+      "description": "Deprecated: use Text instead. Read-only, will be removed in future versions.",
+      "example": "<p>Hello</p>",
+      "readOnly": true,
+      "type": "string"
+     },
+     "id": {
+      "description": "Component unique identifier - must be unique within the template",
+      "example": "6699a0000000000000000000",
+      "maxLength": 24,
+      "minLength": 24,
+      "type": "string"
+     },
+     "image": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/Image"
+       }
+      ],
+      "description": "Image content of the component - used by role 'product_image'."
+     },
+     "role": {
+      "description": "Role the component plays inside its parent block - set only where the parent block assigns\nroles to its parts, and omitted otherwise.",
+      "enum": [
+       "discount_code",
+       "discount_button",
+       "discount_expiration_date",
+       "menu_text",
+       "product_image",
+       "product_title",
+       "product_description",
+       "product_prices",
+       "product_price",
+       "product_button",
+       "product_current_price",
+       "product_old_price"
+      ],
+      "example": "discount_code",
+      "type": "string"
+     },
+     "stylePresetID": {
+      "description": "Style preset ID - ID of the style preset. ID must be present in template General Settings.",
+      "example": "paragraph",
+      "type": "string"
+     },
+     "styleProperties": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/StyleProperties"
+       }
+      ],
+      "description": "Style properties - style properties of the component"
+     },
+     "text": {
+      "description": "Text content of the component - supports HTML formatting and personalization tags.\nFor role 'discount_code' this is the code the recipient sees; on a platform that issues its own codes\nit is replaced at send time, so it carries the placeholder XXXX-XXXX-XXXX.",
+      "example": "<p>XXXX-XXXX-XXXX</p>",
+      "type": "string"
+     },
+     "type": {
+      "description": "Component type. Only these block types can be nested as a component.",
+      "enum": [
+       "text",
+       "button",
+       "image",
+       "price"
+      ],
+      "example": "text",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Body": {
+    "description": "Body settings for the template",
+    "properties": {
+     "backgroundColor": {
+      "description": "Body background color",
+      "example": "#EDEEF0",
+      "type": "string"
+     },
+     "backgroundImageID": {
+      "description": "Body background image ID - must be present in Image API",
+      "example": "68f0ad8a72105230579523cd",
+      "maxLength": 24,
+      "minLength": 24,
+      "type": "string"
+     },
+     "backgroundRepeat": {
+      "description": "Body background repeat",
+      "example": "no-repeat",
+      "type": "string"
+     },
+     "backgroundSize": {
+      "description": "Body background size",
+      "example": "cover",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Button": {
+    "description": "Button block settings",
+    "properties": {
+     "isFullWidth": {
+      "description": "Button is full width",
+      "example": true,
+      "type": "boolean"
+     },
+     "link": {
+      "description": "Button link",
+      "example": "https://www.omnisend.com",
+      "type": "string"
+     },
+     "text": {
+      "description": "Button text",
+      "example": "Shop now",
+      "type": "string"
+     },
+     "translationKey": {
+      "description": "Button translation key - used for internationalization support",
+      "example": "shop_now",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "ButtonPreset": {
+    "description": "Button preset for consistent design",
+    "properties": {
+     "id": {
+      "description": "Button preset unique identifier",
+      "example": "primary_button",
+      "type": "string"
+     },
+     "name": {
+      "description": "Button preset name",
+      "example": "Primary button",
+      "type": "string"
+     },
+     "styles": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/ButtonStyle"
+       }
+      ],
+      "description": "Button preset styles"
+     }
+    },
+    "type": "object"
+   },
+   "ButtonStyle": {
+    "description": "Button preset style properties",
+    "properties": {
+     "backgroundColor": {
+      "description": "Button background color",
+      "example": "#383838",
+      "type": "string"
+     },
+     "border": {
+      "description": "Button border style",
+      "example": "2px solid #BFDCFE",
+      "type": "string"
+     },
+     "borderRadius": {
+      "description": "Button border radius",
+      "example": "0px",
+      "type": "string"
+     },
+     "color": {
+      "description": "Button font color",
+      "example": "#FFFFFF",
+      "type": "string"
+     },
+     "fontFamily": {
+      "description": "Button font family",
+      "example": "Alegreya, Georgia, Times New Roman, serif",
+      "type": "string"
+     },
+     "fontSize": {
+      "description": "Button font size",
+      "example": "16px",
+      "type": "string"
+     },
+     "fontStyle": {
+      "description": "Button font style",
+      "example": "normal",
+      "type": "string"
+     },
+     "fontWeight": {
+      "description": "Button font weight",
+      "example": "bold",
+      "type": "string"
+     },
+     "letterSpacing": {
+      "description": "Button letter spacing - spacing between letters",
+      "example": "0px",
+      "type": "string"
+     },
+     "paddingBottom": {
+      "description": "Button padding bottom",
+      "example": "16px",
+      "type": "string"
+     },
+     "paddingLeft": {
+      "description": "Button padding left",
+      "example": "16px",
+      "type": "string"
+     },
+     "paddingRight": {
+      "description": "Button padding right",
+      "example": "16px",
+      "type": "string"
+     },
+     "paddingTop": {
+      "description": "Button padding top",
+      "example": "16px",
+      "type": "string"
+     },
+     "textDecoration": {
+      "description": "Button text decoration",
+      "example": "none",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Column": {
+    "description": "Column is a single column of the row",
+    "properties": {
+     "blocks": {
+      "description": "Column blocks - used to group content into logical blocks",
+      "items": {
+       "$ref": "#/components/schemas/Block"
+      },
+      "type": "array"
+     },
+     "id": {
+      "description": "Column unique identifier - must be unique within the template",
+      "example": "69770b2f7f774c6fb6f57194",
+      "maxLength": 24,
+      "minLength": 24,
+      "type": "string"
+     },
+     "styleProperties": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/StyleProperties"
+       }
+      ],
+      "description": "Column style properties - used to configure the column styling"
+     },
+     "width": {
+      "description": "Column width - used to set the width of the column",
+      "example": "552px",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Content": {
+    "description": "Email content",
+    "properties": {
+     "createdAt": {
+      "description": "Content created at (read-only)",
+      "example": "2021-01-01T01:02:03Z",
+      "readOnly": true,
+      "type": "string"
+     },
+     "generalSettings": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/GeneralSettings"
+       }
+      ],
+      "description": "Content general settings - global and template level styles"
+     },
+     "id": {
+      "description": "Content unique identifier (read-only)",
+      "example": "68beca12d2e99b0c8d19fd5e",
+      "readOnly": true,
+      "type": "string"
+     },
+     "sections": {
+      "description": "Content sections",
+      "items": {
+       "$ref": "#/components/schemas/Section"
+      },
+      "type": "array"
+     },
+     "updatedAt": {
+      "description": "Content updated at (read-only)",
+      "example": "2021-01-01T01:02:03Z",
+      "readOnly": true,
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "CursorsResponse": {
+    "description": "Cursor pointers for paginating forward and backward through results",
+    "properties": {
+     "after": {
+      "description": "Opaque cursor for fetching the next page of results",
+      "example": "eyJpZCI6ImNhbXAtNDU2In0",
+      "type": "string",
+      "nullable": true
+     },
+     "before": {
+      "description": "Opaque cursor for fetching the previous page of results",
+      "example": "eyJpZCI6ImNhbXAtMTIzIn0",
+      "type": "string",
+      "nullable": true
+     }
+    },
+    "type": "object"
+   },
+   "CustomFont": {
+    "description": "Custom font reference",
+    "properties": {
+     "id": {
+      "description": "ID of the custom font",
+      "example": "69ca539b38e3c1f5dc035867",
+      "maxLength": 24,
+      "minLength": 24,
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Discount": {
+    "description": "Discount block settings. This object configures the offer only \u2014 the parts the recipient sees (code, redeem button, expiry) are separate role-tagged blocks in the parent block's 'components'. See the notes on the Block 'type' field for the roles each discount block type requires.  An offer needs 'discountType', the value that matches it ('valuePercentage' for a percentage, 'valueFixed' for an amount off), 'discountConditions', and 'endsIn' for how long it stays valid. 'staticDiscount' and 'dynamicDiscount' blocks require 'code', 'discountType', 'valuePercentage' and 'discountConditions'.",
+    "properties": {
+     "appliesToCustomCollectionID": {
+      "description": "ID of the custom collection that the discount applies to",
+      "example": 0,
+      "type": "integer"
+     },
+     "appliesToID": {
+      "description": "ID of the specific resource (product, collection) that the discount applies to",
+      "example": 0,
+      "type": "integer"
+     },
+     "appliesToResource": {
+      "description": "Type of resource the discount applies to",
+      "example": "all",
+      "type": "string"
+     },
+     "appliesToSmartCollectionID": {
+      "description": "ID of the smart collection that the discount applies to",
+      "example": 0,
+      "type": "integer"
+     },
+     "code": {
+      "description": "Discount code customers use to apply the discount.\nIn 'discount' (Shopify, BigCommerce) and 'dynamicDiscount' (WooCommerce) blocks the code is not taken from here:\nthe store issues a unique code per recipient when the email is sent, and it replaces both this value and the text\nof the 'discount_code' component. Use the placeholder XXXX-XXXX-XXXX in both places \u2014 a literal code written here\nis not created in the store, so it is either replaced at send time or, for a brand with automatic discount\ncreation switched off, delivered as a code the recipient cannot redeem.\nIn 'staticDiscount' blocks (WooCommerce) this is instead the real, fixed code that already exists in the store.",
+      "example": "XXXX-XXXX-XXXX",
+      "type": "string"
+     },
+     "combinesWith": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/DiscountCombinesWith"
+       }
+      ],
+      "description": "Whether the discount can be combined with other discounts"
+     },
+     "discountConditions": {
+      "description": "Conditions that must be met for the discount to apply",
+      "example": "all_orders",
+      "type": "string"
+     },
+     "discountType": {
+      "description": "Type of discount: percentage off, fixed amount off, or shipping discount",
+      "example": "percentage",
+      "type": "string"
+     },
+     "endsIn": {
+      "description": "Number of days until the discount ends",
+      "example": "14",
+      "type": "string"
+     },
+     "isAppliedOncePerCustomer": {
+      "description": "When generating a discount code in integrated platforms, the discount can only be used once per customer",
+      "example": false,
+      "type": "boolean"
+     },
+     "isDiscountApplied": {
+      "description": "Whether the discount should be automatically applied to the order",
+      "example": true,
+      "type": "boolean"
+     },
+     "isItemsOnSaleExcluded": {
+      "description": "Whether the discount should exclude items that are already on sale",
+      "example": false,
+      "type": "boolean"
+     },
+     "link": {
+      "description": "URL link for the discount",
+      "example": "https://omnisend-inga-qa7-new.myshopify.com",
+      "type": "string"
+     },
+     "minimumOrderAmount": {
+      "description": "Minimum order amount required for the discount to apply",
+      "example": "50",
+      "type": "string"
+     },
+     "offerText": {
+      "description": "Text displayed to customers when they apply the discount",
+      "example": "Get 15% off your order",
+      "type": "string"
+     },
+     "title": {
+      "description": "Title of the discount",
+      "example": "Summer Sale",
+      "type": "string"
+     },
+     "usageLimit": {
+      "description": "Maximum number of times the discount can be used",
+      "example": "100",
+      "type": "string"
+     },
+     "validUntil": {
+      "description": "Date and time when the discount expires",
+      "example": "2026-02-09T06:42:35.350Z",
+      "type": "string"
+     },
+     "validUntilFormat": {
+      "description": "Format of the expiration date",
+      "example": "MMM DD, YYYY",
+      "type": "string"
+     },
+     "validUntilFormatted": {
+      "description": "Formatted expiration date",
+      "example": "Feb 09, 2026",
+      "type": "string"
+     },
+     "valueFixed": {
+      "description": "Fixed value of the discount",
+      "example": "10",
+      "type": "string"
+     },
+     "valuePercentage": {
+      "description": "Percentage value of the discount",
+      "example": "15",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "DiscountCombinesWith": {
+    "description": "Discount combines with settings",
+    "properties": {
+     "isOrderDiscountsCombined": {
+      "description": "Whether the discount can be combined with order-level discounts",
+      "example": true,
+      "type": "boolean"
+     },
+     "isProductDiscountsCombined": {
+      "description": "Whether the discount can be combined with product-specific discounts",
+      "example": true,
+      "type": "boolean"
+     },
+     "isShippingDiscountsCombined": {
+      "description": "Whether the discount can be combined with shipping discounts",
+      "example": true,
+      "type": "boolean"
+     }
+    },
+    "type": "object"
+   },
+   "DynamicList": {
+    "description": "Dynamic list settings for repeating content blocks",
+    "properties": {
+     "columnCount": {
+      "description": "Number of columns in the list layout",
+      "example": 3,
+      "type": "integer"
+     },
+     "layout": {
+      "description": "Layout type for the list items",
+      "example": "grid",
+      "type": "string"
+     },
+     "listPath": {
+      "description": "Data path for the list items source",
+      "example": "items",
+      "type": "string"
+     },
+     "repetitionCount": {
+      "description": "Maximum number of items to display",
+      "example": 5,
+      "type": "integer"
+     }
+    },
+    "type": "object"
+   },
+   "FieldError": {
+    "description": "Field-level validation error details",
+    "properties": {
+     "code": {
+      "description": "Machine-readable error code",
+      "example": "required",
+      "type": "string"
+     },
+     "field": {
+      "description": "Name of the field that caused the error, as a dot-separated path using the field names of\nthe request schema. Array indices are not included: a fault inside sections[0].rows[2] is\nreported as \"sections.rows\".",
+      "example": "sections.rows.columns.blocks.styleProperties.borderRadius",
+      "type": "string"
+     },
+     "message": {
+      "description": "Human-readable error message",
+      "example": "Name is required",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Filter": {
+    "description": "Filter for conditional display of content",
+    "properties": {
+     "operator": {
+      "description": "Filter operator - logical operator to combine multiple filter rules",
+      "example": "and",
+      "type": "string"
+     },
+     "rules": {
+      "description": "Filter rules - array of filter rules",
+      "items": {
+       "$ref": "#/components/schemas/Rule"
+      },
+      "type": "array"
+     }
+    },
+    "type": "object"
+   },
+   "FilterProperty": {
+    "description": "Filter property for conditional display of content",
+    "properties": {
+     "id": {
+      "description": "Filter property unique identifier",
+      "example": "property_id",
+      "type": "string"
+     },
+     "isSystem": {
+      "description": "Indicates whether the property is a built-in system property (true) or a user-defined custom property (false).",
+      "example": true,
+      "type": "boolean"
+     },
+     "name": {
+      "description": "Filter property name",
+      "example": "Property Name",
+      "type": "string"
+     },
+     "type": {
+      "description": "Filter property type",
+      "example": "string",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "GeneralSettings": {
+    "description": "General settings for the template",
+    "properties": {
+     "body": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/Body"
+       }
+      ],
+      "description": "Body settings"
+     },
+     "buttonPresets": {
+      "description": "Button presets",
+      "items": {
+       "$ref": "#/components/schemas/ButtonPreset"
+      },
+      "type": "array"
+     },
+     "content": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/Content"
+       }
+      ],
+      "description": "Content settings"
+     },
+     "gmail": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/Gmail"
+       }
+      ],
+      "description": "Gmail settings"
+     },
+     "logo": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/Logo"
+       }
+      ],
+      "description": "Logo settings"
+     },
+     "textPresets": {
+      "description": "Text presets",
+      "items": {
+       "$ref": "#/components/schemas/TextPreset"
+      },
+      "type": "array"
+     }
+    },
+    "type": "object"
+   },
+   "Gmail": {
+    "description": "Gmail specific settings for email.",
+    "properties": {
+     "annotation": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/Annotation"
+       }
+      ],
+      "description": "Gmail annotation settings"
+     }
+    },
+    "type": "object"
+   },
+   "HTMLCode": {
+    "description": "HTML code block with separate style and body content",
+    "properties": {
+     "body": {
+      "description": "HTML body content that will be embedded in the email.",
+      "example": "<p>Enter your own HTML</p>",
+      "type": "string"
+     },
+     "style": {
+      "description": "CSS styles for the HTML content that will be embedded in the HTML header.",
+      "example": "p { text-align: center; }",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Icon": {
+    "description": "Social media icon with link and image source",
+    "properties": {
+     "link": {
+      "description": "Link to the social media profile or contact method",
+      "example": "https://facebook.com/omnisend",
+      "type": "string"
+     },
+     "source": {
+      "description": "Source path for the social media icon image",
+      "example": "dynamicImage/social/facebook/48/24/default",
+      "type": "string"
+     },
+     "type": {
+      "description": "Type of the social media platform",
+      "example": "facebook",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Image": {
+    "description": "Image block for displaying images in the email",
+    "properties": {
+     "altSource": {
+      "description": "Image alt source - used as a fallback image if the original image fails to load",
+      "example": "/image/newsletter/fallback",
+      "type": "string"
+     },
+     "altText": {
+      "description": "Image alt text for accessibility",
+      "example": "Sample image",
+      "type": "string"
+     },
+     "height": {
+      "description": "Image original height",
+      "example": 1306,
+      "type": "integer"
+     },
+     "id": {
+      "description": "Image ID retrieved from Image API",
+      "example": "68f0ad8a72105230579523cd",
+      "maxLength": 24,
+      "minLength": 24,
+      "type": "string"
+     },
+     "isDynamic": {
+      "description": "Whether the image is dynamic - used to identify whether the image is dynamically generated",
+      "example": false,
+      "type": "boolean"
+     },
+     "isExternalSource": {
+      "description": "Whether the image is an external source - used to identify whether the image has an external source",
+      "example": false,
+      "type": "boolean"
+     },
+     "link": {
+      "description": "Image destination path - where the image will redirect on click",
+      "example": "https://www.omnisend.com",
+      "type": "string"
+     },
+     "maxHeight": {
+      "description": "Image max height in pixels - absolute pixel height constraint for dynamic images (0-1000)",
+      "example": 300,
+      "type": "integer"
+     },
+     "maxHeightPercentage": {
+      "description": "Image max height percentage - used to identify the maximum height of the image as a percentage of the container",
+      "example": 100,
+      "type": "integer"
+     },
+     "name": {
+      "description": "Image name displayed in the email",
+      "example": "product-image.png",
+      "type": "string"
+     },
+     "resizeHeight": {
+      "description": "Resized image height - used when the image is resized to a different width or height than the original",
+      "example": 193.7890625,
+      "type": "number"
+     },
+     "resizeWidth": {
+      "description": "Resized image width - used when the image is resized to a different width than the original",
+      "example": 297,
+      "type": "integer"
+     },
+     "size": {
+      "description": "Image size in bytes",
+      "example": 102400,
+      "type": "integer"
+     },
+     "source": {
+      "description": "Image source URL.",
+      "example": "/image/newsletter/68f0ad8a72105230579523cd",
+      "type": "string"
+     },
+     "state": {
+      "description": "Image state - used to identify the state of the image",
+      "example": "ready",
+      "type": "string"
+     },
+     "type": {
+      "description": "Image type (image/jpg, image/jpeg, image/png, image/gif)",
+      "example": "image/png",
+      "type": "string"
+     },
+     "width": {
+      "description": "Image original width",
+      "example": 2001,
+      "type": "integer"
+     }
+    },
+    "type": "object"
+   },
+   "ImportTemplateRequest": {
+    "description": "Represents the request body for importing a template from raw HTML",
+    "properties": {
+     "html": {
+      "description": "Raw HTML content to import",
+      "example": "<html><body>...</body></html>",
+      "minLength": 1,
+      "type": "string"
+     },
+     "name": {
+      "description": "Template name",
+      "example": "My Imported Template",
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string"
+     }
+    },
+    "required": [
+     "html",
+     "name"
+    ],
+    "type": "object"
+   },
+   "LineSpace": {
+    "description": "Horizontal line or space block for layout separation",
+    "properties": {
+     "height": {
+      "description": "Height of the line or space element in pixels",
+      "example": 60,
+      "type": "integer"
+     },
+     "type": {
+      "description": "type of line or space element",
+      "example": "line",
+      "type": "string"
+     },
+     "width": {
+      "description": "Width of the line or space element in pixels",
+      "example": 100,
+      "type": "integer"
+     }
+    },
+    "type": "object"
+   },
+   "ListUniversalLayoutsResponse": {
+    "description": "Represents the response for listing universal layouts",
+    "properties": {
+     "paging": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/PagingResponse"
+       }
+      ],
+      "description": "Pagination information"
+     },
+     "universalLayouts": {
+      "description": "List of universal layouts",
+      "items": {
+       "$ref": "#/components/schemas/UniversalLayout"
+      },
+      "type": "array"
+     }
+    },
+    "type": "object"
+   },
+   "Logo": {
+    "description": "Logo block for displaying a logo in the email",
+    "properties": {
+     "link": {
+      "description": "Link where the logo will redirect on click",
+      "example": "[[account.website]]",
+      "type": "string"
+     },
+     "resizeWidth": {
+      "description": "Resized width of the logo in pixels",
+      "example": 79,
+      "type": "integer"
+     }
+    },
+    "type": "object"
+   },
+   "OrderAddress": {
+    "description": "Postal address for billing or shipping",
+    "properties": {
+     "address1": {
+      "description": "Primary address line",
+      "example": "123 Main St",
+      "type": "string"
+     },
+     "address2": {
+      "description": "Secondary address line",
+      "example": "Apt 4B",
+      "type": "string"
+     },
+     "city": {
+      "description": "City name",
+      "example": "San Francisco",
+      "type": "string"
+     },
+     "company": {
+      "description": "Company name",
+      "example": "Acme Inc",
+      "type": "string"
+     },
+     "country": {
+      "description": "Country name",
+      "example": "United States",
+      "type": "string"
+     },
+     "countryCode": {
+      "description": "ISO country code",
+      "example": "US",
+      "type": "string"
+     },
+     "firstName": {
+      "description": "First name",
+      "example": "John",
+      "type": "string"
+     },
+     "lastName": {
+      "description": "Last name",
+      "example": "Doe",
+      "type": "string"
+     },
+     "phone": {
+      "description": "Phone number",
+      "example": "+1-555-123-4567",
+      "type": "string"
+     },
+     "state": {
+      "description": "State or province name",
+      "example": "California",
+      "type": "string"
+     },
+     "stateCode": {
+      "description": "State or province code",
+      "example": "CA",
+      "type": "string"
+     },
+     "zip": {
+      "description": "Postal code",
+      "example": "94102",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "OrderAddressHiddenFields": {
+    "description": "Visibility toggles for individual address fields",
+    "properties": {
+     "isAddress1Hidden": {
+      "description": "Whether the address line 1 is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isAddress2Hidden": {
+      "description": "Whether the address line 2 is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isCityHidden": {
+      "description": "Whether the city is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isCompanyHidden": {
+      "description": "Whether the company is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isCountryHidden": {
+      "description": "Whether the country is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isNameSurnameHidden": {
+      "description": "Whether the name and surname are hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isPhoneHidden": {
+      "description": "Whether the phone is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isStateHidden": {
+      "description": "Whether the state is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isZipCodeHidden": {
+      "description": "Whether the zip code is hidden",
+      "example": false,
+      "type": "boolean"
+     }
+    },
+    "type": "object"
+   },
+   "OrderAddresses": {
+    "description": "Order addresses block displaying billing and shipping information",
+    "properties": {
+     "billing": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/OrderAddress"
+       }
+      ],
+      "description": "Billing address"
+     },
+     "hiddenFields": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/OrderAddressesHiddenFields"
+       }
+      ],
+      "description": "Fields to hide in the addresses block"
+     },
+     "shipping": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/OrderAddress"
+       }
+      ],
+      "description": "Shipping address"
+     },
+     "shippingMethods": {
+      "description": "Shipping methods used for the order",
+      "items": {
+       "$ref": "#/components/schemas/OrderShipping"
+      },
+      "type": "array"
+     },
+     "title": {
+      "description": "Section title",
+      "example": "Billing & Shipping",
+      "type": "string"
+     },
+     "transactions": {
+      "description": "Payment transactions for the order",
+      "items": {
+       "$ref": "#/components/schemas/OrderTransaction"
+      },
+      "type": "array"
+     }
+    },
+    "type": "object"
+   },
+   "OrderAddressesHiddenFields": {
+    "description": "Visibility toggles for the order addresses section",
+    "properties": {
+     "billing": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/OrderAddressHiddenFields"
+       }
+      ],
+      "description": "Billing address hidden fields"
+     },
+     "isTitleHidden": {
+      "description": "Whether the section title is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "shipping": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/OrderAddressHiddenFields"
+       }
+      ],
+      "description": "Shipping address hidden fields"
+     }
+    },
+    "type": "object"
+   },
+   "OrderProduct": {
+    "description": "Individual product within an order",
+    "properties": {
+     "currency": {
+      "description": "Price currency code",
+      "example": "USD",
+      "type": "string"
+     },
+     "discountAmount": {
+      "description": "Discount amount applied",
+      "example": "$5.00",
+      "type": "string"
+     },
+     "image": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/Image"
+       }
+      ],
+      "description": "Product image"
+     },
+     "price": {
+      "description": "Product price",
+      "example": "$29.99",
+      "type": "string"
+     },
+     "priceWithDiscount": {
+      "description": "Price after discount",
+      "example": "$24.99",
+      "type": "string"
+     },
+     "productID": {
+      "description": "Product identifier",
+      "example": "7382522822795",
+      "type": "string"
+     },
+     "productUrl": {
+      "description": "Product page URL",
+      "example": "https://example.com/products/product-1",
+      "type": "string"
+     },
+     "quantity": {
+      "description": "Ordered quantity",
+      "example": 2,
+      "type": "integer"
+     },
+     "sku": {
+      "description": "Stock keeping unit code",
+      "example": "SKU-12345",
+      "type": "string"
+     },
+     "title": {
+      "description": "Product name",
+      "example": "Product Name",
+      "type": "string"
+     },
+     "variant": {
+      "description": "Selected product variant",
+      "example": "Size: Large, Color: Blue",
+      "type": "string"
+     },
+     "vendor": {
+      "description": "Product vendor name",
+      "example": "Vendor Name",
+      "type": "string"
+     },
+     "weight": {
+      "description": "Product weight",
+      "example": 0.5,
+      "type": "number"
+     }
+    },
+    "type": "object"
+   },
+   "OrderProducts": {
+    "description": "Order products block displaying ordered items",
+    "properties": {
+     "hiddenFields": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/OrderProductsHiddenFields"
+       }
+      ],
+      "description": "Fields to hide in the order products display"
+     },
+     "products": {
+      "description": "List of ordered products. Placeholder data \u2014 actual products are injected at render time.",
+      "items": {
+       "$ref": "#/components/schemas/OrderProduct"
+      },
+      "type": "array"
+     }
+    },
+    "type": "object"
+   },
+   "OrderProductsHiddenFields": {
+    "description": "Visibility toggles for order product fields",
+    "properties": {
+     "isDiscountAmountHidden": {
+      "description": "Whether the discount amount is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isImageHidden": {
+      "description": "Whether the image is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isPriceHidden": {
+      "description": "Whether the price is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isPriceWithDiscountHidden": {
+      "description": "Whether the price with discount is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isProductIDHidden": {
+      "description": "Whether the product ID is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isQuantityHidden": {
+      "description": "Whether the quantity is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isSkuHidden": {
+      "description": "Whether the SKU is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isTitleHidden": {
+      "description": "Whether the title is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isVariantHidden": {
+      "description": "Whether the variant is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isVendorHidden": {
+      "description": "Whether the vendor is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isWeightHidden": {
+      "description": "Whether the weight is hidden",
+      "example": false,
+      "type": "boolean"
+     }
+    },
+    "type": "object"
+   },
+   "OrderShipping": {
+    "description": "Shipping method details",
+    "properties": {
+     "price": {
+      "description": "Shipping price",
+      "example": "$5.00",
+      "type": "string"
+     },
+     "title": {
+      "description": "Shipping method name",
+      "example": "Standard Shipping",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "OrderSummary": {
+    "description": "Order summary block displaying order identification details",
+    "properties": {
+     "date": {
+      "description": "Order date",
+      "example": "2024-01-15",
+      "type": "string"
+     },
+     "dateFormat": {
+      "description": "Date display format",
+      "example": "MM/DD/YYYY",
+      "type": "string"
+     },
+     "hiddenFields": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/OrderSummaryHiddenFields"
+       }
+      ],
+      "description": "Fields to hide in the order summary"
+     },
+     "orderID": {
+      "description": "Order identifier",
+      "example": "#1001",
+      "type": "string"
+     },
+     "title": {
+      "description": "Summary section title",
+      "example": "Order Summary",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "OrderSummaryHiddenFields": {
+    "description": "Visibility toggles for order summary fields",
+    "properties": {
+     "isDateHidden": {
+      "description": "Whether the date is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isOrderIDHidden": {
+      "description": "Whether the order ID is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isTitleHidden": {
+      "description": "Whether the title is hidden",
+      "example": false,
+      "type": "boolean"
+     }
+    },
+    "type": "object"
+   },
+   "OrderTax": {
+    "description": "Tax line item applied to the order",
+    "properties": {
+     "price": {
+      "description": "Tax amount",
+      "example": "$4.80",
+      "type": "string"
+     },
+     "rate": {
+      "description": "Tax rate",
+      "example": "8%",
+      "type": "string"
+     },
+     "title": {
+      "description": "Tax name",
+      "example": "Sales Tax",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "OrderTotal": {
+    "description": "Order total block displaying pricing breakdown",
+    "properties": {
+     "currency": {
+      "description": "Currency code",
+      "example": "USD",
+      "type": "string"
+     },
+     "discountTotal": {
+      "description": "Total discount amount",
+      "example": "$5.00",
+      "type": "string"
+     },
+     "discounts": {
+      "description": "Applied discount details",
+      "items": {
+       "$ref": "#/components/schemas/OrderTotalDiscount"
+      },
+      "type": "array"
+     },
+     "hiddenFields": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/OrderTotalHiddenFields"
+       }
+      ],
+      "description": "Fields to hide in the order total"
+     },
+     "isSubTotalTaxIncluded": {
+      "description": "Whether the subtotal includes tax",
+      "example": false,
+      "type": "boolean"
+     },
+     "orderTotal": {
+      "description": "Final order total",
+      "example": "$64.78",
+      "type": "string"
+     },
+     "shippingPrice": {
+      "description": "Shipping price",
+      "example": "$5.00",
+      "type": "string"
+     },
+     "subTotal": {
+      "description": "Subtotal amount before tax and shipping",
+      "example": "$59.98",
+      "type": "string"
+     },
+     "taxTotal": {
+      "description": "Total tax amount",
+      "example": "$4.80",
+      "type": "string"
+     },
+     "taxes": {
+      "description": "Applied tax details",
+      "items": {
+       "$ref": "#/components/schemas/OrderTax"
+      },
+      "type": "array"
+     }
+    },
+    "type": "object"
+   },
+   "OrderTotalDiscount": {
+    "description": "Discount applied to the order total",
+    "properties": {
+     "amount": {
+      "description": "Discount amount",
+      "example": "$5.00",
+      "type": "string"
+     },
+     "code": {
+      "description": "Discount code",
+      "example": "SAVE10",
+      "type": "string"
+     },
+     "type": {
+      "description": "Discount type",
+      "example": "percentage",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "OrderTotalHiddenFields": {
+    "description": "Visibility toggles for order total fields",
+    "properties": {
+     "isDiscountTotalHidden": {
+      "description": "Whether the discount total is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isOrderTotalHidden": {
+      "description": "Whether the order total is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isShippingPriceHidden": {
+      "description": "Whether the shipping price is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isSubTotalHidden": {
+      "description": "Whether the subtotal is hidden",
+      "example": false,
+      "type": "boolean"
+     },
+     "isTaxTotalHidden": {
+      "description": "Whether the tax total is hidden",
+      "example": false,
+      "type": "boolean"
+     }
+    },
+    "type": "object"
+   },
+   "OrderTransaction": {
+    "description": "Payment transaction details",
+    "properties": {
+     "payment": {
+      "description": "Payment method used",
+      "example": "Credit Card",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "PagingResponse": {
+    "description": "Cursor-based pagination metadata",
+    "properties": {
+     "cursors": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/CursorsResponse"
+       }
+      ],
+      "description": "Cursor values for navigating between pages"
+     },
+     "hasMore": {
+      "description": "Whether there are more items available beyond the current page",
+      "example": true,
+      "type": "boolean"
+     },
+     "limit": {
+      "description": "Maximum number of items returned per page",
+      "example": 50,
+      "type": "integer"
+     }
+    },
+    "type": "object"
+   },
+   "Preheader": {
+    "description": "Preheader block to setup View in Browser link text formattings Text is formatted as ```Text<a href=\"https://view-inbrowser-link\">LinkText</a>```",
+    "properties": {
+     "linkText": {
+      "description": "Preheader link text",
+      "example": "click here",
+      "type": "string"
+     },
+     "text": {
+      "description": "Preheader text",
+      "example": "If you cannot see images, please ",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Product": {
+    "description": "Product block for displaying product information",
+    "properties": {
+     "buttonText": {
+      "description": "Product button text - text of the button that will redirect to the product page",
+      "example": "Shop now",
+      "type": "string"
+     },
+     "description": {
+      "description": "Product description - displayed in the email",
+      "example": "Product description",
+      "type": "string"
+     },
+     "id": {
+      "description": "Product ID - Omnisend product ID - can be retrieved from the Product API",
+      "example": "662b698cf0e05e2d6ed9a9f4",
+      "maxLength": 24,
+      "minLength": 24,
+      "type": "string"
+     },
+     "imageID": {
+      "description": "Product image ID - Omnisend image ID - can be retrieved from the Image API",
+      "example": "68f0ad8a72105230579523cd",
+      "maxLength": 24,
+      "minLength": 24,
+      "type": "string"
+     },
+     "imageUrl": {
+      "description": "Product image URL - URL of the product image",
+      "example": "https://cdn.shopify.com/s/files/1/0604/4093/6587/files/product-jpeg-500x500.webp?v=1714121101",
+      "type": "string"
+     },
+     "link": {
+      "description": "Product link - where the product will redirect on click",
+      "example": "https://omnisend-inga-qa7-new.myshopify.com/products/testing19",
+      "type": "string"
+     },
+     "oldPrice": {
+      "description": "Product price before discount",
+      "example": "$0.00",
+      "type": "string"
+     },
+     "originalTitle": {
+      "description": "Product original title - original title of the product",
+      "example": "Betta bought",
+      "type": "string"
+     },
+     "price": {
+      "description": "Product price",
+      "example": "EUR 2'222.00",
+      "type": "string"
+     },
+     "productID": {
+      "description": "ID of connected platform product (e.g. Shopify product ID)",
+      "example": "7382522822795",
+      "type": "string"
+     },
+     "title": {
+      "description": "Product title - displayed in the email",
+      "example": "Betta bought",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "ProductRecommender": {
+    "description": "Product recommender settings for the product recommendations section",
+    "properties": {
+     "excludeCategories": {
+      "description": "Categories to exclude from recommendations",
+      "example": [
+       "278568042635"
+      ],
+      "items": {
+       "type": "string"
+      },
+      "type": "array"
+     },
+     "excludeProducts": {
+      "description": "Products to exclude from recommendations",
+      "example": [
+       "7061555871883"
+      ],
+      "items": {
+       "type": "string"
+      },
+      "type": "array"
+     },
+     "fallbackType": {
+      "description": "Product recommender fallback type",
+      "example": "newest",
+      "type": "string"
+     },
+     "includeCategories": {
+      "description": "Categories to include in recommendations",
+      "example": [
+       "296006844555"
+      ],
+      "items": {
+       "type": "string"
+      },
+      "type": "array"
+     },
+     "isOutOfStockIncluded": {
+      "description": "Whether to include out-of-stock products in recommendations",
+      "example": true,
+      "type": "boolean"
+     },
+     "priceFrom": {
+      "description": "Minimum price filter for product recommendations",
+      "example": 100,
+      "type": "number"
+     },
+     "purchaseExclusionDays": {
+      "description": "Number of days to exclude recently purchased products",
+      "example": 30,
+      "type": "integer"
+     },
+     "recencyMonths": {
+      "description": "Number of months to consider for recency-based recommendations",
+      "example": 3,
+      "type": "integer"
+     },
+     "type": {
+      "description": "Product recommender type",
+      "example": "mostViewed",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Row": {
+    "description": "Row is a single row of the section",
+    "properties": {
+     "columns": {
+      "description": "Row columns - used to group content into logical columns",
+      "items": {
+       "$ref": "#/components/schemas/Column"
+      },
+      "type": "array"
+     },
+     "id": {
+      "description": "Row unique identifier - must be unique within the template",
+      "example": "69770b2f7f774c6fb6f57193",
+      "maxLength": 24,
+      "minLength": 24,
+      "type": "string"
+     },
+     "styleProperties": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/StyleProperties"
+       }
+      ],
+      "description": "Row style properties - used to configure the row styling"
+     }
+    },
+    "type": "object"
+   },
+   "Rule": {
+    "description": "Filter rule for conditional display of content",
+    "properties": {
+     "operator": {
+      "description": "Filter operator - comparison operator for the filter condition",
+      "example": "equals",
+      "type": "string"
+     },
+     "property": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/FilterProperty"
+       }
+      ],
+      "description": "Filter property - property to filter on"
+     },
+     "value": {
+      "description": "Filter value - value to compare against the property",
+      "example": "value",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Section": {
+    "description": "Section is a single section of the template",
+    "properties": {
+     "id": {
+      "description": "Section unique identifier - must be unique within the template",
+      "example": "69770b2f7f774c6fb6f57192",
+      "maxLength": 24,
+      "minLength": 24,
+      "type": "string"
+     },
+     "productRecommender": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/ProductRecommender"
+       }
+      ],
+      "description": "Section product recommender - used to configure the product recommender functionality"
+     },
+     "rows": {
+      "description": "Section rows - used to group content into logical sections",
+      "items": {
+       "$ref": "#/components/schemas/Row"
+      },
+      "type": "array"
+     },
+     "settings": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/Settings"
+       }
+      ],
+      "description": "Section settings - used to configure the section behavior and content"
+     },
+     "styleProperties": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/StyleProperties"
+       }
+      ],
+      "description": "Section style properties - used to configure the section styling"
+     },
+     "type": {
+      "description": "Section type - determines the section functionality and available content options.\nproducts_listing: manually selected products. product_recommender: personalized recommendations (requires productRecommender).\nproduct_cart_recovery: abandoned cart items. product_back_in_stock: restocked items.\npreheader: inbox preview text. badge: free-plan branding badge. dynamic_list: repeats content over a list.\nuniversal_layout: wraps a saved universal layout (set settings.universalLayoutID; the section's rows are resolved from the layout on read).\nEmpty string (or field omitted): plain layout section with no special functionality.",
+      "enum": [
+       "products_listing",
+       "product_recommender",
+       "product_cart_recovery",
+       "product_back_in_stock",
+       "badge",
+       "preheader",
+       "dynamic_list",
+       "universal_layout",
+       ""
+      ],
+      "example": "product_recommender",
+      "type": "string"
+     },
+     "visibility": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/Visibility"
+       }
+      ],
+      "description": "Section visibility settings - used to control the visibility of the section on mobile and desktop"
+     }
+    },
+    "type": "object"
+   },
+   "Settings": {
+    "description": "Settings for the section",
+    "properties": {
+     "backgroundType": {
+      "description": "Background type - determines whether the section background is a color or image",
+      "example": "image",
+      "type": "string"
+     },
+     "customFonts": {
+      "description": "Custom fonts used in this section",
+      "items": {
+       "$ref": "#/components/schemas/CustomFont"
+      },
+      "type": "array"
+     },
+     "dynamicList": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/DynamicList"
+       }
+      ],
+      "description": "Dynamic list configuration for repeating content"
+     },
+     "excludeProducts": {
+      "description": "Products to exclude from display when abandoned products section is used.\nProducts are excluded from display if they are in the list of products that were abandoned by the contact.",
+      "items": {
+       "type": "string"
+      },
+      "type": "array"
+     },
+     "filter": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/Filter"
+       }
+      ],
+      "description": "Filter for the section - used to conditionally display content based on contact or event properties"
+     },
+     "isColumnStackDisabled": {
+      "description": "Whether to disable column stacking - used to display content in a single column",
+      "example": true,
+      "type": "boolean"
+     },
+     "isOutOfStockHidden": {
+      "description": "Whether to hide out of stock products from product sections",
+      "example": false,
+      "type": "boolean"
+     },
+     "isProductImagesFitted": {
+      "description": "Whether to fit product images to the container - used to display product images in a single line",
+      "example": true,
+      "type": "boolean"
+     },
+     "sideBySideProductLayout": {
+      "description": "Side by side product layout",
+      "example": "2-column",
+      "type": "string"
+     },
+     "universalLayoutID": {
+      "description": "Universal layout ID - ID of the universal layout.\nIf present, section content is received from Universal Layout API and displayed as is.",
+      "example": "68beca12d2e99b0c8d19fd5e",
+      "maxLength": 24,
+      "minLength": 24,
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Social": {
+    "description": "Social block for displaying social media icons and links",
+    "properties": {
+     "icons": {
+      "description": "Icons of the social media platforms",
+      "items": {
+       "$ref": "#/components/schemas/Icon"
+      },
+      "type": "array"
+     },
+     "shape": {
+      "description": "Shape of the social media icons",
+      "example": "circle",
+      "type": "string"
+     },
+     "size": {
+      "description": "Size of the social media icons",
+      "example": "24px",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "StyleProperties": {
+    "description": "Style properties for the section",
+    "properties": {
+     "alignment": {
+      "description": "Alignment - used to align the content horizontally",
+      "example": "center",
+      "type": "string"
+     },
+     "backgroundColor": {
+      "description": "Background color - used to set the background color of the content",
+      "example": "#FFFFFF",
+      "type": "string"
+     },
+     "backgroundImageID": {
+      "description": "Background image ID - ID of the background image asset. Must be present in Image API",
+      "example": "68f0af8f72105230579523cf",
+      "maxLength": 24,
+      "minLength": 24,
+      "type": "string"
+     },
+     "backgroundPosition": {
+      "description": "Background position - used to position the background image",
+      "example": "unset",
+      "type": "string"
+     },
+     "backgroundRepeat": {
+      "description": "Background repeat - used to repeat the background image",
+      "example": "no-repeat",
+      "type": "string"
+     },
+     "backgroundSize": {
+      "description": "Background size - used to size the background image",
+      "example": "cover",
+      "type": "string"
+     },
+     "border": {
+      "description": "Border - used to add a border to the content",
+      "example": "2px solid #BFDCFE",
+      "type": "string"
+     },
+     "borderRadius": {
+      "description": "Border radius",
+      "example": "0px",
+      "type": "string"
+     },
+     "color": {
+      "description": "Text color",
+      "example": "#BFDCFE",
+      "type": "string"
+     },
+     "dividerColor": {
+      "description": "Divider color",
+      "example": "#E0E0E0",
+      "type": "string"
+     },
+     "fontFamily": {
+      "description": "Font family",
+      "example": "Arial, sans-serif",
+      "type": "string"
+     },
+     "fontSize": {
+      "description": "Font size",
+      "example": "16px",
+      "type": "string"
+     },
+     "fontStyle": {
+      "description": "Font style",
+      "example": "normal",
+      "type": "string"
+     },
+     "fontWeight": {
+      "description": "Font weight",
+      "example": "bold",
+      "type": "string"
+     },
+     "innerPadding": {
+      "description": "Inner padding",
+      "example": "16px",
+      "type": "string"
+     },
+     "innerPaddingBottom": {
+      "description": "Inner padding bottom",
+      "example": "16px",
+      "type": "string"
+     },
+     "innerPaddingLeft": {
+      "description": "Inner padding left",
+      "example": "16px",
+      "type": "string"
+     },
+     "innerPaddingRight": {
+      "description": "Inner padding right",
+      "example": "16px",
+      "type": "string"
+     },
+     "innerPaddingTop": {
+      "description": "Inner padding top",
+      "example": "16px",
+      "type": "string"
+     },
+     "isBackgroundPaddingsExcluded": {
+      "description": "Whether to exclude background paddings - used to exclude paddings from the background image",
+      "example": false,
+      "type": "boolean"
+     },
+     "letterSpacing": {
+      "description": "Letter spacing - spacing between letters",
+      "example": "0px",
+      "type": "string"
+     },
+     "lineHeight": {
+      "description": "Line height",
+      "example": "1.5",
+      "type": "string"
+     },
+     "linkColor": {
+      "description": "Link color",
+      "example": "#383838",
+      "type": "string"
+     },
+     "padding": {
+      "description": "Padding",
+      "example": "12px",
+      "type": "string"
+     },
+     "paddingBottom": {
+      "description": "Padding bottom",
+      "example": "12px",
+      "type": "string"
+     },
+     "paddingLeft": {
+      "description": "Padding left",
+      "example": "12px",
+      "type": "string"
+     },
+     "paddingRight": {
+      "description": "Padding right",
+      "example": "12px",
+      "type": "string"
+     },
+     "paddingTop": {
+      "description": "Padding top",
+      "example": "12px",
+      "type": "string"
+     },
+     "priceColor": {
+      "description": "Price color - used to color the price text",
+      "example": "#212121",
+      "type": "string"
+     },
+     "secondaryColor": {
+      "description": "Secondary color - used to color the secondary text",
+      "example": "#757575",
+      "type": "string"
+     },
+     "textBackgroundColor": {
+      "description": "Text Background color - used to set the text background color",
+      "example": "#BFDCFE",
+      "type": "string"
+     },
+     "textDecoration": {
+      "description": "Text decoration",
+      "example": "none",
+      "type": "string"
+     },
+     "verticalAlign": {
+      "description": "Vertical alignment - used to align the content vertically",
+      "example": "top",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Template": {
+    "description": "Email template",
+    "properties": {
+     "createdAt": {
+      "description": "Template created at (read-only)",
+      "example": "2021-01-01T01:02:03Z",
+      "readOnly": true,
+      "type": "string"
+     },
+     "generalSettings": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/GeneralSettings"
+       }
+      ],
+      "description": "Template general settings - global and template level styles"
+     },
+     "id": {
+      "description": "Template unique identifier (read-only)",
+      "example": "68beca12d2e99b0c8d19fd5e",
+      "readOnly": true,
+      "type": "string"
+     },
+     "name": {
+      "description": "Template name",
+      "example": "Welcome Email 1",
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string"
+     },
+     "sections": {
+      "description": "Template sections",
+      "items": {
+       "$ref": "#/components/schemas/Section"
+      },
+      "type": "array"
+     },
+     "updatedAt": {
+      "description": "Template updated at (read-only)",
+      "example": "2021-01-01T01:02:03Z",
+      "readOnly": true,
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "TemplateListItem": {
+    "description": "Email template list item",
+    "properties": {
+     "createdAt": {
+      "description": "Template created at (read-only)",
+      "example": "2021-01-01T01:02:03Z",
+      "readOnly": true,
+      "type": "string"
+     },
+     "id": {
+      "description": "Template unique identifier (read-only)",
+      "example": "68beca12d2e99b0c8d19fd5e",
+      "readOnly": true,
+      "type": "string"
+     },
+     "name": {
+      "description": "Template name",
+      "example": "Welcome Email 1",
+      "maxLength": 255,
+      "minLength": 1,
+      "type": "string"
+     },
+     "updatedAt": {
+      "description": "Template updated at (read-only)",
+      "example": "2021-01-01T01:02:03Z",
+      "readOnly": true,
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "TemplateListResponse": {
+    "description": "List of email templates with pagination",
+    "properties": {
+     "paging": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/PagingResponse"
+       }
+      ],
+      "description": "Pagination information"
+     },
+     "templates": {
+      "description": "List of email templates",
+      "items": {
+       "$ref": "#/components/schemas/TemplateListItem"
+      },
+      "type": "array"
+     }
+    },
+    "type": "object"
+   },
+   "TextPreset": {
+    "description": "Text preset for consistent typography",
+    "properties": {
+     "id": {
+      "description": "Text preset unique identifier - must be unique within the template",
+      "example": "heading_large",
+      "type": "string"
+     },
+     "name": {
+      "description": "Text preset name",
+      "example": "Heading Large",
+      "type": "string"
+     },
+     "styles": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/TextStyle"
+       }
+      ],
+      "description": "Text preset styles"
+     }
+    },
+    "type": "object"
+   },
+   "TextStyle": {
+    "description": "Text preset style properties",
+    "properties": {
+     "color": {
+      "description": "Text preset color",
+      "example": "#BFDCFE",
+      "type": "string"
+     },
+     "fontFamily": {
+      "description": "Text preset font family",
+      "example": "Abril Fatface, Georgia, Times New Roman, Times, serif",
+      "type": "string"
+     },
+     "fontSize": {
+      "description": "Text preset font size",
+      "example": "36px",
+      "type": "string"
+     },
+     "letterSpacing": {
+      "description": "Text preset letter spacing - spacing between letters",
+      "example": "0px",
+      "type": "string"
+     },
+     "lineHeight": {
+      "description": "Text preset line height",
+      "example": "125%",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "UniversalLayout": {
+    "description": "Represents a universal layout in the external API",
+    "properties": {
+     "content": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/Section"
+       }
+      ],
+      "description": "Universal layout content - the section structure"
+     },
+     "createdAt": {
+      "description": "Universal layout created at (read-only)",
+      "example": "2021-01-01T01:02:03Z",
+      "readOnly": true,
+      "type": "string"
+     },
+     "id": {
+      "description": "Universal layout unique identifier (read-only)",
+      "example": "68beca12d2e99b0c8d19fd5e",
+      "readOnly": true,
+      "type": "string"
+     },
+     "name": {
+      "description": "Universal layout name",
+      "example": "Header Layout",
+      "type": "string"
+     },
+     "snapshotState": {
+      "description": "Universal layout snapshot state (read-only)",
+      "example": "ready",
+      "readOnly": true,
+      "type": "string"
+     },
+     "snapshotUrl": {
+      "description": "Universal layout snapshot URL (read-only)",
+      "example": "https://example.com/snapshot.png",
+      "readOnly": true,
+      "type": "string"
+     },
+     "updatedAt": {
+      "description": "Universal layout updated at (read-only)",
+      "example": "2021-01-01T01:02:03Z",
+      "readOnly": true,
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Video": {
+    "description": "Video block for displaying a video in the email",
+    "properties": {
+     "altText": {
+      "description": "Video alt text - alternative text for the video for accessibility",
+      "example": "Video description",
+      "type": "string"
+     },
+     "id": {
+      "description": "Video ID - Omnisend video ID - can be retrieved from the Video API",
+      "example": "68f0ad8a72105230579523cd",
+      "maxLength": 24,
+      "minLength": 24,
+      "type": "string"
+     },
+     "image": {
+      "allOf": [
+       {
+        "$ref": "#/components/schemas/Image"
+       }
+      ],
+      "description": "Video image - image of the video thumbnail"
+     },
+     "link": {
+      "description": "Video link - where the video will redirect on click",
+      "example": "https://www.youtube.com/watch?v=example",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "Visibility": {
+    "description": "Visibility settings for the template",
+    "properties": {
+     "isDesktopVisible": {
+      "description": "Whether the template is visible on desktop devices",
+      "example": true,
+      "type": "boolean"
+     },
+     "isMobileVisible": {
+      "description": "Whether the template is visible on mobile devices",
+      "example": true,
+      "type": "boolean"
+     }
+    },
+    "type": "object"
+   }
+  }
+ }
+}

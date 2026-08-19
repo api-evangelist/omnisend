@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Brands API",
+    "version": "2026-03-15"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Brands",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get information about brand",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/brands/current",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "With this endpoint you can get brand's information.\n\n**Scopes:**\n`brands.read`\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>"
+        },
+        {
+          "info": {
+            "name": "Connect brand",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/brands/current",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "With this endpoint you can connect your site to Omnisend.\nNote it's only possible to connect store with [oAuth flow](https://api-docs.omnisend.com/reference/oauth).\n\n**Scopes:**\n`brands.write`\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

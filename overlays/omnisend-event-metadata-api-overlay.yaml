@@ -1,0 +1,42 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Omnisend event-metadata-api
+  version: 1.0.0
+  x-generated: '2026-08-13'
+  x-method: generated
+  x-source: openapi/omnisend-event-metadata-api-openapi.yml
+  x-note: 'Records API Evangelist enhancements over the contract Omnisend publishes. It is never applied to the harvested
+    file — openapi/ stays verbatim. The gaps captured here are real and measured: 0 of 3 operations carry no operationId,
+    0 carry no tag, and the document declares securitySchemes without ever applying them.'
+extends: omnisend-event-metadata-api-openapi.yml
+actions:
+- target: $
+  description: Apply the two declared security schemes at the document root. The published contract defines ApiKeyAuth and
+    Bearer in components.securitySchemes but never applies them, so no operation states its auth requirement.
+  update:
+    security:
+    - ApiKeyAuth: []
+    - Bearer: []
+- target: $
+  description: Declare a document-level tag so every operation can be grouped. The published contract declares none.
+  update:
+    tags:
+    - name: Event Metadata
+      description: 'API for retrieving event metadata — event names, property schemas,
+
+        and display metadata used by segmentation and automation consumers.'
+- target: $.paths['/event-metadata'].post
+  description: Tag POST /event-metadata as Event Metadata.
+  update:
+    tags:
+    - Event Metadata
+- target: $.paths['/event-metadata'].put
+  description: Tag PUT /event-metadata as Event Metadata.
+  update:
+    tags:
+    - Event Metadata
+- target: $.paths['/event-metadata/query'].post
+  description: Tag POST /event-metadata/query as Event Metadata.
+  update:
+    tags:
+    - Event Metadata

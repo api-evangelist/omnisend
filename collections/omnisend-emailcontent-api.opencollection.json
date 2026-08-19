@@ -1,0 +1,124 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Email Content API",
+    "version": "5.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Email Content",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get email content",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/email-content/:id",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Content ID (24 character hexadecimal)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "With this endpoint you can get email content by ID.\n\n**Scopes:**\n`email-templates.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Update email content",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.omnisend.com/api/email-content/:id",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Content ID (24 character hexadecimal)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "With this endpoint you can update (fully replace) email content by ID.\nThe full content structure must be provided in the request body.\n\n**Scopes:**\n`email-templates.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Render email content",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/email-content/:id/render",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Content ID (24 character hexadecimal)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "With this endpoint you can render email content to HTML by ID.\nThe content is rendered with an empty data context (no contact, no marketing activity).\n\n**Scopes:**\n`email-templates.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 40 requests per minute."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

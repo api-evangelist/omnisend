@@ -1,41 +1,363 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/omnisend-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: https://mcp.omnisend.com/.well-known/oauth-authorization-server (RFC 8414 scopes_supported), https://mcp.omnisend.com/.well-known/oauth-protected-resource
+  (RFC 9728 scopes_supported), https://api-docs.omnisend.com/reference/oauth, per-operation "Scopes:" notes in https://api-docs.omnisend.com/llms.txt,
+  and openapi/omnisend-*-openapi.yml
 schemes:
-- name: OAuth2
-  source: openapi/omnisend-openapi.yml
+- name: Bearer
+  source: openapi/omnisend-analytics-api-openapi.yml
   flows:
-  - flow: authorizationCode
-    authorizationUrl: https://app.omnisend.com/oauth/authorize
-    tokenUrl: https://api.omnisend.com/v5/oauth/token
+  - flow: clientCredentials
+    tokenUrl: https://app.omnisend.com/oauth2/token
+- name: Bearer
+  source: openapi/omnisend-automations-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://app.omnisend.com/oauth2/token
+- name: Bearer
+  source: openapi/omnisend-batches-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://app.omnisend.com/oauth2/token
+- name: Bearer
+  source: openapi/omnisend-brands-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://app.omnisend.com/oauth2/token
+- name: Bearer
+  source: openapi/omnisend-campaigns-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://app.omnisend.com/oauth2/token
+- name: Bearer
+  source: openapi/omnisend-contacts-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://app.omnisend.com/oauth2/token
+- name: Bearer
+  source: openapi/omnisend-emailcontent-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://app.omnisend.com/oauth2/token
+- name: Bearer
+  source: openapi/omnisend-emailtemplates-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://app.omnisend.com/oauth2/token
+- name: Bearer
+  source: openapi/omnisend-emailuniversallayouts-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://app.omnisend.com/oauth2/token
+- name: Bearer
+  source: openapi/omnisend-event-metadata-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://app.omnisend.com/oauth2/token
+- name: Bearer
+  source: openapi/omnisend-events-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://app.omnisend.com/oauth2/token
+- name: Bearer
+  source: openapi/omnisend-images-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://app.omnisend.com/oauth2/token
+- name: Bearer
+  source: openapi/omnisend-productcategories-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://app.omnisend.com/oauth2/token
+- name: Bearer
+  source: openapi/omnisend-products-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://app.omnisend.com/oauth2/token
+- name: Bearer
+  source: openapi/omnisend-segments-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://app.omnisend.com/oauth2/token
 scopes:
 - scope: analytics.read
-  description: Read analytics
-  flows:
-  - authorizationCode
   sources:
-  - openapi/omnisend-openapi.yml
+  - openapi/omnisend-analytics-api-openapi.yml
+- scope: automations.read
+  description: Read access to automations
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/omnisend-automations-api-openapi.yml
+- scope: automations.write
+  description: Write access to automations
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/omnisend-automations-api-openapi.yml
+- scope: brands.read
+  sources:
+  - openapi/omnisend-brands-api-openapi.yml
+- scope: brands.write
+  sources:
+  - openapi/omnisend-brands-api-openapi.yml
 - scope: campaigns.read
-  description: Read campaigns
+  description: Read access to campaigns
   flows:
-  - authorizationCode
+  - clientCredentials
   sources:
-  - openapi/omnisend-openapi.yml
+  - openapi/omnisend-campaigns-api-openapi.yml
 - scope: campaigns.write
-  description: Manage campaigns
+  description: Write access to campaigns
   flows:
-  - authorizationCode
+  - clientCredentials
   sources:
-  - openapi/omnisend-openapi.yml
+  - openapi/omnisend-campaigns-api-openapi.yml
 - scope: contacts.read
   description: Read contacts
   flows:
-  - authorizationCode
+  - clientCredentials
   sources:
-  - openapi/omnisend-openapi.yml
+  - openapi/omnisend-batches-api-openapi.yml
+  - openapi/omnisend-contacts-api-openapi.yml
 - scope: contacts.write
-  description: Manage contacts
+  description: Create, update and delete contacts
   flows:
-  - authorizationCode
+  - clientCredentials
   sources:
-  - openapi/omnisend-openapi.yml
+  - openapi/omnisend-batches-api-openapi.yml
+  - openapi/omnisend-contacts-api-openapi.yml
+- scope: email-templates.read
+  description: Allows reading email templates and universal layouts
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/omnisend-emailcontent-api-openapi.yml
+  - openapi/omnisend-emailtemplates-api-openapi.yml
+  - openapi/omnisend-emailuniversallayouts-api-openapi.yml
+- scope: email-templates.write
+  description: Allows create, update, delete email templates and universal layouts
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/omnisend-emailcontent-api-openapi.yml
+  - openapi/omnisend-emailtemplates-api-openapi.yml
+  - openapi/omnisend-emailuniversallayouts-api-openapi.yml
+- scope: events.read
+  sources:
+  - openapi/omnisend-batches-api-openapi.yml
+- scope: events.write
+  sources:
+  - openapi/omnisend-batches-api-openapi.yml
+  - openapi/omnisend-events-api-openapi.yml
+- scope: images.read
+  description: Allows reading images
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/omnisend-images-api-openapi.yml
+- scope: images.write
+  description: Allows uploading and deleting images
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/omnisend-images-api-openapi.yml
+- scope: none
+  description: No scopes required — authorization is not enforced via OAuth2 scopes
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/omnisend-event-metadata-api-openapi.yml
+- scope: products.read
+  description: Grants read access to product data
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/omnisend-batches-api-openapi.yml
+  - openapi/omnisend-productcategories-api-openapi.yml
+  - openapi/omnisend-products-api-openapi.yml
+- scope: products.write
+  description: Grants write access to product data
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/omnisend-batches-api-openapi.yml
+  - openapi/omnisend-productcategories-api-openapi.yml
+  - openapi/omnisend-products-api-openapi.yml
+- scope: segments.read
+  description: Read segments
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/omnisend-segments-api-openapi.yml
+- scope: segments.write
+  description: Create, update and delete segments
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/omnisend-segments-api-openapi.yml
+docs: https://api-docs.omnisend.com/reference/oauth
+description: 'OAuth 2.0 scopes for Omnisend. The authoritative list is the provider''s own RFC 8414 authorization
+  server metadata, which declares 26 scopes — six more than any OpenAPI contract exposes. The RFC 9728 protected-resource
+  metadata on the MCP host declares a 22-scope subset: the four missing there (accounts.write, sessions.write, reports.read,
+  brand-assets.write) are account-level scopes the MCP agent surface deliberately does not offer. Scope names are
+  resource.action and map cleanly onto the API resources.'
+authorization_server:
+  issuer: https://app.omnisend.com
+  metadata: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+  authorization_endpoint: https://app.omnisend.com/oauth2/authorize
+  token_endpoint: https://app.omnisend.com/oauth2/token
+  registration_endpoint: https://app.omnisend.com/oauth2/register
+  revocation_endpoint: https://app.omnisend.com/oauth2/revoke
+  grant_types:
+  - authorization_code
+  - refresh_token
+  code_challenge_methods:
+  - S256
+  scope_delimiter: space
+  note: Requested with the `scope` query parameter on the authorize call. Omnisend's OAuth page writes the parameter
+    as `scopes` in its table and `scope` in its example — the RFC 6749 name is `scope`.
+published_scopes:
+- scope: contacts.write
+  description: Create, update and delete contacts
+  in_openapi: true
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: contacts.read
+  description: Read contacts
+  in_openapi: true
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: products.write
+  description: Create, update and delete product data and categories
+  in_openapi: true
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: products.read
+  description: Read product data
+  in_openapi: true
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: events.write
+  description: Send customer events and declare custom event metadata
+  in_openapi: true
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: events.read
+  description: Read customer events
+  in_openapi: true
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: accounts.write
+  description: Account-level write. Not offered on the MCP surface.
+  in_openapi: false
+  on_mcp: false
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: sessions.write
+  description: Session write. Not offered on the MCP surface.
+  in_openapi: false
+  on_mcp: false
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: brands.write
+  description: Connect a store / write brand information (OAuth only)
+  in_openapi: true
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: brands.read
+  description: Read brand information
+  in_openapi: true
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: automations.read
+  description: Read automation workflows
+  in_openapi: true
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: automations.write
+  description: Create, update, enable, disable and delete automation workflows
+  in_openapi: true
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: campaigns.read
+  description: Read campaigns
+  in_openapi: true
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: campaigns.write
+  description: Create, update, send, cancel, copy and delete campaigns
+  in_openapi: true
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: reports.read
+  description: Read reports. Not offered on the MCP surface.
+  in_openapi: false
+  on_mcp: false
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: analytics.read
+  description: Generate analytics reports and statistics
+  in_openapi: true
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: segments.read
+  description: Read segments and segment statistics
+  in_openapi: true
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: segments.write
+  description: Create, update and delete segments
+  in_openapi: true
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: email-templates.read
+  description: Read email templates, email content and universal layouts
+  in_openapi: true
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: email-templates.write
+  description: Create, update, delete and render email templates, content and universal layouts
+  in_openapi: true
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: images.read
+  description: Read images
+  in_openapi: true
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: images.write
+  description: Upload and delete images
+  in_openapi: true
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: forms.read
+  description: Read sign-up forms and form reports
+  in_openapi: false
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: forms.write
+  description: Create and update sign-up forms
+  in_openapi: false
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: brand-assets.read
+  description: Read brand assets
+  in_openapi: false
+  on_mcp: true
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+- scope: brand-assets.write
+  description: Write brand assets. Not offered on the MCP surface.
+  in_openapi: false
+  on_mcp: false
+  source: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+scope_count: 26
+notes:
+- The OpenAPI contracts declare only contacts.read and contacts.write inside the Bearer securityScheme; every other
+  scope requirement is stated in prose in the per-operation description ("**Scopes:** `campaigns.write`"), not in
+  the machine-readable security block.
+- The Event Metadata API operations declare no scope in the spec at all — the derived entry "none" below is an artifact
+  of that omission, not a claim that the operations are unauthenticated. The docs state events.write for create/update.
+- forms.read / forms.write and brand-assets.* have no published OpenAPI at all; the Forms surface is reachable only
+  through the MCP server.
+- Client credentials are not self-serve — the OAuth page asks integrators to submit a Google Form and promises credentials
+  in 1-3 business days. The MCP hosts advertise RFC 7591 dynamic client registration, which is a different and faster
+  path.
+- Access tokens are documented as effectively non-expiring (expires_in 9223372036) unless revoked.

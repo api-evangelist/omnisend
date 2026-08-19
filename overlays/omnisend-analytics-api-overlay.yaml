@@ -1,0 +1,45 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Omnisend analytics-api
+  version: 1.0.0
+  x-generated: '2026-08-13'
+  x-method: generated
+  x-source: openapi/omnisend-analytics-api-openapi.yml
+  x-note: 'Records API Evangelist enhancements over the contract Omnisend publishes. It is never applied to the harvested
+    file — openapi/ stays verbatim. The gaps captured here are real and measured: 2 of 2 operations carry no operationId,
+    0 carry no tag, and the document declares securitySchemes without ever applying them.'
+extends: omnisend-analytics-api-openapi.yml
+actions:
+- target: $
+  description: Apply the two declared security schemes at the document root. The published contract defines ApiKeyAuth and
+    Bearer in components.securitySchemes but never applies them, so no operation states its auth requirement.
+  update:
+    security:
+    - ApiKeyAuth: []
+    - Bearer: []
+- target: $
+  description: Declare a document-level tag so every operation can be grouped. The published contract declares none.
+  update:
+    tags:
+    - name: Analytics
+      description: ''
+- target: $.paths['/analytics/reports'].post
+  description: Tag POST /analytics/reports as Analytics.
+  update:
+    tags:
+    - Analytics
+- target: $.paths['/analytics/statistics'].post
+  description: Tag POST /analytics/statistics as Analytics.
+  update:
+    tags:
+    - Analytics
+- target: $.paths['/analytics/reports'].post
+  description: Add a stable operationId for POST /analytics/reports; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: post_analytics_reports
+- target: $.paths['/analytics/statistics'].post
+  description: Add a stable operationId for POST /analytics/statistics; the published contract omits it, which blocks code
+    generation and tool binding.
+  update:
+    operationId: post_analytics_statistics

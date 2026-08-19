@@ -1,0 +1,75 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Omnisend productcategories-api
+  version: 1.0.0
+  x-generated: '2026-08-13'
+  x-method: generated
+  x-source: openapi/omnisend-productcategories-api-openapi.yml
+  x-note: 'Records API Evangelist enhancements over the contract Omnisend publishes. It is never applied to the harvested
+    file — openapi/ stays verbatim. The gaps captured here are real and measured: 5 of 5 operations carry no operationId,
+    0 carry no tag, and the document declares securitySchemes without ever applying them.'
+extends: omnisend-productcategories-api-openapi.yml
+actions:
+- target: $
+  description: Apply the two declared security schemes at the document root. The published contract defines ApiKeyAuth and
+    Bearer in components.securitySchemes but never applies them, so no operation states its auth requirement.
+  update:
+    security:
+    - ApiKeyAuth: []
+    - Bearer: []
+- target: $
+  description: Declare a document-level tag so every operation can be grouped. The published contract declares none.
+  update:
+    tags:
+    - name: Productcategories
+      description: Manage product categories for your Omnisend store.
+- target: $.paths['/product-categories'].get
+  description: Tag GET /product-categories as Productcategories.
+  update:
+    tags:
+    - Productcategories
+- target: $.paths['/product-categories'].post
+  description: Tag POST /product-categories as Productcategories.
+  update:
+    tags:
+    - Productcategories
+- target: $.paths['/product-categories/{categoryID}'].delete
+  description: Tag DELETE /product-categories/{categoryID} as Productcategories.
+  update:
+    tags:
+    - Productcategories
+- target: $.paths['/product-categories/{categoryID}'].get
+  description: Tag GET /product-categories/{categoryID} as Productcategories.
+  update:
+    tags:
+    - Productcategories
+- target: $.paths['/product-categories/{categoryID}'].patch
+  description: Tag PATCH /product-categories/{categoryID} as Productcategories.
+  update:
+    tags:
+    - Productcategories
+- target: $.paths['/product-categories'].get
+  description: Add a stable operationId for GET /product-categories; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: get_product_categories
+- target: $.paths['/product-categories'].post
+  description: Add a stable operationId for POST /product-categories; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: post_product_categories
+- target: $.paths['/product-categories/{categoryID}'].delete
+  description: Add a stable operationId for DELETE /product-categories/{categoryID}; the published contract omits it, which
+    blocks code generation and tool binding.
+  update:
+    operationId: delete_product_categories_categoryID
+- target: $.paths['/product-categories/{categoryID}'].get
+  description: Add a stable operationId for GET /product-categories/{categoryID}; the published contract omits it, which blocks
+    code generation and tool binding.
+  update:
+    operationId: get_product_categories_categoryID
+- target: $.paths['/product-categories/{categoryID}'].patch
+  description: Add a stable operationId for PATCH /product-categories/{categoryID}; the published contract omits it, which
+    blocks code generation and tool binding.
+  update:
+    operationId: patch_product_categories_categoryID

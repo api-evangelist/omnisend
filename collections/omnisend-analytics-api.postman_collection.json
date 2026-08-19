@@ -1,0 +1,1103 @@
+{
+  "item": [
+    {
+      "id": "e59d7b5f-25a3-4231-88ea-199a25a67178",
+      "name": "Reports",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a40e2926-4d00-4ce2-a2a6-cdad2bbf2371",
+          "name": "Generate report",
+          "request": {
+            "name": "Generate report",
+            "description": {
+              "content": "Returns aggregated marketing analytics grouped by message send date. Covers delivery, engagement, and revenue attribution metrics for campaigns and automations. Supports optional dimensions (timestamp, channel, activity), filters, and up to 4 queries per request.\n\n**Scopes:**\n`analytics.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 10 requests per minute and 55 requests per 24 hours.\nRate limits apply per brand. See [Rate limits](https://api-docs.omnisend.com/reference/reports#rate-limits).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "analytics",
+                "reports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"queries\": [\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"interval\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"interval\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "faad660b-42d2-4a35-b6e8-937a63f3aa3f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"queries\": [\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"interval\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"interval\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"reports\": [\n    {\n      \"alias\": \"string\",\n      \"dimensions\": [\n        {\n          \"granularity\": \"string\",\n          \"name\": \"string\"\n        },\n        {\n          \"granularity\": \"string\",\n          \"name\": \"string\"\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"string\"\n        },\n        {\n          \"name\": \"string\"\n        }\n      ],\n      \"rows\": [\n        {\n          \"key_0\": {},\n          \"key_1\": {},\n          \"key_2\": {}\n        },\n        {\n          \"key_0\": {},\n          \"key_1\": {}\n        }\n      ]\n    },\n    {\n      \"alias\": \"string\",\n      \"dimensions\": [\n        {\n          \"granularity\": \"string\",\n          \"name\": \"string\"\n        },\n        {\n          \"granularity\": \"string\",\n          \"name\": \"string\"\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"string\"\n        },\n        {\n          \"name\": \"string\"\n        }\n      ],\n      \"rows\": [\n        {\n          \"key_0\": {},\n          \"key_1\": {}\n        },\n        {\n          \"key_0\": {},\n          \"key_1\": {}\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2e9b314-84ee-45b4-a484-ff68735e68e9",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"queries\": [\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"interval\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"interval\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a6e013a-5a16-4285-ac76-b015d53cc44c",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"queries\": [\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"interval\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"interval\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "59ee072a-4bbf-4f4b-bc7e-92365bdc4433",
+              "name": "Unsupported media type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"queries\": [\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"interval\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"interval\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2af3d7a-29a6-4301-9716-3cf7bd45b51f",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"queries\": [\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"interval\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"interval\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe731934-2f4a-4453-b73a-85672ab5a22a",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"queries\": [\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"interval\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"interval\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "889f2cbe-a215-49cc-9407-52eb9681c6bf",
+              "name": "Service temporarily unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"queries\": [\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"interval\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"interval\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db707379-4608-455c-885d-141606b26963",
+              "name": "Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"queries\": [\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"interval\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"interval\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 524,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "6f3d776a-06d4-4e48-818f-0855ec9c4777",
+      "name": "Statistics",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d61bd934-847c-4a6a-832d-dc56c5c14905",
+          "name": "Generate report",
+          "request": {
+            "name": "Generate report",
+            "description": {
+              "content": "Returns aggregated marketing analytics grouped by event date (when opens, clicks, orders actually occurred). Covers delivery, engagement, revenue attribution, and audience growth metrics. Requires a timestamp dimension. Supports a rich set of dimensions (client, click, subscription, deliverability) and up to 4 queries per request.\n\n**Scopes:**\n`analytics.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 10 requests per minute and 55 requests per 24 hours.\nRate limits apply per brand. See [Rate limits](https://api-docs.omnisend.com/reference/statistics#rate-limits).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "analytics",
+                "statistics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"queries\": [\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9720bc8f-0e84-4de3-9af3-ef464d7aec75",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics",
+                    "statistics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"queries\": [\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statistics\": [\n    {\n      \"alias\": \"string\",\n      \"dimensions\": [\n        {\n          \"granularity\": \"string\",\n          \"name\": \"string\"\n        },\n        {\n          \"granularity\": \"string\",\n          \"name\": \"string\"\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"string\"\n        },\n        {\n          \"name\": \"string\"\n        }\n      ],\n      \"rows\": [\n        {\n          \"key_0\": {}\n        },\n        {\n          \"key_0\": {}\n        }\n      ]\n    },\n    {\n      \"alias\": \"string\",\n      \"dimensions\": [\n        {\n          \"granularity\": \"string\",\n          \"name\": \"string\"\n        },\n        {\n          \"granularity\": \"string\",\n          \"name\": \"string\"\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"string\"\n        },\n        {\n          \"name\": \"string\"\n        }\n      ],\n      \"rows\": [\n        {\n          \"key_0\": {}\n        },\n        {\n          \"key_0\": {},\n          \"key_1\": {},\n          \"key_2\": {},\n          \"key_3\": {}\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7bf0e0f6-1a6d-4d99-9770-65aa329f5c23",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics",
+                    "statistics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"queries\": [\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8815324b-22e5-43e2-b266-bb7d83400071",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics",
+                    "statistics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"queries\": [\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d7d0d47-1c16-4de9-96a5-203b6d42c593",
+              "name": "Unsupported media type",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics",
+                    "statistics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"queries\": [\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b973f10-f6a5-4969-9699-6f8738047451",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics",
+                    "statistics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"queries\": [\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65a7139e-73c7-4aef-a5dc-7af4ac7ad73e",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics",
+                    "statistics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"queries\": [\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34acd779-6ce0-42a1-8ee7-9c58917b655e",
+              "name": "Service temporarily unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics",
+                    "statistics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"queries\": [\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1dbe6fd-dc0e-4e6d-8815-64b00026eada",
+              "name": "Timeout",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analytics",
+                    "statistics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"queries\": [\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"alias\": \"<string>\",\n      \"dateRange\": {\n        \"from\": \"<string>\",\n        \"to\": \"<string>\"\n      },\n      \"dimensions\": [\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"granularity\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"filters\": [\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"name\": \"<string>\",\n          \"operator\": \"<string>\",\n          \"values\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ],\n      \"metrics\": [\n        {\n          \"name\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 524,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.omnisend.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "aca385e0-9aea-402e-aee1-e285344a0f19",
+    "name": "Analytics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

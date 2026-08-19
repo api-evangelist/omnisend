@@ -4,7 +4,11 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Omnisend
 providerId: omnisend
 created: '2026-05-25'
-modified: '2026-05-25'
+modified: '2026-08-13'
+generated: '2026-08-13'
+method: searched
+source: https://www.omnisend.com/pricing
+plan_count: 4
 reconciled: true
 tags:
   - Email Marketing
@@ -170,3 +174,18 @@ notes:
   - 3-month prepay discount of approximately 30% is offered on Standard and Pro plans.
   - SMS pricing is country-specific and volume-discounted; consult omnisend.com/sms-pricing for per-country rates.
   - Dedicated IP is an add-on for Pro and Enterprise customers with large sending volumes.
+verification:
+  checked: '2026-08-13'
+  url: https://www.omnisend.com/pricing
+  status: 200
+  confirmed:
+    - Four published tiers — Free, Standard, Pro, and a contact-sales Enterprise/Custom tier.
+    - Price is a function of contact-list size; the page carries a 65-step list-size selector from 0-250 up to 150,001+.
+    - '3-month prepay discount is published on the page as "Pay 3 months upfront (save 30%)".'
+    - Currency selector offers USD, CAD, AUD, GBP and EUR, with the page stating local currency figures are estimates and billing is in USD.
+    - 'SMS is metered separately, advertised on the pricing page as starting at $0.007/SMS.'
+    - Billing counts subscribers AND non-subscribers who received automated messages; unsubscribed contacts are not billed.
+  note: >-
+    Omnisend publishes no machine-readable pricing or catalog endpoint, and no API-specific pricing —
+    API access is included with the account rather than metered, so there is no per-call price to
+    record. The tier prices below are the published starting rates for the smallest paid list tier.

@@ -1,0 +1,75 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Omnisend products-api
+  version: 1.0.0
+  x-generated: '2026-08-13'
+  x-method: generated
+  x-source: openapi/omnisend-products-api-openapi.yml
+  x-note: 'Records API Evangelist enhancements over the contract Omnisend publishes. It is never applied to the harvested
+    file — openapi/ stays verbatim. The gaps captured here are real and measured: 5 of 5 operations carry no operationId,
+    0 carry no tag, and the document declares securitySchemes without ever applying them.'
+extends: omnisend-products-api-openapi.yml
+actions:
+- target: $
+  description: Apply the two declared security schemes at the document root. The published contract defines ApiKeyAuth and
+    Bearer in components.securitySchemes but never applies them, so no operation states its auth requirement.
+  update:
+    security:
+    - ApiKeyAuth: []
+    - Bearer: []
+- target: $
+  description: Declare a document-level tag so every operation can be grouped. The published contract declares none.
+  update:
+    tags:
+    - name: Products
+      description: ''
+- target: $.paths['/products'].get
+  description: Tag GET /products as Products.
+  update:
+    tags:
+    - Products
+- target: $.paths['/products'].post
+  description: Tag POST /products as Products.
+  update:
+    tags:
+    - Products
+- target: $.paths['/products/{productID}'].delete
+  description: Tag DELETE /products/{productID} as Products.
+  update:
+    tags:
+    - Products
+- target: $.paths['/products/{productID}'].get
+  description: Tag GET /products/{productID} as Products.
+  update:
+    tags:
+    - Products
+- target: $.paths['/products/{productID}'].put
+  description: Tag PUT /products/{productID} as Products.
+  update:
+    tags:
+    - Products
+- target: $.paths['/products'].get
+  description: Add a stable operationId for GET /products; the published contract omits it, which blocks code generation and
+    tool binding.
+  update:
+    operationId: get_products
+- target: $.paths['/products'].post
+  description: Add a stable operationId for POST /products; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: post_products
+- target: $.paths['/products/{productID}'].delete
+  description: Add a stable operationId for DELETE /products/{productID}; the published contract omits it, which blocks code
+    generation and tool binding.
+  update:
+    operationId: delete_products_productID
+- target: $.paths['/products/{productID}'].get
+  description: Add a stable operationId for GET /products/{productID}; the published contract omits it, which blocks code
+    generation and tool binding.
+  update:
+    operationId: get_products_productID
+- target: $.paths['/products/{productID}'].put
+  description: Add a stable operationId for PUT /products/{productID}; the published contract omits it, which blocks code
+    generation and tool binding.
+  update:
+    operationId: put_products_productID

@@ -1,0 +1,246 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Segments API",
+    "version": "5.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Segments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List segments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/segments",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Page size (1-50)"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for next page (base64-encoded, obtained from previous response)"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for previous page (base64-encoded, obtained from previous response)"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort field (only needed on first request)"
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction (only needed on first request)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "List segments with sorting and cursor-based pagination support.\n\n**Scopes:**\n`segments.read`\n\n**Pagination:**\nThis endpoint uses cursor-based pagination. Use the `after` cursor from the response to get the next page,\nor the `before` cursor to get the previous page. Do not use both `after` and `before` parameters simultaneously.\n\n**Sorting:**\n- Only single-field sorting is supported. You cannot sort by multiple fields.\n- Available sort fields: `createdAt` (default), `name`.\n- When sorting by `nam"
+        },
+        {
+          "info": {
+            "name": "Create segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/segments",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates a new segment.\n\n**Scopes:**\n`segments.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 15 requests per minute.\n\n# Segmentation examples\n\n## Event filter fields reference\n\nFor `entity: \"event\"` conditions, each filter in the `filters` array supports the following fields:\n\n| Field | Required | Description |\n|---|---|---|\n| `name` | Yes | Event name (e.g., `\"placed order\"`, `\"opened message\"`) |\n| `operator` | Yes | `has` or `hasNot` |\n| `count` | Yes | `atLeast` or `equals` |\n| "
+        },
+        {
+          "info": {
+            "name": "Get segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/segments/:segmentID",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "segmentID",
+                "value": "",
+                "type": "path",
+                "description": "Segment ID (24 character hexadecimal)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a segment by its unique identifier.\n\n**Scopes:**\n`segments.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 100 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Update segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.omnisend.com/api/segments/:segmentID",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "segmentID",
+                "value": "",
+                "type": "path",
+                "description": "Segment ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Updates an existing segment by ID.\nThe segment must not be in a building state to be updated.\nIf the segment is currently being built, a `409 Conflict` error is returned.\n\n**Scopes:**\n`segments.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 15 requests per minute.\n\nThe request body structure (`name` and `conditionGroups`) is identical to [Create segment](post_segments).\nSee the Create segment endpoint for detailed examples of condition groups, filters, and advanced segmentation patt"
+        },
+        {
+          "info": {
+            "name": "Delete segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.omnisend.com/api/segments/:segmentID",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "segmentID",
+                "value": "",
+                "type": "path",
+                "description": "Segment ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Permanently deletes a segment by its unique identifier.\nThe segment must not be in a building state to be deleted.\nIf the segment is currently being built, a `409 Conflict` error is returned.\n\n**Scopes:**\n`segments.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 100 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Get segment statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/segments/:segmentID/statistics",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "segmentID",
+                "value": "",
+                "type": "path",
+                "description": "Segment ID (24 character hexadecimal)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns statistics for a segment, including the total number of matching contacts.\n\n**Scopes:**\n`segments.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 100 requests per minute."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

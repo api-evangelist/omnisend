@@ -1,0 +1,206 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Email Universal Layouts API",
+    "version": "5.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Email Universal Layouts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get universal layouts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/email-universal-layouts",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (1-250, default 100)"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for next page (base64-encoded, from previous response)"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for previous page (base64-encoded, from previous response)"
+              },
+              {
+                "name": "nameContains",
+                "value": "",
+                "type": "query",
+                "description": "Filter layouts by name (case-insensitive partial match, max 200 characters)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "With this endpoint you can get a paginated list of universal layouts.\n\n**Sorting:**\nItems are returned in descending order by creation time (newest first).\nThis is based on the internal document ID which contains a timestamp.\n\n**Pagination:**\nThis endpoint uses cursor-based pagination for efficient traversal of large datasets.\n- Use the `paging.cursors.after` value from the response to get the next page\n- Use the `paging.cursors.before` value from the response to get the previous page\n- The `pag"
+        },
+        {
+          "info": {
+            "name": "Create universal layout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.omnisend.com/api/email-universal-layouts",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "With this endpoint you can create a new universal layout.\n\n**Scopes:**\n`email-templates.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Get universal layout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.omnisend.com/api/email-universal-layouts/:id",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Universal Layout ID (24 character hexadecimal)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "With this endpoint you can get a universal layout by ID.\n\n**Scopes:**\n`email-templates.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Update universal layout",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.omnisend.com/api/email-universal-layouts/:id",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Universal Layout ID (24 character hexadecimal)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "With this endpoint you can update (fully replace) a universal layout by ID.\n\n**Scopes:**\n`email-templates.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        },
+        {
+          "info": {
+            "name": "Delete universal layout",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.omnisend.com/api/email-universal-layouts/:id",
+            "headers": [
+              {
+                "name": "Omnisend-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Universal Layout ID (24 character hexadecimal)"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://app.omnisend.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "With this endpoint you can delete a universal layout by ID.\n\n**Scopes:**\n`email-templates.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,3347 @@
+{
+  "item": [
+    {
+      "id": "64589e31-5b03-4f96-a814-c9d5bf79521a",
+      "name": "Segments",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cadac93d-30a8-49b3-bea8-03c3564c227c",
+          "name": "List segments",
+          "request": {
+            "name": "List segments",
+            "description": {
+              "content": "List segments with sorting and cursor-based pagination support.\n\n**Scopes:**\n`segments.read`\n\n**Pagination:**\nThis endpoint uses cursor-based pagination. Use the `after` cursor from the response to get the next page,\nor the `before` cursor to get the previous page. Do not use both `after` and `before` parameters simultaneously.\n\n**Sorting:**\n- Only single-field sorting is supported. You cannot sort by multiple fields.\n- Available sort fields: `createdAt` (default), `name`.\n- When sorting by `name`, segments are sorted lexicographically (case-sensitive).\n- Sort parameters are only required on the first request. Subsequent requests using a cursor\nwill automatically use the sort settings embedded in the cursor.\n\n**Cursor Behavior:**\n- Cursors are self-contained and include all parameters needed for pagination.\n- Once you have a cursor, you only need to pass the cursor for subsequent pages.\n- If sort parameters are provided with a cursor, they must match the cursor's sort settings.\n- Cursors may become invalid if the underlying data changes significantly (e.g., the referenced segment is deleted).\n\n**Rate Limiting:**\nThis endpoint is rate limited to 100 requests per minute.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "segments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Page size (1-50)"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "Cursor for next page (base64-encoded, obtained from previous response)"
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "Cursor for previous page (base64-encoded, obtained from previous response)"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "createdAt",
+                  "description": "Sort field (only needed on first request)"
+                },
+                {
+                  "disabled": false,
+                  "key": "direction",
+                  "value": "desc",
+                  "description": "Sort direction (only needed on first request)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "segments.read segments.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fe7a8f9e-39c9-4a28-9161-ec053d3291ab",
+              "name": "Segments list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "createdAt"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"paging\": {\n    \"cursors\": {\n      \"after\": \"eyJpZCI6ImNhbXAtNDU2In0\",\n      \"before\": \"eyJpZCI6ImNhbXAtMTIzIn0\"\n    },\n    \"hasMore\": true,\n    \"limit\": 50\n  },\n  \"segments\": [\n    {\n      \"archivedAt\": \"2026-06-01T00:00:00Z\",\n      \"conditionGroups\": [\n        {\n          \"conditions\": [\n            {\n              \"filters\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"entity\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"junction\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"filters\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"entity\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"junction\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"conditions\": [\n            {\n              \"filters\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"entity\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"junction\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"filters\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"entity\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"junction\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"createdAt\": \"2026-01-15T10:30:00Z\",\n      \"isStarred\": false,\n      \"name\": \"VIP Customers\",\n      \"segmentID\": \"000000000000000000000001\",\n      \"status\": \"ready\",\n      \"updatedAt\": \"2026-01-20T14:45:00Z\"\n    },\n    {\n      \"archivedAt\": \"2026-06-01T00:00:00Z\",\n      \"conditionGroups\": [\n        {\n          \"conditions\": [\n            {\n              \"filters\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"entity\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"junction\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"filters\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"entity\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"junction\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"conditions\": [\n            {\n              \"filters\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"entity\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"junction\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"filters\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"entity\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"junction\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"createdAt\": \"2026-01-15T10:30:00Z\",\n      \"isStarred\": false,\n      \"name\": \"VIP Customers\",\n      \"segmentID\": \"000000000000000000000001\",\n      \"status\": \"ready\",\n      \"updatedAt\": \"2026-01-20T14:45:00Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41bb99bf-4e43-46a4-a951-72d027916db1",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "createdAt"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f6615c49-f235-45aa-b017-861d45ea1ab9",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "createdAt"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8d63c09b-04fd-4cb9-830f-26b17ad1308c",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "createdAt"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f44d629-2b86-478d-a5c7-6da61b5de097",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "createdAt"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc44a068-8527-4194-bcd7-75acf6f5fa65",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "createdAt"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"retryAfter\": 60,\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc0aa349-7e09-4880-8757-086299c49acd",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "createdAt"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "desc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "af4426e5-961f-4c30-8c7e-5f924b83b7e2",
+          "name": "Create segment",
+          "request": {
+            "name": "Create segment",
+            "description": {
+              "content": "Creates a new segment.\n\n**Scopes:**\n`segments.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 15 requests per minute.\n\n# Segmentation examples\n\n## Event filter fields reference\n\nFor `entity: \"event\"` conditions, each filter in the `filters` array supports the following fields:\n\n| Field | Required | Description |\n|---|---|---|\n| `name` | Yes | Event name (e.g., `\"placed order\"`, `\"opened message\"`) |\n| `operator` | Yes | `has` or `hasNot` |\n| `count` | Yes | `atLeast` or `equals` |\n| `value` | Yes | Integer threshold (e.g., `1`) |\n| `origin` | No | Event source (e.g., `\"shopify\"`, `\"omnisend\"`). See the `origin` note below. |\n| `period` | No | Time window — see period operators below |\n| `filters` | No | Array of property sub-filters on the event payload |\n| `junction` | No | `and` or `or` — logical operator for `filters` |\n\n> **`origin` is usually optional.** Most events belong to a single origin, so the API resolves it for you.\n> You only need to specify `origin` when an event exists under multiple origins — otherwise the API returns an error with the list of valid values to choose from.\n\n### Period operators\n\nThe `period` object is optional on every event filter. When omitted, the filter matches across all time.\n\n#### Relative periods\n\nUse `value` (positive integer) + `unit` (`days` \\| `weeks` \\| `months` \\| `years`).\n\n| `operator` | Meaning | Example JSON |\n|---|---|---|\n| `inTheLast` | Event occurred within the last N units | `{ \"operator\": \"inTheLast\", \"unit\": \"days\", \"value\": 7 }` |\n| `notInTheLast` | Event did **not** occur within the last N units | `{ \"operator\": \"notInTheLast\", \"unit\": \"months\", \"value\": 3 }` |\n\n#### Absolute periods\n\nUse ISO 8601 date strings (`YYYY-MM-DD`).\n\n| `operator` | Meaning | Example JSON |\n|---|---|---|\n| `equals` | Event occurred on an exact date | `{ \"operator\": \"equals\", \"value\": \"2026-01-13\" }` |\n| `before` | Event occurred before a date (exclusive) | `{ \"operator\": \"before\", \"value\": \"2026-01-13\" }` |\n| `after` | Event occurred after a date (exclusive) | `{ \"operator\": \"after\", \"value\": \"2026-04-01\" }` |\n| `between` | Event occurred within a date range (inclusive) | `{ \"operator\": \"between\", \"valueFrom\": \"2025-01-01\", \"valueTo\": \"2025-01-31\" }` |\n\n---\n\n## Contact filter properties reference\n\nFor `entity: \"contact\"` conditions, valid `property` values are:\n\n- Text: `email`, `phoneNumber`, `firstName`, `lastName`, `gender`, `country`, `state`, `city`, `address`, `postalCode`, `lastDetectedCity`, `lastDetectedCountry`, `customerLifecycleStage`\n- List: `tags`, `consent`\n- Number: `averageOrderValue`, `totalSpent`\n- Date: `dateAdded`\n- Subscription status: `subscriptionStatus`\n- Variadic: `birthday` (`valueType` can be `date` or `text`), `custom` (`valueType` can be `text`, `number`, `bool`, or `date`)\n\n> **Important**:\n> - Use `tags` (plural), not `tag`.\n> - When `property` is `custom`, provide both `name` and `valueType`.\n\nThis section provides a deeper technical reference for building complex segments using the API segment model.\n\n---\n\n<details id=\"example-combining-contact-and-event-conditions-and-logic\">\n<summary>Example: Combining contact and event conditions (AND logic)</summary>\n<br>\n<div style=\"padding-left: 1.5em;\">\n\nShows how to combine different entity types (`contact` and `event`) within a single group. **AND logic is automatically inferred** between multiple conditions inside the `conditions` array.\n<br>\n\n```json\n{\n  \"name\": \"Combining Contact and Event Conditions\",\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"entity\": \"contact\",\n          \"junction\": \"and\",\n          \"filters\": [\n            { \"operator\": \"anyOf\", \"property\": \"country\", \"value\": [\"US\", \"Canada\"] },\n            {\n              \"channels\": [\"email\"],\n              \"operator\": \"equals\",\n              \"property\": \"subscriptionStatus\",\n              \"value\": \"subscribed\"\n            }\n          ]\n        },\n        {\n          \"entity\": \"event\",\n          \"junction\": \"and\",\n          \"filters\": [\n            {\n              \"count\": \"atLeast\",\n              \"name\": \"opened message\",\n              \"operator\": \"has\",\n              \"period\": { \"operator\": \"inTheLast\", \"unit\": \"days\", \"value\": 7 },\n              \"value\": 1\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n\n**Target audience:** Contacts who are from the US and subscribed to the email channel, **AND** who have opened at least one message in the last 7 days.\n\n</div>\n</details>\n\n---\n\n<details id=\"example-multiple-event-conditions-in-a-single-group\">\n<summary>Example: Multiple event conditions in a single group</summary>\n<br>\n<div style=\"padding-left: 1.5em;\">\n\nMultiple `event` conditions within the same group, with an **OR** junction on filters within one condition.\n<br>\n\n```json\n{\n  \"name\": \"Multiple Event Conditions in a Group\",\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"entity\": \"event\",\n          \"junction\": \"and\",\n          \"filters\": [\n            {\n              \"count\": \"atLeast\",\n              \"name\": \"opened message\",\n              \"operator\": \"has\",\n              \"period\": { \"operator\": \"inTheLast\", \"unit\": \"days\", \"value\": 7 },\n              \"value\": 1\n            }\n          ]\n        },\n        {\n          \"entity\": \"event\",\n          \"junction\": \"or\",\n          \"filters\": [\n            {\n              \"count\": \"atLeast\",\n              \"name\": \"clicked message\",\n              \"operator\": \"has\",\n              \"value\": 1\n            },\n            {\n              \"count\": \"equals\",\n              \"name\": \"marked message as spam\",\n              \"operator\": \"has\",\n              \"value\": 0\n            }\n          ]\n        },\n        {\n          \"entity\": \"contact\",\n          \"junction\": \"and\",\n          \"filters\": [\n            { \"operator\": \"anyOf\", \"property\": \"country\", \"value\": [\"US\", \"Mexico\"] }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n\n**Target audience:** Contacts from the US who have opened a message in the last 7 days, **AND** who have either clicked a message **OR** have never marked a message as spam.\n\n</div>\n</details>\n\n---\n\n<details id=\"example-multiple-condition-groups-or-logic\">\n<summary>Example: Multiple condition groups (OR logic)</summary>\n<br>\n<div style=\"padding-left: 1.5em;\">\n\nDemonstrates the **OR** relationship between different `conditionGroups`. A contact is included if they match any of the groups.\n<br>\n\n```json\n{\n  \"name\": \"Multiple Condition Groups\",\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"entity\": \"contact\",\n          \"junction\": \"and\",\n          \"filters\": [\n            { \"operator\": \"anyOf\", \"property\": \"tags\", \"value\": [\"vip\", \"imported\"] }\n          ]\n        },\n        {\n          \"entity\": \"event\",\n          \"junction\": \"and\",\n          \"filters\": [\n            {\n              \"count\": \"atLeast\",\n              \"name\": \"placed order\",\n              \"operator\": \"has\",\n              \"origin\": \"shopify\",\n              \"value\": 1\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"entity\": \"contact\",\n          \"junction\": \"or\",\n          \"filters\": [\n            { \"operator\": \"anyOf\", \"property\": \"country\", \"value\": [\"US\", \"Canada\"] },\n            {\n              \"channels\": [\"email\"],\n              \"operator\": \"equals\",\n              \"property\": \"subscriptionStatus\",\n              \"value\": \"subscribed\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n\n**Target audience:** Contacts who are either (tagged as \"vip\" **AND** have placed at least one Shopify order) **OR** (are from the US **OR** are subscribed to the email channel).\n\n</div>\n</details>\n\n---\n\n<details id=\"example-filtering-by-contact-properties\">\n<summary>Example: Filtering by contact properties</summary>\n<br>\n<div style=\"padding-left: 1.5em;\">\n\nCommon contact property filters, including text matching, subscription status, and location.\n<br>\n\n```json\n{\n  \"name\": \"Contact Property Filters\",\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"entity\": \"contact\",\n          \"junction\": \"and\",\n          \"filters\": [\n            { \"operator\": \"anyOf\", \"property\": \"firstName\", \"value\": [\"Jane\", \"John\"] },\n            { \"operator\": \"contains\", \"property\": \"lastName\", \"value\": [\"Smith\"] },\n            {\n              \"channels\": [\"email\", \"browserPush\", \"sms\"],\n              \"operator\": \"equals\",\n              \"property\": \"subscriptionStatus\",\n              \"value\": \"subscribed\"\n            },\n            { \"operator\": \"anyOf\", \"property\": \"tags\", \"value\": [\"vip\"] },\n            { \"operator\": \"noneOf\", \"property\": \"tags\", \"value\": [\"excluded\"] },\n            { \"operator\": \"anyOf\", \"property\": \"country\", \"value\": [\"US\", \"Canada\"] },\n            { \"operator\": \"doesNotExist\", \"property\": \"postalCode\" }\n          ]\n        },\n        {\n          \"entity\": \"contact\",\n          \"junction\": \"or\",\n          \"filters\": [\n            { \"operator\": \"anyOf\", \"property\": \"gender\", \"value\": [\"f\"] },\n            { \"operator\": \"anyOf\", \"property\": \"lastDetectedCity\", \"value\": [\"New York\"] }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n\n**Target audience:** Contacts who match all the primary criteria (named Jane/John Smith, subscribed on all channels, tagged \"vip\", not tagged \"excluded\", from US, no zip code) **AND** who are also either female **OR** located in New York.\n\n</div>\n</details>\n\n---\n\n<details id=\"example-filtering-by-birthday\">\n<summary>Example: Filtering by birthday</summary>\n<br>\n<div style=\"padding-left: 1.5em;\">\n\nDate-based filtering for birthdays, including date ranges, upcoming anniversaries, and month matching.\n<br>\n\n```json\n{\n  \"name\": \"Birthday Filters\",\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"entity\": \"contact\",\n          \"junction\": \"or\",\n          \"filters\": [\n            {\n              \"operator\": \"between\",\n              \"property\": \"birthday\",\n              \"valueFrom\": \"2000-01-01\",\n              \"valueTo\": \"2005-01-15\",\n              \"valueType\": \"date\"\n            },\n            {\n              \"operator\": \"anniversaryIsInTheNext\",\n              \"property\": \"birthday\",\n              \"unit\": \"days\",\n              \"value\": 7,\n              \"valueType\": \"date\"\n            },\n            {\n              \"operator\": \"contains\",\n              \"property\": \"birthday\",\n              \"value\": [\"-05-\"],\n              \"valueType\": \"text\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n\n**Target audience:** Contacts whose birth date falls between January 1, 2000 and January 15, 2005, **OR** whose birthday anniversary is in the next 7 days, **OR** whose birthday is in the month of May.\n\n</div>\n</details>\n\n---\n\n\n<details id=\"example-lifecycle-stages-and-computed-metrics\">\n<summary>Example: Lifecycle stages and computed metrics</summary>\n<br>\n<div style=\"padding-left: 1.5em;\">\n\nFiltering contacts based on their RFM lifecycle stage and financial metrics like average order value.\n<br>\n\n```json\n{\n  \"name\": \"Lifecycle and Metrics\",\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"entity\": \"contact\",\n          \"junction\": \"and\",\n          \"filters\": [\n            {\n              \"property\": \"customerLifecycleStage\",\n              \"operator\": \"anyOf\",\n              \"value\": [\"champions\", \"loyalists\", \"highPotential\"]\n            },\n            { \"operator\": \"moreThan\", \"property\": \"averageOrderValue\", \"value\": 50 },\n            { \"operator\": \"between\", \"property\": \"totalSpent\", \"valueFrom\": 100, \"valueTo\": 500 }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n\n**Target audience:** High-value contacts (Champions, Loyalists, or High Potential) with an average order value over 50 and a total lifetime spend between 100 and 500.\n\n</div>\n</details>\n\n---\n\n<details id=\"example-filtering-by-custom-fields\">\n<summary>Example: Filtering by custom fields</summary>\n<br>\n<div style=\"padding-left: 1.5em;\">\n\nFiltering by user-defined custom fields, which require an explicit `valueType`.\n<br>\n\n```json\n{\n  \"name\": \"Custom Field Filters\",\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"entity\": \"contact\",\n          \"junction\": \"and\",\n          \"filters\": [\n            { \"name\": \"is_vip\", \"operator\": \"equals\", \"property\": \"custom\", \"value\": true, \"valueType\": \"bool\" },\n            { \"name\": \"favorite_category\", \"operator\": \"anyOf\", \"property\": \"custom\", \"value\": [\"Electronics\"], \"valueType\": \"text\" },\n            { \"name\": \"lifetime_orders\", \"operator\": \"moreThan\", \"property\": \"custom\", \"value\": 5, \"valueType\": \"number\" },\n            {\n              \"name\": \"first_purchase_date\",\n              \"operator\": \"inTheLast\",\n              \"property\": \"custom\",\n              \"unit\": \"days\",\n              \"value\": 30,\n              \"valueType\": \"date\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n\n**Target audience:** Contacts who are marked as VIP in custom fields, whose favorite category is Electronics, who have more than 5 lifetime orders, and who made their first purchase in the last 30 days.\n\n</div>\n</details>\n\n---\n\n<details id=\"example-behavioral-events-engagement\">\n<summary>Example: Behavioral events (engagement)</summary>\n<br>\n<div style=\"padding-left: 1.5em;\">\n\nBehavioral segmentation based on message engagement (clicks, opens) and page views.\n<br>\n\n```json\n{\n  \"name\": \"Behavioral Engagement\",\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"entity\": \"event\",\n          \"junction\": \"and\",\n          \"filters\": [\n            {\n              \"count\": \"atLeast\",\n              \"name\": \"clicked message\",\n              \"operator\": \"has\",\n              \"value\": 1\n            },\n            {\n              \"count\": \"atLeast\",\n              \"name\": \"opened message\",\n              \"operator\": \"has\",\n              \"period\": { \"operator\": \"inTheLast\", \"unit\": \"days\", \"value\": 7 },\n              \"value\": 1\n            },\n            {\n              \"count\": \"equals\",\n              \"name\": \"marked message as spam\",\n              \"operator\": \"has\",\n              \"period\": { \"operator\": \"before\", \"value\": \"2026-01-13\" },\n              \"value\": 0\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n\n**Target audience:** Contacts who have clicked a message, opened a message in the last 7 days, viewed a page in the last month, **AND** have never marked a message as spam (prior to Jan 13, 2026).\n\n</div>\n</details>\n\n---\n\n<details id=\"example-platform-event-property-filters\">\n<summary>Example: Platform event property filters</summary>\n<br>\n<div style=\"padding-left: 1.5em;\">\n\nDeep filtering on properties of platform-defined events, such as Shopify order details.\n\n> **Note**: Use the `[]` wildcard syntax to match any element within an array. This can be chained for nested arrays; for example, `raw.fulfillments.[].line_items.[].title` matches any line item title within any fulfillment in the order.\n\n> **Important**: When using events defined by other platforms (e.g., Shopify, Omnisend), you must use predefined event names and their specific properties. Filter values must strictly match the predefined `valueType` for each property.\n<br>\n\n```json\n{\n  \"name\": \"Platform Event Filters\",\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"entity\": \"event\",\n          \"junction\": \"and\",\n          \"filters\": [\n            {\n              \"count\": \"atLeast\",\n              \"name\": \"placed order\",\n              \"operator\": \"has\",\n              \"origin\": \"shopify\",\n              \"value\": 1,\n              \"filters\": [\n                { \"operator\": \"moreThan\", \"property\": \"raw._total_price\", \"value\": 50 },\n                { \"operator\": \"contains\", \"property\": \"raw.fulfillments.[].line_items.[].title\", \"value\": [\"Book\"] }\n              ],\n              \"junction\": \"and\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n\n**Target audience:** Contacts who have placed at least one Shopify order where the total price was over 50 **AND** the order contained an item with \"Book\" in the title.\n\n</div>\n</details>\n\n---\n\n<details id=\"example-custom-event-property-filters\">\n<summary>Example: Custom event property filters</summary>\n<br>\n<div style=\"padding-left: 1.5em;\">\n\nFiltering custom events based on their specific properties.\n\n> **Important**: Mandatory `valueType` must be provided for every property filter (e.g., `text`, `number`). The event and its properties must have been sent at least once before they can be used in a segment filter.\n<br>\n\n```json\n{\n  \"name\": \"Custom Event Filters\",\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"entity\": \"event\",\n          \"junction\": \"and\",\n          \"filters\": [\n            {\n              \"count\": \"atLeast\",\n              \"name\": \"app_feature_used\",\n              \"origin\": \"my_mobile_app\",\n              \"operator\": \"has\",\n              \"value\": 5,\n              \"junction\": \"and\",\n              \"filters\": [\n                {\n                  \"operator\": \"equals\",\n                  \"property\": \"feature_name\",\n                  \"value\": [\"dark_mode_toggle\"],\n                  \"valueType\": \"text\"\n                },\n                {\n                  \"operator\": \"moreThan\",\n                  \"property\": \"session_duration\",\n                  \"value\": 120,\n                  \"valueType\": \"number\"\n                }\n              ]\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n\n**Target audience:** Contacts who have used the \"dark_mode_toggle\" feature in the custom \"my_mobile_app\" at least 5 times, where the session duration was greater than 120 seconds.\n\n</div>\n</details>\n\n---\n\n<details id=\"example-filtering-events-by-date-range\">\n<summary>Example: Filtering events by date range</summary>\n<br>\n<div style=\"padding-left: 1.5em;\">\n\nFiltering events using a specific date range with the `between` period operator. Uses `valueFrom` and `valueTo` to define the time window.\n<br>\n\n```json\n{\n  \"name\": \"Shopify Orders in Date Range\",\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"entity\": \"event\",\n          \"junction\": \"and\",\n          \"filters\": [\n            {\n              \"count\": \"atLeast\",\n              \"name\": \"placed order\",\n              \"operator\": \"has\",\n              \"origin\": \"shopify\",\n              \"value\": 1,\n              \"period\": {\n                \"operator\": \"between\",\n                \"valueFrom\": \"2025-01-01\",\n                \"valueTo\": \"2025-01-31\"\n              },\n              \"filters\": [\n                {\n                  \"operator\": \"contains\",\n                  \"property\": \"raw.line_items.[].title\",\n                  \"value\": [\"Summer T-Shirt\"],\n                  \"valueType\": \"text\"\n                }\n              ],\n              \"junction\": \"and\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n\n**Target audience:** Contacts who placed at least one Shopify order between January 1 and January 31, 2025, where the order contained an item with \"Summer T-Shirt\" in the title.\n\n</div>\n</details>\n\n---\n\n<details id=\"example-filtering-events-by-exact-date\">\n<summary>Example: Filtering events by exact date</summary>\n<br>\n<div style=\"padding-left: 1.5em;\">\n\nFiltering contacts who did not view a page on a specific date using the `equals` period operator.\n<br>\n\n```json\n{\n  \"name\": \"Did Not View Page on April 13\",\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"entity\": \"event\",\n          \"junction\": \"and\",\n          \"filters\": [\n            {\n              \"count\": \"atLeast\",\n              \"name\": \"viewed page\",\n              \"operator\": \"hasNot\",\n              \"value\": 1,\n              \"period\": {\n                \"operator\": \"equals\",\n                \"value\": \"2026-04-13\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}\n```\n\n**Target audience:** Contacts who did not view a page on April 13, 2026.\n\n</div>\n</details>\n\n---\n\n- [Events and Properties Reference](/docs/segments-events-properties) — Explore available event names and properties to build powerful segment filters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "segments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "segments.read segments.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"<string>\",\n          \"junction\": \"<string>\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"<string>\",\n          \"junction\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"<string>\",\n          \"junction\": \"<string>\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"<string>\",\n          \"junction\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d19645e7-f40a-48f7-baff-a47c6be3a7aa",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"My Segment\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"archivedAt\": \"2026-06-01T00:00:00Z\",\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    }\n  ],\n  \"createdAt\": \"2026-01-15T10:30:00Z\",\n  \"isStarred\": false,\n  \"name\": \"VIP Customers\",\n  \"segmentID\": \"000000000000000000000001\",\n  \"status\": \"ready\",\n  \"updatedAt\": \"2026-01-20T14:45:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78c6334f-81a6-4de9-b907-ccaefc738683",
+              "name": "Invalid request body or validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"My Segment\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2cc49fd5-8ec9-4248-8acf-5720cf1e6c3b",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"My Segment\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6331e888-2e7d-430c-90b7-6d85e245e894",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"My Segment\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0062c550-fee1-4856-9226-260c16cdd09b",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"My Segment\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa57903e-4456-480a-ba41-ce33cc6bc305",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"My Segment\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"retryAfter\": 60,\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "75a35eb4-0110-4e7f-822a-b4fcd87c574e",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"My Segment\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "77b2ef43-60e0-445d-a400-b1f5483990bc",
+          "name": "Delete segment",
+          "request": {
+            "name": "Delete segment",
+            "description": {
+              "content": "Permanently deletes a segment by its unique identifier.\nThe segment must not be in a building state to be deleted.\nIf the segment is currently being built, a `409 Conflict` error is returned.\n\n**Scopes:**\n`segments.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 100 requests per minute.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "segments",
+                ":segmentID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "segmentID",
+                  "description": "(Required) Segment ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "segments.read segments.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "14f5f524-62cd-458b-8ed6-f98a668d61f5",
+              "name": "No Content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1602be28-01af-4941-a818-3d188f3d5635",
+              "name": "Request contains invalid or missing fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb04dd93-e870-4f20-8ca3-777aa2f303b5",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5eb104e8-0c80-43a0-bf05-d340b86adc3d",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b95689a7-e29b-4044-ac5c-8c92b2e3798a",
+              "name": "Segment is currently being built and cannot be deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23e31b9e-b9bc-4512-93f4-57366373ac01",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2033e197-68fe-4c9e-a9c4-60291ad052e4",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"retryAfter\": 60,\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2acfa6dc-9a24-4452-aa90-f8eb04d9559a",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "599259d4-7fc9-4c45-b39d-7d7b9866c612",
+          "name": "Get segment",
+          "request": {
+            "name": "Get segment",
+            "description": {
+              "content": "Returns a segment by its unique identifier.\n\n**Scopes:**\n`segments.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 100 requests per minute.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "segments",
+                ":segmentID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "segmentID",
+                  "description": "(Required) Segment ID (24 character hexadecimal)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "segments.read segments.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "83e655ed-2749-4e8b-b16c-44363518a12a",
+              "name": "Segment resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID (24 character hexadecimal)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"archivedAt\": \"2026-06-01T00:00:00Z\",\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    }\n  ],\n  \"createdAt\": \"2026-01-15T10:30:00Z\",\n  \"isStarred\": false,\n  \"name\": \"VIP Customers\",\n  \"segmentID\": \"000000000000000000000001\",\n  \"status\": \"ready\",\n  \"updatedAt\": \"2026-01-20T14:45:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0891584d-bb8c-40db-9dd0-7ed5889daee7",
+              "name": "Request contains invalid or missing fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID (24 character hexadecimal)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "341f6d5a-40a6-47c2-9c43-8fcd1e172253",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID (24 character hexadecimal)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9369b083-6ca2-4b81-9a93-943402d81136",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID (24 character hexadecimal)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9043c2f5-46ae-4c64-b0d3-a4ad97bebd78",
+              "name": "Segment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID (24 character hexadecimal)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b2191c1d-d29d-45c3-afc5-72db4c6e2ec9",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID (24 character hexadecimal)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e006f13a-6bf9-4bba-b7ce-b28e5bd69d7e",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID (24 character hexadecimal)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"retryAfter\": 60,\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a7b562d1-4284-4b3c-80ad-cf77d16760ae",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID (24 character hexadecimal)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fe1703b4-f0ae-4d2d-ac65-9f2e49696877",
+          "name": "Update segment",
+          "request": {
+            "name": "Update segment",
+            "description": {
+              "content": "Updates an existing segment by ID.\nThe segment must not be in a building state to be updated.\nIf the segment is currently being built, a `409 Conflict` error is returned.\n\n**Scopes:**\n`segments.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 15 requests per minute.\n\nThe request body structure (`name` and `conditionGroups`) is identical to [Create segment](post_segments).\nSee the Create segment endpoint for detailed examples of condition groups, filters, and advanced segmentation patterns.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "segments",
+                ":segmentID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "segmentID",
+                  "description": "(Required) Segment ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "segments.read segments.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"<string>\",\n          \"junction\": \"<string>\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"<string>\",\n          \"junction\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"<string>\",\n          \"junction\": \"<string>\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"<string>\",\n          \"junction\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fe542ff7-8d2a-4608-b401-60e9ea57b5d8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"My Segment\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"archivedAt\": \"2026-06-01T00:00:00Z\",\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    }\n  ],\n  \"createdAt\": \"2026-01-15T10:30:00Z\",\n  \"isStarred\": false,\n  \"name\": \"VIP Customers\",\n  \"segmentID\": \"000000000000000000000001\",\n  \"status\": \"ready\",\n  \"updatedAt\": \"2026-01-20T14:45:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84fe784d-2fef-4df9-8122-d91380514277",
+              "name": "Invalid request body or validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"My Segment\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d64e907-fc0d-40b6-98c0-42a4bd427861",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"My Segment\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1893621f-0186-47e1-9bed-c98df9e0e15c",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"My Segment\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "638abb99-6419-499d-ba15-da3de60a45aa",
+              "name": "Segment with the given ID was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"My Segment\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "477eacfa-7c82-487b-bc24-2acc1db3d286",
+              "name": "Segment is currently being built and cannot be updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"My Segment\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce4639ea-f57e-44b9-9c72-d9f8015d7128",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"My Segment\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76e8acc2-c928-4034-8452-d0607606fd64",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"My Segment\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"retryAfter\": 60,\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26d86113-970d-448e-b7bd-f5387b3908b9",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"conditionGroups\": [\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    },\n    {\n      \"conditions\": [\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        },\n        {\n          \"filters\": [],\n          \"entity\": \"contact\",\n          \"junction\": \"and\"\n        }\n      ]\n    }\n  ],\n  \"name\": \"My Segment\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e969a2b3-ba19-49fb-8f62-3715ddf3f852",
+          "name": "Get segment statistics",
+          "request": {
+            "name": "Get segment statistics",
+            "description": {
+              "content": "Returns statistics for a segment, including the total number of matching contacts.\n\n**Scopes:**\n`segments.read`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 100 requests per minute.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "segments",
+                ":segmentID",
+                "statistics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "segmentID",
+                  "description": "(Required) Segment ID (24 character hexadecimal)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "segments.read segments.write"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "79ac48c6-820d-474b-8aea-83e70b0b04d7",
+              "name": "Segment statistics",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID",
+                    "statistics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID (24 character hexadecimal)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"contactsCount\": 1234\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9dff7492-77ad-4d1f-8f27-27bea39bf94d",
+              "name": "Request contains invalid or missing fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID",
+                    "statistics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID (24 character hexadecimal)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "daefab3c-fc11-45ad-b63d-24cdc68cd212",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID",
+                    "statistics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID (24 character hexadecimal)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b78bc22-dfaa-4ad3-b24e-7df6b8002f56",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID",
+                    "statistics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID (24 character hexadecimal)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "318a14db-bd21-44bd-b80e-1ee49bf3a8c7",
+              "name": "Segment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID",
+                    "statistics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID (24 character hexadecimal)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ccd716a5-f019-4eae-88e8-9a5db2502177",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID",
+                    "statistics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID (24 character hexadecimal)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae6e6b76-1032-469b-bb5e-fb177c9b9955",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID",
+                    "statistics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID (24 character hexadecimal)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"retryAfter\": 60,\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6def55aa-db7e-40e1-b119-7c688bdfafd3",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "segments",
+                    ":segmentID",
+                    "statistics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "segmentID",
+                      "description": "(Required) Segment ID (24 character hexadecimal)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour (e.g., 2026-preview)",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.omnisend.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f6388378-d8c8-4e86-a7d4-7e07f465139f",
+    "name": "Segments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage contact segments using flexible condition-based rules.",
+      "type": "text/plain"
+    }
+  }
+}

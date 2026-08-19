@@ -1,0 +1,35 @@
+{
+    "resource": "https://mcp.omnisend.com",
+    "authorization_servers": [
+        "https://mcp.omnisend.com"
+    ],
+    "scopes_supported": [
+        "contacts.write",
+        "contacts.read",
+        "products.write",
+        "products.read",
+        "events.write",
+        "events.read",
+        "brands.write",
+        "brands.read",
+        "automations.read",
+        "automations.write",
+        "campaigns.read",
+        "campaigns.write",
+        "analytics.read",
+        "segments.read",
+        "segments.write",
+        "email-templates.read",
+        "email-templates.write",
+        "images.read",
+        "images.write",
+        "forms.read",
+        "forms.write",
+        "brand-assets.read"
+    ],
+    "resource_documentation": "https://api-docs.omnisend.com/reference/mcp-server",
+    "token_endpoint_auth_methods_supported": [
+        "client_secret_post",
+        "client_secret_basic"
+    ]
+}

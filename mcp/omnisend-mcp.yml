@@ -1,0 +1,127 @@
+generated: '2026-08-13'
+method: searched
+status: published
+source: https://api-docs.omnisend.com/reference/mcp-server-v2
+description: >-
+  Omnisend ships two first-party hosted, remote MCP servers — the original at
+  https://mcp.omnisend.com/mcp (4 tools) and a v2 at https://mcp.omnisend.com/v2/mcp (7 tools).
+  Both are HTTPS endpoints an MCP client POSTs to directly; there is no npx/stdio package to install.
+  Both are OAuth-protected: an anonymous tools/list returns 401 with a RFC 9728 resource_metadata
+  challenge. Omnisend is additionally listed in Claude's built-in Connector Directory.
+
+deployment:
+  mode: remote
+  endpoint: https://mcp.omnisend.com/v2/mcp
+  auth: oauth
+  verified: probed
+  note: >-
+    Probed 2026-08-13. POST tools/list with Accept: application/json, text/event-stream returned
+    HTTP 401 with
+    WWW-Authenticate: Bearer resource_metadata="https://mcp.omnisend.com/.well-known/oauth-protected-resource",
+    error="invalid_request", error_description="missing Authorization or X-Api-Key".
+    The live tool schemas therefore require authenticated introspection; the tool list below is the
+    provider's own published catalog, not a fabrication.
+
+servers:
+  - name: Omnisend MCP Server v2
+    endpoint: https://mcp.omnisend.com/v2/mcp
+    docs: https://api-docs.omnisend.com/reference/mcp-server-v2
+    transport: streamable-http
+    auth: oauth
+    tool_count: 7
+    design: >-
+      Compact tool design — a small fixed set of generic tools that front the whole API surface,
+      instead of one MCP tool per REST operation, to keep the client context window bounded.
+    x-evidence:
+      probed: '2026-08-13'
+      http_status: 401
+      www_authenticate: 'Bearer resource_metadata="https://mcp.omnisend.com/.well-known/oauth-protected-resource"'
+  - name: Omnisend MCP Server (v1)
+    endpoint: https://mcp.omnisend.com/mcp
+    docs: https://api-docs.omnisend.com/reference/mcp-server
+    transport: streamable-http
+    auth: oauth
+    tool_count: 4
+    status: superseded
+    note: Still documented and live; the docs point new integrations at v2.
+    x-evidence:
+      probed: '2026-08-13'
+      http_status: 401
+      www_authenticate: 'Bearer resource_metadata="https://mcp.omnisend.com/.well-known/oauth-protected-resource"'
+
+authorization:
+  model: OAuth 2.0 authorization code with PKCE (S256)
+  authorization_server: https://app.omnisend.com
+  authorization_endpoint: https://app.omnisend.com/oauth2/authorize
+  token_endpoint: https://app.omnisend.com/oauth2/token
+  registration_endpoint: https://app.omnisend.com/oauth2/register
+  revocation_endpoint: https://app.omnisend.com/oauth2/revoke
+  protected_resource_metadata: https://mcp.omnisend.com/.well-known/oauth-protected-resource
+  authorization_server_metadata: https://mcp.omnisend.com/.well-known/oauth-authorization-server
+  alternate: X-Api-Key header is also accepted (named in the 401 challenge).
+  account_roles_required: [Owner, Admin, Manager, Partner]
+  scopes: scopes/omnisend-scopes.yml
+
+tools:
+  - name: omnisend_search
+    category: discovery
+    description: Lists all available Omnisend API operations with short descriptions. Optional `action` filter — query, create, update, delete.
+    server: v2
+  - name: omnisend_tool_schema
+    category: discovery
+    description: Retrieves the full JSON Schema (input parameters, required fields, enums) plus curated markdown for a specific API operation.
+    server: v2
+  - name: omnisend_reference
+    category: discovery
+    description: Retrieves embedded Omnisend reference documentation by topic — payload examples, event property paths, behavioral hints. Call without topic_id to list topics.
+    server: v2
+  - name: omnisend_query
+    category: read
+    description: Runs read operations (action=query) — GET requests plus read-shaped analytics POSTs such as reports and statistics.
+    server: v2
+  - name: omnisend_create
+    category: write
+    description: Creates new resources (action=create) — campaigns, contacts, segments, products, images, email templates, batches.
+    server: v2
+  - name: omnisend_update
+    category: write
+    description: Updates existing resources or performs state transitions (action=update) — PATCH, PUT, and verb-style POSTs such as send, cancel, tag.
+    server: v2
+  - name: omnisend_delete
+    category: destructive
+    description: Deletes resources (action=delete).
+    server: v2
+  - name: search
+    category: discovery
+    description: v1 equivalent of omnisend_search.
+    server: v1
+  - name: tool_schema
+    category: discovery
+    description: v1 equivalent of omnisend_tool_schema.
+    server: v1
+  - name: tool_documentation
+    category: discovery
+    description: v1 equivalent of omnisend_reference.
+    server: v1
+  - name: execute
+    category: write
+    description: v1 single execution tool — performs any operation regardless of action class. v2 replaced it with four action-scoped tools so clients can route reads away from write paths.
+    server: v1
+
+reference_topics:
+  - {id: analytics, title: Analytics reports and statistics}
+  - {id: batches, title: Batches API}
+  - {id: brands, title: Brands API}
+  - {id: campaigns, title: Campaigns API}
+  - {id: contacts, title: Contacts API}
+  - {id: email_content, title: Email content API}
+  - {id: email_templates, title: Email templates and universal layouts}
+  - {id: events, title: Events API reference}
+  - {id: images, title: Images API}
+  - {id: product_categories, title: Product categories API}
+  - {id: products, title: Products API}
+  - {id: segments, title: Segments API and event properties}
+
+clients_documented: [Claude, ChatGPT, Cursor]
+multi_account: Distinct server entries with a `?brand=` query parameter, one per Omnisend brand.
+crosswalk: mcp/omnisend-tool-crosswalk.yml

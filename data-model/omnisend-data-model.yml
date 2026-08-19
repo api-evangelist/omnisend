@@ -1,0 +1,214 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/omnisend-*-openapi.yml (283 component schemas across 15 harvested contracts)
+description: >-
+  Entity-relationship graph of the Omnisend API 2026-03-15, derived from the harvested contracts by
+  following id-reference fields between component schemas. The graph has one hub — Brand — and three
+  loosely-coupled clusters hanging off it: an AUDIENCE cluster (Contact, Segment, Event), a CATALOG
+  cluster (Product, ProductCategory) and a MESSAGING cluster (Campaign, Automation, EmailTemplate,
+  EmailContent, UniversalLayout, Image). Analytics is a query surface over the messaging cluster
+  rather than a stored entity.
+
+id_convention:
+  style: opaque string identifiers, no type prefix
+  note: >-
+    Omnisend does NOT use prefixed ids. A contact id, campaign id and segment id are all bare opaque
+    strings, so an id carries no evidence of what it points at — the caller must track the type.
+    Path parameter naming is also inconsistent: {id} for campaigns, automations, images, email
+    templates and contacts, but {segmentID}, {productID}, {categoryID} and {batchID} elsewhere.
+  example_format: '24-character hex string (e.g. 000000000000000000000001 in the docs examples)'
+
+entities:
+  - name: Brand
+    spec: openapi/omnisend-brands-api-openapi.yml
+    path: /brands/current
+    description: The Omnisend account/store. The tenant boundary — rate limits, API keys and OAuth tokens are all scoped per brand.
+    relationships:
+      - {kind: has_many, target: Contact}
+      - {kind: has_many, target: Product}
+      - {kind: has_many, target: Campaign, via: brandID}
+      - {kind: has_many, target: Automation, via: brandID}
+      - {kind: has_many, target: Segment}
+      - {kind: has_many, target: Image}
+    note: Connecting a store (POST /brands/current) is only possible through the OAuth flow — an API key alone is not sufficient.
+
+  - name: Contact
+    spec: openapi/omnisend-contacts-api-openapi.yml
+    paths: [/contacts, '/contacts/{id}', /contacts/tags]
+    identity: 'identifiers[] of {type: email|phone, id, channels}'
+    description: A person, keyed by one or more channel identifiers rather than a single primary key.
+    relationships:
+      - {kind: belongs_to, target: Brand}
+      - {kind: has_many, target: Event}
+      - {kind: has_many, target: Tag}
+      - {kind: many_to_many, target: Segment, note: 'membership is computed from conditions, not assigned'}
+    fields_of_note:
+      - 'subscriptionStatus per channel (email, sms, browserPush): subscribed | unsubscribed | nonSubscribed'
+      - customerLifecycleStage (RFM) — champions, loyalists, highPotential, …
+      - computed metrics averageOrderValue, totalSpent
+      - arbitrary custom fields with an explicit valueType (text, number, bool, date)
+    note: POST /contacts is an upsert on the email identifier — 201 when created, 200 when an existing contact was updated.
+
+  - name: Tag
+    description: A free-form label on a contact. Not a first-class resource — created implicitly and applied in bulk.
+    relationships:
+      - {kind: belongs_to, target: Contact}
+    applied_via: 'POST /contacts/tags and DELETE /contacts/tags, selecting by contactIDs, emails, phones or segmentID'
+    note: Tagging and untagging are ASYNCHRONOUS — the change may not be visible immediately.
+
+  - name: Segment
+    spec: openapi/omnisend-segments-api-openapi.yml
+    paths: [/segments, '/segments/{segmentID}', '/segments/{segmentID}/statistics']
+    description: A saved, condition-based audience. Structure is conditionGroups[] (OR) of conditions[] (AND) of filters[].
+    relationships:
+      - {kind: belongs_to, target: Brand}
+      - {kind: references, target: Contact, via: 'entity: contact filters'}
+      - {kind: references, target: Event, via: 'entity: event filters'}
+    lifecycle: 'A segment enters a `building` state after write; modifying or deleting it while building returns 409 Conflict.'
+    note: Strictest rate limits in the API — 15/min for create and update, 100/min for read and delete.
+
+  - name: Event
+    spec: openapi/omnisend-events-api-openapi.yml
+    path: /events
+    description: A customer behaviour record. The trigger substrate for automations and the filter substrate for segments.
+    relationships:
+      - {kind: belongs_to, target: Contact}
+      - {kind: described_by, target: EventMetadata, via: 'name + origin'}
+      - {kind: referenced_by, target: Automation, via: trigger.condition.event}
+    identity: 'name + origin (e.g. "placed order" + "shopify")'
+    note: 'The same event name can exist under several origins; where it does, `origin` becomes required.'
+
+  - name: EventMetadata
+    spec: openapi/omnisend-event-metadata-api-openapi.yml
+    paths: [/event-metadata, /event-metadata/query]
+    description: The schema declaration for a brand-custom event — displayName plus a recursive property tree.
+    relationships:
+      - {kind: describes, target: Event, via: 'name + origin'}
+    note: >-
+      The only entity in the API whose operations declare operationId (post_event_metadata,
+      put_event_metadata, post_event_metadata_query). Properties are flagged `explicitlyDefined`;
+      the type of an already-defined property cannot change.
+
+  - name: Product
+    spec: openapi/omnisend-products-api-openapi.yml
+    paths: [/products, '/products/{productID}']
+    relationships:
+      - {kind: belongs_to, target: Brand}
+      - {kind: has_many, target: ProductCategory, via: categoryID}
+      - {kind: has_one, target: Image, via: imageID}
+      - {kind: referenced_by, target: Event, via: 'OrderProduct.productID'}
+
+  - name: ProductCategory
+    spec: openapi/omnisend-productcategories-api-openapi.yml
+    paths: [/product-categories, '/product-categories/{categoryID}']
+    relationships:
+      - {kind: belongs_to, target: Brand}
+      - {kind: has_many, target: Product}
+
+  - name: Campaign
+    spec: openapi/omnisend-campaigns-api-openapi.yml
+    paths: ['/campaigns', '/campaigns/{id}', '/campaigns/{id}/send', '/campaigns/{id}/cancel', '/campaigns/{id}/copy', '/campaigns/{id}/utm', '/campaigns/{id}/ab-test/*', '/campaigns/{id}/test-email']
+    description: A one-off send across email, SMS or push. The richest state machine in the API.
+    states: [draft, scheduled, started, paused, stopped, sent, canceled]
+    relationships:
+      - {kind: belongs_to, target: Brand, via: brandID}
+      - {kind: has_one, target: EmailContent, via: contentID}
+      - {kind: has_one, target: EmailTemplate, via: templateID}
+      - {kind: has_one, target: Image, via: 'imageID / iconID (SMS and push)'}
+      - {kind: has_one, target: Campaign, via: 'boosterSettings.campaignID', note: 'a booster campaign points at its parent campaign; at most one booster per parent'}
+      - {kind: targets, target: Segment}
+      - {kind: has_many, target: ABTestVariant, via: variantID}
+    rules:
+      - Only a `draft` campaign can be updated or sent; to resend, copy it and send the copy.
+      - Cancel is valid from scheduled or paused (any channel) or started (email only); anything else is 409.
+      - Cancellation of a started campaign is best-effort — messages in flight may still deliver.
+
+  - name: Automation
+    spec: openapi/omnisend-automations-api-openapi.yml
+    paths: ['/automations', '/automations/{id}', '/automations/{id}/blocks', '/automations/{id}/enable', '/automations/{id}/disable', '/automations/{id}/copy', '/automations/{id}/utm']
+    description: An event-triggered workflow — a trigger plus an ordered tree of blocks.
+    relationships:
+      - {kind: belongs_to, target: Brand, via: brandID}
+      - {kind: has_many, target: AutomationBlock, via: blockID}
+      - {kind: triggered_by, target: Event, via: trigger.condition.event}
+    rules:
+      - An enabled automation cannot be patched or restructured — disable, change, re-enable.
+      - Blocks are addressed by `id` when updating and by `temporaryID` when creating; blocks absent from a PUT /blocks payload are removed.
+      - A copy is always created disabled.
+      - 'DELETE /automations/{id} is documented as idempotent.'
+
+  - name: AutomationBlock
+    description: A node in an automation — delay, action, split, or a send-action carrying email/SMS/push content.
+    relationships:
+      - {kind: belongs_to, target: Automation}
+      - {kind: has_one, target: UTMSettings, via: 'blocks/{blockID}/utm'}
+    note: 'The `sendWebhook` action block is Omnisend''s entire outbound webhook mechanism — see asyncapi/omnisend-webhooks.yml.'
+
+  - name: EmailTemplate
+    spec: openapi/omnisend-emailtemplates-api-openapi.yml
+    paths: [/email-templates, '/email-templates/{id}', '/email-templates/{id}/render', /email-templates/import]
+    relationships:
+      - {kind: belongs_to, target: Brand}
+      - {kind: referenced_by, target: Campaign, via: templateID}
+      - {kind: has_one, target: EmailUniversalLayout}
+    note: Import from raw HTML is capped at a 1 MB request body; render is rate limited to 40/min.
+
+  - name: EmailContent
+    spec: openapi/omnisend-emailcontent-api-openapi.yml
+    paths: ['/email-content/{id}', '/email-content/{id}/render']
+    relationships:
+      - {kind: referenced_by, target: Campaign, via: contentID}
+    note: PUT fully replaces the content structure; render is rate limited to 40/min and runs with an empty data context.
+
+  - name: EmailUniversalLayout
+    spec: openapi/omnisend-emailuniversallayouts-api-openapi.yml
+    paths: [/email-universal-layouts, '/email-universal-layouts/{id}']
+    description: A shared header/footer/styling shell applied across templates.
+
+  - name: Image
+    spec: openapi/omnisend-images-api-openapi.yml
+    paths: [/images, '/images/{id}', /images/upload]
+    relationships:
+      - {kind: referenced_by, target: Product, via: imageID}
+      - {kind: referenced_by, target: Campaign, via: 'imageID, iconID'}
+    constraints: JPEG, PNG, GIF, WebP; max 5 MB. Upload by URL or by file.
+
+  - name: Batch
+    spec: openapi/omnisend-batches-api-openapi.yml
+    paths: [/batches, '/batches/{batchID}', '/batches/{batchID}/items']
+    description: An asynchronous bulk job over contacts, products or events.
+    relationships:
+      - {kind: has_many, target: BatchItem, via: itemID}
+      - {kind: acts_on, target: [Contact, Product, Event]}
+    constraints: Up to 100 actions per batch. Required scopes depend on the payload type.
+
+  - name: AnalyticsQuery
+    spec: openapi/omnisend-analytics-api-openapi.yml
+    paths: [/analytics/reports, /analytics/statistics]
+    description: Not a stored entity — a POST query surface. /reports groups by message send date; /statistics groups by event date and requires a timestamp dimension.
+    relationships:
+      - {kind: reports_on, target: [Campaign, Automation, Contact]}
+    constraints: Up to 4 queries per request; 10 requests/minute and 55 requests/24 hours.
+
+  - name: Form
+    description: >-
+      Sign-up forms, popups, flyouts and landing pages. Present in the product and reachable through
+      the MCP server (get_forms, form reports, form contacts) and through the browser snippet, but
+      Omnisend publishes NO OpenAPI reference for it — the forms-reports definition is listed on the
+      docs host without a reference page.
+    relationships:
+      - {kind: has_many, target: Contact}
+    gap: true
+
+clusters:
+  audience: [Contact, Tag, Segment, Event, EventMetadata, Form]
+  catalog: [Product, ProductCategory, Image]
+  messaging: [Campaign, Automation, AutomationBlock, EmailTemplate, EmailContent, EmailUniversalLayout]
+  operations: [Batch, AnalyticsQuery]
+
+observations:
+  - Brand is the tenant boundary for rate limiting, keys and tokens — every other entity hangs off it.
+  - Contact identity is multi-channel (email and/or phone) rather than a single primary key, which is why the API carries both PATCH /contacts (by email) and PATCH /contacts/{id}.
+  - Segment membership is computed, never assigned; there is no add-contact-to-segment operation.
+  - The messaging cluster is where the state machines live — campaign status and automation enabled/disabled drive most 409 responses.
+  - Two write paths are asynchronous and eventually consistent — contact tagging and batch processing.

@@ -1,0 +1,143 @@
+generated: '2026-08-13'
+method: searched
+source: live HTTPS probes of every Omnisend host named in apis.yml and in the harvested OpenAPI servers[]
+description: >-
+  RFC 8615 well-known discovery probe across every Omnisend host. Three real documents are served:
+  a RFC 9116 security.txt on the marketing host, and RFC 8414 / RFC 9728 OAuth metadata on the MCP
+  host (mirrored on the app host). Every other path 404s, or answers 200 with a single-page-app HTML
+  shell — recorded below as a miss, not a document.
+hosts:
+  - host: https://www.omnisend.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        content_type: text/plain
+        file: omnisend-security.txt
+        note: RFC 9116. Contact mailto:security@omnisend.com, Policy https://www.omnisend.com/bug-bounty/. No Expires, Encryption, Preferred-Languages or Canonical field.
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://mcp.omnisend.com
+    documents:
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        content_type: application/json
+        file: omnisend-mcp-oauth-authorization-server.json
+        note: >-
+          RFC 8414. issuer https://app.omnisend.com, authorization_code + refresh_token grants,
+          PKCE S256, dynamic client registration endpoint, and 26 declared scopes.
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        content_type: application/json
+        file: omnisend-mcp-oauth-protected-resource.json
+        note: >-
+          RFC 9728. resource https://mcp.omnisend.com, 22 scopes, resource_documentation points at
+          the published MCP server reference page.
+      - path: /.well-known/security.txt
+        status: 200
+        result: miss
+        note: 200 but the body is the MCP host's HTML landing page, not a security.txt document.
+      - path: /.well-known/openid-configuration
+        status: 200
+        result: miss
+        note: 200 with an HTML shell — catch-all, not an OIDC discovery document.
+      - path: /.well-known/api-catalog
+        status: 200
+        result: miss
+        note: 200 with an HTML shell — catch-all, not an RFC 9727 api-catalog.
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        result: miss
+        note: 200 with an HTML shell — catch-all.
+      - path: /.well-known/agent-card.json
+        status: 200
+        result: miss
+        note: 200 with an HTML shell — NOT an A2A agent card. No card artifact written.
+      - path: /.well-known/agent.json
+        status: 200
+        result: miss
+        note: 200 with an HTML shell — NOT an A2A agent card. No card artifact written.
+  - host: https://app.omnisend.com
+    documents:
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        content_type: application/json
+        file: omnisend-app-oauth-authorization-server.json
+        note: Identical RFC 8414 document to the MCP host; app.omnisend.com is the issuer.
+      - path: /.well-known/security.txt
+        status: 200
+        result: miss
+        note: 200 with the app single-page-app HTML shell.
+      - path: /.well-known/openid-configuration
+        status: 200
+        result: miss
+        note: 200 with the app SPA HTML shell — Omnisend is an OAuth 2.0 provider, not an OIDC provider.
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        result: miss
+      - path: /.well-known/api-catalog
+        status: 200
+        result: miss
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        result: miss
+      - path: /.well-known/agent-card.json
+        status: 200
+        result: miss
+      - path: /.well-known/agent.json
+        status: 200
+        result: miss
+  - host: https://api.omnisend.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://api-docs.omnisend.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+summary:
+  documents_served: 4
+  hosts_probed: 5
+  paths_probed: 40
+  agent_card: false
+  api_catalog: false
+  openid_configuration: false
+  security_txt: true
+  oauth_metadata: true

@@ -1,0 +1,75 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Omnisend images-api
+  version: 1.0.0
+  x-generated: '2026-08-13'
+  x-method: generated
+  x-source: openapi/omnisend-images-api-openapi.yml
+  x-note: 'Records API Evangelist enhancements over the contract Omnisend publishes. It is never applied to the harvested
+    file — openapi/ stays verbatim. The gaps captured here are real and measured: 5 of 5 operations carry no operationId,
+    0 carry no tag, and the document declares securitySchemes without ever applying them.'
+extends: omnisend-images-api-openapi.yml
+actions:
+- target: $
+  description: Apply the two declared security schemes at the document root. The published contract defines ApiKeyAuth and
+    Bearer in components.securitySchemes but never applies them, so no operation states its auth requirement.
+  update:
+    security:
+    - ApiKeyAuth: []
+    - Bearer: []
+- target: $
+  description: Declare a document-level tag so every operation can be grouped. The published contract declares none.
+  update:
+    tags:
+    - name: Images
+      description: External API for image retrieval, upload, and deletion.
+- target: $.paths['/images'].get
+  description: Tag GET /images as Images.
+  update:
+    tags:
+    - Images
+- target: $.paths['/images'].post
+  description: Tag POST /images as Images.
+  update:
+    tags:
+    - Images
+- target: $.paths['/images/{id}'].delete
+  description: Tag DELETE /images/{id} as Images.
+  update:
+    tags:
+    - Images
+- target: $.paths['/images/{id}'].get
+  description: Tag GET /images/{id} as Images.
+  update:
+    tags:
+    - Images
+- target: $.paths['/images/upload'].post
+  description: Tag POST /images/upload as Images.
+  update:
+    tags:
+    - Images
+- target: $.paths['/images'].get
+  description: Add a stable operationId for GET /images; the published contract omits it, which blocks code generation and
+    tool binding.
+  update:
+    operationId: get_images
+- target: $.paths['/images'].post
+  description: Add a stable operationId for POST /images; the published contract omits it, which blocks code generation and
+    tool binding.
+  update:
+    operationId: post_images
+- target: $.paths['/images/{id}'].delete
+  description: Add a stable operationId for DELETE /images/{id}; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: delete_images_id
+- target: $.paths['/images/{id}'].get
+  description: Add a stable operationId for GET /images/{id}; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: get_images_id
+- target: $.paths['/images/upload'].post
+  description: Add a stable operationId for POST /images/upload; the published contract omits it, which blocks code generation
+    and tool binding.
+  update:
+    operationId: post_images_upload

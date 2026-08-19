@@ -1,0 +1,157 @@
+generated: '2026-08-13'
+method: searched
+source: https://www.omnisend.com/changelog/
+description: >-
+  Omnisend publishes a dated, categorised product changelog on its marketing host, with a Roadmap tab
+  on the same page. It is a PRODUCT changelog, not an API changelog — entries are feature releases
+  written for merchants, with no version numbers, no breaking-change flags and no per-endpoint diffs.
+  The API's own version history is expressed instead through documentation branches and migration
+  guides (see lifecycle/omnisend-lifecycle.yml).
+
+scheme: dated entries, no version numbers
+url: https://www.omnisend.com/changelog/
+roadmap_url: https://www.omnisend.com/changelog/#roadmap
+subscribe: https://www.omnisend.com/changelog/
+categories:
+  - Omnisend AI
+  - Emails
+  - Sign-up forms
+  - Integrations
+  - SMS
+  - Push notifications
+  - Deliverability
+  - Automated workflows
+  - Audience
+  - Reports
+  - Campaigns
+entry_types: [New feature, Enhanced feature, Highly requested feature]
+
+current_api_version: '2026-03-15'
+
+entries:
+  - date: '2026-07-31'
+    category: Emails
+    type: New feature
+    title: Text-only Email Editor
+    breaking: false
+    highlight: A streamlined text-only editor alongside the drag-and-drop builder.
+  - date: '2026-07-30'
+    category: Integrations
+    type: Highly requested feature
+    title: Omnisend is Now Available as a Connector in Claude
+    breaking: false
+    highlight: >-
+      Omnisend is listed in Claude's Connector Directory, so the MCP server can be added without
+      entering a custom URL. Agent-surface distribution, not an API change.
+  - date: '2026-07-29'
+    category: Reports
+    type: New feature
+    title: Reports AI Is Available to All Paid Users
+    breaking: false
+  - date: '2026-07-28'
+    category: Sign-up forms
+    type: New feature
+    title: Fullscreen Signup Forms
+    breaking: false
+  - date: '2026-07-20'
+    category: Sign-up forms
+    type: New feature
+    title: Contact Activity Now Shows Form-Specific Details
+    breaking: false
+  - date: '2026-07-15'
+    category: Emails
+    type: Highly requested feature
+    title: Send Time Optimization
+    breaking: false
+  - date: '2026-07-14'
+    category: Integrations
+    type: Enhanced feature
+    title: AI Apps Access
+    breaking: false
+    highlight: >-
+      Scoped consent for connected AI apps — read-only, scoped, or full — instead of granting
+      everything by default. Directly relevant to the MCP OAuth surface.
+  - date: '2026-07-11'
+    category: Integrations
+    type: New feature
+    title: 'New integration: Recurpay'
+    breaking: false
+  - date: '2026-07-10'
+    category: Omnisend AI
+    type: New feature
+    title: On-brand, Editable Emails via MCP
+    breaking: false
+    highlight: >-
+      An email created through an MCP-connected assistant lands in the drag-and-drop builder fully
+      editable and on-brand.
+  - date: '2026-07-10'
+    category: Integrations
+    type: New feature
+    title: 'New integration: KickoffLabs'
+    breaking: false
+  - date: '2026-07-09'
+    category: Integrations
+    type: New feature
+    title: 'New integration: TrustWILL'
+    breaking: false
+  - date: '2026-07-08'
+    category: Omnisend AI
+    type: New feature
+    title: AI Recommendations in Automations
+    breaking: false
+  - date: '2026-06-26'
+    category: Integrations
+    type: New feature
+    title: 'New integrations: Fourthwall, Aircall, Wrapped'
+    breaking: false
+  - date: '2026-06-25'
+    category: Sign-up forms
+    type: Enhanced feature
+    title: Redesigned AI Form Creation Flow
+    breaking: false
+  - date: '2026-06-22'
+    category: Emails
+    type: New feature
+    title: Text Background Color
+    breaking: false
+  - date: '2026-06-17'
+    category: Integrations
+    type: New feature
+    title: 'New integration: EmailHeatmaps'
+    breaking: false
+  - date: '2026-06-15'
+    category: Integrations
+    type: New feature
+    title: 'New integration: Chargebee'
+    breaking: false
+  - date: '2026-06-12'
+    category: Integrations
+    type: New feature
+    title: 'New integrations: Lapio, Tickvio'
+    breaking: false
+  - date: '2026-06-11'
+    category: Emails
+    type: Enhanced feature
+    title: Personalization Just Got Much Easier
+    breaking: false
+  - date: '2026-06-10'
+    category: Integrations
+    type: New feature
+    title: 'New integration: Zendesk'
+    breaking: false
+  - date: '2026-06-09'
+    category: Deliverability
+    type: New feature
+    title: Hostinger & Shopify Now Available as Domain Providers
+    breaking: false
+  - date: '2026-06-08'
+    category: Sign-up forms
+    type: New feature
+    title: Redirect After Submission — Now for All Form Types
+    breaking: false
+
+gaps:
+  - No API changelog. Contract changes (new Automations, Campaigns, Event Metadata and Forms surfaces) do not appear here.
+  - No version numbers and no breaking/non-breaking classification on any entry.
+  - No RSS/Atom or JSON feed found for the changelog — the page is HTML with an email subscribe control.
+  - https://api-docs.omnisend.com/changelog returns 404; anything pointing there is stale.

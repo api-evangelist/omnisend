@@ -1,0 +1,1560 @@
+{
+  "item": [
+    {
+      "id": "a4c9733e-3e26-4fb3-ae22-87fd4b597539",
+      "name": "Event Metadata",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "01034dcd-bd6c-44ae-afcd-19bd7133a8ef",
+          "name": "Create custom event metadata",
+          "request": {
+            "name": "Create custom event metadata",
+            "description": {
+              "content": "Declares a new brand-custom event schema. The event identity is the\ncombination of `name` and `origin`; `displayName` and at least one\ntop-level property are required. Optional metadata fields must be\nomitted rather than sent as null. The created event is returned with\nevery node flagged `explicitlyDefined`.\n\n**Scopes:**\n`events.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "event-metadata"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"origin\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"properties\": {\n    \"key_0\": {\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"group\": \"<string>\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_1\": {\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"group\": \"<string>\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        },\n        \"key_1\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_2\": {\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"group\": \"<string>\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_3\": {\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"group\": \"<string>\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ba984aa3-20c1-4183-8698-b4d326273e22",
+              "name": "The created event metadata",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"loyalty points earned\",\n  \"origin\": \"api\",\n  \"displayName\": \"Loyalty Points Earned\",\n  \"properties\": {\n    \"key_0\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        },\n        \"key_1\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_1\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"event\": {\n    \"displayName\": \"Placed Order\",\n    \"explicitlyDefined\": false,\n    \"name\": \"placed order\",\n    \"origins\": [\n      \"shopify\",\n      \"woocommerce\"\n    ],\n    \"properties\": {\n      \"key_0\": {\n        \"description\": \"Specifies from which channel the contact subscribed to. Possible values: Email, SMS, Push.\",\n        \"displayName\": \"Product ID\",\n        \"explicitlyDefined\": false,\n        \"group\": \"Core\",\n        \"properties\": {\n          \"key_0\": {\n            \"value\": \"<Circular reference to #/components/schemas/PropertyNode detected>\"\n          }\n        },\n        \"type\": \"string\"\n      },\n      \"key_1\": {\n        \"description\": \"Specifies from which channel the contact subscribed to. Possible values: Email, SMS, Push.\",\n        \"displayName\": \"Product ID\",\n        \"explicitlyDefined\": true,\n        \"group\": \"Core\",\n        \"properties\": {\n          \"key_0\": {\n            \"value\": \"<Circular reference to #/components/schemas/PropertyNode detected>\"\n          }\n        },\n        \"type\": \"string\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a47d008-7793-4852-abc3-852d95179272",
+              "name": "Invalid request body or field values",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"loyalty points earned\",\n  \"origin\": \"api\",\n  \"displayName\": \"Loyalty Points Earned\",\n  \"properties\": {\n    \"key_0\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        },\n        \"key_1\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_1\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb019324-075d-44dc-af67-3707f6997be2",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"loyalty points earned\",\n  \"origin\": \"api\",\n  \"displayName\": \"Loyalty Points Earned\",\n  \"properties\": {\n    \"key_0\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        },\n        \"key_1\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_1\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc69c4da-0b08-4495-8127-33f0a7f0d3db",
+              "name": "Event already exists or collides with a global lexicon event",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"loyalty points earned\",\n  \"origin\": \"api\",\n  \"displayName\": \"Loyalty Points Earned\",\n  \"properties\": {\n    \"key_0\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        },\n        \"key_1\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_1\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b7dfe5c-96a4-4cd8-a824-cb1529d9d5bb",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"loyalty points earned\",\n  \"origin\": \"api\",\n  \"displayName\": \"Loyalty Points Earned\",\n  \"properties\": {\n    \"key_0\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        },\n        \"key_1\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_1\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5307c95d-cf53-4671-b3df-fcc2b17a70f5",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"loyalty points earned\",\n  \"origin\": \"api\",\n  \"displayName\": \"Loyalty Points Earned\",\n  \"properties\": {\n    \"key_0\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        },\n        \"key_1\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_1\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"retryAfter\": 60,\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f574edd9-f3f7-4f48-9257-c85badada05d",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"loyalty points earned\",\n  \"origin\": \"api\",\n  \"displayName\": \"Loyalty Points Earned\",\n  \"properties\": {\n    \"key_0\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        },\n        \"key_1\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_1\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "46ee9492-eb21-4ce1-b123-13b152fb350e",
+              "name": "The event metadata was modified concurrently; retry the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"loyalty points earned\",\n  \"origin\": \"api\",\n  \"displayName\": \"Loyalty Points Earned\",\n  \"properties\": {\n    \"key_0\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        },\n        \"key_1\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_1\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "48fd2b96-ecf2-4190-99b3-759492e80b56",
+          "name": "Update custom event metadata",
+          "request": {
+            "name": "Update custom event metadata",
+            "description": {
+              "content": "Merges changes into an existing brand-custom event, identified by\n`name` and `origin`. Only supplied fields are applied: omitted\nmetadata and omitted properties are preserved, and no property is\ndeleted. The type of an already explicitly-defined property cannot\nchange. Optional metadata fields must be omitted rather than sent as\nnull. The merged event is returned.\n\n**Scopes:**\n`events.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "event-metadata"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"origin\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"properties\": {\n    \"key_0\": {\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"group\": \"<string>\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_1\": {\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"group\": \"<string>\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        },\n        \"key_1\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_2\": {\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"group\": \"<string>\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_3\": {\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"displayName\": \"<string>\",\n      \"group\": \"<string>\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "99b2d6ed-1b33-47f4-a839-889ff8c14ffa",
+              "name": "The merged event metadata",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"loyalty points earned\",\n  \"origin\": \"api\",\n  \"displayName\": \"Loyalty Points Earned\",\n  \"properties\": {\n    \"key_0\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        },\n        \"key_1\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_1\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"event\": {\n    \"displayName\": \"Placed Order\",\n    \"explicitlyDefined\": false,\n    \"name\": \"placed order\",\n    \"origins\": [\n      \"shopify\",\n      \"woocommerce\"\n    ],\n    \"properties\": {\n      \"key_0\": {\n        \"description\": \"Specifies from which channel the contact subscribed to. Possible values: Email, SMS, Push.\",\n        \"displayName\": \"Product ID\",\n        \"explicitlyDefined\": false,\n        \"group\": \"Core\",\n        \"properties\": {\n          \"key_0\": {\n            \"value\": \"<Circular reference to #/components/schemas/PropertyNode detected>\"\n          }\n        },\n        \"type\": \"string\"\n      },\n      \"key_1\": {\n        \"description\": \"Specifies from which channel the contact subscribed to. Possible values: Email, SMS, Push.\",\n        \"displayName\": \"Product ID\",\n        \"explicitlyDefined\": true,\n        \"group\": \"Core\",\n        \"properties\": {\n          \"key_0\": {\n            \"value\": \"<Circular reference to #/components/schemas/PropertyNode detected>\"\n          }\n        },\n        \"type\": \"string\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f25043e-8dc7-4811-aa99-bef0315af91f",
+              "name": "Invalid request body or field values",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"loyalty points earned\",\n  \"origin\": \"api\",\n  \"displayName\": \"Loyalty Points Earned\",\n  \"properties\": {\n    \"key_0\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        },\n        \"key_1\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_1\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1482f396-c8dc-4d04-9f5d-405c43876ed3",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"loyalty points earned\",\n  \"origin\": \"api\",\n  \"displayName\": \"Loyalty Points Earned\",\n  \"properties\": {\n    \"key_0\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        },\n        \"key_1\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_1\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0aa31223-c890-4697-a982-46b4326e5f9c",
+              "name": "Event metadata does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"loyalty points earned\",\n  \"origin\": \"api\",\n  \"displayName\": \"Loyalty Points Earned\",\n  \"properties\": {\n    \"key_0\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        },\n        \"key_1\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_1\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09326e7f-9b7f-4baf-acf8-90c04aac98c1",
+              "name": "Event is not API-owned or a property type conflict occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"loyalty points earned\",\n  \"origin\": \"api\",\n  \"displayName\": \"Loyalty Points Earned\",\n  \"properties\": {\n    \"key_0\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        },\n        \"key_1\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_1\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "56fbc869-2a21-4e19-b755-35aaa868adf8",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"loyalty points earned\",\n  \"origin\": \"api\",\n  \"displayName\": \"Loyalty Points Earned\",\n  \"properties\": {\n    \"key_0\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        },\n        \"key_1\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_1\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7f66437-bc73-4e43-a3c0-4d84a0d9cb4e",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"loyalty points earned\",\n  \"origin\": \"api\",\n  \"displayName\": \"Loyalty Points Earned\",\n  \"properties\": {\n    \"key_0\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        },\n        \"key_1\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_1\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"retryAfter\": 60,\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6981c66c-bd53-43f9-af49-90d704c9085f",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"loyalty points earned\",\n  \"origin\": \"api\",\n  \"displayName\": \"Loyalty Points Earned\",\n  \"properties\": {\n    \"key_0\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        },\n        \"key_1\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_1\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ccec4593-6d73-4506-9e33-dc51a5bd7f63",
+              "name": "The event metadata was modified concurrently; retry the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"loyalty points earned\",\n  \"origin\": \"api\",\n  \"displayName\": \"Loyalty Points Earned\",\n  \"properties\": {\n    \"key_0\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        },\n        \"key_1\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    },\n    \"key_1\": {\n      \"type\": \"integer\",\n      \"description\": \"<string>\",\n      \"displayName\": \"Points\",\n      \"group\": \"Core\",\n      \"properties\": {\n        \"key_0\": {\n          \"value\": \"<Circular reference to #/components/schemas/WritePropertyNode detected>\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1f73dd57-e132-40b7-92f8-63e89e68f118",
+          "name": "Query events metadata",
+          "request": {
+            "name": "Query events metadata",
+            "description": {
+              "content": "Returns event metadata entries for the given category, optionally filtered\nby event names and/or origins.\n\n**Supported categories:** `automations`, `events`, `segments`\n\n**API version scoping:**\nThe events a category exposes depend on the requested `Omnisend-Version`; a date\nbetween releases resolves to the nearest earlier supported version. Brand-custom\nevents are not version-scoped.\n\n**Event name filtering:**\nWhen `events` are provided, only events whose system name matches one of the\ngiven values are returned (exact, case-sensitive match).\n\n**Origin filtering:**\nBy default the response includes Omnisend events together with events from every\norigin the brand has data for. When the brand is connected to a specific origin,\nthat origin's events are included as well. The optional `origins` filter narrows\nthe response to the requested origins (OR-combined) within what the brand can\nalready see; an origin the brand is not entitled to is never returned, even if\nrequested.\n\n**Property inclusion:**\nWhen `includeProperties` is `true`, each event item includes its nested\nproperty tree, keyed by property name, with struct properties nesting their\nchildren under a recursive `properties` map. When omitted or `false`, only\nevent-level metadata (`name`, `displayName`, `origins`) is returned.\n\n**Custom event exclusion:**\nWhen `excludeCustomEvents` is `true`, brand-custom events are omitted.\nWhen omitted or `false`, custom events are included.\nSet this to `true` when only well-known standard events are needed, for a more predictable response size.\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "event-metadata",
+                "query"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category\": \"<string>\",\n  \"events\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"excludeCustomEvents\": \"<boolean>\",\n  \"includeProperties\": \"<boolean>\",\n  \"origins\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fb747053-7194-4168-8e32-17d908e7dff9",
+              "name": "List of event metadata entries",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": \"automations\",\n  \"events\": [\n    \"placed order\"\n  ],\n  \"excludeCustomEvents\": true,\n  \"includeProperties\": false,\n  \"origins\": [\n    \"shopify\",\n    \"api\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"events\": [\n    {\n      \"displayName\": \"Placed Order\",\n      \"explicitlyDefined\": true,\n      \"name\": \"placed order\",\n      \"origins\": [\n        \"shopify\",\n        \"woocommerce\"\n      ],\n      \"properties\": {\n        \"key_0\": {\n          \"description\": \"Specifies from which channel the contact subscribed to. Possible values: Email, SMS, Push.\",\n          \"displayName\": \"Product ID\",\n          \"explicitlyDefined\": true,\n          \"group\": \"Core\",\n          \"properties\": {\n            \"key_0\": {\n              \"value\": \"<Circular reference to #/components/schemas/PropertyNode detected>\"\n            }\n          },\n          \"type\": \"string\"\n        }\n      }\n    },\n    {\n      \"displayName\": \"Placed Order\",\n      \"explicitlyDefined\": false,\n      \"name\": \"placed order\",\n      \"origins\": [\n        \"shopify\",\n        \"woocommerce\"\n      ],\n      \"properties\": {\n        \"key_0\": {\n          \"description\": \"Specifies from which channel the contact subscribed to. Possible values: Email, SMS, Push.\",\n          \"displayName\": \"Product ID\",\n          \"explicitlyDefined\": false,\n          \"group\": \"Core\",\n          \"properties\": {\n            \"key_0\": {\n              \"value\": \"<Circular reference to #/components/schemas/PropertyNode detected>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Circular reference to #/components/schemas/PropertyNode detected>\"\n            },\n            \"key_2\": {\n              \"value\": \"<Circular reference to #/components/schemas/PropertyNode detected>\"\n            }\n          },\n          \"type\": \"string\"\n        },\n        \"key_1\": {\n          \"description\": \"Specifies from which channel the contact subscribed to. Possible values: Email, SMS, Push.\",\n          \"displayName\": \"Product ID\",\n          \"explicitlyDefined\": false,\n          \"group\": \"Core\",\n          \"properties\": {\n            \"key_0\": {\n              \"value\": \"<Circular reference to #/components/schemas/PropertyNode detected>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Circular reference to #/components/schemas/PropertyNode detected>\"\n            },\n            \"key_2\": {\n              \"value\": \"<Circular reference to #/components/schemas/PropertyNode detected>\"\n            }\n          },\n          \"type\": \"string\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "026902eb-d61d-46f2-a95f-5438f711d177",
+              "name": "Invalid request body, missing or unsupported category",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": \"automations\",\n  \"events\": [\n    \"placed order\"\n  ],\n  \"excludeCustomEvents\": true,\n  \"includeProperties\": false,\n  \"origins\": [\n    \"shopify\",\n    \"api\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9bff9c4c-57e9-48e0-babd-40887d7e6f93",
+              "name": "Authentication is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": \"automations\",\n  \"events\": [\n    \"placed order\"\n  ],\n  \"excludeCustomEvents\": true,\n  \"includeProperties\": false,\n  \"origins\": [\n    \"shopify\",\n    \"api\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0c8294a-24bb-4e19-a7de-449d4591b199",
+              "name": "API version has been retired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": \"automations\",\n  \"events\": [\n    \"placed order\"\n  ],\n  \"excludeCustomEvents\": true,\n  \"includeProperties\": false,\n  \"origins\": [\n    \"shopify\",\n    \"api\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d4fe9bb-0c98-45bf-8f44-ae7a90689501",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": \"automations\",\n  \"events\": [\n    \"placed order\"\n  ],\n  \"excludeCustomEvents\": true,\n  \"includeProperties\": false,\n  \"origins\": [\n    \"shopify\",\n    \"api\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"retryAfter\": 60,\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a213ba9-f4c7-41c0-a43a-20dc39d78633",
+              "name": "Unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "event-metadata",
+                    "query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": \"automations\",\n  \"events\": [\n    \"placed order\"\n  ],\n  \"excludeCustomEvents\": true,\n  \"includeProperties\": false,\n  \"origins\": [\n    \"shopify\",\n    \"api\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.omnisend.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b07bbdce-fb43-4351-8d4d-32f60654f7ac",
+    "name": "Event Metadata API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for retrieving event metadata — event names, property schemas,\nand display metadata used by segmentation and automation consumers.",
+      "type": "text/plain"
+    }
+  }
+}

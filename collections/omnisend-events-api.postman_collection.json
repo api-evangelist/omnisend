@@ -1,0 +1,265 @@
+{
+  "item": [
+    {
+      "id": "df21fb5f-8b16-4482-b5ab-4815b11841c5",
+      "name": "Events",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e2d9a591-b039-47c2-a5c4-4bc6d486c13e",
+          "name": "Send Customer event",
+          "request": {
+            "name": "Send Customer event",
+            "description": {
+              "content": "With this endpoint you can send customer events to Omnisend. Customer events are used to track customer behavior and trigger automations based on that behavior.\nYou can either format and send custom customer events or use predefined events.\n\n**Scopes:**\n`events.write`\n\n**Rate Limiting:**\nThis endpoint is rate limited to 400 requests per minute.\n\n<br><a href=\"https://www.postman.com/omnisend-api/workspace/omnisend/overview\" target=\"_blank\">Open Postman collection</a>\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API version that specifies the response format and behaviour",
+                "key": "Omnisend-Version",
+                "value": "2026-03-15"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://app.omnisend.com/oauth2/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contact\": {\n    \"address\": \"<string>\",\n    \"birthdate\": \"<date>\",\n    \"city\": \"<string>\",\n    \"consents\": [\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"ip\": \"<string>\",\n        \"source\": \"<string>\",\n        \"userAgent\": \"<string>\"\n      },\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"ip\": \"<string>\",\n        \"source\": \"<string>\",\n        \"userAgent\": \"<string>\"\n      }\n    ],\n    \"country\": \"<string>\",\n    \"countryCode\": \"<string>\",\n    \"customProperties\": {\n      \"key_0\": true\n    },\n    \"email\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"gender\": \"<string>\",\n    \"id\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"optIns\": [\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"source\": \"<string>\"\n      },\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"source\": \"<string>\"\n      }\n    ],\n    \"optOuts\": [\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"reason\": \"<string>\",\n        \"source\": \"<string>\"\n      },\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"reason\": \"<string>\",\n        \"source\": \"<string>\"\n      }\n    ],\n    \"phone\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"state\": \"<string>\",\n    \"tags\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"eventID\": \"<string>\",\n  \"eventName\": \"<string>\",\n  \"eventTime\": \"<string>\",\n  \"eventVersion\": \"<string>\",\n  \"origin\": \"<string>\",\n  \"properties\": {\n    \"key_0\": false,\n    \"key_1\": 7674.239057776178\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "758dda00-442c-4421-9621-19dd4d58d194",
+              "name": "Accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contact\": {\n    \"address\": \"123 Main St.\",\n    \"birthdate\": \"1990-01-01\",\n    \"city\": \"New York\",\n    \"consents\": [\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"ip\": \"<string>\",\n        \"source\": \"<string>\",\n        \"userAgent\": \"<string>\"\n      },\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"ip\": \"<string>\",\n        \"source\": \"<string>\",\n        \"userAgent\": \"<string>\"\n      }\n    ],\n    \"country\": \"United States\",\n    \"countryCode\": \"US\",\n    \"customProperties\": {\n      \"key_0\": true,\n      \"key_1\": 6218.808763758655,\n      \"key_2\": false\n    },\n    \"email\": \"john.smoth@example.com\",\n    \"firstName\": \"John\",\n    \"gender\": \"<string>\",\n    \"id\": \"<string>\",\n    \"lastName\": \"Doe\",\n    \"optIns\": [\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"source\": \"<string>\"\n      },\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"source\": \"<string>\"\n      }\n    ],\n    \"optOuts\": [\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"reason\": \"<string>\",\n        \"source\": \"<string>\"\n      },\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"reason\": \"<string>\",\n        \"source\": \"<string>\"\n      }\n    ],\n    \"phone\": \"+1234567890\",\n    \"postalCode\": \"10001\",\n    \"state\": \"NY\",\n    \"tags\": [\n      \"tag1\",\n      \"tag2\"\n    ]\n  },\n  \"eventID\": \"9afca57b-d157-478b-adde-b9506322b16f\",\n  \"eventName\": \"my custom event\",\n  \"eventTime\": \"2021-07-01T00:00:00Z\",\n  \"eventVersion\": \"\",\n  \"origin\": \"api\",\n  \"properties\": {\n    \"key_0\": 72,\n    \"key_1\": false,\n    \"key_2\": \"string\",\n    \"key_3\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "055cb282-d7e1-4492-b1ed-c4b80c6e0b3b",
+              "name": "Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contact\": {\n    \"address\": \"123 Main St.\",\n    \"birthdate\": \"1990-01-01\",\n    \"city\": \"New York\",\n    \"consents\": [\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"ip\": \"<string>\",\n        \"source\": \"<string>\",\n        \"userAgent\": \"<string>\"\n      },\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"ip\": \"<string>\",\n        \"source\": \"<string>\",\n        \"userAgent\": \"<string>\"\n      }\n    ],\n    \"country\": \"United States\",\n    \"countryCode\": \"US\",\n    \"customProperties\": {\n      \"key_0\": true,\n      \"key_1\": 6218.808763758655,\n      \"key_2\": false\n    },\n    \"email\": \"john.smoth@example.com\",\n    \"firstName\": \"John\",\n    \"gender\": \"<string>\",\n    \"id\": \"<string>\",\n    \"lastName\": \"Doe\",\n    \"optIns\": [\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"source\": \"<string>\"\n      },\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"source\": \"<string>\"\n      }\n    ],\n    \"optOuts\": [\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"reason\": \"<string>\",\n        \"source\": \"<string>\"\n      },\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"reason\": \"<string>\",\n        \"source\": \"<string>\"\n      }\n    ],\n    \"phone\": \"+1234567890\",\n    \"postalCode\": \"10001\",\n    \"state\": \"NY\",\n    \"tags\": [\n      \"tag1\",\n      \"tag2\"\n    ]\n  },\n  \"eventID\": \"9afca57b-d157-478b-adde-b9506322b16f\",\n  \"eventName\": \"my custom event\",\n  \"eventTime\": \"2021-07-01T00:00:00Z\",\n  \"eventVersion\": \"\",\n  \"origin\": \"api\",\n  \"properties\": {\n    \"key_0\": 72,\n    \"key_1\": false,\n    \"key_2\": \"string\",\n    \"key_3\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    },\n    {\n      \"code\": \"invalid_format\",\n      \"field\": \"content.email.subject\",\n      \"message\": \"Must be a valid email address\"\n    }\n  ],\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd4082d9-442d-457c-8d11-c91fe76ef3ea",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) API version that specifies the response format and behaviour",
+                    "key": "Omnisend-Version",
+                    "value": "2026-03-15"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"contact\": {\n    \"address\": \"123 Main St.\",\n    \"birthdate\": \"1990-01-01\",\n    \"city\": \"New York\",\n    \"consents\": [\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"ip\": \"<string>\",\n        \"source\": \"<string>\",\n        \"userAgent\": \"<string>\"\n      },\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"ip\": \"<string>\",\n        \"source\": \"<string>\",\n        \"userAgent\": \"<string>\"\n      }\n    ],\n    \"country\": \"United States\",\n    \"countryCode\": \"US\",\n    \"customProperties\": {\n      \"key_0\": true,\n      \"key_1\": 6218.808763758655,\n      \"key_2\": false\n    },\n    \"email\": \"john.smoth@example.com\",\n    \"firstName\": \"John\",\n    \"gender\": \"<string>\",\n    \"id\": \"<string>\",\n    \"lastName\": \"Doe\",\n    \"optIns\": [\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"source\": \"<string>\"\n      },\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"source\": \"<string>\"\n      }\n    ],\n    \"optOuts\": [\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"reason\": \"<string>\",\n        \"source\": \"<string>\"\n      },\n      {\n        \"channel\": \"<string>\",\n        \"createdAt\": \"<string>\",\n        \"reason\": \"<string>\",\n        \"source\": \"<string>\"\n      }\n    ],\n    \"phone\": \"+1234567890\",\n    \"postalCode\": \"10001\",\n    \"state\": \"NY\",\n    \"tags\": [\n      \"tag1\",\n      \"tag2\"\n    ]\n  },\n  \"eventID\": \"9afca57b-d157-478b-adde-b9506322b16f\",\n  \"eventName\": \"my custom event\",\n  \"eventTime\": \"2021-07-01T00:00:00Z\",\n  \"eventVersion\": \"\",\n  \"origin\": \"api\",\n  \"properties\": {\n    \"key_0\": 72,\n    \"key_1\": false,\n    \"key_2\": \"string\",\n    \"key_3\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"A human-readable explanation of the error.\",\n  \"instance\": \"urn:omnisend:request:00000000-0000-0000-0000-000000000001\",\n  \"status\": 0,\n  \"title\": \"Problem\",\n  \"type\": \"https://problems.omnisend.com/problem\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.omnisend.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "49e8f334-c826-4503-a7a1-1707a6ed2f39",
+    "name": "Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

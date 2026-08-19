@@ -1,64 +1,134 @@
-openapi: 3.1.0
+openapi: 3.0.0
 info:
-  title: Omnisend REST Analytics Brands API
-  description: 'Omnisend''s REST API for managing ecommerce email and SMS marketing
-
-    automation. Exposes contacts, events, products, product categories,
-
-    segments, campaigns, batches, email templates, email content, email
-
-    universal layouts, images, brands, and analytics reports. Authentication
-
-    uses an API key passed via the `X-API-KEY` header, or OAuth 2.0 with
-
-    scopes such as `contacts.read`, `contacts.write`, `campaigns.read`,
-
-    `campaigns.write`, `analytics.read`, etc.
-
-    '
-  version: v5
-  contact:
-    name: Omnisend
-    url: https://api-docs.omnisend.com/
-servers:
-- url: https://api.omnisend.com/v5
-  description: Omnisend REST API v5
-security:
-- ApiKeyAuth: []
-- OAuth2: []
-tags:
-- name: Brands
+  contact: {}
+  title: Brands API
+  version: '2026-03-15'
+  x-api-evangelist:
+    harvested: '2026-08-13'
+    method: searched
+    source: https://dash.readme.com/api/v1/api-registry/18xl2lmnspx82s
+    source-note: Published by Omnisend on its own docs host api-docs.omnisend.com (ReadMe project @omnisend,
+      branch v2026-03-15); registry document referenced by the reference page as oasPublicUrl.
 paths:
   /brands/current:
     get:
-      tags:
-      - Brands
-      summary: Get current brand
+      description: 'With this endpoint you can get brand''s information.
+
+
+        **Scopes:**
+
+        `brands.read`
+
+        <br><a href="https://www.postman.com/omnisend-api/workspace/omnisend/overview" target="_blank">Open
+        Postman collection</a>'
+      parameters:
+      - $ref: '#/components/parameters/APIVersionHeader'
       responses:
         '200':
-          description: Brand
+          description: Brand details
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/internal_handler_http_v5_getBrand.response'
+      security:
+      - Bearer:
+        - brands.read
+      - ApiKeyAuth: []
+      summary: Get information about brand
+      tags:
+      - Brands
     post:
-      tags:
-      - Brands
-      summary: Connect a brand
+      description: 'With this endpoint you can connect your site to Omnisend.
+
+        Note it''s only possible to connect store with [oAuth flow](https://api-docs.omnisend.com/reference/oauth).
+
+
+        **Scopes:**
+
+        `brands.write`
+
+        <br><a href="https://www.postman.com/omnisend-api/workspace/omnisend/overview" target="_blank">Open
+        Postman collection</a>
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/APIVersionHeader'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/github_com_omnisend_brand_settings_internal_domain_storeConnection.ConnectBrandRequest'
+        description: brand information
+        required: true
       responses:
         '200':
-          description: Brand connected
+          description: OK
+      security:
+      - Bearer:
+        - brands.write
+      summary: Connect brand
+      tags:
+      - Brands
+servers:
+- url: https://api.omnisend.com/api
 components:
+  parameters:
+    APIVersionHeader:
+      description: API version that specifies the response format and behaviour (e.g., 2026-03-15)
+      in: header
+      name: Omnisend-Version
+      required: true
+      schema:
+        type: string
+        default: '2026-03-15'
   securitySchemes:
     ApiKeyAuth:
-      type: apiKey
       in: header
-      name: X-API-KEY
-    OAuth2:
+      name: Authorization
+      type: apiKey
+    Bearer:
       type: oauth2
       flows:
-        authorizationCode:
-          authorizationUrl: https://app.omnisend.com/oauth/authorize
-          tokenUrl: https://api.omnisend.com/v5/oauth/token
-          scopes:
-            contacts.read: Read contacts
-            contacts.write: Manage contacts
-            campaigns.read: Read campaigns
-            campaigns.write: Manage campaigns
-            analytics.read: Read analytics
+        clientCredentials:
+          tokenUrl: https://app.omnisend.com/oauth2/token
+          scopes: {}
+  schemas:
+    github_com_omnisend_brand_settings_internal_domain_storeConnection.ConnectBrandRequest:
+      properties:
+        currency:
+          example: USD
+          type: string
+        platform:
+          example: wordpress
+          type: string
+        version:
+          example: '2'
+          maxLength: 10
+          type: string
+        website:
+          example: https://www.example.com
+          type: string
+      required:
+      - platform
+      - version
+      - website
+      type: object
+    internal_handler_http_v5_getBrand.response:
+      properties:
+        brandID:
+          type: string
+        connected:
+          type: boolean
+        currency:
+          type: string
+        name:
+          type: string
+        platform:
+          type: string
+        timezone:
+          type: string
+        version:
+          type: string
+        website:
+          type: string
+      type: object

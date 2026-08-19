@@ -1,0 +1,145 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  registry metadata endpoints (repo.packagist.org, registry.npmjs.org, api.wordpress.org),
+  api.github.com/orgs/omnisend/repos, and https://api-docs.omnisend.com/reference/getting-started
+description: >-
+  First-party Omnisend client libraries and platform plugins, read from the registries that publish
+  their version and release date. The finding worth recording is that Omnisend's only first-party
+  API SDK — omnisend/php-sdk on Packagist — last released 1.2 on 2020-07-24 and wraps API v3, while
+  the current contract is 2026-03-15 served at https://api.omnisend.com/api. Its GitHub repository
+  is archived. Omnisend's living distribution effort is in WordPress/WooCommerce plugins, not SDKs.
+  Omnisend's own getting-started page points integrators at raw curl and the Postman collection —
+  it does not offer an SDK.
+
+packages:
+  - language: php
+    registry: packagist
+    name: omnisend/php-sdk
+    url: https://packagist.org/packages/omnisend/php-sdk
+    repository: https://github.com/omnisend/php-sdk
+    install: composer require omnisend/php-sdk
+    official: true
+    kind: sdk
+    version: '1.2'
+    published: '2020-07-24'
+    api_version_wrapped: v3
+    note: >-
+      Stale. Three published versions total; latest 1.2 (2020-07-24). Describes itself as a
+      "Simple to use Omnisend API v3 wrapper". The GitHub repository is ARCHIVED (last push
+      2021-07-01). It cannot reach the 2026-03-15 contract, which requires the
+      `Omnisend-Version` header and the /api base path. 256,399 lifetime installs.
+
+  - language: php
+    registry: wordpress.org
+    name: omnisend
+    display_name: "Newsletters, Email Marketing, SMS and Popups by Omnisend"
+    url: https://wordpress.org/plugins/omnisend/
+    repository: https://github.com/omnisend/wp-omnisend
+    official: true
+    kind: plugin
+    version: 1.8.0
+    published: '2026-07-27'
+    downloads: 901933
+    note: Core WordPress plugin. Actively maintained (repo pushed 2026-08-12).
+
+  - language: php
+    registry: wordpress.org
+    name: omnisend-connect
+    display_name: Email Marketing for WooCommerce by Omnisend
+    url: https://wordpress.org/plugins/omnisend-connect/
+    official: true
+    kind: plugin
+    version: 1.22.0
+    published: '2026-08-12'
+    downloads: 997669
+    note: WooCommerce connector — the most-installed and most recently released first-party artifact Omnisend ships.
+
+  - language: php
+    registry: wordpress.org
+    name: omnisend-for-contact-form-7
+    display_name: Omnisend for Contact Form 7 Add-On
+    url: https://wordpress.org/plugins/omnisend-for-contact-form-7/
+    repository: https://github.com/omnisend/wp-omnisend-contact-form-7
+    official: true
+    kind: plugin
+    version: 1.2.0
+    published: '2026-07-23'
+    downloads: 6694
+
+  - language: javascript
+    registry: npm
+    name: "@omnisend-ui/ui-react"
+    url: https://www.npmjs.com/package/@omnisend-ui/ui-react
+    install: npm install @omnisend-ui/ui-react
+    official: true
+    kind: design-system
+    version: 2.2.0
+    published: '2025-04-28'
+    note: >-
+      Published by the `omnisend-fe` npm account and described as "Omnisend UI component library for
+      React". This is Omnisend's internal design system, NOT an API client — it is recorded here for
+      completeness and is deliberately not counted as an SDK. No repository or homepage is declared
+      on the package.
+
+  - language: javascript
+    registry: npm
+    name: "@omnisend-ui/ui-theme"
+    url: https://www.npmjs.com/package/@omnisend-ui/ui-theme
+    official: true
+    kind: design-system
+    version: 2.0.10
+    published: '2025-04-28'
+    note: Theme package for the same internal design system. Not an API client.
+
+  - language: javascript
+    registry: cdn
+    name: launcher-v2.js
+    url: https://omnisnippet1.com/inshop/launcher-v2.js
+    official: true
+    kind: browser-snippet
+    version: null
+    published: null
+    note: >-
+      The Omnisend JavaScript snippet, loaded from omnisnippet1.com by a script tag documented at
+      https://api-docs.omnisend.com/reference/javascript-snippet. The URL is UNPINNED — it always
+      floats to whatever `launcher-v2.js` currently is, so a consumer cannot tell what build they are
+      running, and neither can we. No registry metadata endpoint exists for it. Recorded as
+      version: null deliberately: checked, nothing datable to record.
+
+archived:
+  - name: omnisend/magento2-plugin
+    url: https://github.com/omnisend/magento2-plugin
+    kind: plugin
+    archived: true
+    last_push: '2023-07-11'
+    note: >-
+      apis.yml still advertises this as a Magento 2 plugin. The GitHub repository is archived and has
+      not been pushed since 2023-07-11.
+
+not_published:
+  - registry: pypi
+    query: omnisend
+    status: 404
+    note: No first-party Python client.
+  - registry: rubygems
+    query: omnisend
+    status: 404
+    note: No first-party Ruby client.
+  - registry: npm
+    query: omnisend
+    note: >-
+      npm search returns only third-party wrappers — react-omnisend, omnisend-node-sdk (ajmnz, last
+      release 2023-08-05), @pipedream/omnisend, @activepieces/piece-omnisend, n8n-nodes-omnisend.
+      None is first-party; none is recorded as official.
+  - registry: [maven, nuget, go, crates]
+    note: No first-party Omnisend packages found.
+
+summary:
+  official_sdks: 1
+  official_sdks_current: 0
+  official_plugins: 3
+  languages: [php]
+  note: >-
+    sdk_count is 1 on paper and 0 in practice: the single first-party SDK targets a retired API
+    version and its repository is archived.
