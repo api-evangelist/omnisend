@@ -48,7 +48,7 @@ tags:
 url: https://raw.githubusercontent.com/api-evangelist/omnisend/refs/heads/main/apis.yml
 created: '2026-05-11'
 modified: '2026-08-13'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: omnisend:omnisend-analytics-api
   name: Omnisend Analytics API
