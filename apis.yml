@@ -32,6 +32,22 @@ position: Consuming
 tags:
 - Email Marketing
 - Marketing Automation
+- E-Commerce
+- SMS Marketing
+- Customer Engagement
+- Segmentation
+- Campaigns
+- Forms
+- Popups
+- Web Push
+- Automation Workflows
+- Analytics
+- MCP
+- Agent Ready
+- Transactional Messaging
+tags_raw:
+- Email Marketing
+- Marketing Automation
 - Ecommerce
 - SMS Marketing
 - Customer Engagement
@@ -231,6 +247,8 @@ apis:
   humanURL: https://api-docs.omnisend.com/reference/overview
   baseURL: https://api.omnisend.com/api
   tags:
+  - Email Templates
+  tags_raw:
   - EmailTemplates
   properties:
   - type: OpenAPI
@@ -289,6 +307,8 @@ apis:
   humanURL: https://api-docs.omnisend.com/reference/overview
   baseURL: https://api.omnisend.com/api
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -318,6 +338,8 @@ apis:
   humanURL: https://api-docs.omnisend.com/reference/overview
   baseURL: https://api.omnisend.com/api
   tags:
+  - Image
+  tags_raw:
   - Images
   properties:
   - type: OpenAPI
@@ -347,6 +369,8 @@ apis:
   humanURL: https://api-docs.omnisend.com/reference/overview
   baseURL: https://api.omnisend.com/api
   tags:
+  - Product Categories
+  tags_raw:
   - ProductCategories
   properties:
   - type: OpenAPI
@@ -376,6 +400,8 @@ apis:
   humanURL: https://api-docs.omnisend.com/reference/overview
   baseURL: https://api.omnisend.com/api
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
@@ -437,6 +463,10 @@ apis:
   tags:
   - Automations
   - Workflows
+  - Webhook
+  tags_raw:
+  - Automations
+  - Workflows
   - Webhooks
   properties:
   - type: OpenAPI
@@ -466,6 +496,10 @@ apis:
   humanURL: https://api-docs.omnisend.com/reference/overview
   baseURL: https://api.omnisend.com/api
   tags:
+  - EventMetadata
+  - Event
+  - Schemas
+  tags_raw:
   - EventMetadata
   - Events
   - Schemas
