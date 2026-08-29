@@ -11,8 +11,11 @@ info:
     OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: omnisendApi
-  url: ../openapi/_original/_superseded/omnisend-openapi-scaffold-v5.yml
+- name: contactsApi
+  url: ../openapi/omnisend-contacts-api-openapi.yml
+  type: openapi
+- name: eventsApi
+  url: ../openapi/omnisend-events-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: subscribe-and-welcome
@@ -43,7 +46,7 @@ workflows:
     description: >-
       Create or update the contact with a subscribed status using the email as
       the natural key.
-    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1contacts/post'
+    operationPath: '{$sourceDescriptions.contactsApi.url}#/paths/~1contacts/post'
     parameters:
     - name: X-API-KEY
       in: header
@@ -62,7 +65,7 @@ workflows:
     description: >-
       Send a subscribed customer event to trigger the welcome automation.
       Returns 202 Accepted when the event is queued.
-    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1events/post'
+    operationPath: '{$sourceDescriptions.eventsApi.url}#/paths/~1events/post'
     parameters:
     - name: X-API-KEY
       in: header

@@ -10,8 +10,8 @@ info:
     description.
   version: 1.0.0
 sourceDescriptions:
-- name: omnisendApi
-  url: ../openapi/_original/_superseded/omnisend-openapi-scaffold-v5.yml
+- name: campaignsApi
+  url: ../openapi/omnisend-campaigns-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: create-and-send-campaign
@@ -45,7 +45,7 @@ workflows:
   - stepId: createCampaign
     description: >-
       Create the campaign. Returns 201 Created with the campaign id.
-    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1campaigns/post'
+    operationPath: '{$sourceDescriptions.campaignsApi.url}#/paths/~1campaigns/post'
     parameters:
     - name: X-API-KEY
       in: header
@@ -64,7 +64,7 @@ workflows:
   - stepId: getCampaign
     description: >-
       Read the campaign back by id to confirm it persisted before sending.
-    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1campaigns~1{id}/get'
+    operationPath: '{$sourceDescriptions.campaignsApi.url}#/paths/~1campaigns~1{id}/get'
     parameters:
     - name: X-API-KEY
       in: header
@@ -81,7 +81,7 @@ workflows:
     description: >-
       Queue the campaign for sending. Returns 202 Accepted when the send is
       queued.
-    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1campaigns~1{id}~1send/post'
+    operationPath: '{$sourceDescriptions.campaignsApi.url}#/paths/~1campaigns~1{id}~1send/post'
     parameters:
     - name: X-API-KEY
       in: header

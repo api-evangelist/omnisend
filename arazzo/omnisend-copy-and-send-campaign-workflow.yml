@@ -10,8 +10,8 @@ info:
     executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: omnisendApi
-  url: ../openapi/_original/_superseded/omnisend-openapi-scaffold-v5.yml
+- name: campaignsApi
+  url: ../openapi/omnisend-campaigns-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: copy-and-send-campaign
@@ -35,7 +35,7 @@ workflows:
   - stepId: copyCampaign
     description: >-
       Copy the source campaign. Returns 201 Created with the new campaign id.
-    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1campaigns~1{id}~1copy/post'
+    operationPath: '{$sourceDescriptions.campaignsApi.url}#/paths/~1campaigns~1{id}~1copy/post'
     parameters:
     - name: X-API-KEY
       in: header
@@ -51,7 +51,7 @@ workflows:
     description: >-
       Read the copied campaign back by id to confirm it persisted before
       sending.
-    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1campaigns~1{id}/get'
+    operationPath: '{$sourceDescriptions.campaignsApi.url}#/paths/~1campaigns~1{id}/get'
     parameters:
     - name: X-API-KEY
       in: header
@@ -66,7 +66,7 @@ workflows:
   - stepId: sendCopy
     description: >-
       Queue the copied campaign for sending. Returns 202 Accepted when queued.
-    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1campaigns~1{id}~1send/post'
+    operationPath: '{$sourceDescriptions.campaignsApi.url}#/paths/~1campaigns~1{id}~1send/post'
     parameters:
     - name: X-API-KEY
       in: header

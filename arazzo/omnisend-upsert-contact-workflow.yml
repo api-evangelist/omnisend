@@ -12,8 +12,8 @@ info:
     executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: omnisendApi
-  url: ../openapi/_original/_superseded/omnisend-openapi-scaffold-v5.yml
+- name: contactsApi
+  url: ../openapi/omnisend-contacts-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: upsert-contact
@@ -52,7 +52,7 @@ workflows:
       Attempt to read an existing contact by its Omnisend contact id. A 200
       means the contact exists and can be patched by id; any other status
       routes to the create-or-update fallback.
-    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1contacts~1{id}/get'
+    operationPath: '{$sourceDescriptions.contactsApi.url}#/paths/~1contacts~1{id}/get'
     parameters:
     - name: X-API-KEY
       in: header
@@ -80,7 +80,7 @@ workflows:
     description: >-
       Patch the matched contact by id with the supplied attributes. Only the
       provided fields are changed.
-    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1contacts~1{id}/patch'
+    operationPath: '{$sourceDescriptions.contactsApi.url}#/paths/~1contacts~1{id}/patch'
     parameters:
     - name: X-API-KEY
       in: header
@@ -105,7 +105,7 @@ workflows:
     description: >-
       Create the contact, or update it in place, using the email as the natural
       key when no contact id matched.
-    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1contacts/post'
+    operationPath: '{$sourceDescriptions.contactsApi.url}#/paths/~1contacts/post'
     parameters:
     - name: X-API-KEY
       in: header

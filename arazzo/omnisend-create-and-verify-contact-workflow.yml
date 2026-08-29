@@ -11,8 +11,8 @@ info:
     read and executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: omnisendApi
-  url: ../openapi/_original/_superseded/omnisend-openapi-scaffold-v5.yml
+- name: contactsApi
+  url: ../openapi/omnisend-contacts-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: create-and-verify-contact
@@ -46,7 +46,7 @@ workflows:
     description: >-
       Create the contact or update it in place using the email as the natural
       key, returning the Omnisend contact id.
-    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1contacts/post'
+    operationPath: '{$sourceDescriptions.contactsApi.url}#/paths/~1contacts/post'
     parameters:
     - name: X-API-KEY
       in: header
@@ -66,7 +66,7 @@ workflows:
     description: >-
       Read the contact back by its id to confirm the write and return the
       persisted profile.
-    operationPath: '{$sourceDescriptions.omnisendApi.url}#/paths/~1contacts~1{id}/get'
+    operationPath: '{$sourceDescriptions.contactsApi.url}#/paths/~1contacts~1{id}/get'
     parameters:
     - name: X-API-KEY
       in: header
