@@ -2,8 +2,8 @@
 kin_checks:
   slug: omnisend
   schema_version: 0.15.1
-  scored_at: '2026-08-27'
-  run_ts: 2026-08-27T140727
+  scored_at: '2026-08-28'
+  run_ts: 2026-08-28T221322
   note: Actionable checks only (missed + partial). earned/na are every other check
     in rubric/scoring-0.15.1.yml; counts below let you verify that.
   counts:
@@ -17,18 +17,18 @@ kin_checks:
     status: missed
   - id: openapi_3_2
     status: missed
-    detail: 0 of 14 openapi documents pass
+    detail: 0 of 16 openapi documents pass
   - id: openapi_3_1
     status: missed
-    detail: 0 of 14 openapi documents pass
+    detail: 0 of 16 openapi documents pass
   - id: info_complete
     status: missed
-    detail: 0 of 14 openapi documents pass
+    detail: 0 of 16 openapi documents pass
   - id: examples_present
     status: missed
   - id: webhooks_or_callbacks
     status: missed
-    detail: 0 of 14 openapi documents pass
+    detail: 0 of 16 openapi documents pass
   - id: json_ld_class_depth
     status: missed
   - id: json_ld_property_depth
@@ -72,20 +72,20 @@ kin_checks:
     status: missed
   - id: operations_operation_ids
     status: partial
-    earned: 0.29
-    detail: 1 of 14 openapi documents pass
+    earned: 0.25
+    detail: 1 of 16 openapi documents pass
   - id: error_responses_documented
     status: partial
-    earned: 3.71
-    detail: 13 of 14 openapi documents pass
+    earned: 3.75
+    detail: 15 of 16 openapi documents pass
   - id: components_reuse
     status: partial
-    earned: 2.79
-    detail: 13 of 14 openapi documents pass
+    earned: 2.81
+    detail: 15 of 16 openapi documents pass
   - id: oauth_scopes_enumerated
     status: partial
-    earned: 2.57
-    detail: 9 of 14 openapi documents pass
+    earned: 2.5
+    detail: 10 of 16 openapi documents pass
   - id: rules_present
     status: partial
     earned: 2.5
