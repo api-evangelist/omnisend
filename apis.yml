@@ -303,7 +303,7 @@ apis:
   humanURL: https://api-docs.omnisend.com/reference/overview
   baseURL: https://api.omnisend.com/api
   tags:
-  - Automations
+  - Automation
   - Workflows
   - Webhook
   tags_raw:
@@ -341,7 +341,7 @@ apis:
   tags:
   - EventMetadata
   - Event
-  - Schemas
+  - Schema
   tags_raw:
   - EventMetadata
   - Events
