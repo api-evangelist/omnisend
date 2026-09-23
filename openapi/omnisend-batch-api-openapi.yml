@@ -3,11 +3,6 @@ info:
   contact: {}
   title: Batches Batch API
   version: '2026'
-  x-api-evangelist:
-    harvested: '2026-08-13'
-    method: searched
-    source: https://dash.readme.com/api/v1/api-registry/azzp6hramsfxryvv
-    source-note: Published by Omnisend on its own docs host api-docs.omnisend.com (ReadMe project @omnisend, branch v2026-03-15); registry document referenced by the reference page as oasPublicUrl.
 servers:
 - url: https://api.omnisend.com/api
 tags:
@@ -28,7 +23,7 @@ paths:
         This endpoint is rate limited to 400 requests per minute.
 
 
-        <br><a href="https://www.postman.com/omnisend-api/workspace/omnisend/overview" target="_blank">Open Postman collection</a>'
+        Open Postman collection'
       parameters:
       - description: Offset (minimum 0)
         in: query
@@ -107,6 +102,8 @@ paths:
       summary: Get batches
       tags:
       - Batch
+      operationId: getBatches
+      x-operation-id-source: derived
     post:
       description: 'Batch operations allow for multiple actions of a similar type to be executed in a single request. Utilizing the batch endpoint is recommended to avoid hitting rate limits and to enhance overall performance.
 
@@ -124,7 +121,6 @@ paths:
         The required scopes depend on the type of batch operation being performed.
 
 
-
         **WARNING**: Before sending a batch of **events**, ensure there are no automations configured in Omnisend that could send messages to customers based on the imported data. This could result in duplicate messages being sent to customers.
 
 
@@ -139,7 +135,7 @@ paths:
         This endpoint is rate limited to 400 requests per minute.
 
 
-        <br><a href="https://www.postman.com/omnisend-api/workspace/omnisend/overview" target="_blank">Open Postman collection</a>'
+        Open Postman collection'
       parameters:
       - $ref: '#/components/parameters/APIVersionHeader'
       requestBody:
@@ -183,6 +179,8 @@ paths:
       summary: Create batch
       tags:
       - Batch
+      operationId: postBatches
+      x-operation-id-source: derived
   /batches/{batchID}:
     get:
       description: 'Get batch information
@@ -198,7 +196,7 @@ paths:
         This endpoint is rate limited to 400 requests per minute.
 
 
-        <br><a href="https://www.postman.com/omnisend-api/workspace/omnisend/overview" target="_blank">Open Postman collection</a>'
+        Open Postman collection'
       parameters:
       - description: Batch ID
         in: path
@@ -247,6 +245,8 @@ paths:
       summary: Get batch information
       tags:
       - Batch
+      operationId: getBatchesByBatchID
+      x-operation-id-source: derived
   /batches/{batchID}/items:
     get:
       description: 'Get batch items
@@ -262,7 +262,7 @@ paths:
         This endpoint is rate limited to 400 requests per minute.
 
 
-        <br><a href="https://www.postman.com/omnisend-api/workspace/omnisend/overview" target="_blank">Open Postman collection</a>'
+        Open Postman collection'
       parameters:
       - description: Batch ID
         in: path
@@ -311,8 +311,55 @@ paths:
       summary: Get batch items
       tags:
       - Batch
+      operationId: getBatchesByBatchIDItems
+      x-operation-id-source: derived
 components:
   schemas:
+    FieldError:
+      description: A single field validation failure within a validation error response.
+      properties:
+        code:
+          description: Error code indicating the type of failure
+          example: invalid_format
+          type: string
+        field:
+          description: Dot-separated path to the field that failed validation
+          example: content.email.subject
+          type: string
+        message:
+          description: Human-readable explanation of what is wrong with the field value
+          example: Must be a valid email address
+          type: string
+      type: object
+    CreateBatchRequest:
+      properties:
+        endpoint:
+          enum:
+          - products
+          - contacts
+          - events
+          - categories
+          example: contacts
+          type: string
+        items:
+          items: {}
+          maxItems: 100
+          minItems: 1
+          type: array
+        method:
+          enum:
+          - POST
+          - PUT
+          example: POST
+          type: string
+        origin:
+          example: omnisend
+          type: string
+      required:
+      - endpoint
+      - items
+      - method
+      type: object
     Batch:
       properties:
         batchID:
@@ -360,75 +407,6 @@ components:
           example: 100
           type: integer
       type: object
-    CreateBatchRequest:
-      properties:
-        endpoint:
-          enum:
-          - products
-          - contacts
-          - events
-          - categories
-          example: contacts
-          type: string
-        items:
-          items: {}
-          maxItems: 100
-          minItems: 1
-          type: array
-        method:
-          enum:
-          - POST
-          - PUT
-          example: POST
-          type: string
-        origin:
-          example: omnisend
-          type: string
-      required:
-      - endpoint
-      - items
-      - method
-      type: object
-    CreateBatchResponse:
-      properties:
-        batchID:
-          type: string
-        totalCount:
-          type: integer
-      type: object
-    ListBatchesResponse:
-      properties:
-        batches:
-          items:
-            $ref: '#/components/schemas/Batch'
-          type: array
-        paging:
-          $ref: '#/components/schemas/Paging'
-      type: object
-    Problem:
-      description: Standard error response returned by all API endpoints on failure.
-      properties:
-        detail:
-          description: Human-readable explanation of this specific error occurrence
-          example: A human-readable explanation of the error.
-          type: string
-        instance:
-          description: Request trace identifier for support and debugging
-          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
-          type: string
-        status:
-          description: HTTP status code
-          example: 0
-          type: integer
-        title:
-          description: Short description of the error type
-          example: Problem
-          type: string
-        type:
-          description: URI that identifies the error type
-          example: https://problems.omnisend.com/problem
-          type: string
-      type: object
     ValidationProblem:
       description: Error response returned when the request contains invalid input. The errors array lists every field that failed validation.
       properties:
@@ -458,36 +436,14 @@ components:
           example: https://problems.omnisend.com/problem
           type: string
       type: object
-    Paging:
+    ListBatchesResponse:
       properties:
-        limit:
-          example: 100
-          type: integer
-        next:
-          example: https://api.omnisend.com/api/batches?limit=100&offset=105
-          type: string
-        offset:
-          example: 5
-          type: integer
-        previous:
-          example: https://api.omnisend.com/api/batches?limit=100&offset=5
-          type: string
-      type: object
-    FieldError:
-      description: A single field validation failure within a validation error response.
-      properties:
-        code:
-          description: Error code indicating the type of failure
-          example: invalid_format
-          type: string
-        field:
-          description: Dot-separated path to the field that failed validation
-          example: content.email.subject
-          type: string
-        message:
-          description: Human-readable explanation of what is wrong with the field value
-          example: Must be a valid email address
-          type: string
+        batches:
+          items:
+            $ref: '#/components/schemas/Batch'
+          type: array
+        paging:
+          $ref: '#/components/schemas/Paging'
       type: object
     BatchItem:
       properties:
@@ -501,6 +457,52 @@ components:
           type: integer
         status:
           example: finished
+          type: string
+      type: object
+    Problem:
+      description: Standard error response returned by all API endpoints on failure.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    CreateBatchResponse:
+      properties:
+        batchID:
+          type: string
+        totalCount:
+          type: integer
+      type: object
+    Paging:
+      properties:
+        limit:
+          example: 100
+          type: integer
+        next:
+          example: https://api.omnisend.com/api/batches?limit=100&offset=105
+          type: string
+        offset:
+          example: 5
+          type: integer
+        previous:
+          example: https://api.omnisend.com/api/batches?limit=100&offset=5
           type: string
       type: object
   parameters:

@@ -3,11 +3,6 @@ info:
   contact: {}
   title: Analytics Reports API
   version: '5.0'
-  x-api-evangelist:
-    harvested: '2026-08-13'
-    method: searched
-    source: https://dash.readme.com/api/v1/api-registry/c7lis6msfxryyp
-    source-note: Published by Omnisend on its own docs host api-docs.omnisend.com (ReadMe project @omnisend, branch v2026-03-15); registry document referenced by the reference page as oasPublicUrl.
 servers:
 - url: https://api.omnisend.com/api
 tags:
@@ -27,9 +22,7 @@ paths:
 
         This endpoint is rate limited to 10 requests per minute and 55 requests per 24 hours.
 
-        Rate limits apply per brand. See [Rate limits](https://api-docs.omnisend.com/reference/reports#rate-limits).
-
-        '
+        Rate limits apply per brand. See Rate limits.'
       parameters:
       - $ref: '#/components/parameters/APIVersionHeader'
       requestBody:
@@ -95,6 +88,8 @@ paths:
       summary: Generate report
       tags:
       - Reports
+      operationId: postAnalyticsReports
+      x-operation-id-source: derived
 components:
   schemas:
     reports.ReportQuery:
@@ -116,16 +111,12 @@ components:
             $ref: '#/components/schemas/analytics.Metric'
           type: array
       type: object
-    analytics.Filter:
+    analytics.Dimension:
       properties:
+        granularity:
+          type: string
         name:
           type: string
-        operator:
-          type: string
-        values:
-          items:
-            type: string
-          type: array
       type: object
     reports.ReportResult:
       properties:
@@ -144,50 +135,20 @@ components:
             $ref: '#/components/schemas/analytics.ReportResultRow'
           type: array
       type: object
-    analytics.MetricHeader:
+    FieldError:
+      description: A single field validation failure within a validation error response.
       properties:
-        name:
+        code:
+          description: Error code indicating the type of failure
+          example: invalid_format
           type: string
-      type: object
-    analytics.ReportResultRow:
-      additionalProperties: {}
-      type: object
-    Problem:
-      description: Standard error response returned by all API endpoints on failure.
-      properties:
-        detail:
-          description: Human-readable explanation of this specific error occurrence
-          example: A human-readable explanation of the error.
+        field:
+          description: Dot-separated path to the field that failed validation
+          example: content.email.subject
           type: string
-        instance:
-          description: Request trace identifier for support and debugging
-          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
-          type: string
-        status:
-          description: HTTP status code
-          example: 0
-          type: integer
-        title:
-          description: Short description of the error type
-          example: Problem
-          type: string
-        type:
-          description: URI that identifies the error type
-          example: https://problems.omnisend.com/problem
-          type: string
-      type: object
-    reports.DateRange:
-      properties:
-        from:
-          type: string
-        interval:
-          type: string
-        to:
-          type: string
-      type: object
-    analytics.Metric:
-      properties:
-        name:
+        message:
+          description: Human-readable explanation of what is wrong with the field value
+          example: Must be a valid email address
           type: string
       type: object
     reports.ReportResponse:
@@ -197,11 +158,13 @@ components:
             $ref: '#/components/schemas/reports.ReportResult'
           type: array
       type: object
-    analytics.DimensionHeader:
+    reports.DateRange:
       properties:
-        granularity:
+        from:
           type: string
-        name:
+        interval:
+          type: string
+        to:
           type: string
       type: object
     ValidationProblem:
@@ -233,35 +196,67 @@ components:
           example: https://problems.omnisend.com/problem
           type: string
       type: object
+    analytics.ReportResultRow:
+      additionalProperties: {}
+      type: object
+    analytics.Filter:
+      properties:
+        name:
+          type: string
+        operator:
+          type: string
+        values:
+          items:
+            type: string
+          type: array
+      type: object
+    analytics.MetricHeader:
+      properties:
+        name:
+          type: string
+      type: object
+    analytics.Metric:
+      properties:
+        name:
+          type: string
+      type: object
+    analytics.DimensionHeader:
+      properties:
+        granularity:
+          type: string
+        name:
+          type: string
+      type: object
+    Problem:
+      description: Standard error response returned by all API endpoints on failure.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
     reports.ReportRequest:
       properties:
         queries:
           items:
             $ref: '#/components/schemas/reports.ReportQuery'
           type: array
-      type: object
-    FieldError:
-      description: A single field validation failure within a validation error response.
-      properties:
-        code:
-          description: Error code indicating the type of failure
-          example: invalid_format
-          type: string
-        field:
-          description: Dot-separated path to the field that failed validation
-          example: content.email.subject
-          type: string
-        message:
-          description: Human-readable explanation of what is wrong with the field value
-          example: Must be a valid email address
-          type: string
-      type: object
-    analytics.Dimension:
-      properties:
-        granularity:
-          type: string
-        name:
-          type: string
       type: object
   parameters:
     APIVersionHeader:
