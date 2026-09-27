@@ -61,6 +61,67 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    contactDto.Channel:
+      enum:
+      - email
+      - sms
+      type: string
+      x-enum-varnames:
+      - ChannelTypeEmail
+      - ChannelTypeSms
+    contactDto.Consent:
+      properties:
+        channel:
+          allOf:
+          - $ref: '#/components/schemas/contactDto.Channel'
+          enum:
+          - email
+          - sms
+        createdAt:
+          description: RFC3339 format
+          type: string
+        ip:
+          description: IP address of the user
+          type: string
+        source:
+          maxLength: 100
+          type: string
+        userAgent:
+          description: User agent of the device that user used to give consent
+          maxLength: 200
+          type: string
+      type: object
+    EventRequest:
+      properties:
+        contact:
+          allOf:
+          - $ref: '#/components/schemas/contactDto.Contact'
+          description: Contact information, contact will be created or updated based on the data provided here.
+        eventID:
+          description: UUID of the event (v4, v5, v6, v7). Along with 'eventTime' used for historical event deduplication (not working on real-time events used for automations). If not provided, it will be generated automatically.
+          example: 9afca57b-d157-478b-adde-b9506322b16f
+          type: string
+        eventName:
+          description: Check event documentation to find what event names you need to specify for each event.
+          example: my custom event
+          type: string
+        eventTime:
+          description: ISO 8601 timestamp. Accepts RFC 3339 (e.g. "2021-07-01T00:00:00Z") and the space-separated form "YYYY-MM-DD HH:MM:SS±HH:MM" (e.g. "2021-07-01 00:00:00+02:00"). Optional; defaults to current time.
+          example: '2021-07-01T00:00:00Z'
+          type: string
+        eventVersion:
+          description: Required ONLY for recommended events. Check event documentation to find what version you need to specify for each event. For custom events you should leave it empty.
+          example: ''
+          type: string
+        origin:
+          description: It should be based on the source of event API. If you are building platform or app integration it should have dedicated origin. Otherwise it should be "api".
+          example: api
+          type: string
+        properties:
+          additionalProperties: true
+          description: Event properties, you can check events guides section to see what recommended properties you should provide for each event. Not providing recommending properties can result some of the features not working properly.
+          type: object
+      type: object
     FieldError:
       description: A single field validation failure within a validation error response.
       properties:
@@ -91,7 +152,7 @@ components:
           maxLength: 100
           type: string
       type: object
-    contactDto.Consent:
+    contactDto.OptOut:
       properties:
         channel:
           allOf:
@@ -100,17 +161,65 @@ components:
           - email
           - sms
         createdAt:
-          description: RFC3339 format
           type: string
-        ip:
-          description: IP address of the user
+        reason:
+          maxLength: 100
           type: string
         source:
           maxLength: 100
           type: string
-        userAgent:
-          description: User agent of the device that user used to give consent
-          maxLength: 200
+      type: object
+    Problem:
+      description: Standard error response returned by all API endpoints on failure.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    ValidationProblem:
+      description: Error response returned when the request contains invalid input. The errors array lists every field that failed validation.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        errors:
+          description: List of fields that failed validation
+          items:
+            $ref: '#/components/schemas/FieldError'
+          type: array
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
           type: string
       type: object
     contactDto.Contact:
@@ -196,115 +305,6 @@ components:
             type: string
           maxItems: 100
           type: array
-      type: object
-    contactDto.Channel:
-      enum:
-      - email
-      - sms
-      type: string
-      x-enum-varnames:
-      - ChannelTypeEmail
-      - ChannelTypeSms
-    contactDto.OptOut:
-      properties:
-        channel:
-          allOf:
-          - $ref: '#/components/schemas/contactDto.Channel'
-          enum:
-          - email
-          - sms
-        createdAt:
-          type: string
-        reason:
-          maxLength: 100
-          type: string
-        source:
-          maxLength: 100
-          type: string
-      type: object
-    Problem:
-      description: Standard error response returned by all API endpoints on failure.
-      properties:
-        detail:
-          description: Human-readable explanation of this specific error occurrence
-          example: A human-readable explanation of the error.
-          type: string
-        instance:
-          description: Request trace identifier for support and debugging
-          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
-          type: string
-        status:
-          description: HTTP status code
-          example: 0
-          type: integer
-        title:
-          description: Short description of the error type
-          example: Problem
-          type: string
-        type:
-          description: URI that identifies the error type
-          example: https://problems.omnisend.com/problem
-          type: string
-      type: object
-    EventRequest:
-      properties:
-        contact:
-          allOf:
-          - $ref: '#/components/schemas/contactDto.Contact'
-          description: Contact information, contact will be created or updated based on the data provided here.
-        eventID:
-          description: UUID of the event (v4, v5, v6, v7). Along with 'eventTime' used for historical event deduplication (not working on real-time events used for automations). If not provided, it will be generated automatically.
-          example: 9afca57b-d157-478b-adde-b9506322b16f
-          type: string
-        eventName:
-          description: Check event documentation to find what event names you need to specify for each event.
-          example: my custom event
-          type: string
-        eventTime:
-          description: ISO 8601 timestamp. Accepts RFC 3339 (e.g. "2021-07-01T00:00:00Z") and the space-separated form "YYYY-MM-DD HH:MM:SS±HH:MM" (e.g. "2021-07-01 00:00:00+02:00"). Optional; defaults to current time.
-          example: '2021-07-01T00:00:00Z'
-          type: string
-        eventVersion:
-          description: Required ONLY for recommended events. Check event documentation to find what version you need to specify for each event. For custom events you should leave it empty.
-          example: ''
-          type: string
-        origin:
-          description: It should be based on the source of event API. If you are building platform or app integration it should have dedicated origin. Otherwise it should be "api".
-          example: api
-          type: string
-        properties:
-          additionalProperties: true
-          description: Event properties, you can check events guides section to see what recommended properties you should provide for each event. Not providing recommending properties can result some of the features not working properly.
-          type: object
-      type: object
-    ValidationProblem:
-      description: Error response returned when the request contains invalid input. The errors array lists every field that failed validation.
-      properties:
-        detail:
-          description: Human-readable explanation of this specific error occurrence
-          example: A human-readable explanation of the error.
-          type: string
-        errors:
-          description: List of fields that failed validation
-          items:
-            $ref: '#/components/schemas/FieldError'
-          type: array
-        instance:
-          description: Request trace identifier for support and debugging
-          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
-          type: string
-        status:
-          description: HTTP status code
-          example: 0
-          type: integer
-        title:
-          description: Short description of the error type
-          example: Problem
-          type: string
-        type:
-          description: URI that identifies the error type
-          example: https://problems.omnisend.com/problem
-          type: string
       type: object
   parameters:
     APIVersionHeader:

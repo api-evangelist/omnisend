@@ -71,6 +71,25 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    internal_handler_http_v5_getBrand.response:
+      properties:
+        brandID:
+          type: string
+        connected:
+          type: boolean
+        currency:
+          type: string
+        name:
+          type: string
+        platform:
+          type: string
+        timezone:
+          type: string
+        version:
+          type: string
+        website:
+          type: string
+      type: object
     github_com_omnisend_brand_settings_internal_domain_storeConnection.ConnectBrandRequest:
       properties:
         currency:
@@ -90,25 +109,6 @@ components:
       - platform
       - version
       - website
-      type: object
-    internal_handler_http_v5_getBrand.response:
-      properties:
-        brandID:
-          type: string
-        connected:
-          type: boolean
-        currency:
-          type: string
-        name:
-          type: string
-        platform:
-          type: string
-        timezone:
-          type: string
-        version:
-          type: string
-        website:
-          type: string
       type: object
   parameters:
     APIVersionHeader:

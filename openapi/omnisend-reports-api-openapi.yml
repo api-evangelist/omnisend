@@ -92,48 +92,40 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    reports.ReportQuery:
+    reports.ReportRequest:
       properties:
-        alias:
-          type: string
-        dateRange:
-          $ref: '#/components/schemas/reports.DateRange'
-        dimensions:
+        queries:
           items:
-            $ref: '#/components/schemas/analytics.Dimension'
-          type: array
-        filters:
-          items:
-            $ref: '#/components/schemas/analytics.Filter'
-          type: array
-        metrics:
-          items:
-            $ref: '#/components/schemas/analytics.Metric'
+            $ref: '#/components/schemas/reports.ReportQuery'
           type: array
       type: object
-    analytics.Dimension:
+    reports.DateRange:
+      properties:
+        from:
+          type: string
+        interval:
+          type: string
+        to:
+          type: string
+      type: object
+    analytics.MetricHeader:
+      properties:
+        name:
+          type: string
+      type: object
+    reports.ReportResponse:
+      properties:
+        reports:
+          items:
+            $ref: '#/components/schemas/reports.ReportResult'
+          type: array
+      type: object
+    analytics.DimensionHeader:
       properties:
         granularity:
           type: string
         name:
           type: string
-      type: object
-    reports.ReportResult:
-      properties:
-        alias:
-          type: string
-        dimensions:
-          items:
-            $ref: '#/components/schemas/analytics.DimensionHeader'
-          type: array
-        metrics:
-          items:
-            $ref: '#/components/schemas/analytics.MetricHeader'
-          type: array
-        rows:
-          items:
-            $ref: '#/components/schemas/analytics.ReportResultRow'
-          type: array
       type: object
     FieldError:
       description: A single field validation failure within a validation error response.
@@ -151,20 +143,43 @@ components:
           example: Must be a valid email address
           type: string
       type: object
-    reports.ReportResponse:
+    analytics.Dimension:
       properties:
-        reports:
-          items:
-            $ref: '#/components/schemas/reports.ReportResult'
-          type: array
+        granularity:
+          type: string
+        name:
+          type: string
       type: object
-    reports.DateRange:
+    analytics.ReportResultRow:
+      additionalProperties: {}
+      type: object
+    analytics.Metric:
       properties:
-        from:
+        name:
           type: string
-        interval:
+      type: object
+    Problem:
+      description: Standard error response returned by all API endpoints on failure.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
           type: string
-        to:
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
           type: string
       type: object
     ValidationProblem:
@@ -196,8 +211,41 @@ components:
           example: https://problems.omnisend.com/problem
           type: string
       type: object
-    analytics.ReportResultRow:
-      additionalProperties: {}
+    reports.ReportResult:
+      properties:
+        alias:
+          type: string
+        dimensions:
+          items:
+            $ref: '#/components/schemas/analytics.DimensionHeader'
+          type: array
+        metrics:
+          items:
+            $ref: '#/components/schemas/analytics.MetricHeader'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/analytics.ReportResultRow'
+          type: array
+      type: object
+    reports.ReportQuery:
+      properties:
+        alias:
+          type: string
+        dateRange:
+          $ref: '#/components/schemas/reports.DateRange'
+        dimensions:
+          items:
+            $ref: '#/components/schemas/analytics.Dimension'
+          type: array
+        filters:
+          items:
+            $ref: '#/components/schemas/analytics.Filter'
+          type: array
+        metrics:
+          items:
+            $ref: '#/components/schemas/analytics.Metric'
+          type: array
       type: object
     analytics.Filter:
       properties:
@@ -208,54 +256,6 @@ components:
         values:
           items:
             type: string
-          type: array
-      type: object
-    analytics.MetricHeader:
-      properties:
-        name:
-          type: string
-      type: object
-    analytics.Metric:
-      properties:
-        name:
-          type: string
-      type: object
-    analytics.DimensionHeader:
-      properties:
-        granularity:
-          type: string
-        name:
-          type: string
-      type: object
-    Problem:
-      description: Standard error response returned by all API endpoints on failure.
-      properties:
-        detail:
-          description: Human-readable explanation of this specific error occurrence
-          example: A human-readable explanation of the error.
-          type: string
-        instance:
-          description: Request trace identifier for support and debugging
-          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
-          type: string
-        status:
-          description: HTTP status code
-          example: 0
-          type: integer
-        title:
-          description: Short description of the error type
-          example: Problem
-          type: string
-        type:
-          description: URI that identifies the error type
-          example: https://problems.omnisend.com/problem
-          type: string
-      type: object
-    reports.ReportRequest:
-      properties:
-        queries:
-          items:
-            $ref: '#/components/schemas/reports.ReportQuery'
           type: array
       type: object
   parameters:

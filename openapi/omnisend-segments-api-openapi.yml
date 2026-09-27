@@ -544,6 +544,67 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    SegmentCondition:
+      description: A single filter condition applied to a specific entity.
+      properties:
+        entity:
+          description: Entity type this condition applies to
+          example: contact
+          type: string
+        filters:
+          description: List of filter criteria. Must contain at least one item.
+          items: {}
+          minItems: 1
+          type: array
+        junction:
+          description: Logical operator combining the filters within this condition
+          example: and
+          type: string
+      required:
+      - filters
+      type: object
+    CursorsResponse:
+      description: Cursor pointers for paginating forward and backward through results
+      properties:
+        after:
+          description: Opaque cursor for fetching the next page of results
+          example: eyJpZCI6ImNhbXAtNDU2In0
+          type:
+          - string
+          - 'null'
+        before:
+          description: Opaque cursor for fetching the previous page of results
+          example: eyJpZCI6ImNhbXAtMTIzIn0
+          type:
+          - string
+          - 'null'
+      type: object
+    UpdateSegmentRequest:
+      description: Request body for updating an existing segment.
+      properties:
+        conditionGroups:
+          description: Condition groups defining the segment rules
+          items:
+            $ref: '#/components/schemas/SegmentConditionGroup'
+          type: array
+        name:
+          description: Name of the segment
+          example: My Segment
+          maxLength: 256
+          type: string
+      required:
+      - conditionGroups
+      - name
+      type: object
+    GetSegmentStatisticsResponse:
+      description: Segment statistics resource.
+      properties:
+        contactsCount:
+          description: Segment contacts count (read-only)
+          example: 1234
+          readOnly: true
+          type: integer
+      type: object
     FieldError:
       description: A single field validation failure within a validation error response.
       properties:
@@ -559,15 +620,6 @@ components:
           description: Human-readable explanation of what is wrong with the field value
           example: Must be a valid email address
           type: string
-      type: object
-    GetSegmentStatisticsResponse:
-      description: Segment statistics resource.
-      properties:
-        contactsCount:
-          description: Segment contacts count (read-only)
-          example: 1234
-          readOnly: true
-          type: integer
       type: object
     RateLimitProblem:
       description: Error response returned when the rate limit is exceeded. Use the retryAfter value to know when it is safe to retry the request.
@@ -610,35 +662,6 @@ components:
             $ref: '#/components/schemas/GetSegmentResponse'
           type: array
       type: object
-    ValidationProblem:
-      description: Error response returned when the request contains invalid input. The errors array lists every field that failed validation.
-      properties:
-        detail:
-          description: Human-readable explanation of this specific error occurrence
-          example: A human-readable explanation of the error.
-          type: string
-        errors:
-          description: List of fields that failed validation
-          items:
-            $ref: '#/components/schemas/FieldError'
-          type: array
-        instance:
-          description: Request trace identifier for support and debugging
-          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
-          type: string
-        status:
-          description: HTTP status code
-          example: 0
-          type: integer
-        title:
-          description: Short description of the error type
-          example: Problem
-          type: string
-        type:
-          description: URI that identifies the error type
-          example: https://problems.omnisend.com/problem
-          type: string
-      type: object
     CreateSegmentRequest:
       description: Request body for creating a new segment.
       properties:
@@ -655,6 +678,22 @@ components:
       required:
       - conditionGroups
       - name
+      type: object
+    PagingResponse:
+      description: Cursor-based pagination metadata
+      properties:
+        cursors:
+          allOf:
+          - $ref: '#/components/schemas/CursorsResponse'
+          description: Cursor values for navigating between pages
+        hasMore:
+          description: Whether there are more items available beyond the current page
+          example: true
+          type: boolean
+        limit:
+          description: Maximum number of items returned per page
+          example: 50
+          type: integer
       type: object
     GetSegmentResponse:
       description: Segment resource representation.
@@ -704,55 +743,6 @@ components:
           readOnly: true
           type: string
       type: object
-    CursorsResponse:
-      description: Cursor pointers for paginating forward and backward through results
-      properties:
-        after:
-          description: Opaque cursor for fetching the next page of results
-          example: eyJpZCI6ImNhbXAtNDU2In0
-          type:
-          - string
-          - 'null'
-        before:
-          description: Opaque cursor for fetching the previous page of results
-          example: eyJpZCI6ImNhbXAtMTIzIn0
-          type:
-          - string
-          - 'null'
-      type: object
-    UpdateSegmentRequest:
-      description: Request body for updating an existing segment.
-      properties:
-        conditionGroups:
-          description: Condition groups defining the segment rules
-          items:
-            $ref: '#/components/schemas/SegmentConditionGroup'
-          type: array
-        name:
-          description: Name of the segment
-          example: My Segment
-          maxLength: 256
-          type: string
-      required:
-      - conditionGroups
-      - name
-      type: object
-    PagingResponse:
-      description: Cursor-based pagination metadata
-      properties:
-        cursors:
-          allOf:
-          - $ref: '#/components/schemas/CursorsResponse'
-          description: Cursor values for navigating between pages
-        hasMore:
-          description: Whether there are more items available beyond the current page
-          example: true
-          type: boolean
-        limit:
-          description: Maximum number of items returned per page
-          example: 50
-          type: integer
-      type: object
     SegmentConditionGroup:
       description: Group of conditions combined with a logical junction.
       properties:
@@ -762,24 +752,34 @@ components:
             $ref: '#/components/schemas/SegmentCondition'
           type: array
       type: object
-    SegmentCondition:
-      description: A single filter condition applied to a specific entity.
+    ValidationProblem:
+      description: Error response returned when the request contains invalid input. The errors array lists every field that failed validation.
       properties:
-        entity:
-          description: Entity type this condition applies to
-          example: contact
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
           type: string
-        filters:
-          description: List of filter criteria. Must contain at least one item.
-          items: {}
-          minItems: 1
+        errors:
+          description: List of fields that failed validation
+          items:
+            $ref: '#/components/schemas/FieldError'
           type: array
-        junction:
-          description: Logical operator combining the filters within this condition
-          example: and
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
           type: string
-      required:
-      - filters
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
       type: object
     Problem:
       description: Standard error response returned by all API endpoints on failure.
