@@ -315,6 +315,30 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Problem:
+      description: Standard error response returned by all API endpoints on failure.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
     Paging:
       properties:
         limit:
@@ -330,21 +354,63 @@ components:
           example: https://api.omnisend.com/api/batches?limit=100&offset=5
           type: string
       type: object
-    ListBatchesResponse:
+    CreateBatchRequest:
       properties:
-        batches:
-          items:
-            $ref: '#/components/schemas/Batch'
-          type: array
-        paging:
-          $ref: '#/components/schemas/Paging'
-      type: object
-    CreateBatchResponse:
-      properties:
-        batchID:
+        endpoint:
+          enum:
+          - products
+          - contacts
+          - events
+          - categories
+          example: contacts
           type: string
-        totalCount:
+        items:
+          items: {}
+          maxItems: 100
+          minItems: 1
+          type: array
+        method:
+          enum:
+          - POST
+          - PUT
+          example: POST
+          type: string
+        origin:
+          example: omnisend
+          type: string
+      required:
+      - endpoint
+      - items
+      - method
+      type: object
+    ValidationProblem:
+      description: Error response returned when the request contains invalid input. The errors array lists every field that failed validation.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        errors:
+          description: List of fields that failed validation
+          items:
+            $ref: '#/components/schemas/FieldError'
+          type: array
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
           type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
       type: object
     Batch:
       properties:
@@ -393,6 +459,15 @@ components:
           example: 100
           type: integer
       type: object
+    ListBatchesResponse:
+      properties:
+        batches:
+          items:
+            $ref: '#/components/schemas/Batch'
+          type: array
+        paging:
+          $ref: '#/components/schemas/Paging'
+      type: object
     FieldError:
       description: A single field validation failure within a validation error response.
       properties:
@@ -423,87 +498,12 @@ components:
           example: finished
           type: string
       type: object
-    Problem:
-      description: Standard error response returned by all API endpoints on failure.
+    CreateBatchResponse:
       properties:
-        detail:
-          description: Human-readable explanation of this specific error occurrence
-          example: A human-readable explanation of the error.
+        batchID:
           type: string
-        instance:
-          description: Request trace identifier for support and debugging
-          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
-          type: string
-        status:
-          description: HTTP status code
-          example: 0
+        totalCount:
           type: integer
-        title:
-          description: Short description of the error type
-          example: Problem
-          type: string
-        type:
-          description: URI that identifies the error type
-          example: https://problems.omnisend.com/problem
-          type: string
-      type: object
-    ValidationProblem:
-      description: Error response returned when the request contains invalid input. The errors array lists every field that failed validation.
-      properties:
-        detail:
-          description: Human-readable explanation of this specific error occurrence
-          example: A human-readable explanation of the error.
-          type: string
-        errors:
-          description: List of fields that failed validation
-          items:
-            $ref: '#/components/schemas/FieldError'
-          type: array
-        instance:
-          description: Request trace identifier for support and debugging
-          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
-          type: string
-        status:
-          description: HTTP status code
-          example: 0
-          type: integer
-        title:
-          description: Short description of the error type
-          example: Problem
-          type: string
-        type:
-          description: URI that identifies the error type
-          example: https://problems.omnisend.com/problem
-          type: string
-      type: object
-    CreateBatchRequest:
-      properties:
-        endpoint:
-          enum:
-          - products
-          - contacts
-          - events
-          - categories
-          example: contacts
-          type: string
-        items:
-          items: {}
-          maxItems: 100
-          minItems: 1
-          type: array
-        method:
-          enum:
-          - POST
-          - PUT
-          example: POST
-          type: string
-        origin:
-          example: omnisend
-          type: string
-      required:
-      - endpoint
-      - items
-      - method
       type: object
   parameters:
     APIVersionHeader:

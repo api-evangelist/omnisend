@@ -421,21 +421,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Paging:
-      properties:
-        limit:
-          example: 100
-          type: integer
-        next:
-          example: https://api.omnisend.com/api/products?limit=100&offset=105
-          type: string
-        offset:
-          example: 5
-          type: integer
-        previous:
-          example: https://api.omnisend.com/api/products?limit=100&offset=5
-          type: string
-      type: object
     Product:
       properties:
         categoryIDs:
@@ -528,6 +513,80 @@ components:
       - title
       - url
       type: object
+    ReplaceProductResponse:
+      properties:
+        id:
+          example: shoes-blue-123
+          type: string
+      type: object
+    Paging:
+      properties:
+        limit:
+          example: 100
+          type: integer
+        next:
+          example: https://api.omnisend.com/api/products?limit=100&offset=105
+          type: string
+        offset:
+          example: 5
+          type: integer
+        previous:
+          example: https://api.omnisend.com/api/products?limit=100&offset=5
+          type: string
+      type: object
+    Problem:
+      description: Standard error response returned by all API endpoints on failure.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    ValidationProblem:
+      description: Error response returned when the request contains invalid input. The errors array lists every field that failed validation.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        errors:
+          description: List of fields that failed validation
+          items:
+            $ref: '#/components/schemas/FieldError'
+          type: array
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
     CreateProductResponse:
       properties:
         id:
@@ -550,11 +609,14 @@ components:
           example: Must be a valid email address
           type: string
       type: object
-    ReplaceProductResponse:
+    ListProductsResponse:
       properties:
-        id:
-          example: shoes-blue-123
-          type: string
+        paging:
+          $ref: '#/components/schemas/Paging'
+        products:
+          items:
+            $ref: '#/components/schemas/Product'
+          type: array
       type: object
     Variant:
       properties:
@@ -612,68 +674,6 @@ components:
       - price
       - title
       - url
-      type: object
-    Problem:
-      description: Standard error response returned by all API endpoints on failure.
-      properties:
-        detail:
-          description: Human-readable explanation of this specific error occurrence
-          example: A human-readable explanation of the error.
-          type: string
-        instance:
-          description: Request trace identifier for support and debugging
-          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
-          type: string
-        status:
-          description: HTTP status code
-          example: 0
-          type: integer
-        title:
-          description: Short description of the error type
-          example: Problem
-          type: string
-        type:
-          description: URI that identifies the error type
-          example: https://problems.omnisend.com/problem
-          type: string
-      type: object
-    ValidationProblem:
-      description: Error response returned when the request contains invalid input. The errors array lists every field that failed validation.
-      properties:
-        detail:
-          description: Human-readable explanation of this specific error occurrence
-          example: A human-readable explanation of the error.
-          type: string
-        errors:
-          description: List of fields that failed validation
-          items:
-            $ref: '#/components/schemas/FieldError'
-          type: array
-        instance:
-          description: Request trace identifier for support and debugging
-          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
-          type: string
-        status:
-          description: HTTP status code
-          example: 0
-          type: integer
-        title:
-          description: Short description of the error type
-          example: Problem
-          type: string
-        type:
-          description: URI that identifies the error type
-          example: https://problems.omnisend.com/problem
-          type: string
-      type: object
-    ListProductsResponse:
-      properties:
-        paging:
-          $ref: '#/components/schemas/Paging'
-        products:
-          items:
-            $ref: '#/components/schemas/Product'
-          type: array
       type: object
   parameters:
     APIVersionHeader:

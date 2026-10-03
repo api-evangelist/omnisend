@@ -92,79 +92,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    statistics.ReportRequest:
-      properties:
-        queries:
-          items:
-            $ref: '#/components/schemas/statistics.ReportQuery'
-          type: array
-      type: object
-    analytics.MetricHeader:
-      properties:
-        name:
-          type: string
-      type: object
-    analytics.Dimension:
-      properties:
-        granularity:
-          type: string
-        name:
-          type: string
-      type: object
-    analytics.DimensionHeader:
-      properties:
-        granularity:
-          type: string
-        name:
-          type: string
-      type: object
-    FieldError:
-      description: A single field validation failure within a validation error response.
-      properties:
-        code:
-          description: Error code indicating the type of failure
-          example: invalid_format
-          type: string
-        field:
-          description: Dot-separated path to the field that failed validation
-          example: content.email.subject
-          type: string
-        message:
-          description: Human-readable explanation of what is wrong with the field value
-          example: Must be a valid email address
-          type: string
-      type: object
-    statistics.ReportQuery:
-      properties:
-        alias:
-          type: string
-        dateRange:
-          $ref: '#/components/schemas/statistics.DateRange'
-        dimensions:
-          items:
-            $ref: '#/components/schemas/analytics.Dimension'
-          type: array
-        filters:
-          items:
-            $ref: '#/components/schemas/analytics.Filter'
-          type: array
-        metrics:
-          items:
-            $ref: '#/components/schemas/analytics.Metric'
-          type: array
-      type: object
-    analytics.ReportResultRow:
-      additionalProperties: {}
-      type: object
-    statistics.DateRange:
-      properties:
-        from:
-          description: RFC3339/ISO8601 format
-          type: string
-        to:
-          description: RFC3339/ISO8601 format
-          type: string
-      type: object
     statistics.ReportResult:
       properties:
         alias:
@@ -181,6 +108,18 @@ components:
           items:
             $ref: '#/components/schemas/analytics.ReportResultRow'
           type: array
+      type: object
+    analytics.Dimension:
+      properties:
+        granularity:
+          type: string
+        name:
+          type: string
+      type: object
+    analytics.MetricHeader:
+      properties:
+        name:
+          type: string
       type: object
     analytics.Metric:
       properties:
@@ -211,6 +150,52 @@ components:
           example: https://problems.omnisend.com/problem
           type: string
       type: object
+    statistics.ReportQuery:
+      properties:
+        alias:
+          type: string
+        dateRange:
+          $ref: '#/components/schemas/statistics.DateRange'
+        dimensions:
+          items:
+            $ref: '#/components/schemas/analytics.Dimension'
+          type: array
+        filters:
+          items:
+            $ref: '#/components/schemas/analytics.Filter'
+          type: array
+        metrics:
+          items:
+            $ref: '#/components/schemas/analytics.Metric'
+          type: array
+      type: object
+    statistics.DateRange:
+      properties:
+        from:
+          description: RFC3339/ISO8601 format
+          type: string
+        to:
+          description: RFC3339/ISO8601 format
+          type: string
+      type: object
+    analytics.DimensionHeader:
+      properties:
+        granularity:
+          type: string
+        name:
+          type: string
+      type: object
+    analytics.Filter:
+      properties:
+        name:
+          type: string
+        operator:
+          type: string
+        values:
+          items:
+            type: string
+          type: array
+      type: object
     ValidationProblem:
       description: Error response returned when the request contains invalid input. The errors array lists every field that failed validation.
       properties:
@@ -240,6 +225,29 @@ components:
           example: https://problems.omnisend.com/problem
           type: string
       type: object
+    statistics.ReportRequest:
+      properties:
+        queries:
+          items:
+            $ref: '#/components/schemas/statistics.ReportQuery'
+          type: array
+      type: object
+    FieldError:
+      description: A single field validation failure within a validation error response.
+      properties:
+        code:
+          description: Error code indicating the type of failure
+          example: invalid_format
+          type: string
+        field:
+          description: Dot-separated path to the field that failed validation
+          example: content.email.subject
+          type: string
+        message:
+          description: Human-readable explanation of what is wrong with the field value
+          example: Must be a valid email address
+          type: string
+      type: object
     statistics.ReportResponse:
       properties:
         statistics:
@@ -247,16 +255,8 @@ components:
             $ref: '#/components/schemas/statistics.ReportResult'
           type: array
       type: object
-    analytics.Filter:
-      properties:
-        name:
-          type: string
-        operator:
-          type: string
-        values:
-          items:
-            type: string
-          type: array
+    analytics.ReportResultRow:
+      additionalProperties: {}
       type: object
   parameters:
     APIVersionHeader:

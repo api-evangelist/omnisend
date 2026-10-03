@@ -1396,51 +1396,252 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ABTestVariantContent:
-      description: A/B test variant content grouped by channel.
+    CreateSMSCompliance:
+      description: SMS compliance text settings for creation
+      properties:
+        stopKeywordText:
+          description: STOP keyword text for US/CA recipients
+          example: Reply STOP to opt out
+          maxLength: 250
+          type: string
+        unsubscribeLinkText:
+          description: Unsubscribe link text for non-US/CA recipients
+          example: Unsubscribe [[unsubscribe_link]]
+          maxLength: 250
+          type: string
+      required:
+      - stopKeywordText
+      - unsubscribeLinkText
+      type: object
+    BoosterSettings:
+      description: Booster-specific settings.
+      properties:
+        campaignID:
+          description: Parent campaign ID this booster follows up on
+          example: '000000000000000000000001'
+          type: string
+        delay:
+          allOf:
+          - $ref: '#/components/schemas/BoosterDelay'
+          description: Delay between the parent's send and this booster's send
+        sendTo:
+          description: 'Audience selector. The booster targets recipients of the parent who
+
+            did NOT perform the implied action (`nonOpeners` did not open;
+
+            `nonClickers` did not click).'
+          enum:
+          - nonOpeners
+          - nonClickers
+          example: nonOpeners
+          type: string
+      required:
+      - campaignID
+      - sendTo
+      type: object
+    CreateABTestVariant:
+      description: A/B test variant for creation. Email fields live under `content.email`.
+      properties:
+        content:
+          allOf:
+          - $ref: '#/components/schemas/CreateABTestVariantContent'
+          description: Variant content grouped by channel
+      required:
+      - content
+      type: object
+    Problem:
+      description: Standard error response returned by all API endpoints on failure.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    CampaignsResponse:
+      description: Paginated list of campaigns
+      properties:
+        campaigns:
+          description: List of campaigns
+          items:
+            $ref: '#/components/schemas/Campaign'
+          type: array
+        paging:
+          allOf:
+          - $ref: '#/components/schemas/PagingResponse'
+          description: Pagination information
+      type: object
+    UpdateContent:
+      description: Campaign content for update
       properties:
         email:
           allOf:
-          - $ref: '#/components/schemas/ABTestVariantEmail'
-          description: Email content for this variant
+          - $ref: '#/components/schemas/UpdateEmail'
+          description: Email content. Only specified fields will be updated
+        sms:
+          allOf:
+          - $ref: '#/components/schemas/UpdateSMS'
+          description: SMS content. Only specified fields will be updated
       type: object
-    UpdateABTest:
-      description: A/B test update block. Full replacement semantics.
+    SMSCompliance:
+      description: SMS compliance text settings
       properties:
-        settings:
-          allOf:
-          - $ref: '#/components/schemas/UpdateABTestSettings'
-          description: A/B test settings
-        variants:
-          allOf:
-          - $ref: '#/components/schemas/UpdateABTestVariants'
-          description: Per-variant content fields
+        stopKeywordText:
+          description: STOP keyword text for US/CA recipients. Max 250 chars
+          example: Reply STOP to opt out
+          type: string
+        unsubscribeLinkText:
+          description: Unsubscribe link text for non-US/CA recipients. Max 250 chars
+          example: Unsubscribe [[unsubscribe_link]]
+          type: string
       type: object
-    CampaignStatus:
-      description: Campaign status
+    FieldError:
+      description: A single field validation failure within a validation error response.
+      properties:
+        code:
+          description: Error code indicating the type of failure
+          example: invalid_format
+          type: string
+        field:
+          description: Dot-separated path to the field that failed validation
+          example: content.email.subject
+          type: string
+        message:
+          description: Human-readable explanation of what is wrong with the field value
+          example: Must be a valid email address
+          type: string
+      type: object
+    UpdateBoosterSettings:
+      description: Booster-specific settings for campaign update.
+      properties:
+        delay:
+          allOf:
+          - $ref: '#/components/schemas/UpdateBoosterDelay'
+          description: 'Delay before sending the booster after the parent campaign is sent.
+
+            Only required when the parent campaign is in draft status'
+        sendTo:
+          description: 'Which recipients to target: "nonOpeners" or "nonClickers"'
+          enum:
+          - nonOpeners
+          - nonClickers
+          example: nonOpeners
+          type: string
+      type: object
+    CreateBoosterDelay:
+      description: Delay settings for booster campaign
+      properties:
+        amount:
+          description: 'Amount of time units. Minimum 0 (SMS booster only — means "send together with parent").
+
+            Maximum 240 hours (or 10 days)'
+          example: 48
+          minimum: 0
+          type: integer
+        unit:
+          description: 'Time unit: "h" for hours, "d" for days'
+          enum:
+          - h
+          - d
+          example: h
+          type: string
+      required:
+      - amount
+      - unit
+      type: object
+    Audience:
+      description: Campaign audience
+      properties:
+        excludedSegmentIDs:
+          description: Segments to exclude from the audience
+          items:
+            type: string
+          type: array
+        includedSegmentIDs:
+          description: Segments to include. Empty includes all subscribers
+          items:
+            type: string
+          type: array
+      type: object
+    CampaignChannel:
+      description: Campaign message channel
       enum:
-      - draft
-      - scheduled
-      - started
-      - sent
-      - error
-      - canceled
-      - paused
-      - onHold
-      - expired
-      - stopped
+      - email
+      - push
+      - sms
       type: string
       x-enum-varnames:
-      - CampaignStatusDraft
-      - CampaignStatusScheduled
-      - CampaignStatusStarted
-      - CampaignStatusSent
-      - CampaignStatusError
-      - CampaignStatusCanceled
-      - CampaignStatusPaused
-      - CampaignStatusOnHold
-      - CampaignStatusExpired
-      - CampaignStatusStopped
+      - CampaignChannelEmail
+      - CampaignChannelPush
+      - CampaignChannelSMS
+    CreateABTestVariantEmail:
+      description: Email content fields for an A/B test variant creation.
+      properties:
+        preheader:
+          description: Preview text shown in the inbox after the subject line
+          example: Check it out
+          type: string
+        replyToEmail:
+          description: 'Reply-to email address for recipient responses. Omit it and replies go to the sender
+
+            address. Set it only when a specific address is required: it must be an address
+
+            verified for the brand, and verification status is not exposed here, so an address
+
+            that is guessed, or copied from another campaign, is rejected.'
+          example: support@example.com
+          type: string
+        senderEmail:
+          description: 'Sender email address. Omit it and the campaign is sent from the sender address
+
+            configured for the brand. Set it only when a specific address is required: which
+
+            addresses a brand may send from follows from its sender setup and is not exposed
+
+            here, so an address that is guessed, or copied from another campaign, is rejected.'
+          example: hello@example.com
+          type: string
+        senderName:
+          description: Display name of the sender
+          example: My Store
+          type: string
+        subject:
+          description: Email subject line
+          example: Welcome!
+          type: string
+        templateID:
+          description: Template unique identifier. Must reference an existing template.
+          example: '000000000000000000000001'
+          type: string
+      required:
+      - subject
+      - templateID
+      type: object
+    CreateABTestVariantContent:
+      description: Variant content grouped by channel for creation.
+      properties:
+        email:
+          allOf:
+          - $ref: '#/components/schemas/CreateABTestVariantEmail'
+          description: Email content for this variant
+      required:
+      - email
+      type: object
     CreateEmail:
       description: Email content for campaign creation
       properties:
@@ -1498,15 +1699,40 @@ components:
       required:
       - templateID
       type: object
-    UpdateBoosterDelay:
-      description: Delay settings for booster campaign
+    Email:
+      description: Email content
+      properties:
+        contentID:
+          description: Email content unique identifier referencing the campaign's email design
+          example: '000000000000000000000001'
+          type: string
+        preheader:
+          description: Email preheader text displayed after the subject line in the recipient's inbox
+          example: Discover what we have in store for you
+          type: string
+        replyToEmail:
+          description: Reply-to email address for recipient responses
+          example: support@example.com
+          type: string
+        senderEmail:
+          description: Sender email address shown in the recipient's inbox
+          example: hello@example.com
+          type: string
+        senderName:
+          description: Sender display name shown in the recipient's inbox
+          example: My Store
+          type: string
+        subject:
+          description: Email subject line displayed in the recipient's inbox
+          example: Welcome to Omnisend!
+          type: string
+      type: object
+    ABTestDecisionTime:
+      description: Decision time before selecting a winner. Same shape as booster delay.
       properties:
         amount:
-          description: 'Amount of time units. Minimum 0 (SMS booster only — means "send together with parent").
-
-            Maximum 240 hours (or 10 days)'
-          example: 48
-          minimum: 0
+          description: Amount of time units to wait
+          example: 4
           type: integer
         unit:
           description: 'Time unit: "h" for hours, "d" for days'
@@ -1515,9 +1741,6 @@ components:
           - d
           example: h
           type: string
-      required:
-      - amount
-      - unit
       type: object
     UpdateSMSCompliance:
       description: SMS compliance text settings for update
@@ -1534,94 +1757,6 @@ components:
           maxLength: 250
           minLength: 1
           type: string
-      type: object
-    FieldError:
-      description: A single field validation failure within a validation error response.
-      properties:
-        code:
-          description: Error code indicating the type of failure
-          example: invalid_format
-          type: string
-        field:
-          description: Dot-separated path to the field that failed validation
-          example: content.email.subject
-          type: string
-        message:
-          description: Human-readable explanation of what is wrong with the field value
-          example: Must be a valid email address
-          type: string
-      type: object
-    Content:
-      description: Campaign content
-      properties:
-        email:
-          allOf:
-          - $ref: '#/components/schemas/Email'
-          description: Email content
-        sms:
-          allOf:
-          - $ref: '#/components/schemas/SMS'
-          description: SMS content
-      type: object
-    CreateABTestVariants:
-      description: A/B test variants object with keys "a" and "b".
-      properties:
-        a:
-          $ref: '#/components/schemas/CreateABTestVariant'
-        b:
-          $ref: '#/components/schemas/CreateABTestVariant'
-      required:
-      - a
-      - b
-      type: object
-    ABTest:
-      description: A/B test configuration. Variants are keyed by "a" and "b"; the parent campaign's `content` field is omitted because variants carry their own content. `result` is populated once a winner is selected and is `null` otherwise.
-      properties:
-        result:
-          allOf:
-          - $ref: '#/components/schemas/ABTestResult'
-          description: Winner information (read-only). Null until winner is selected.
-        settings:
-          allOf:
-          - $ref: '#/components/schemas/ABTestSettings'
-          description: Test configuration
-        variants:
-          allOf:
-          - $ref: '#/components/schemas/ABTestVariants'
-          description: Variants keyed by "a" and "b"
-      type: object
-    UpdateABTestDecisionTime:
-      description: Decision time for A/B test winner selection
-      properties:
-        amount:
-          description: Amount of time units
-          example: 4
-          minimum: 1
-          type: integer
-        unit:
-          description: 'Time unit: "h" (hours, 1–168) or "d" (days, 1–7)'
-          enum:
-          - h
-          - d
-          example: h
-          type: string
-      required:
-      - amount
-      - unit
-      type: object
-    Audience:
-      description: Campaign audience
-      properties:
-        excludedSegmentIDs:
-          description: Segments to exclude from the audience
-          items:
-            type: string
-          type: array
-        includedSegmentIDs:
-          description: Segments to include. Empty includes all subscribers
-          items:
-            type: string
-          type: array
       type: object
     ABTestVariantEmail:
       description: Email content fields for an A/B test variant.
@@ -1651,705 +1786,6 @@ components:
           example: Welcome!
           type: string
       type: object
-    CreateSMS:
-      description: SMS content for campaign creation
-      properties:
-        compliance:
-          allOf:
-          - $ref: '#/components/schemas/CreateSMSCompliance'
-          description: Compliance text appended to every SMS
-        imageID:
-          description: 'Image ID obtained from the Images API.
-
-            When set, the message is delivered as MMS to US/CA recipients;
-
-            other countries receive SMS without the image.
-
-            Image must be JPEG, JPG, PNG, or GIF and not exceed 500 KB'
-          example: '000000000000000000000001'
-          type: string
-        isLinkShorteningEnabled:
-          description: 'Auto-shorten links in message body. Default: true'
-          example: true
-          type: boolean
-        message:
-          description: 'SMS message body.
-
-            When sent as SMS, the message (including the appended
-
-            compliance text and unsubscribe link/keyword) must not exceed 9 SMS
-
-            segments for either US/CA or other-country recipients.
-
-            When sent as MMS, the message (including the appended
-
-            compliance text) must not exceed 1600 characters for US/CA recipients.'
-          example: Hi! Check out our deals
-          type: string
-      required:
-      - compliance
-      - message
-      type: object
-    CreateContent:
-      description: Campaign content for creation
-      properties:
-        email:
-          allOf:
-          - $ref: '#/components/schemas/CreateEmail'
-          description: Email content
-        sms:
-          allOf:
-          - $ref: '#/components/schemas/CreateSMS'
-          description: SMS content
-      type: object
-    CreateABTestDecisionTime:
-      description: Decision time before selecting a winner. Same shape as booster delay.
-      properties:
-        amount:
-          description: Number of time units to wait before selecting a winner
-          example: 4
-          minimum: 1
-          type: integer
-        unit:
-          description: 'Time unit: "h" for hours, "d" for days'
-          enum:
-          - h
-          - d
-          example: h
-          type: string
-      required:
-      - amount
-      - unit
-      type: object
-    ABTestResult:
-      description: A/B test result (read-only).
-      properties:
-        isManuallySelected:
-          description: Whether the winner was manually selected (read-only)
-          example: false
-          readOnly: true
-          type: boolean
-        selectedAt:
-          description: When the winner was selected (read-only)
-          example: '2026-01-15T10:30:00Z'
-          readOnly: true
-          type: string
-        winnerVariantID:
-          description: Campaign ID of the winning variant (read-only). Matches variants.a.id or variants.b.id.
-          example: '000000000000000000000011'
-          readOnly: true
-          type: string
-      type: object
-    CreateABTestVariant:
-      description: A/B test variant for creation. Email fields live under `content.email`.
-      properties:
-        content:
-          allOf:
-          - $ref: '#/components/schemas/CreateABTestVariantContent'
-          description: Variant content grouped by channel
-      required:
-      - content
-      type: object
-    UTMVariants:
-      description: UTM variants for an A/B test campaign.
-      properties:
-        a:
-          allOf:
-          - $ref: '#/components/schemas/UTMVariant'
-          description: Variant A UTM settings
-        b:
-          allOf:
-          - $ref: '#/components/schemas/UTMVariant'
-          description: Variant B UTM settings
-      type: object
-    BoosterDelay:
-      description: Delay between the parent campaign send and the booster send.
-      properties:
-        amount:
-          description: Amount of time units before the booster is sent
-          example: 48
-          type: integer
-        unit:
-          description: 'Time unit: "h" for hours, "d" for days'
-          enum:
-          - h
-          - d
-          example: h
-          type: string
-      type: object
-    UpdateCampaignRequest:
-      description: Campaign update request
-      properties:
-        abTest:
-          allOf:
-          - $ref: '#/components/schemas/UpdateABTest'
-          description: 'A/B test settings. Only applicable to A/B campaigns (campaigns with type "abTest").
-
-            Full replacement — all provided variant and setting fields replace existing values.
-
-            templateID / contentID are excluded: templates are set at create time and cannot
-
-            be changed via PATCH.'
-        audience:
-          allOf:
-          - $ref: '#/components/schemas/Audience'
-          description: Campaign audience. Included and excluded segments must not overlap
-        boosterSettings:
-          allOf:
-          - $ref: '#/components/schemas/UpdateBoosterSettings'
-          description: Booster-specific settings. Only applicable to booster campaigns (campaigns with type "booster").
-        content:
-          allOf:
-          - $ref: '#/components/schemas/UpdateContent'
-          description: Campaign content. Only specified fields will be updated
-        language:
-          description: Campaign language locale in xx_XX format. Must be a supported language
-          example: en_US
-          type: string
-        name:
-          description: Campaign name
-          example: Welcome Campaign
-          maxLength: 250
-          type: string
-        sendingSettings:
-          allOf:
-          - $ref: '#/components/schemas/UpdateSendingSettings'
-          description: 'Campaign sending settings.
-
-            Full object replacement - all fields must be provided when updating'
-      type: object
-    BoosterSettings:
-      description: Booster-specific settings.
-      properties:
-        campaignID:
-          description: Parent campaign ID this booster follows up on
-          example: '000000000000000000000001'
-          type: string
-        delay:
-          allOf:
-          - $ref: '#/components/schemas/BoosterDelay'
-          description: Delay between the parent's send and this booster's send
-        sendTo:
-          description: 'Audience selector. The booster targets recipients of the parent who
-
-            did NOT perform the implied action (`nonOpeners` did not open;
-
-            `nonClickers` did not click).'
-          enum:
-          - nonOpeners
-          - nonClickers
-          example: nonOpeners
-          type: string
-      required:
-      - campaignID
-      - sendTo
-      type: object
-    SMS:
-      description: SMS message content
-      properties:
-        compliance:
-          allOf:
-          - $ref: '#/components/schemas/SMSCompliance'
-          description: Compliance text appended to every SMS
-        imageID:
-          description: 'Image ID obtained from the Images API.
-
-            When set, the message is delivered as MMS to US/CA recipients;
-
-            other countries receive SMS without the image.
-
-            Image must be JPEG, JPG, PNG, or GIF and not exceed 500 KB'
-          example: '000000000000000000000001'
-          type: string
-        isLinkShorteningEnabled:
-          description: Auto-shorten links in message body
-          example: true
-          type: boolean
-        message:
-          description: 'SMS message body.
-
-            When sent as SMS, the message (including the appended
-
-            compliance text and unsubscribe link/keyword) must not exceed 9 SMS
-
-            segments for either US/CA or other-country recipients.
-
-            When sent as MMS, the message (including the appended
-
-            compliance text) must not exceed 1600 characters for US/CA recipients.'
-          example: Hi! Check out our new deals
-          type: string
-        senderName:
-          description: Sender display name. Max 250 chars
-          example: My Store
-          type: string
-      type: object
-    UpdateABTestVariantContent:
-      description: Variant content grouped by channel for update.
-      properties:
-        email:
-          allOf:
-          - $ref: '#/components/schemas/UpdateABTestVariantEmail'
-          description: Email content for this variant
-      type: object
-    SendTestEmailRequest:
-      description: Request payload for sending a campaign test email.
-      properties:
-        recipients:
-          description: Email addresses that receive the test send. Between 1 and 5 addresses.
-          example:
-          - merchant@example.com
-          - teammate@example.com
-          items:
-            format: email
-            type: string
-          maxItems: 5
-          minItems: 1
-          type: array
-      required:
-      - recipients
-      type: object
-    ABTestDecisionTime:
-      description: Decision time before selecting a winner. Same shape as booster delay.
-      properties:
-        amount:
-          description: Amount of time units to wait
-          example: 4
-          type: integer
-        unit:
-          description: 'Time unit: "h" for hours, "d" for days'
-          enum:
-          - h
-          - d
-          example: h
-          type: string
-      type: object
-    RateLimitProblem:
-      description: Error response returned when the rate limit is exceeded. Use the retryAfter value to know when it is safe to retry the request.
-      properties:
-        detail:
-          description: Human-readable explanation of this specific error occurrence
-          example: A human-readable explanation of the error.
-          type: string
-        instance:
-          description: Request trace identifier for support and debugging
-          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
-          type: string
-        retryAfter:
-          description: Seconds to wait before retrying the request
-          example: 60
-          type: integer
-        status:
-          description: HTTP status code
-          example: 0
-          type: integer
-        title:
-          description: Short description of the error type
-          example: Problem
-          type: string
-        type:
-          description: URI that identifies the error type
-          example: https://problems.omnisend.com/problem
-          type: string
-      type: object
-    CampaignType:
-      description: Campaign type
-      enum:
-      - regular
-      - abTest
-      - booster
-      type: string
-      x-enum-varnames:
-      - CampaignTypeRegular
-      - CampaignTypeABTest
-      - CampaignTypeBooster
-    CreateBoosterDelay:
-      description: Delay settings for booster campaign
-      properties:
-        amount:
-          description: 'Amount of time units. Minimum 0 (SMS booster only — means "send together with parent").
-
-            Maximum 240 hours (or 10 days)'
-          example: 48
-          minimum: 0
-          type: integer
-        unit:
-          description: 'Time unit: "h" for hours, "d" for days'
-          enum:
-          - h
-          - d
-          example: h
-          type: string
-      required:
-      - amount
-      - unit
-      type: object
-    UpdateContent:
-      description: Campaign content for update
-      properties:
-        email:
-          allOf:
-          - $ref: '#/components/schemas/UpdateEmail'
-          description: Email content. Only specified fields will be updated
-        sms:
-          allOf:
-          - $ref: '#/components/schemas/UpdateSMS'
-          description: SMS content. Only specified fields will be updated
-      type: object
-    ABTestSettings:
-      description: A/B test settings.
-      properties:
-        decisionTime:
-          allOf:
-          - $ref: '#/components/schemas/ABTestDecisionTime'
-          description: Time to wait before selecting the winner
-        testSizePercent:
-          description: Percentage of audience for the test phase (10-100)
-          example: 30
-          type: integer
-        winningMetric:
-          description: Winner determination metric
-          enum:
-          - openRate
-          - clickRate
-          example: openRate
-          type: string
-      type: object
-    UpdateBoosterSettings:
-      description: Booster-specific settings for campaign update.
-      properties:
-        delay:
-          allOf:
-          - $ref: '#/components/schemas/UpdateBoosterDelay'
-          description: 'Delay before sending the booster after the parent campaign is sent.
-
-            Only required when the parent campaign is in draft status'
-        sendTo:
-          description: 'Which recipients to target: "nonOpeners" or "nonClickers"'
-          enum:
-          - nonOpeners
-          - nonClickers
-          example: nonOpeners
-          type: string
-      type: object
-    CreateABTestVariantContent:
-      description: Variant content grouped by channel for creation.
-      properties:
-        email:
-          allOf:
-          - $ref: '#/components/schemas/CreateABTestVariantEmail'
-          description: Email content for this variant
-      required:
-      - email
-      type: object
-    SMSCompliance:
-      description: SMS compliance text settings
-      properties:
-        stopKeywordText:
-          description: STOP keyword text for US/CA recipients. Max 250 chars
-          example: Reply STOP to opt out
-          type: string
-        unsubscribeLinkText:
-          description: Unsubscribe link text for non-US/CA recipients. Max 250 chars
-          example: Unsubscribe [[unsubscribe_link]]
-          type: string
-      type: object
-    UpdateABTestSettings:
-      description: A/B test settings for update
-      properties:
-        decisionTime:
-          allOf:
-          - $ref: '#/components/schemas/UpdateABTestDecisionTime'
-          description: Time allowed before a winner is selected
-        testSizePercent:
-          description: Percentage of audience used for the test (10–100)
-          example: 20
-          maximum: 100
-          minimum: 10
-          type: integer
-        winningMetric:
-          description: Metric used to determine the winner
-          enum:
-          - openRate
-          - clickRate
-          example: openRate
-          type: string
-      type: object
-    CreateABTestVariantEmail:
-      description: Email content fields for an A/B test variant creation.
-      properties:
-        preheader:
-          description: Preview text shown in the inbox after the subject line
-          example: Check it out
-          type: string
-        replyToEmail:
-          description: 'Reply-to email address for recipient responses. Omit it and replies go to the sender
-
-            address. Set it only when a specific address is required: it must be an address
-
-            verified for the brand, and verification status is not exposed here, so an address
-
-            that is guessed, or copied from another campaign, is rejected.'
-          example: support@example.com
-          type: string
-        senderEmail:
-          description: 'Sender email address. Omit it and the campaign is sent from the sender address
-
-            configured for the brand. Set it only when a specific address is required: which
-
-            addresses a brand may send from follows from its sender setup and is not exposed
-
-            here, so an address that is guessed, or copied from another campaign, is rejected.'
-          example: hello@example.com
-          type: string
-        senderName:
-          description: Display name of the sender
-          example: My Store
-          type: string
-        subject:
-          description: Email subject line
-          example: Welcome!
-          type: string
-        templateID:
-          description: Template unique identifier. Must reference an existing template.
-          example: '000000000000000000000001'
-          type: string
-      required:
-      - subject
-      - templateID
-      type: object
-    CreateSendingSettings:
-      description: Sending settings for campaign creation
-      properties:
-        isTZOptimizationEnabled:
-          description: 'Whether timezone optimization is enabled.
-
-            Only available with immediate or scheduled strategy, and only in email campaigns'
-          example: false
-          type: boolean
-        optimizeFor:
-          description: 'Optimization objective for personalized sends.
-
-            Required when strategy is "personalized", must not be set otherwise'
-          enum:
-          - opens
-          - clicks
-          - orders
-          example: opens
-          type: string
-        scheduledAt:
-          description: 'Campaign scheduled send time in RFC 3339 format.
-
-            Required when strategy is "scheduled" or "personalized", must not be set for "immediate".
-
-            For "scheduled" it must be in the future and within one year from now.
-
-            For "personalized" only the calendar date in the brand timezone is used, not the time-of-day:
-
-            the value is normalized to the start of that day in the brand timezone. A date resolving to today
-
-            starts the STO window at the next whole hour when the campaign is sent; a future date (within one
-
-            year) starts it at brand-local midnight. Per-contact send times are then chosen within the
-
-            following 24 hours. Responses store the start as brand-local midnight, which can appear as the
-
-            previous UTC calendar date'
-          example: '2026-06-15T00:00:00+03:00'
-          type: string
-        strategy:
-          description: 'Sending strategy. Default: immediate.
-
-            "personalized" enables send time optimization and is only available
-
-            for regular email campaigns in stores whose plan includes personalized send times and that are eligible for them'
-          enum:
-          - immediate
-          - scheduled
-          - personalized
-          example: immediate
-          type: string
-      type: object
-    UpdateABTestVariantEmail:
-      description: Email content fields for an A/B test variant update.
-      properties:
-        preheader:
-          description: Email preheader text
-          example: Preheader for A
-          maxLength: 250
-          type: string
-        replyToEmail:
-          description: 'Reply-to email address. Omit it to keep the current value; send an empty string to clear
-
-            it, which makes replies go to the sender address. Any address set must be verified for
-
-            the brand, and verification status is not exposed here, so an address that is guessed,
-
-            or copied from another campaign, is rejected.'
-          example: support@example.com
-          type: string
-        senderEmail:
-          description: 'Sender email address. Omit it to keep the current sender, which the brand may already
-
-            send from. Set it only when switching to a specific required address: which addresses
-
-            a brand may send from follows from its sender setup and is not exposed here, so an
-
-            address that is guessed, or copied from another campaign, is rejected.'
-          example: hello@example.com
-          type: string
-        senderName:
-          description: Sender display name
-          example: My Store
-          maxLength: 250
-          minLength: 1
-          type: string
-        subject:
-          description: Email subject line
-          example: Version A subject
-          maxLength: 250
-          minLength: 1
-          type: string
-      type: object
-    UTMResponse:
-      description: UTM settings for a campaign. Exactly one of `tags` (regular campaign) or `variants` (A/B test campaign) is present.
-      properties:
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/UTMTags'
-          description: UTM tags — present for regular campaigns
-        variants:
-          allOf:
-          - $ref: '#/components/schemas/UTMVariants'
-          description: UTM variants — present for A/B campaigns
-      type: object
-    Email:
-      description: Email content
-      properties:
-        contentID:
-          description: Email content unique identifier referencing the campaign's email design
-          example: '000000000000000000000001'
-          type: string
-        preheader:
-          description: Email preheader text displayed after the subject line in the recipient's inbox
-          example: Discover what we have in store for you
-          type: string
-        replyToEmail:
-          description: Reply-to email address for recipient responses
-          example: support@example.com
-          type: string
-        senderEmail:
-          description: Sender email address shown in the recipient's inbox
-          example: hello@example.com
-          type: string
-        senderName:
-          description: Sender display name shown in the recipient's inbox
-          example: My Store
-          type: string
-        subject:
-          description: Email subject line displayed in the recipient's inbox
-          example: Welcome to Omnisend!
-          type: string
-      type: object
-    UpdateSendingSettings:
-      description: 'Sending settings for campaign update. Full object replacement - provide all fields applicable to the selected strategy (for personalized: strategy, scheduledAt, optimizeFor; omit isTZOptimizationEnabled)'
-      properties:
-        isTZOptimizationEnabled:
-          description: 'Whether timezone optimization is enabled.
-
-            Only available with immediate or scheduled strategy, and only in email campaigns'
-          example: false
-          type: boolean
-        optimizeFor:
-          description: 'Optimization objective for personalized sends.
-
-            Required when strategy is "personalized", must not be set otherwise'
-          enum:
-          - opens
-          - clicks
-          - orders
-          example: opens
-          type: string
-        scheduledAt:
-          description: 'Campaign scheduled send time in RFC 3339 format.
-
-            Required when strategy is "scheduled" or "personalized", must not be set for "immediate".
-
-            For "scheduled" it must be in the future and within one year from now.
-
-            For "personalized" only the calendar date in the brand timezone is used, not the time-of-day:
-
-            the value is normalized to the start of that day in the brand timezone. A date resolving to today
-
-            starts the STO window at the next whole hour when the campaign is sent; a future date (within one
-
-            year) starts it at brand-local midnight. Per-contact send times are then chosen within the
-
-            following 24 hours. Responses store the start as brand-local midnight, which can appear as the
-
-            previous UTC calendar date'
-          example: '2026-06-15T00:00:00+03:00'
-          type: string
-        strategy:
-          description: 'Sending strategy.
-
-            "personalized" enables send time optimization and is only available
-
-            for regular email campaigns in stores whose plan includes personalized send times and that are eligible for them'
-          enum:
-          - immediate
-          - scheduled
-          - personalized
-          example: immediate
-          type: string
-      type: object
-    UTMVariant:
-      description: UTM variant entry for an A/B test campaign.
-      properties:
-        id:
-          description: Variant campaign ID (read-only)
-          example: '000000000000000000000010'
-          readOnly: true
-          type: string
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/UTMTags'
-          description: UTM tags for this variant
-      type: object
-    SelectABTestWinnerRequest:
-      description: Winning variant selection for a manual A/B test winner pick
-      properties:
-        variantID:
-          description: ID of the variant to promote as the winner
-          example: '000000000000000000000001'
-          type: string
-      required:
-      - variantID
-      type: object
-    Problem:
-      description: Standard error response returned by all API endpoints on failure.
-      properties:
-        detail:
-          description: Human-readable explanation of this specific error occurrence
-          example: A human-readable explanation of the error.
-          type: string
-        instance:
-          description: Request trace identifier for support and debugging
-          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
-          type: string
-        status:
-          description: HTTP status code
-          example: 0
-          type: integer
-        title:
-          description: Short description of the error type
-          example: Problem
-          type: string
-        type:
-          description: URI that identifies the error type
-          example: https://problems.omnisend.com/problem
-          type: string
-      type: object
     UTMVariantTags:
       description: UTM variant tags for an A/B update request. Providing empty values resets them to defaults.
       properties:
@@ -2369,42 +1805,6 @@ components:
           maxLength: 250
           type: string
       type: object
-    UTMUpdate:
-      description: UTM update request. Provide `tags` for regular campaigns or `variants` for A/B test campaigns. Exactly one must be present; providing both is a validation error.
-      properties:
-        tags:
-          allOf:
-          - $ref: '#/components/schemas/UTMTags'
-          description: Tags for a regular campaign — omit for A/B campaigns
-        variants:
-          allOf:
-          - $ref: '#/components/schemas/UTMVariantsUpdate'
-          description: Variants for an A/B test campaign — omit for regular campaigns
-      type: object
-    CreateBoosterSettings:
-      description: Booster settings for campaign creation
-      properties:
-        campaignID:
-          description: Parent campaign ID to boost
-          example: '000000000000000000000001'
-          type: string
-        delay:
-          allOf:
-          - $ref: '#/components/schemas/CreateBoosterDelay'
-          description: 'Delay before sending the booster after the parent campaign is sent.
-
-            Only required when the parent campaign is in draft status'
-        sendTo:
-          description: 'Which recipients to target: "nonOpeners" or "nonClickers"'
-          enum:
-          - nonOpeners
-          - nonClickers
-          example: nonOpeners
-          type: string
-      required:
-      - campaignID
-      - sendTo
-      type: object
     ABTestVariant:
       description: A/B test variant. Email-specific fields live under `content.email`.
       properties:
@@ -2418,210 +1818,57 @@ components:
           readOnly: true
           type: string
       type: object
-    ABTestVariants:
-      description: A/B test variants object with keys "a" and "b".
+    CampaignType:
+      description: Campaign type
+      enum:
+      - regular
+      - abTest
+      - booster
+      type: string
+      x-enum-varnames:
+      - CampaignTypeRegular
+      - CampaignTypeABTest
+      - CampaignTypeBooster
+    UTMVariants:
+      description: UTM variants for an A/B test campaign.
       properties:
         a:
           allOf:
-          - $ref: '#/components/schemas/ABTestVariant'
-          description: Variant A (null if not yet configured)
+          - $ref: '#/components/schemas/UTMVariant'
+          description: Variant A UTM settings
         b:
           allOf:
-          - $ref: '#/components/schemas/ABTestVariant'
-          description: Variant B (null if not yet configured)
+          - $ref: '#/components/schemas/UTMVariant'
+          description: Variant B UTM settings
       type: object
-    UTMVariantsUpdate:
-      description: UTM variant update entries for an A/B test campaign.
+    ABTestVariantContent:
+      description: A/B test variant content grouped by channel.
       properties:
-        a:
+        email:
           allOf:
-          - $ref: '#/components/schemas/UTMVariantTags'
-          description: Variant A tags
-        b:
-          allOf:
-          - $ref: '#/components/schemas/UTMVariantTags'
-          description: Variant B tags
+          - $ref: '#/components/schemas/ABTestVariantEmail'
+          description: Email content for this variant
       type: object
-    UpdateABTestVariants:
-      description: Per-variant content for A/B test update
+    UpdateBoosterDelay:
+      description: Delay settings for booster campaign
       properties:
-        a:
-          allOf:
-          - $ref: '#/components/schemas/UpdateABTestVariant'
-          description: Variant A content
-        b:
-          allOf:
-          - $ref: '#/components/schemas/UpdateABTestVariant'
-          description: Variant B content
-      type: object
-    UpdateABTestVariant:
-      description: Content fields for a single A/B variant. Email fields live under `content.email`.
-      properties:
-        content:
-          allOf:
-          - $ref: '#/components/schemas/UpdateABTestVariantContent'
-          description: Variant content grouped by channel
-      type: object
-    CursorsResponse:
-      description: Cursor pointers for paginating forward and backward through results
-      properties:
-        after:
-          description: Opaque cursor for fetching the next page of results
-          example: eyJpZCI6ImNhbXAtNDU2In0
-          type:
-          - string
-          - 'null'
-        before:
-          description: Opaque cursor for fetching the previous page of results
-          example: eyJpZCI6ImNhbXAtMTIzIn0
-          type:
-          - string
-          - 'null'
-      type: object
-    CreateABTest:
-      description: A/B test configuration for campaign creation.
-      properties:
-        settings:
-          $ref: '#/components/schemas/CreateABTestSettings'
-        variants:
-          $ref: '#/components/schemas/CreateABTestVariants'
-      required:
-      - settings
-      - variants
-      type: object
-    CreateABTestSettings:
-      description: A/B test settings for campaign creation.
-      properties:
-        decisionTime:
-          allOf:
-          - $ref: '#/components/schemas/CreateABTestDecisionTime'
-          description: Time to wait before selecting a winner. Required unless testSizePercent is 100
-        testSizePercent:
-          description: Percentage of the audience used for testing (10-100). When 100, all recipients get a variant (send-all mode)
-          example: 30
-          maximum: 100
-          minimum: 10
+        amount:
+          description: 'Amount of time units. Minimum 0 (SMS booster only — means "send together with parent").
+
+            Maximum 240 hours (or 10 days)'
+          example: 48
+          minimum: 0
           type: integer
-        winningMetric:
-          description: Metric used to determine the winner. Required unless testSizePercent is 100
+        unit:
+          description: 'Time unit: "h" for hours, "d" for days'
           enum:
-          - openRate
-          - clickRate
-          example: openRate
+          - h
+          - d
+          example: h
           type: string
       required:
-      - testSizePercent
-      type: object
-    SendingSettings:
-      description: Campaign sending settings
-      properties:
-        isTZOptimizationEnabled:
-          description: 'Whether timezone optimization is enabled.
-
-            Only available with immediate or scheduled strategy, and only in email campaigns'
-          example: false
-          type: boolean
-        optimizeFor:
-          description: 'Optimization objective for personalized sends.
-
-            Present when strategy is personalized'
-          enum:
-          - opens
-          - clicks
-          - orders
-          example: opens
-          type: string
-        scheduledAt:
-          description: 'Scheduled send time in RFC 3339 format.
-
-            Present when strategy is scheduled or personalized'
-          example: '2026-03-01T10:00:00Z'
-          type: string
-        strategy:
-          description: Sending strategy
-          enum:
-          - immediate
-          - scheduled
-          - personalized
-          example: immediate
-          type: string
-      type: object
-    CreateSMSCompliance:
-      description: SMS compliance text settings for creation
-      properties:
-        stopKeywordText:
-          description: STOP keyword text for US/CA recipients
-          example: Reply STOP to opt out
-          maxLength: 250
-          type: string
-        unsubscribeLinkText:
-          description: Unsubscribe link text for non-US/CA recipients
-          example: Unsubscribe [[unsubscribe_link]]
-          maxLength: 250
-          type: string
-      required:
-      - stopKeywordText
-      - unsubscribeLinkText
-      type: object
-    UTMTags:
-      description: UTM tag values. Providing empty values resets them to defaults.
-      properties:
-        campaign:
-          description: UTM campaign parameter (max 250 characters)
-          example: Welcome Email
-          maxLength: 250
-          type: string
-        medium:
-          description: UTM medium parameter (max 250 characters)
-          example: email
-          maxLength: 250
-          type: string
-        source:
-          description: UTM source parameter (max 250 characters)
-          example: omnisend
-          maxLength: 250
-          type: string
-      type: object
-    UpdateEmail:
-      description: Email content for campaign update
-      properties:
-        preheader:
-          description: Email preheader text
-          example: Discover what we have in store for you
-          maxLength: 250
-          type: string
-        replyToEmail:
-          description: 'Reply-to email address for recipient responses. Omit it to keep the current value; send
-
-            an empty string to clear it, which makes replies go to the sender address. Any address
-
-            set must be verified for the brand, and verification status is not exposed here, so an
-
-            address that is guessed, or copied from another campaign, is rejected.'
-          example: support@example.com
-          type: string
-        senderEmail:
-          description: 'Sender email address. Omit it to keep the current sender, which the brand may already
-
-            send from. Set it only when switching to a specific required address: which addresses
-
-            a brand may send from follows from its sender setup and is not exposed here, so an
-
-            address that is guessed, or copied from another campaign, is rejected.'
-          example: hello@example.com
-          type: string
-        senderName:
-          description: Sender display name shown in the recipient's inbox
-          example: My Store
-          maxLength: 250
-          minLength: 1
-          type: string
-        subject:
-          description: Email subject line
-          example: Welcome to Omnisend!
-          maxLength: 250
-          minLength: 1
-          type: string
+      - amount
+      - unit
       type: object
     Campaign:
       description: Campaign resource. When `type` is `booster`, the `boosterSettings` field is populated, identifying the parent campaign and the conditions under which the booster targets recipients of that parent.
@@ -2729,6 +1976,346 @@ components:
           readOnly: true
           type: string
       type: object
+    UpdateABTestVariantEmail:
+      description: Email content fields for an A/B test variant update.
+      properties:
+        preheader:
+          description: Email preheader text
+          example: Preheader for A
+          maxLength: 250
+          type: string
+        replyToEmail:
+          description: 'Reply-to email address. Omit it to keep the current value; send an empty string to clear
+
+            it, which makes replies go to the sender address. Any address set must be verified for
+
+            the brand, and verification status is not exposed here, so an address that is guessed,
+
+            or copied from another campaign, is rejected.'
+          example: support@example.com
+          type: string
+        senderEmail:
+          description: 'Sender email address. Omit it to keep the current sender, which the brand may already
+
+            send from. Set it only when switching to a specific required address: which addresses
+
+            a brand may send from follows from its sender setup and is not exposed here, so an
+
+            address that is guessed, or copied from another campaign, is rejected.'
+          example: hello@example.com
+          type: string
+        senderName:
+          description: Sender display name
+          example: My Store
+          maxLength: 250
+          minLength: 1
+          type: string
+        subject:
+          description: Email subject line
+          example: Version A subject
+          maxLength: 250
+          minLength: 1
+          type: string
+      type: object
+    SendingSettings:
+      description: Campaign sending settings
+      properties:
+        isTZOptimizationEnabled:
+          description: 'Whether timezone optimization is enabled.
+
+            Only available with immediate or scheduled strategy, and only in email campaigns'
+          example: false
+          type: boolean
+        optimizeFor:
+          description: 'Optimization objective for personalized sends.
+
+            Present when strategy is personalized'
+          enum:
+          - opens
+          - clicks
+          - orders
+          example: opens
+          type: string
+        scheduledAt:
+          description: 'Scheduled send time in RFC 3339 format.
+
+            Present when strategy is scheduled or personalized'
+          example: '2026-03-01T10:00:00Z'
+          type: string
+        strategy:
+          description: Sending strategy
+          enum:
+          - immediate
+          - scheduled
+          - personalized
+          example: immediate
+          type: string
+      type: object
+    UpdateCampaignRequest:
+      description: Campaign update request
+      properties:
+        abTest:
+          allOf:
+          - $ref: '#/components/schemas/UpdateABTest'
+          description: 'A/B test settings. Only applicable to A/B campaigns (campaigns with type "abTest").
+
+            Full replacement — all provided variant and setting fields replace existing values.
+
+            templateID / contentID are excluded: templates are set at create time and cannot
+
+            be changed via PATCH.'
+        audience:
+          allOf:
+          - $ref: '#/components/schemas/Audience'
+          description: Campaign audience. Included and excluded segments must not overlap
+        boosterSettings:
+          allOf:
+          - $ref: '#/components/schemas/UpdateBoosterSettings'
+          description: Booster-specific settings. Only applicable to booster campaigns (campaigns with type "booster").
+        content:
+          allOf:
+          - $ref: '#/components/schemas/UpdateContent'
+          description: Campaign content. Only specified fields will be updated
+        language:
+          description: Campaign language locale in xx_XX format. Must be a supported language
+          example: en_US
+          type: string
+        name:
+          description: Campaign name
+          example: Welcome Campaign
+          maxLength: 250
+          type: string
+        sendingSettings:
+          allOf:
+          - $ref: '#/components/schemas/UpdateSendingSettings'
+          description: 'Campaign sending settings.
+
+            Full object replacement - all fields must be provided when updating'
+      type: object
+    ABTestResult:
+      description: A/B test result (read-only).
+      properties:
+        isManuallySelected:
+          description: Whether the winner was manually selected (read-only)
+          example: false
+          readOnly: true
+          type: boolean
+        selectedAt:
+          description: When the winner was selected (read-only)
+          example: '2026-01-15T10:30:00Z'
+          readOnly: true
+          type: string
+        winnerVariantID:
+          description: Campaign ID of the winning variant (read-only). Matches variants.a.id or variants.b.id.
+          example: '000000000000000000000011'
+          readOnly: true
+          type: string
+      type: object
+    SelectABTestWinnerRequest:
+      description: Winning variant selection for a manual A/B test winner pick
+      properties:
+        variantID:
+          description: ID of the variant to promote as the winner
+          example: '000000000000000000000001'
+          type: string
+      required:
+      - variantID
+      type: object
+    UpdateABTestVariantContent:
+      description: Variant content grouped by channel for update.
+      properties:
+        email:
+          allOf:
+          - $ref: '#/components/schemas/UpdateABTestVariantEmail'
+          description: Email content for this variant
+      type: object
+    UTMVariantsUpdate:
+      description: UTM variant update entries for an A/B test campaign.
+      properties:
+        a:
+          allOf:
+          - $ref: '#/components/schemas/UTMVariantTags'
+          description: Variant A tags
+        b:
+          allOf:
+          - $ref: '#/components/schemas/UTMVariantTags'
+          description: Variant B tags
+      type: object
+    UpdateABTest:
+      description: A/B test update block. Full replacement semantics.
+      properties:
+        settings:
+          allOf:
+          - $ref: '#/components/schemas/UpdateABTestSettings'
+          description: A/B test settings
+        variants:
+          allOf:
+          - $ref: '#/components/schemas/UpdateABTestVariants'
+          description: Per-variant content fields
+      type: object
+    UpdateSendingSettings:
+      description: 'Sending settings for campaign update. Full object replacement - provide all fields applicable to the selected strategy (for personalized: strategy, scheduledAt, optimizeFor; omit isTZOptimizationEnabled)'
+      properties:
+        isTZOptimizationEnabled:
+          description: 'Whether timezone optimization is enabled.
+
+            Only available with immediate or scheduled strategy, and only in email campaigns'
+          example: false
+          type: boolean
+        optimizeFor:
+          description: 'Optimization objective for personalized sends.
+
+            Required when strategy is "personalized", must not be set otherwise'
+          enum:
+          - opens
+          - clicks
+          - orders
+          example: opens
+          type: string
+        scheduledAt:
+          description: 'Campaign scheduled send time in RFC 3339 format.
+
+            Required when strategy is "scheduled" or "personalized", must not be set for "immediate".
+
+            For "scheduled" it must be in the future and within one year from now.
+
+            For "personalized" only the calendar date in the brand timezone is used, not the time-of-day:
+
+            the value is normalized to the start of that day in the brand timezone. A date resolving to today
+
+            starts the STO window at the next whole hour when the campaign is sent; a future date (within one
+
+            year) starts it at brand-local midnight. Per-contact send times are then chosen within the
+
+            following 24 hours. Responses store the start as brand-local midnight, which can appear as the
+
+            previous UTC calendar date'
+          example: '2026-06-15T00:00:00+03:00'
+          type: string
+        strategy:
+          description: 'Sending strategy.
+
+            "personalized" enables send time optimization and is only available
+
+            for regular email campaigns in stores whose plan includes personalized send times and that are eligible for them'
+          enum:
+          - immediate
+          - scheduled
+          - personalized
+          example: immediate
+          type: string
+      type: object
+    CreateSendingSettings:
+      description: Sending settings for campaign creation
+      properties:
+        isTZOptimizationEnabled:
+          description: 'Whether timezone optimization is enabled.
+
+            Only available with immediate or scheduled strategy, and only in email campaigns'
+          example: false
+          type: boolean
+        optimizeFor:
+          description: 'Optimization objective for personalized sends.
+
+            Required when strategy is "personalized", must not be set otherwise'
+          enum:
+          - opens
+          - clicks
+          - orders
+          example: opens
+          type: string
+        scheduledAt:
+          description: 'Campaign scheduled send time in RFC 3339 format.
+
+            Required when strategy is "scheduled" or "personalized", must not be set for "immediate".
+
+            For "scheduled" it must be in the future and within one year from now.
+
+            For "personalized" only the calendar date in the brand timezone is used, not the time-of-day:
+
+            the value is normalized to the start of that day in the brand timezone. A date resolving to today
+
+            starts the STO window at the next whole hour when the campaign is sent; a future date (within one
+
+            year) starts it at brand-local midnight. Per-contact send times are then chosen within the
+
+            following 24 hours. Responses store the start as brand-local midnight, which can appear as the
+
+            previous UTC calendar date'
+          example: '2026-06-15T00:00:00+03:00'
+          type: string
+        strategy:
+          description: 'Sending strategy. Default: immediate.
+
+            "personalized" enables send time optimization and is only available
+
+            for regular email campaigns in stores whose plan includes personalized send times and that are eligible for them'
+          enum:
+          - immediate
+          - scheduled
+          - personalized
+          example: immediate
+          type: string
+      type: object
+    CreateABTestDecisionTime:
+      description: Decision time before selecting a winner. Same shape as booster delay.
+      properties:
+        amount:
+          description: Number of time units to wait before selecting a winner
+          example: 4
+          minimum: 1
+          type: integer
+        unit:
+          description: 'Time unit: "h" for hours, "d" for days'
+          enum:
+          - h
+          - d
+          example: h
+          type: string
+      required:
+      - amount
+      - unit
+      type: object
+    CreateABTestSettings:
+      description: A/B test settings for campaign creation.
+      properties:
+        decisionTime:
+          allOf:
+          - $ref: '#/components/schemas/CreateABTestDecisionTime'
+          description: Time to wait before selecting a winner. Required unless testSizePercent is 100
+        testSizePercent:
+          description: Percentage of the audience used for testing (10-100). When 100, all recipients get a variant (send-all mode)
+          example: 30
+          maximum: 100
+          minimum: 10
+          type: integer
+        winningMetric:
+          description: Metric used to determine the winner. Required unless testSizePercent is 100
+          enum:
+          - openRate
+          - clickRate
+          example: openRate
+          type: string
+      required:
+      - testSizePercent
+      type: object
+    SendTestEmailRequest:
+      description: Request payload for sending a campaign test email.
+      properties:
+        recipients:
+          description: Email addresses that receive the test send. Between 1 and 5 addresses.
+          example:
+          - merchant@example.com
+          - teammate@example.com
+          items:
+            format: email
+            type: string
+          maxItems: 5
+          minItems: 1
+          type: array
+      required:
+      - recipients
+      type: object
     PagingResponse:
       description: Cursor-based pagination metadata
       properties:
@@ -2745,17 +2332,433 @@ components:
           example: 50
           type: integer
       type: object
-    CampaignChannel:
-      description: Campaign message channel
+    Content:
+      description: Campaign content
+      properties:
+        email:
+          allOf:
+          - $ref: '#/components/schemas/Email'
+          description: Email content
+        sms:
+          allOf:
+          - $ref: '#/components/schemas/SMS'
+          description: SMS content
+      type: object
+    ValidationProblem:
+      description: Error response returned when the request contains invalid input. The errors array lists every field that failed validation.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        errors:
+          description: List of fields that failed validation
+          items:
+            $ref: '#/components/schemas/FieldError'
+          type: array
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    CreateBoosterSettings:
+      description: Booster settings for campaign creation
+      properties:
+        campaignID:
+          description: Parent campaign ID to boost
+          example: '000000000000000000000001'
+          type: string
+        delay:
+          allOf:
+          - $ref: '#/components/schemas/CreateBoosterDelay'
+          description: 'Delay before sending the booster after the parent campaign is sent.
+
+            Only required when the parent campaign is in draft status'
+        sendTo:
+          description: 'Which recipients to target: "nonOpeners" or "nonClickers"'
+          enum:
+          - nonOpeners
+          - nonClickers
+          example: nonOpeners
+          type: string
+      required:
+      - campaignID
+      - sendTo
+      type: object
+    ABTestVariants:
+      description: A/B test variants object with keys "a" and "b".
+      properties:
+        a:
+          allOf:
+          - $ref: '#/components/schemas/ABTestVariant'
+          description: Variant A (null if not yet configured)
+        b:
+          allOf:
+          - $ref: '#/components/schemas/ABTestVariant'
+          description: Variant B (null if not yet configured)
+      type: object
+    CursorsResponse:
+      description: Cursor pointers for paginating forward and backward through results
+      properties:
+        after:
+          description: Opaque cursor for fetching the next page of results
+          example: eyJpZCI6ImNhbXAtNDU2In0
+          type:
+          - string
+          - 'null'
+        before:
+          description: Opaque cursor for fetching the previous page of results
+          example: eyJpZCI6ImNhbXAtMTIzIn0
+          type:
+          - string
+          - 'null'
+      type: object
+    UpdateABTestDecisionTime:
+      description: Decision time for A/B test winner selection
+      properties:
+        amount:
+          description: Amount of time units
+          example: 4
+          minimum: 1
+          type: integer
+        unit:
+          description: 'Time unit: "h" (hours, 1–168) or "d" (days, 1–7)'
+          enum:
+          - h
+          - d
+          example: h
+          type: string
+      required:
+      - amount
+      - unit
+      type: object
+    UpdateABTestVariants:
+      description: Per-variant content for A/B test update
+      properties:
+        a:
+          allOf:
+          - $ref: '#/components/schemas/UpdateABTestVariant'
+          description: Variant A content
+        b:
+          allOf:
+          - $ref: '#/components/schemas/UpdateABTestVariant'
+          description: Variant B content
+      type: object
+    CreateContent:
+      description: Campaign content for creation
+      properties:
+        email:
+          allOf:
+          - $ref: '#/components/schemas/CreateEmail'
+          description: Email content
+        sms:
+          allOf:
+          - $ref: '#/components/schemas/CreateSMS'
+          description: SMS content
+      type: object
+    UTMUpdate:
+      description: UTM update request. Provide `tags` for regular campaigns or `variants` for A/B test campaigns. Exactly one must be present; providing both is a validation error.
+      properties:
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/UTMTags'
+          description: Tags for a regular campaign — omit for A/B campaigns
+        variants:
+          allOf:
+          - $ref: '#/components/schemas/UTMVariantsUpdate'
+          description: Variants for an A/B test campaign — omit for regular campaigns
+      type: object
+    UpdateEmail:
+      description: Email content for campaign update
+      properties:
+        preheader:
+          description: Email preheader text
+          example: Discover what we have in store for you
+          maxLength: 250
+          type: string
+        replyToEmail:
+          description: 'Reply-to email address for recipient responses. Omit it to keep the current value; send
+
+            an empty string to clear it, which makes replies go to the sender address. Any address
+
+            set must be verified for the brand, and verification status is not exposed here, so an
+
+            address that is guessed, or copied from another campaign, is rejected.'
+          example: support@example.com
+          type: string
+        senderEmail:
+          description: 'Sender email address. Omit it to keep the current sender, which the brand may already
+
+            send from. Set it only when switching to a specific required address: which addresses
+
+            a brand may send from follows from its sender setup and is not exposed here, so an
+
+            address that is guessed, or copied from another campaign, is rejected.'
+          example: hello@example.com
+          type: string
+        senderName:
+          description: Sender display name shown in the recipient's inbox
+          example: My Store
+          maxLength: 250
+          minLength: 1
+          type: string
+        subject:
+          description: Email subject line
+          example: Welcome to Omnisend!
+          maxLength: 250
+          minLength: 1
+          type: string
+      type: object
+    ABTest:
+      description: A/B test configuration. Variants are keyed by "a" and "b"; the parent campaign's `content` field is omitted because variants carry their own content. `result` is populated once a winner is selected and is `null` otherwise.
+      properties:
+        result:
+          allOf:
+          - $ref: '#/components/schemas/ABTestResult'
+          description: Winner information (read-only). Null until winner is selected.
+        settings:
+          allOf:
+          - $ref: '#/components/schemas/ABTestSettings'
+          description: Test configuration
+        variants:
+          allOf:
+          - $ref: '#/components/schemas/ABTestVariants'
+          description: Variants keyed by "a" and "b"
+      type: object
+    UTMResponse:
+      description: UTM settings for a campaign. Exactly one of `tags` (regular campaign) or `variants` (A/B test campaign) is present.
+      properties:
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/UTMTags'
+          description: UTM tags — present for regular campaigns
+        variants:
+          allOf:
+          - $ref: '#/components/schemas/UTMVariants'
+          description: UTM variants — present for A/B campaigns
+      type: object
+    SMS:
+      description: SMS message content
+      properties:
+        compliance:
+          allOf:
+          - $ref: '#/components/schemas/SMSCompliance'
+          description: Compliance text appended to every SMS
+        imageID:
+          description: 'Image ID obtained from the Images API.
+
+            When set, the message is delivered as MMS to US/CA recipients;
+
+            other countries receive SMS without the image.
+
+            Image must be JPEG, JPG, PNG, or GIF and not exceed 500 KB'
+          example: '000000000000000000000001'
+          type: string
+        isLinkShorteningEnabled:
+          description: Auto-shorten links in message body
+          example: true
+          type: boolean
+        message:
+          description: 'SMS message body.
+
+            When sent as SMS, the message (including the appended
+
+            compliance text and unsubscribe link/keyword) must not exceed 9 SMS
+
+            segments for either US/CA or other-country recipients.
+
+            When sent as MMS, the message (including the appended
+
+            compliance text) must not exceed 1600 characters for US/CA recipients.'
+          example: Hi! Check out our new deals
+          type: string
+        senderName:
+          description: Sender display name. Max 250 chars
+          example: My Store
+          type: string
+      type: object
+    UTMVariant:
+      description: UTM variant entry for an A/B test campaign.
+      properties:
+        id:
+          description: Variant campaign ID (read-only)
+          example: '000000000000000000000010'
+          readOnly: true
+          type: string
+        tags:
+          allOf:
+          - $ref: '#/components/schemas/UTMTags'
+          description: UTM tags for this variant
+      type: object
+    CreateSMS:
+      description: SMS content for campaign creation
+      properties:
+        compliance:
+          allOf:
+          - $ref: '#/components/schemas/CreateSMSCompliance'
+          description: Compliance text appended to every SMS
+        imageID:
+          description: 'Image ID obtained from the Images API.
+
+            When set, the message is delivered as MMS to US/CA recipients;
+
+            other countries receive SMS without the image.
+
+            Image must be JPEG, JPG, PNG, or GIF and not exceed 500 KB'
+          example: '000000000000000000000001'
+          type: string
+        isLinkShorteningEnabled:
+          description: 'Auto-shorten links in message body. Default: true'
+          example: true
+          type: boolean
+        message:
+          description: 'SMS message body.
+
+            When sent as SMS, the message (including the appended
+
+            compliance text and unsubscribe link/keyword) must not exceed 9 SMS
+
+            segments for either US/CA or other-country recipients.
+
+            When sent as MMS, the message (including the appended
+
+            compliance text) must not exceed 1600 characters for US/CA recipients.'
+          example: Hi! Check out our deals
+          type: string
+      required:
+      - compliance
+      - message
+      type: object
+    ABTestSettings:
+      description: A/B test settings.
+      properties:
+        decisionTime:
+          allOf:
+          - $ref: '#/components/schemas/ABTestDecisionTime'
+          description: Time to wait before selecting the winner
+        testSizePercent:
+          description: Percentage of audience for the test phase (10-100)
+          example: 30
+          type: integer
+        winningMetric:
+          description: Winner determination metric
+          enum:
+          - openRate
+          - clickRate
+          example: openRate
+          type: string
+      type: object
+    CampaignStatus:
+      description: Campaign status
       enum:
-      - email
-      - push
-      - sms
+      - draft
+      - scheduled
+      - started
+      - sent
+      - error
+      - canceled
+      - paused
+      - onHold
+      - expired
+      - stopped
       type: string
       x-enum-varnames:
-      - CampaignChannelEmail
-      - CampaignChannelPush
-      - CampaignChannelSMS
+      - CampaignStatusDraft
+      - CampaignStatusScheduled
+      - CampaignStatusStarted
+      - CampaignStatusSent
+      - CampaignStatusError
+      - CampaignStatusCanceled
+      - CampaignStatusPaused
+      - CampaignStatusOnHold
+      - CampaignStatusExpired
+      - CampaignStatusStopped
+    UTMTags:
+      description: UTM tag values. Providing empty values resets them to defaults.
+      properties:
+        campaign:
+          description: UTM campaign parameter (max 250 characters)
+          example: Welcome Email
+          maxLength: 250
+          type: string
+        medium:
+          description: UTM medium parameter (max 250 characters)
+          example: email
+          maxLength: 250
+          type: string
+        source:
+          description: UTM source parameter (max 250 characters)
+          example: omnisend
+          maxLength: 250
+          type: string
+      type: object
+    UpdateABTestSettings:
+      description: A/B test settings for update
+      properties:
+        decisionTime:
+          allOf:
+          - $ref: '#/components/schemas/UpdateABTestDecisionTime'
+          description: Time allowed before a winner is selected
+        testSizePercent:
+          description: Percentage of audience used for the test (10–100)
+          example: 20
+          maximum: 100
+          minimum: 10
+          type: integer
+        winningMetric:
+          description: Metric used to determine the winner
+          enum:
+          - openRate
+          - clickRate
+          example: openRate
+          type: string
+      type: object
+    CreateABTestVariants:
+      description: A/B test variants object with keys "a" and "b".
+      properties:
+        a:
+          $ref: '#/components/schemas/CreateABTestVariant'
+        b:
+          $ref: '#/components/schemas/CreateABTestVariant'
+      required:
+      - a
+      - b
+      type: object
+    UpdateABTestVariant:
+      description: Content fields for a single A/B variant. Email fields live under `content.email`.
+      properties:
+        content:
+          allOf:
+          - $ref: '#/components/schemas/UpdateABTestVariantContent'
+          description: Variant content grouped by channel
+      type: object
+    BoosterDelay:
+      description: Delay between the parent campaign send and the booster send.
+      properties:
+        amount:
+          description: Amount of time units before the booster is sent
+          example: 48
+          type: integer
+        unit:
+          description: 'Time unit: "h" for hours, "d" for days'
+          enum:
+          - h
+          - d
+          example: h
+          type: string
+      type: object
     CreateCampaignRequest:
       description: Campaign creation request
       properties:
@@ -2834,6 +2837,45 @@ components:
       - channel
       - type
       type: object
+    RateLimitProblem:
+      description: Error response returned when the rate limit is exceeded. Use the retryAfter value to know when it is safe to retry the request.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        retryAfter:
+          description: Seconds to wait before retrying the request
+          example: 60
+          type: integer
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    CreateABTest:
+      description: A/B test configuration for campaign creation.
+      properties:
+        settings:
+          $ref: '#/components/schemas/CreateABTestSettings'
+        variants:
+          $ref: '#/components/schemas/CreateABTestVariants'
+      required:
+      - settings
+      - variants
+      type: object
     UpdateSMS:
       description: SMS content for campaign update
       properties:
@@ -2870,48 +2912,6 @@ components:
           example: Hi! Check out our deals
           minLength: 1
           type: string
-      type: object
-    ValidationProblem:
-      description: Error response returned when the request contains invalid input. The errors array lists every field that failed validation.
-      properties:
-        detail:
-          description: Human-readable explanation of this specific error occurrence
-          example: A human-readable explanation of the error.
-          type: string
-        errors:
-          description: List of fields that failed validation
-          items:
-            $ref: '#/components/schemas/FieldError'
-          type: array
-        instance:
-          description: Request trace identifier for support and debugging
-          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
-          type: string
-        status:
-          description: HTTP status code
-          example: 0
-          type: integer
-        title:
-          description: Short description of the error type
-          example: Problem
-          type: string
-        type:
-          description: URI that identifies the error type
-          example: https://problems.omnisend.com/problem
-          type: string
-      type: object
-    CampaignsResponse:
-      description: Paginated list of campaigns
-      properties:
-        campaigns:
-          description: List of campaigns
-          items:
-            $ref: '#/components/schemas/Campaign'
-          type: array
-        paging:
-          allOf:
-          - $ref: '#/components/schemas/PagingResponse'
-          description: Pagination information
       type: object
   parameters:
     APIVersionHeader:

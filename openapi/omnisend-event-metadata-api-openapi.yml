@@ -309,23 +309,6 @@ paths:
       - Event Metadata
 components:
   schemas:
-    WriteEventResponse:
-      description: Response envelope for the POST/PUT write endpoints, echoing the stored event.
-      properties:
-        event:
-          allOf:
-          - $ref: '#/components/schemas/EventItem'
-          description: The stored event after the write was applied
-      type: object
-    EventsResponse:
-      description: Root response envelope for all event metadata endpoints.
-      properties:
-        events:
-          description: List of event metadata entries
-          items:
-            $ref: '#/components/schemas/EventItem'
-          type: array
-      type: object
     EventItem:
       description: A single logical event with one schema variant. A logical event appears as multiple elements when its origins have different property structures (e.g. schema family omnisend vs shopify).
       properties:
@@ -357,6 +340,15 @@ components:
 
             property name. Omitted when the request did not set includeProperties=true.'
           type: object
+      type: object
+    EventsResponse:
+      description: Root response envelope for all event metadata endpoints.
+      properties:
+        events:
+          description: List of event metadata entries
+          items:
+            $ref: '#/components/schemas/EventItem'
+          type: array
       type: object
     QueryEventsRequest:
       description: Request body for the POST /event-metadata/query query endpoint.
@@ -400,6 +392,99 @@ components:
           type: array
       required:
       - category
+      type: object
+    Problem:
+      description: Standard error response returned by all API endpoints on failure.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    WriteEventRequest:
+      description: Request body for creating (POST) or merging (PUT) a brand-custom event-metadata schema. Optional metadata fields are pointers so PUT can distinguish an omitted field (preserve the stored value) from one explicitly set to an empty string.
+      properties:
+        displayName:
+          description: Human-readable label. Required on POST; omit on PUT to keep the stored value.
+          example: Loyalty Points Earned
+          type: string
+        name:
+          description: Machine-readable event name
+          example: loyalty points earned
+          type: string
+        origin:
+          description: Single origin the schema belongs to
+          example: api
+          type: string
+        properties:
+          additionalProperties:
+            $ref: '#/components/schemas/WritePropertyNode'
+          description: 'Property tree keyed by property name. Required with at least one key on POST;
+
+            on PUT only the keys present are merged.'
+          type: object
+      required:
+      - name
+      - origin
+      type: object
+    PropertyNode:
+      description: A single property within an event. Struct properties nest their children under the recursive properties map.
+      properties:
+        description:
+          description: Longer explanation of the property's meaning and allowed values
+          example: 'Specifies from which channel the contact subscribed to. Possible values: Email, SMS, Push.'
+          type: string
+        displayName:
+          description: Human-readable label for the property
+          example: Product ID
+          type: string
+        explicitlyDefined:
+          description: 'True when the property was declared via the write API rather than inferred
+
+            from the global lexicon or scraped traffic'
+          type: boolean
+        group:
+          description: Logical grouping for UI presentation (e.g. "Core", "Address")
+          example: Core
+          type: string
+        properties:
+          additionalProperties:
+            $ref: '#/components/schemas/PropertyNode'
+          description: Child properties, present only for struct-typed properties.
+          type: object
+        type:
+          description: Property data type
+          enum:
+          - string
+          - stringList
+          - integer
+          - integerList
+          - float
+          - floatList
+          - boolean
+          - booleanList
+          - date
+          - dateList
+          - struct
+          - structList
+          example: string
+          type: string
       type: object
     RateLimitProblem:
       description: Error response returned when the rate limit is exceeded. Use the retryAfter value to know when it is safe to retry the request.
@@ -468,98 +553,13 @@ components:
       required:
       - type
       type: object
-    Problem:
-      description: Standard error response returned by all API endpoints on failure.
+    WriteEventResponse:
+      description: Response envelope for the POST/PUT write endpoints, echoing the stored event.
       properties:
-        detail:
-          description: Human-readable explanation of this specific error occurrence
-          example: A human-readable explanation of the error.
-          type: string
-        instance:
-          description: Request trace identifier for support and debugging
-          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
-          type: string
-        status:
-          description: HTTP status code
-          example: 0
-          type: integer
-        title:
-          description: Short description of the error type
-          example: Problem
-          type: string
-        type:
-          description: URI that identifies the error type
-          example: https://problems.omnisend.com/problem
-          type: string
-      type: object
-    PropertyNode:
-      description: A single property within an event. Struct properties nest their children under the recursive properties map.
-      properties:
-        description:
-          description: Longer explanation of the property's meaning and allowed values
-          example: 'Specifies from which channel the contact subscribed to. Possible values: Email, SMS, Push.'
-          type: string
-        displayName:
-          description: Human-readable label for the property
-          example: Product ID
-          type: string
-        explicitlyDefined:
-          description: 'True when the property was declared via the write API rather than inferred
-
-            from the global lexicon or scraped traffic'
-          type: boolean
-        group:
-          description: Logical grouping for UI presentation (e.g. "Core", "Address")
-          example: Core
-          type: string
-        properties:
-          additionalProperties:
-            $ref: '#/components/schemas/PropertyNode'
-          description: Child properties, present only for struct-typed properties.
-          type: object
-        type:
-          description: Property data type
-          enum:
-          - string
-          - stringList
-          - integer
-          - integerList
-          - float
-          - floatList
-          - boolean
-          - booleanList
-          - date
-          - dateList
-          - struct
-          - structList
-          example: string
-          type: string
-      type: object
-    WriteEventRequest:
-      description: Request body for creating (POST) or merging (PUT) a brand-custom event-metadata schema. Optional metadata fields are pointers so PUT can distinguish an omitted field (preserve the stored value) from one explicitly set to an empty string.
-      properties:
-        displayName:
-          description: Human-readable label. Required on POST; omit on PUT to keep the stored value.
-          example: Loyalty Points Earned
-          type: string
-        name:
-          description: Machine-readable event name
-          example: loyalty points earned
-          type: string
-        origin:
-          description: Single origin the schema belongs to
-          example: api
-          type: string
-        properties:
-          additionalProperties:
-            $ref: '#/components/schemas/WritePropertyNode'
-          description: 'Property tree keyed by property name. Required with at least one key on POST;
-
-            on PUT only the keys present are merged.'
-          type: object
-      required:
-      - name
-      - origin
+        event:
+          allOf:
+          - $ref: '#/components/schemas/EventItem'
+          description: The stored event after the write was applied
       type: object
   parameters:
     APIVersionHeader:
