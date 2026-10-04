@@ -428,26 +428,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    CategoryListItem:
-      description: A single product category entry in a list response
-      properties:
-        categoryID:
-          description: Product category unique identifier (read-only)
-          example: C1234
-          type: string
-        createdAt:
-          description: Product category creation timestamp (read-only)
-          example: '2024-01-15T10:30:00Z'
-          type: string
-        title:
-          description: Product category name
-          example: Beauty products
-          type: string
-        updatedAt:
-          description: Product category last update timestamp (read-only)
-          example: '2024-01-16T14:45:00Z'
-          type: string
-      type: object
     GetCategoriesResponse:
       description: Response containing a paginated list of product categories
       properties:
@@ -461,23 +441,25 @@ components:
           - $ref: '#/components/schemas/Paging'
           description: Pagination information
       type: object
-    CreateCategoryRequest:
-      description: Payload for creating a product category
+    Paging:
+      description: Pagination metadata for list responses
       properties:
-        categoryID:
-          description: 'Product category unique identifier. Range: 1-100 characters'
-          example: C1234
-          maxLength: 100
-          minLength: 1
+        limit:
+          description: 'Number of items per page. Range: 1-250. Default: 100'
+          example: 100
+          type: integer
+        next:
+          description: URL to the next page of results
+          example: https://api.omnisend.com/api/product-categories?limit=100&offset=105
           type: string
-        title:
-          description: Product category name. Max 255 characters
-          example: Beauty products
-          maxLength: 255
+        offset:
+          description: Current page offset
+          example: 5
+          type: integer
+        previous:
+          description: URL to the previous page of results
+          example: https://api.omnisend.com/api/product-categories?limit=100&offset=5
           type: string
-      required:
-      - categoryID
-      - title
       type: object
     Problem:
       description: Standard error response returned by all API endpoints on failure.
@@ -501,46 +483,6 @@ components:
         type:
           description: URI that identifies the error type
           example: https://problems.omnisend.com/problem
-          type: string
-      type: object
-    Paging:
-      description: Pagination metadata for list responses
-      properties:
-        limit:
-          description: 'Number of items per page. Range: 1-250. Default: 100'
-          example: 100
-          type: integer
-        next:
-          description: URL to the next page of results
-          example: https://api.omnisend.com/api/product-categories?limit=100&offset=105
-          type: string
-        offset:
-          description: Current page offset
-          example: 5
-          type: integer
-        previous:
-          description: URL to the previous page of results
-          example: https://api.omnisend.com/api/product-categories?limit=100&offset=5
-          type: string
-      type: object
-    GetCategoryResponse:
-      description: Product category details
-      properties:
-        categoryID:
-          description: Product category unique identifier (read-only)
-          example: C1234
-          type: string
-        createdAt:
-          description: Product category creation timestamp (read-only)
-          example: '2024-01-15T10:30:00Z'
-          type: string
-        title:
-          description: Product category name
-          example: Beauty products
-          type: string
-        updatedAt:
-          description: Product category last update timestamp (read-only)
-          example: '2024-01-16T14:45:00Z'
           type: string
       type: object
     ValidationProblem:
@@ -572,25 +514,6 @@ components:
           example: https://problems.omnisend.com/problem
           type: string
       type: object
-    CreateCategoryResponse:
-      description: Response returned after successfully creating a product category
-      properties:
-        categoryID:
-          description: Product category unique identifier
-          example: C1234
-          type: string
-      type: object
-    UpdateCategoryRequest:
-      description: Payload for updating a product category
-      properties:
-        title:
-          description: Product category name. Max 255 characters
-          example: Beauty products
-          maxLength: 255
-          type: string
-      required:
-      - title
-      type: object
     FieldError:
       description: A single field validation failure within a validation error response.
       properties:
@@ -614,6 +537,83 @@ components:
           description: Product category unique identifier (read-only)
           example: shirts-1234
           type: string
+      type: object
+    GetCategoryResponse:
+      description: Product category details
+      properties:
+        categoryID:
+          description: Product category unique identifier (read-only)
+          example: C1234
+          type: string
+        createdAt:
+          description: Product category creation timestamp (read-only)
+          example: '2024-01-15T10:30:00Z'
+          type: string
+        title:
+          description: Product category name
+          example: Beauty products
+          type: string
+        updatedAt:
+          description: Product category last update timestamp (read-only)
+          example: '2024-01-16T14:45:00Z'
+          type: string
+      type: object
+    UpdateCategoryRequest:
+      description: Payload for updating a product category
+      properties:
+        title:
+          description: Product category name. Max 255 characters
+          example: Beauty products
+          maxLength: 255
+          type: string
+      required:
+      - title
+      type: object
+    CreateCategoryResponse:
+      description: Response returned after successfully creating a product category
+      properties:
+        categoryID:
+          description: Product category unique identifier
+          example: C1234
+          type: string
+      type: object
+    CategoryListItem:
+      description: A single product category entry in a list response
+      properties:
+        categoryID:
+          description: Product category unique identifier (read-only)
+          example: C1234
+          type: string
+        createdAt:
+          description: Product category creation timestamp (read-only)
+          example: '2024-01-15T10:30:00Z'
+          type: string
+        title:
+          description: Product category name
+          example: Beauty products
+          type: string
+        updatedAt:
+          description: Product category last update timestamp (read-only)
+          example: '2024-01-16T14:45:00Z'
+          type: string
+      type: object
+    CreateCategoryRequest:
+      description: Payload for creating a product category
+      properties:
+        categoryID:
+          description: 'Product category unique identifier. Range: 1-100 characters'
+          example: C1234
+          maxLength: 100
+          minLength: 1
+          type: string
+        title:
+          description: Product category name. Max 255 characters
+          example: Beauty products
+          maxLength: 255
+          type: string
+      required:
+      - categoryID
+      - title
       type: object
   parameters:
     APIVersionHeader:

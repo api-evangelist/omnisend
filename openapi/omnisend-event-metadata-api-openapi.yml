@@ -309,38 +309,6 @@ paths:
       - Event Metadata
 components:
   schemas:
-    EventItem:
-      description: A single logical event with one schema variant. A logical event appears as multiple elements when its origins have different property structures (e.g. schema family omnisend vs shopify).
-      properties:
-        displayName:
-          description: Human-readable label for the event
-          example: Placed Order
-          type: string
-        explicitlyDefined:
-          description: 'True when the event schema was declared via the write API rather than
-
-            inferred from the global lexicon or scraped traffic'
-          type: boolean
-        name:
-          description: Machine-readable event name (e.g. "placed order")
-          example: placed order
-          type: string
-        origins:
-          description: List of origins that contributed to this event variant
-          example:
-          - shopify
-          - woocommerce
-          items:
-            type: string
-          type: array
-        properties:
-          additionalProperties:
-            $ref: '#/components/schemas/PropertyNode'
-          description: 'Nested tree of properties belonging to this event variant, keyed by
-
-            property name. Omitted when the request did not set includeProperties=true.'
-          type: object
-      type: object
     EventsResponse:
       description: Root response envelope for all event metadata endpoints.
       properties:
@@ -349,49 +317,6 @@ components:
           items:
             $ref: '#/components/schemas/EventItem'
           type: array
-      type: object
-    QueryEventsRequest:
-      description: Request body for the POST /event-metadata/query query endpoint.
-      properties:
-        category:
-          description: Event category, resolved against the requested Omnisend-Version
-          enum:
-          - automations
-          - events
-          - segments
-          example: automations
-          type: string
-        events:
-          description: Optional list of event names to filter by
-          example:
-          - placed order
-          items:
-            type: string
-          type: array
-        excludeCustomEvents:
-          description: 'When true, brand-custom events are omitted.
-
-            When false or omitted, custom events are included.
-
-            Set this to `true` when only well-known events are needed, for a more predictable response size.'
-          example: true
-          type: boolean
-        includeProperties:
-          description: 'When true, response items include the nested property tree.
-
-            When false or omitted, only event-level metadata is returned.'
-          example: false
-          type: boolean
-        origins:
-          description: Optional list of origins to filter by (OR-combined)
-          example:
-          - shopify
-          - api
-          items:
-            type: string
-          type: array
-      required:
-      - category
       type: object
     Problem:
       description: Standard error response returned by all API endpoints on failure.
@@ -443,6 +368,117 @@ components:
       - name
       - origin
       type: object
+    QueryEventsRequest:
+      description: Request body for the POST /event-metadata/query query endpoint.
+      properties:
+        category:
+          description: Event category, resolved against the requested Omnisend-Version
+          enum:
+          - automations
+          - events
+          - segments
+          example: automations
+          type: string
+        events:
+          description: Optional list of event names to filter by
+          example:
+          - placed order
+          items:
+            type: string
+          type: array
+        excludeCustomEvents:
+          description: 'When true, brand-custom events are omitted.
+
+            When false or omitted, custom events are included.
+
+            Set this to `true` when only well-known events are needed, for a more predictable response size.'
+          example: true
+          type: boolean
+        includeProperties:
+          description: 'When true, response items include the nested property tree.
+
+            When false or omitted, only event-level metadata is returned.'
+          example: false
+          type: boolean
+        origins:
+          description: Optional list of origins to filter by (OR-combined)
+          example:
+          - shopify
+          - api
+          items:
+            type: string
+          type: array
+      required:
+      - category
+      type: object
+    RateLimitProblem:
+      description: Error response returned when the rate limit is exceeded. Use the retryAfter value to know when it is safe to retry the request.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        retryAfter:
+          description: Seconds to wait before retrying the request
+          example: 60
+          type: integer
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    WriteEventResponse:
+      description: Response envelope for the POST/PUT write endpoints, echoing the stored event.
+      properties:
+        event:
+          allOf:
+          - $ref: '#/components/schemas/EventItem'
+          description: The stored event after the write was applied
+      type: object
+    EventItem:
+      description: A single logical event with one schema variant. A logical event appears as multiple elements when its origins have different property structures (e.g. schema family omnisend vs shopify).
+      properties:
+        displayName:
+          description: Human-readable label for the event
+          example: Placed Order
+          type: string
+        explicitlyDefined:
+          description: 'True when the event schema was declared via the write API rather than
+
+            inferred from the global lexicon or scraped traffic'
+          type: boolean
+        name:
+          description: Machine-readable event name (e.g. "placed order")
+          example: placed order
+          type: string
+        origins:
+          description: List of origins that contributed to this event variant
+          example:
+          - shopify
+          - woocommerce
+          items:
+            type: string
+          type: array
+        properties:
+          additionalProperties:
+            $ref: '#/components/schemas/PropertyNode'
+          description: 'Nested tree of properties belonging to this event variant, keyed by
+
+            property name. Omitted when the request did not set includeProperties=true.'
+          type: object
+      type: object
     PropertyNode:
       description: A single property within an event. Struct properties nest their children under the recursive properties map.
       properties:
@@ -486,34 +522,6 @@ components:
           example: string
           type: string
       type: object
-    RateLimitProblem:
-      description: Error response returned when the rate limit is exceeded. Use the retryAfter value to know when it is safe to retry the request.
-      properties:
-        detail:
-          description: Human-readable explanation of this specific error occurrence
-          example: A human-readable explanation of the error.
-          type: string
-        instance:
-          description: Request trace identifier for support and debugging
-          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
-          type: string
-        retryAfter:
-          description: Seconds to wait before retrying the request
-          example: 60
-          type: integer
-        status:
-          description: HTTP status code
-          example: 0
-          type: integer
-        title:
-          description: Short description of the error type
-          example: Problem
-          type: string
-        type:
-          description: URI that identifies the error type
-          example: https://problems.omnisend.com/problem
-          type: string
-      type: object
     WritePropertyNode:
       description: A single property in a write request. Optional metadata fields are pointers to mirror the PUT preserve-on-omit semantics at each nested node.
       properties:
@@ -552,14 +560,6 @@ components:
           type: string
       required:
       - type
-      type: object
-    WriteEventResponse:
-      description: Response envelope for the POST/PUT write endpoints, echoing the stored event.
-      properties:
-        event:
-          allOf:
-          - $ref: '#/components/schemas/EventItem'
-          description: The stored event after the write was applied
       type: object
   parameters:
     APIVersionHeader:

@@ -92,34 +92,21 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    statistics.ReportResult:
+    statistics.DateRange:
       properties:
-        alias:
+        from:
+          description: RFC3339/ISO8601 format
           type: string
-        dimensions:
-          items:
-            $ref: '#/components/schemas/analytics.DimensionHeader'
-          type: array
-        metrics:
-          items:
-            $ref: '#/components/schemas/analytics.MetricHeader'
-          type: array
-        rows:
-          items:
-            $ref: '#/components/schemas/analytics.ReportResultRow'
-          type: array
-      type: object
-    analytics.Dimension:
-      properties:
-        granularity:
-          type: string
-        name:
+        to:
+          description: RFC3339/ISO8601 format
           type: string
       type: object
-    analytics.MetricHeader:
+    statistics.ReportResponse:
       properties:
-        name:
-          type: string
+        statistics:
+          items:
+            $ref: '#/components/schemas/statistics.ReportResult'
+          type: array
       type: object
     analytics.Metric:
       properties:
@@ -150,50 +137,21 @@ components:
           example: https://problems.omnisend.com/problem
           type: string
       type: object
-    statistics.ReportQuery:
+    statistics.ReportResult:
       properties:
         alias:
           type: string
-        dateRange:
-          $ref: '#/components/schemas/statistics.DateRange'
         dimensions:
           items:
-            $ref: '#/components/schemas/analytics.Dimension'
-          type: array
-        filters:
-          items:
-            $ref: '#/components/schemas/analytics.Filter'
+            $ref: '#/components/schemas/analytics.DimensionHeader'
           type: array
         metrics:
           items:
-            $ref: '#/components/schemas/analytics.Metric'
+            $ref: '#/components/schemas/analytics.MetricHeader'
           type: array
-      type: object
-    statistics.DateRange:
-      properties:
-        from:
-          description: RFC3339/ISO8601 format
-          type: string
-        to:
-          description: RFC3339/ISO8601 format
-          type: string
-      type: object
-    analytics.DimensionHeader:
-      properties:
-        granularity:
-          type: string
-        name:
-          type: string
-      type: object
-    analytics.Filter:
-      properties:
-        name:
-          type: string
-        operator:
-          type: string
-        values:
+        rows:
           items:
-            type: string
+            $ref: '#/components/schemas/analytics.ReportResultRow'
           type: array
       type: object
     ValidationProblem:
@@ -225,12 +183,13 @@ components:
           example: https://problems.omnisend.com/problem
           type: string
       type: object
-    statistics.ReportRequest:
+    analytics.ReportResultRow:
+      additionalProperties: {}
+      type: object
+    analytics.MetricHeader:
       properties:
-        queries:
-          items:
-            $ref: '#/components/schemas/statistics.ReportQuery'
-          type: array
+        name:
+          type: string
       type: object
     FieldError:
       description: A single field validation failure within a validation error response.
@@ -248,15 +207,56 @@ components:
           example: Must be a valid email address
           type: string
       type: object
-    statistics.ReportResponse:
+    analytics.Filter:
       properties:
-        statistics:
+        name:
+          type: string
+        operator:
+          type: string
+        values:
           items:
-            $ref: '#/components/schemas/statistics.ReportResult'
+            type: string
           type: array
       type: object
-    analytics.ReportResultRow:
-      additionalProperties: {}
+    analytics.DimensionHeader:
+      properties:
+        granularity:
+          type: string
+        name:
+          type: string
+      type: object
+    analytics.Dimension:
+      properties:
+        granularity:
+          type: string
+        name:
+          type: string
+      type: object
+    statistics.ReportRequest:
+      properties:
+        queries:
+          items:
+            $ref: '#/components/schemas/statistics.ReportQuery'
+          type: array
+      type: object
+    statistics.ReportQuery:
+      properties:
+        alias:
+          type: string
+        dateRange:
+          $ref: '#/components/schemas/statistics.DateRange'
+        dimensions:
+          items:
+            $ref: '#/components/schemas/analytics.Dimension'
+          type: array
+        filters:
+          items:
+            $ref: '#/components/schemas/analytics.Filter'
+          type: array
+        metrics:
+          items:
+            $ref: '#/components/schemas/analytics.Metric'
+          type: array
       type: object
   parameters:
     APIVersionHeader:

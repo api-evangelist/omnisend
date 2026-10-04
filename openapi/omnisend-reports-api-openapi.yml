@@ -92,68 +92,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    analytics.Dimension:
-      properties:
-        granularity:
-          type: string
-        name:
-          type: string
-      type: object
-    reports.ReportResult:
-      properties:
-        alias:
-          type: string
-        dimensions:
-          items:
-            $ref: '#/components/schemas/analytics.DimensionHeader'
-          type: array
-        metrics:
-          items:
-            $ref: '#/components/schemas/analytics.MetricHeader'
-          type: array
-        rows:
-          items:
-            $ref: '#/components/schemas/analytics.ReportResultRow'
-          type: array
-      type: object
-    reports.DateRange:
-      properties:
-        from:
-          type: string
-        interval:
-          type: string
-        to:
-          type: string
-      type: object
-    analytics.Metric:
-      properties:
-        name:
-          type: string
-      type: object
-    Problem:
-      description: Standard error response returned by all API endpoints on failure.
-      properties:
-        detail:
-          description: Human-readable explanation of this specific error occurrence
-          example: A human-readable explanation of the error.
-          type: string
-        instance:
-          description: Request trace identifier for support and debugging
-          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
-          type: string
-        status:
-          description: HTTP status code
-          example: 0
-          type: integer
-        title:
-          description: Short description of the error type
-          example: Problem
-          type: string
-        type:
-          description: URI that identifies the error type
-          example: https://problems.omnisend.com/problem
-          type: string
-      type: object
     reports.ReportRequest:
       properties:
         queries:
@@ -161,21 +99,11 @@ components:
             $ref: '#/components/schemas/reports.ReportQuery'
           type: array
       type: object
-    analytics.Filter:
-      properties:
-        name:
-          type: string
-        operator:
-          type: string
-        values:
-          items:
-            type: string
-          type: array
+    analytics.ReportResultRow:
+      additionalProperties: {}
       type: object
-    analytics.DimensionHeader:
+    analytics.MetricHeader:
       properties:
-        granularity:
-          type: string
         name:
           type: string
       type: object
@@ -208,6 +136,79 @@ components:
           example: https://problems.omnisend.com/problem
           type: string
       type: object
+    Problem:
+      description: Standard error response returned by all API endpoints on failure.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    reports.DateRange:
+      properties:
+        from:
+          type: string
+        interval:
+          type: string
+        to:
+          type: string
+      type: object
+    FieldError:
+      description: A single field validation failure within a validation error response.
+      properties:
+        code:
+          description: Error code indicating the type of failure
+          example: invalid_format
+          type: string
+        field:
+          description: Dot-separated path to the field that failed validation
+          example: content.email.subject
+          type: string
+        message:
+          description: Human-readable explanation of what is wrong with the field value
+          example: Must be a valid email address
+          type: string
+      type: object
+    reports.ReportResult:
+      properties:
+        alias:
+          type: string
+        dimensions:
+          items:
+            $ref: '#/components/schemas/analytics.DimensionHeader'
+          type: array
+        metrics:
+          items:
+            $ref: '#/components/schemas/analytics.MetricHeader'
+          type: array
+        rows:
+          items:
+            $ref: '#/components/schemas/analytics.ReportResultRow'
+          type: array
+      type: object
+    analytics.DimensionHeader:
+      properties:
+        granularity:
+          type: string
+        name:
+          type: string
+      type: object
     reports.ReportResponse:
       properties:
         reports:
@@ -234,29 +235,28 @@ components:
             $ref: '#/components/schemas/analytics.Metric'
           type: array
       type: object
-    FieldError:
-      description: A single field validation failure within a validation error response.
+    analytics.Dimension:
       properties:
-        code:
-          description: Error code indicating the type of failure
-          example: invalid_format
+        granularity:
           type: string
-        field:
-          description: Dot-separated path to the field that failed validation
-          example: content.email.subject
-          type: string
-        message:
-          description: Human-readable explanation of what is wrong with the field value
-          example: Must be a valid email address
-          type: string
-      type: object
-    analytics.MetricHeader:
-      properties:
         name:
           type: string
       type: object
-    analytics.ReportResultRow:
-      additionalProperties: {}
+    analytics.Filter:
+      properties:
+        name:
+          type: string
+        operator:
+          type: string
+        values:
+          items:
+            type: string
+          type: array
+      type: object
+    analytics.Metric:
+      properties:
+        name:
+          type: string
       type: object
   parameters:
     APIVersionHeader:

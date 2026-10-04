@@ -544,6 +544,35 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    CursorsResponse:
+      description: Cursor pointers for paginating forward and backward through results
+      properties:
+        after:
+          description: Opaque cursor for fetching the next page of results
+          example: eyJpZCI6ImNhbXAtNDU2In0
+          type:
+          - string
+          - 'null'
+        before:
+          description: Opaque cursor for fetching the previous page of results
+          example: eyJpZCI6ImNhbXAtMTIzIn0
+          type:
+          - string
+          - 'null'
+      type: object
+    ListSegmentsResponse:
+      description: Paginated list of segments.
+      properties:
+        paging:
+          allOf:
+          - $ref: '#/components/schemas/PagingResponse'
+          description: Pagination metadata for navigating results
+        segments:
+          description: List of segments on the current page
+          items:
+            $ref: '#/components/schemas/GetSegmentResponse'
+          type: array
+      type: object
     UpdateSegmentRequest:
       description: Request body for updating an existing segment.
       properties:
@@ -594,39 +623,6 @@ components:
           example: https://problems.omnisend.com/problem
           type: string
       type: object
-    PagingResponse:
-      description: Cursor-based pagination metadata
-      properties:
-        cursors:
-          allOf:
-          - $ref: '#/components/schemas/CursorsResponse'
-          description: Cursor values for navigating between pages
-        hasMore:
-          description: Whether there are more items available beyond the current page
-          example: true
-          type: boolean
-        limit:
-          description: Maximum number of items returned per page
-          example: 50
-          type: integer
-      type: object
-    CreateSegmentRequest:
-      description: Request body for creating a new segment.
-      properties:
-        conditionGroups:
-          description: Condition groups defining the segment rules
-          items:
-            $ref: '#/components/schemas/SegmentConditionGroup'
-          type: array
-        name:
-          description: Name of the segment
-          example: My Segment
-          maxLength: 256
-          type: string
-      required:
-      - conditionGroups
-      - name
-      type: object
     ValidationProblem:
       description: Error response returned when the request contains invalid input. The errors array lists every field that failed validation.
       properties:
@@ -656,53 +652,21 @@ components:
           example: https://problems.omnisend.com/problem
           type: string
       type: object
-    GetSegmentResponse:
-      description: Segment resource representation.
+    PagingResponse:
+      description: Cursor-based pagination metadata
       properties:
-        archivedAt:
-          description: Segment archival timestamp, null if not archived (read-only)
-          example: '2026-06-01T00:00:00Z'
-          readOnly: true
-          type:
-          - string
-          - 'null'
-        conditionGroups:
-          description: Condition groups defining the segment rules
-          items:
-            $ref: '#/components/schemas/SegmentConditionGroup'
-          type: array
-        createdAt:
-          description: Segment creation timestamp (read-only)
-          example: '2026-01-15T10:30:00Z'
-          readOnly: true
-          type: string
-        isStarred:
-          description: Whether the segment is marked as a favourite
-          example: false
+        cursors:
+          allOf:
+          - $ref: '#/components/schemas/CursorsResponse'
+          description: Cursor values for navigating between pages
+        hasMore:
+          description: Whether there are more items available beyond the current page
+          example: true
           type: boolean
-        name:
-          description: Segment name
-          example: VIP Customers
-          type: string
-        segmentID:
-          description: Segment unique identifier (read-only)
-          example: '000000000000000000000001'
-          readOnly: true
-          type: string
-        status:
-          description: Segment processing status (read-only)
-          enum:
-          - ready
-          - building
-          - archived
-          example: ready
-          readOnly: true
-          type: string
-        updatedAt:
-          description: Segment last update timestamp (read-only)
-          example: '2026-01-20T14:45:00Z'
-          readOnly: true
-          type: string
+        limit:
+          description: Maximum number of items returned per page
+          example: 50
+          type: integer
       type: object
     FieldError:
       description: A single field validation failure within a validation error response.
@@ -719,22 +683,6 @@ components:
           description: Human-readable explanation of what is wrong with the field value
           example: Must be a valid email address
           type: string
-      type: object
-    CursorsResponse:
-      description: Cursor pointers for paginating forward and backward through results
-      properties:
-        after:
-          description: Opaque cursor for fetching the next page of results
-          example: eyJpZCI6ImNhbXAtNDU2In0
-          type:
-          - string
-          - 'null'
-        before:
-          description: Opaque cursor for fetching the previous page of results
-          example: eyJpZCI6ImNhbXAtMTIzIn0
-          type:
-          - string
-          - 'null'
       type: object
     RateLimitProblem:
       description: Error response returned when the rate limit is exceeded. Use the retryAfter value to know when it is safe to retry the request.
@@ -783,6 +731,23 @@ components:
       required:
       - filters
       type: object
+    CreateSegmentRequest:
+      description: Request body for creating a new segment.
+      properties:
+        conditionGroups:
+          description: Condition groups defining the segment rules
+          items:
+            $ref: '#/components/schemas/SegmentConditionGroup'
+          type: array
+        name:
+          description: Name of the segment
+          example: My Segment
+          maxLength: 256
+          type: string
+      required:
+      - conditionGroups
+      - name
+      type: object
     GetSegmentStatisticsResponse:
       description: Segment statistics resource.
       properties:
@@ -792,18 +757,53 @@ components:
           readOnly: true
           type: integer
       type: object
-    ListSegmentsResponse:
-      description: Paginated list of segments.
+    GetSegmentResponse:
+      description: Segment resource representation.
       properties:
-        paging:
-          allOf:
-          - $ref: '#/components/schemas/PagingResponse'
-          description: Pagination metadata for navigating results
-        segments:
-          description: List of segments on the current page
+        archivedAt:
+          description: Segment archival timestamp, null if not archived (read-only)
+          example: '2026-06-01T00:00:00Z'
+          readOnly: true
+          type:
+          - string
+          - 'null'
+        conditionGroups:
+          description: Condition groups defining the segment rules
           items:
-            $ref: '#/components/schemas/GetSegmentResponse'
+            $ref: '#/components/schemas/SegmentConditionGroup'
           type: array
+        createdAt:
+          description: Segment creation timestamp (read-only)
+          example: '2026-01-15T10:30:00Z'
+          readOnly: true
+          type: string
+        isStarred:
+          description: Whether the segment is marked as a favourite
+          example: false
+          type: boolean
+        name:
+          description: Segment name
+          example: VIP Customers
+          type: string
+        segmentID:
+          description: Segment unique identifier (read-only)
+          example: '000000000000000000000001'
+          readOnly: true
+          type: string
+        status:
+          description: Segment processing status (read-only)
+          enum:
+          - ready
+          - building
+          - archived
+          example: ready
+          readOnly: true
+          type: string
+        updatedAt:
+          description: Segment last update timestamp (read-only)
+          example: '2026-01-20T14:45:00Z'
+          readOnly: true
+          type: string
       type: object
   parameters:
     APIVersionHeader:
