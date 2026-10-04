@@ -565,6 +565,9 @@ apis:
   - type: JSONLD
     url: json-ld/omnisend-context.jsonld
 common:
+- type: CapabilityMap
+  url: capabilities/omnisend-capability-edges.yml
+  name: Omnisend Business Capability Map
 - type: AgenticAccess
   url: agentic-access/omnisend-agentic-access.yml
 - type: VulnerabilityDisclosure

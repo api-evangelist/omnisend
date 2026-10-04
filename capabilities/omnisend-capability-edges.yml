@@ -1,0 +1,89 @@
+slug: omnisend
+provider: Omnisend
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 7
+edges:
+- tag: Segments
+  spec_file: omnisend-segments-api-openapi.yml
+  capability_id: BC-420.20
+  capability_id_l1: BC-420
+  capability_name: Customer Segmentation Management
+  confidence: 0.9
+  evidence: '"Manage contact segments using flexible condition-based rules."; "POST /segments  Create
+    segment", "GET /segments/{segmentID}/statistics"'
+  reason: Explicit creation and management of customer/contact segments with condition rules — Customer
+    Segmentation Management.
+- tag: Automations
+  spec_file: omnisend-automations-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.8
+  evidence: GET /automations getAutomations List automation workflows; schemas SendSmsRequest, SendPush,
+    SendWebhook, UpdateSmsCompliance
+  reason: Operations create, enable and disable email/SMS/push automation workflows with UTM tagging per
+    block — this is marketing automation execution. Digital Marketing Management is the best fit; some
+    ambiguity versus Demand Generation (lifecycle marketing).
+- tag: Campaigns
+  spec_file: omnisend-campaigns-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.8
+  evidence: POST /campaigns/{id}/send postCampaignsByIdSend Send campaign; schemas CampaignChannel, CreateEmail,
+    SMSCompliance, UTMVariantTags
+  reason: Creating, scheduling, A/B testing and sending email/SMS marketing campaigns to an Audience is
+    email/SMS marketing execution. Digital Marketing Management fits; minor ambiguity with Demand Generation
+    Management.
+- tag: Contacts
+  spec_file: omnisend-contacts-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.75
+  evidence: POST /contacts postContacts Create or update existing contact; schemas ContactIdentifierRequest,
+    Identifier, Consent, OptIn, ContactStatus
+  reason: Maintains the marketing contact record with identifiers, consent/opt-in state and tags — customer/contact
+    master data upkeep. Customer Data Management is the closest fit, though the records are marketing
+    contacts rather than a full golden-record MDM.
+- tag: Email Content
+  spec_file: omnisend-email-content-api-openapi.yml
+  capability_id: BC-400
+  capability_id_l1: BC-400
+  capability_name: Marketing Management
+  confidence: 0.75
+  evidence: '"API for managing email content, templates and universal layouts"; GET/PUT /email-content/{id},
+    POST /email-content/{id}/render'
+  reason: Authoring and rendering of email marketing content on an email/SMS marketing automation platform
+    realises Marketing Management. Ambiguous between Digital Marketing (email automation) and Content
+    Marketing (content production), so no L2 asserted.
+- tag: Email Templates
+  spec_file: omnisend-email-templates-api-openapi.yml
+  capability_id: BC-400
+  capability_id_l1: BC-400
+  capability_name: Marketing Management
+  confidence: 0.75
+  evidence: '"POST /email-templates  Create email template", "POST /email-templates/import  Import email
+    template from HTML"'
+  reason: Lifecycle of reusable email marketing templates is a marketing-content/digital-marketing asset
+    management surface; L1 Marketing Management is safe, L2 split between 400.60 and 400.70.
+- tag: Email Universal Layouts
+  spec_file: omnisend-email-universal-layouts-api-openapi.yml
+  capability_id: BC-400
+  capability_id_l1: BC-400
+  capability_name: Marketing Management
+  confidence: 0.7
+  evidence: '"GET /email-universal-layouts  Get universal layouts", "POST /email-universal-layouts  Create
+    universal layout"'
+  reason: Reusable layout assets for email campaigns on a marketing automation platform; supports Marketing
+    Management at L1 but the evidence does not pin a single sub-capability.
