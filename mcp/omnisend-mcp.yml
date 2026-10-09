@@ -146,3 +146,38 @@ clients_documented:
 - Cursor
 multi_account: Distinct server entries with a `?brand=` query parameter, one per Omnisend brand.
 crosswalk: mcp/omnisend-tool-crosswalk.yml
+rfc9728:
+  endpoint: https://mcp.omnisend.com/v2/mcp
+  metadata_url: https://mcp.omnisend.com/.well-known/oauth-protected-resource
+  discovered_via: WWW-Authenticate resource_metadata on an anonymous POST initialize
+  fetched: '2026-09-25'
+  http_status: 200
+  content_type: application/json
+  document:
+    resource: https://mcp.omnisend.com
+    authorization_servers:
+    - https://mcp.omnisend.com
+    scopes_supported:
+    - contacts.write
+    - contacts.read
+    - products.write
+    - products.read
+    - events.write
+    - events.read
+    - brands.write
+    - brands.read
+    - automations.read
+    - automations.write
+    - campaigns.read
+    - campaigns.write
+    - analytics.read
+    - segments.read
+    - segments.write
+    - email-templates.read
+    - email-templates.write
+    - images.read
+    - images.write
+    - forms.read
+    - forms.write
+    - brand-assets.read
+    resource_documentation: https://api-docs.omnisend.com/reference/mcp-server

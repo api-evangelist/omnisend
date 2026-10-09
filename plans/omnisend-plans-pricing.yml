@@ -189,3 +189,53 @@ verification:
     Omnisend publishes no machine-readable pricing or catalog endpoint, and no API-specific pricing —
     API access is included with the account rather than metered, so there is no per-call price to
     record. The tier prices below are the published starting rates for the smallest paid list tier.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - negotiated
+  - tiered
+  units:
+  - active-user
+  - message
+  - negotiated
+  - period
+  plans:
+  - name: Free
+    access: other
+    model: tiered
+    model_how: stated
+    units:
+    - active-user
+    - message
+    periods:
+    - month
+  - name: Standard
+    access: other
+    model: tiered
+    model_how: stated
+    units:
+    - active-user
+    - message
+    - period
+    periods:
+    - month
+  - name: Pro
+    access: other
+    model: tiered
+    model_how: stated
+    units:
+    - active-user
+    - message
+    - period
+    periods:
+    - month
+    - per-use
+  - name: Enterprise / Custom
+    access: negotiated
+    model: negotiated
+    model_how: stated
+    units:
+    - negotiated
+    periods:
+    - month
