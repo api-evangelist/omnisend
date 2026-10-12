@@ -1,0 +1,62 @@
+generated: '2026-10-12'
+method: searched
+source:
+- https://composio.dev/toolkits/omnisend
+checked:
+- https://composio.dev/toolkits/omnisend
+- https://monid.ai/tools/omnisend
+- https://n8n.io/integrations/omnisend/
+- https://zapier.com/apps/omnisend/integrations
+summary: null
+marketplace_apps:
+- marketplace: composio
+  channel: agent-gateway
+  app: omnisend
+  url: https://composio.dev/toolkits/omnisend
+  identity: action-prefix
+  actions:
+  - key: OMNISEND_ADD_CART_PRODUCT
+  - key: OMNISEND_CREATE_BATCH
+  - key: OMNISEND_CREATE_CART
+  - key: OMNISEND_CREATE_CATEGORY
+  - key: OMNISEND_CREATE_ORDER
+  - key: OMNISEND_CREATE_OR_UPDATE_CONTACT
+  - key: OMNISEND_CREATE_PRODUCT
+  - key: OMNISEND_CREATE_PRODUCT_CATEGORY
+  - key: OMNISEND_DELETE_CART
+  - key: OMNISEND_DELETE_CATEGORY
+  - key: OMNISEND_DELETE_ORDER
+  - key: OMNISEND_DELETE_PRODUCT
+  - key: OMNISEND_DELETE_PRODUCT_CATEGORY
+  - key: OMNISEND_GET_BATCHES
+  - key: OMNISEND_GET_BATCH_INFORMATION
+  - key: OMNISEND_GET_BATCH_ITEM
+  - key: OMNISEND_GET_BATCH_ITEMS
+  - key: OMNISEND_GET_BRAND
+  - key: OMNISEND_GET_CART
+  - key: OMNISEND_GET_CATEGORY
+  - key: OMNISEND_GET_CONTACT
+  - key: OMNISEND_GET_ORDER
+  - key: OMNISEND_GET_PRODUCT
+  - key: OMNISEND_GET_PRODUCT_CATEGORY
+  - key: OMNISEND_LIST_CAMPAIGNS
+  - key: OMNISEND_LIST_CARTS
+  - key: OMNISEND_LIST_CATEGORIES
+  - key: OMNISEND_LIST_CONTACTS
+  - key: OMNISEND_LIST_EVENTS
+  - key: OMNISEND_LIST_PRODUCTS
+  - key: OMNISEND_LIST_PRODUCT_CATEGORIES
+  - key: OMNISEND_REMOVE_CART_PRODUCT
+  - key: OMNISEND_REPLACE_CART
+  - key: OMNISEND_REPLACE_CART_PRODUCT
+  - key: OMNISEND_REPLACE_CATEGORY
+  - key: OMNISEND_REPLACE_ORDER
+  - key: OMNISEND_REPLACE_PRODUCT
+  - key: OMNISEND_SEND_EVENT
+  - key: OMNISEND_UPDATE_CART
+  - key: OMNISEND_UPDATE_CART_PRODUCT
+  - key: OMNISEND_UPDATE_CONTACT
+  - key: OMNISEND_UPDATE_ORDER_STATUS
+  - key: OMNISEND_UPDATE_PRODUCT_CATEGORY
+edges: []
+templates: []
