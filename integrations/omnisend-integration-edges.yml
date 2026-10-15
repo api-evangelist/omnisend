@@ -7,6 +7,7 @@ checked:
 - https://monid.ai/tools/omnisend
 - https://n8n.io/integrations/omnisend/
 - https://zapier.com/apps/omnisend/integrations
+- shopify/integrations/shopify-integration-edges.yml
 summary: null
 marketplace_apps:
 - marketplace: composio
@@ -58,5 +59,21 @@ marketplace_apps:
   - key: OMNISEND_UPDATE_CONTACT
   - key: OMNISEND_UPDATE_ORDER_STATUS
   - key: OMNISEND_UPDATE_PRODUCT_CATEGORY
-edges: []
+edges:
+- partner_name: Shopify (own)
+  partner: shopify
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://apps.shopify.com/omnisend
+  mirror_of: shopify/integrations/shopify-integration-edges.yml
+  apps:
+  - Omnisend Email Marketing & SMS
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
 templates: []
