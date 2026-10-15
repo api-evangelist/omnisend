@@ -38,7 +38,7 @@
     app_slug: omnisend
     beta: false
     builder: unknown (not in the directory record)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: omnisend-pipedream
   label: Pipedream
@@ -64,7 +64,7 @@
     actions: true
     sources: true
     builder: Pipedream repo (component)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: omnisend-wordpress-own
   label: WordPress (own)
