@@ -647,21 +647,21 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    CursorsResponse:
-      description: Cursor pointers for paginating forward and backward through results
+    PagingResponse:
+      description: Cursor-based pagination metadata
       properties:
-        after:
-          description: Opaque cursor for fetching the next page of results
-          example: eyJpZCI6ImNhbXAtNDU2In0
-          type:
-          - string
-          - 'null'
-        before:
-          description: Opaque cursor for fetching the previous page of results
-          example: eyJpZCI6ImNhbXAtMTIzIn0
-          type:
-          - string
-          - 'null'
+        cursors:
+          allOf:
+          - $ref: '#/components/schemas/CursorsResponse'
+          description: Cursor values for navigating between pages
+        hasMore:
+          description: Whether there are more items available beyond the current page
+          example: true
+          type: boolean
+        limit:
+          description: Maximum number of items returned per page
+          example: 50
+          type: integer
       type: object
     ContactStatus:
       description: Contact status per channel.
@@ -685,95 +685,6 @@ components:
           description: Timestamp when the status last changed
           example: '2021-05-20T12:00:00Z'
           type: string
-      type: object
-    ContactConsentRequest:
-      description: Consent record.
-      properties:
-        createdAt:
-          description: Consent collection timestamp in RFC3339 format. Defaults to current time if not provided
-          example: '2026-01-01T00:00:00Z'
-          type: string
-        ip:
-          description: IP address at time of consent
-          example: 192.168.1.1
-          type: string
-        source:
-          description: Source of consent
-          example: omnisend-form
-          type: string
-        userAgent:
-          description: User agent at time of consent
-          example: Mozilla/5.0
-          type: string
-      type: object
-    ContactRequest:
-      description: Payload for creating or updating a contact.
-      properties:
-        address:
-          description: Street, house number, apartment number.
-          example: 1234 Main St
-          type: string
-        birthdate:
-          description: Contact birthdate in YYYY-MM-DD format
-          example: '1990-01-01'
-          type: string
-        city:
-          description: City
-          example: Los Angeles
-          type: string
-        country:
-          description: Country name. Used to derive ISO country code when countryCode is not provided
-          example: United States
-          type: string
-        countryCode:
-          description: ISO 3166-1 alpha-2 country code. Takes priority over country when both are provided
-          example: US
-          type: string
-        createdAt:
-          description: Contact creation timestamp. If provided, stored as "externalCreated" custom property
-          example: '2024-01-01T00:00:00Z'
-          type: string
-        customProperties:
-          additionalProperties: true
-          description: You can add your own custom properties. Read more in https://api-docs.omnisend.com/reference/contacts#custom-properties
-          type: object
-        firstName:
-          description: Contact first name
-          example: John
-          type: string
-        gender:
-          description: Contact gender. m - male, f - female
-          enum:
-          - m
-          - f
-          example: m
-          type: string
-        identifiers:
-          description: Contact identifiers (email and/or phone)
-          items:
-            $ref: '#/components/schemas/ContactIdentifierRequest'
-          type: array
-        lastName:
-          description: Contact last name
-          example: Doe
-          type: string
-        postalCode:
-          description: Postal or zip code
-          example: '90001'
-          type: string
-        state:
-          description: State or region
-          example: New York
-          type: string
-        tags:
-          description: 'Labels assigned to the contact. When creating a contact, it is strongly advised to include a source tag, e.g. "source: shopify".'
-          example:
-          - tag1
-          - tag2
-          items:
-            type: string
-          maxItems: 100
-          type: array
       type: object
     AddTagsRequest:
       description: Payload for batch adding tags to contacts.
@@ -819,50 +730,25 @@ components:
       required:
       - tags
       type: object
-    ListContactsResponse:
-      description: Paginated list of contacts.
+    Identifier:
+      description: Unique contact identifier (email or phone).
       properties:
-        contacts:
-          description: List of contact resources
-          items:
-            $ref: '#/components/schemas/ContactResponse'
-          type: array
-        paging:
-          allOf:
-          - $ref: '#/components/schemas/PagingResponse'
-          description: Pagination metadata
-      type: object
-    Channel:
-      description: Channel subscription status.
-      properties:
-        status:
-          description: Channel subscription status
+        channels:
+          additionalProperties:
+            $ref: '#/components/schemas/Channel'
+          description: Subscription status per channel, keyed by channel name
+          type: object
+        id:
+          description: Identifier value (email address or phone number)
+          example: example@example.com
+          type: string
+        type:
+          description: Identifier type
           enum:
-          - subscribed
-          - unsubscribed
-          - nonSubscribed
-          example: subscribed
+          - email
+          - phone
+          example: email
           type: string
-        statusChangedAt:
-          description: Timestamp when the channel status last changed
-          example: '2023-05-22T10:25:14.263Z'
-          type: string
-      type: object
-    PagingResponse:
-      description: Cursor-based pagination metadata
-      properties:
-        cursors:
-          allOf:
-          - $ref: '#/components/schemas/CursorsResponse'
-          description: Cursor values for navigating between pages
-        hasMore:
-          description: Whether there are more items available beyond the current page
-          example: true
-          type: boolean
-        limit:
-          description: Maximum number of items returned per page
-          example: 50
-          type: integer
       type: object
     ContactResponse:
       description: Contact resource representation.
@@ -990,143 +876,6 @@ components:
           readOnly: true
           type: string
       type: object
-    Consent:
-      description: Consent record for a contact channel.
-      properties:
-        channel:
-          description: Channel type this consent applies to
-          enum:
-          - email
-          - sms
-          example: email
-          type: string
-        createdAt:
-          description: Consent collection timestamp
-          example: '2021-05-20T12:00:00Z'
-          type: string
-        ip:
-          description: IP address from which consent was collected
-          example: 161.1.1.1
-          type: string
-        source:
-          description: Source through which consent was obtained (e.g. omnisend-form, api)
-          example: api
-          type: string
-        userAgent:
-          description: User agent string from the consent collection request
-          example: Mozilla/5.0
-          type: string
-      type: object
-    ContactIdentifierRequest:
-      description: 'A unique contact identifier (email or phone). For phone: provide the full number with country code prefix in E.164 format (e.g. +1234567890).'
-      properties:
-        channels:
-          additionalProperties:
-            $ref: '#/components/schemas/ContactChannelRequest'
-          description: Communication channels for this identifier
-          type: object
-        consent:
-          allOf:
-          - $ref: '#/components/schemas/ContactConsentRequest'
-          description: Consent information
-        id:
-          description: 'Identifier value. For email: a valid email address. For phone: full phone number in E.164 format with country code prefix (e.g. +1234567890)'
-          example: example@example.com
-          type: string
-        sendWelcomeMessage:
-          description: Whether to send a welcome message for this identifier. Defaults to true. Takes effect only if the welcome workflow is enabled.
-          example: true
-          type: boolean
-        source:
-          description: Source of the identifier
-          example: api
-          type: string
-        type:
-          description: Identifier type
-          enum:
-          - email
-          - phone
-          example: email
-          type: string
-      required:
-      - id
-      - type
-      type: object
-    OptIn:
-      description: Contact opt-in record.
-      properties:
-        channel:
-          description: Channel type
-          enum:
-          - email
-          - sms
-          example: email
-          type: string
-        optInAt:
-          description: Timestamp when the opt-in was recorded
-          example: '2021-05-20T12:00:00Z'
-          type: string
-      type: object
-    Identifier:
-      description: Unique contact identifier (email or phone).
-      properties:
-        channels:
-          additionalProperties:
-            $ref: '#/components/schemas/Channel'
-          description: Subscription status per channel, keyed by channel name
-          type: object
-        id:
-          description: Identifier value (email address or phone number)
-          example: example@example.com
-          type: string
-        type:
-          description: Identifier type
-          enum:
-          - email
-          - phone
-          example: email
-          type: string
-      type: object
-    FieldError:
-      description: A single field validation failure within a validation error response.
-      properties:
-        code:
-          description: Error code indicating the type of failure
-          example: invalid_format
-          type: string
-        field:
-          description: Dot-separated path to the field that failed validation
-          example: content.email.subject
-          type: string
-        message:
-          description: Human-readable explanation of what is wrong with the field value
-          example: Must be a valid email address
-          type: string
-      type: object
-    Problem:
-      description: Standard error response returned by all API endpoints on failure.
-      properties:
-        detail:
-          description: Human-readable explanation of this specific error occurrence
-          example: A human-readable explanation of the error.
-          type: string
-        instance:
-          description: Request trace identifier for support and debugging
-          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
-          type: string
-        status:
-          description: HTTP status code
-          example: 0
-          type: integer
-        title:
-          description: Short description of the error type
-          example: Problem
-          type: string
-        type:
-          description: URI that identifies the error type
-          example: https://problems.omnisend.com/problem
-          type: string
-      type: object
     RemoveTagsRequest:
       description: Payload for batch removing tags from contacts.
       properties:
@@ -1171,23 +920,177 @@ components:
       required:
       - tags
       type: object
-    ContactChannelRequest:
-      description: Channel subscription details.
+    RateLimitProblem:
+      description: Error response returned when the rate limit is exceeded. Use the retryAfter value to know when it is safe to retry the request.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        retryAfter:
+          description: Seconds to wait before retrying the request
+          example: 60
+          type: integer
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    Problem:
+      description: Standard error response returned by all API endpoints on failure.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    ContactRequest:
+      description: Payload for creating or updating a contact.
+      properties:
+        address:
+          description: Street, house number, apartment number.
+          example: 1234 Main St
+          type: string
+        birthdate:
+          description: Contact birthdate in YYYY-MM-DD format
+          example: '1990-01-01'
+          type: string
+        city:
+          description: City
+          example: Los Angeles
+          type: string
+        country:
+          description: Country name. Used to derive ISO country code when countryCode is not provided
+          example: United States
+          type: string
+        countryCode:
+          description: ISO 3166-1 alpha-2 country code. Takes priority over country when both are provided
+          example: US
+          type: string
+        createdAt:
+          description: Contact creation timestamp. If provided, stored as "externalCreated" custom property
+          example: '2024-01-01T00:00:00Z'
+          type: string
+        customProperties:
+          additionalProperties: true
+          description: You can add your own custom properties. Read more in https://api-docs.omnisend.com/reference/contacts#custom-properties
+          type: object
+        firstName:
+          description: Contact first name
+          example: John
+          type: string
+        gender:
+          description: Contact gender. m - male, f - female
+          enum:
+          - m
+          - f
+          example: m
+          type: string
+        identifiers:
+          description: Contact identifiers (email and/or phone)
+          items:
+            $ref: '#/components/schemas/ContactIdentifierRequest'
+          type: array
+        lastName:
+          description: Contact last name
+          example: Doe
+          type: string
+        postalCode:
+          description: Postal or zip code
+          example: '90001'
+          type: string
+        state:
+          description: State or region
+          example: New York
+          type: string
+        tags:
+          description: 'Labels assigned to the contact. When creating a contact, it is strongly advised to include a source tag, e.g. "source: shopify".'
+          example:
+          - tag1
+          - tag2
+          items:
+            type: string
+          maxItems: 100
+          type: array
+      type: object
+    Channel:
+      description: Channel subscription status.
       properties:
         status:
-          description: Subscription status
+          description: Channel subscription status
           enum:
           - subscribed
-          - nonSubscribed
           - unsubscribed
+          - nonSubscribed
           example: subscribed
           type: string
         statusChangedAt:
-          description: Date when the channel status was last changed
-          example: '2024-01-01T00:00:00Z'
+          description: Timestamp when the channel status last changed
+          example: '2023-05-22T10:25:14.263Z'
+          type: string
+      type: object
+    ContactIdentifierRequest:
+      description: 'A unique contact identifier (email or phone). For phone: provide the full number with country code prefix in E.164 format (e.g. +1234567890).'
+      properties:
+        channels:
+          additionalProperties:
+            $ref: '#/components/schemas/ContactChannelRequest'
+          description: Communication channels for this identifier
+          type: object
+        consent:
+          allOf:
+          - $ref: '#/components/schemas/ContactConsentRequest'
+          description: Consent information
+        id:
+          description: 'Identifier value. For email: a valid email address. For phone: full phone number in E.164 format with country code prefix (e.g. +1234567890)'
+          example: example@example.com
+          type: string
+        sendWelcomeMessage:
+          description: Whether to send a welcome message for this identifier. Defaults to true. Takes effect only if the welcome workflow is enabled.
+          example: true
+          type: boolean
+        source:
+          description: Source of the identifier
+          example: api
+          type: string
+        type:
+          description: Identifier type
+          enum:
+          - email
+          - phone
+          example: email
           type: string
       required:
-      - status
+      - id
+      - type
       type: object
     ValidationProblem:
       description: Error response returned when the request contains invalid input. The errors array lists every field that failed validation.
@@ -1218,34 +1121,139 @@ components:
           example: https://problems.omnisend.com/problem
           type: string
       type: object
-    RateLimitProblem:
-      description: Error response returned when the rate limit is exceeded. Use the retryAfter value to know when it is safe to retry the request.
+    OptIn:
+      description: Contact opt-in record.
       properties:
-        detail:
-          description: Human-readable explanation of this specific error occurrence
-          example: A human-readable explanation of the error.
+        channel:
+          description: Channel type
+          enum:
+          - email
+          - sms
+          example: email
           type: string
-        instance:
-          description: Request trace identifier for support and debugging
-          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
-          type: string
-        retryAfter:
-          description: Seconds to wait before retrying the request
-          example: 60
-          type: integer
-        status:
-          description: HTTP status code
-          example: 0
-          type: integer
-        title:
-          description: Short description of the error type
-          example: Problem
-          type: string
-        type:
-          description: URI that identifies the error type
-          example: https://problems.omnisend.com/problem
+        optInAt:
+          description: Timestamp when the opt-in was recorded
+          example: '2021-05-20T12:00:00Z'
           type: string
       type: object
+    CursorsResponse:
+      description: Cursor pointers for paginating forward and backward through results
+      properties:
+        after:
+          description: Opaque cursor for fetching the next page of results
+          example: eyJpZCI6ImNhbXAtNDU2In0
+          type:
+          - string
+          - 'null'
+        before:
+          description: Opaque cursor for fetching the previous page of results
+          example: eyJpZCI6ImNhbXAtMTIzIn0
+          type:
+          - string
+          - 'null'
+      type: object
+    Consent:
+      description: Consent record for a contact channel.
+      properties:
+        channel:
+          description: Channel type this consent applies to
+          enum:
+          - email
+          - sms
+          example: email
+          type: string
+        createdAt:
+          description: Consent collection timestamp
+          example: '2021-05-20T12:00:00Z'
+          type: string
+        ip:
+          description: IP address from which consent was collected
+          example: 161.1.1.1
+          type: string
+        source:
+          description: Source through which consent was obtained (e.g. omnisend-form, api)
+          example: api
+          type: string
+        userAgent:
+          description: User agent string from the consent collection request
+          example: Mozilla/5.0
+          type: string
+      type: object
+    ContactConsentRequest:
+      description: Consent record.
+      properties:
+        createdAt:
+          description: Consent collection timestamp in RFC3339 format. Defaults to current time if not provided
+          example: '2026-01-01T00:00:00Z'
+          type: string
+        ip:
+          description: IP address at time of consent
+          example: 192.168.1.1
+          type: string
+        source:
+          description: Source of consent
+          example: omnisend-form
+          type: string
+        userAgent:
+          description: User agent at time of consent
+          example: Mozilla/5.0
+          type: string
+      type: object
+    ListContactsResponse:
+      description: Paginated list of contacts.
+      properties:
+        contacts:
+          description: List of contact resources
+          items:
+            $ref: '#/components/schemas/ContactResponse'
+          type: array
+        paging:
+          allOf:
+          - $ref: '#/components/schemas/PagingResponse'
+          description: Pagination metadata
+      type: object
+    ContactChannelRequest:
+      description: Channel subscription details.
+      properties:
+        status:
+          description: Subscription status
+          enum:
+          - subscribed
+          - nonSubscribed
+          - unsubscribed
+          example: subscribed
+          type: string
+        statusChangedAt:
+          description: Date when the channel status was last changed
+          example: '2024-01-01T00:00:00Z'
+          type: string
+      required:
+      - status
+      type: object
+    FieldError:
+      description: A single field validation failure within a validation error response.
+      properties:
+        code:
+          description: Error code indicating the type of failure
+          example: invalid_format
+          type: string
+        field:
+          description: Dot-separated path to the field that failed validation
+          example: content.email.subject
+          type: string
+        message:
+          description: Human-readable explanation of what is wrong with the field value
+          example: Must be a valid email address
+          type: string
+      type: object
+  requestBodies:
+    ContactRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactRequest'
+      description: Contact fields to update
+      required: true
   parameters:
     APIVersionHeader:
       description: API version that specifies the response format and behaviour
@@ -1255,14 +1263,6 @@ components:
       schema:
         type: string
         default: '2026-03-15'
-  requestBodies:
-    ContactRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ContactRequest'
-      description: Contact fields to update
-      required: true
   securitySchemes:
     ApiKeyAuth:
       description: 'API Key authentication. Value format: ''Omnisend-API-Key {api-key}'''

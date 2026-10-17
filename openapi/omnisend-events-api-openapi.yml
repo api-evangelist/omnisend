@@ -61,68 +61,7 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    contactDto.Channel:
-      enum:
-      - email
-      - sms
-      type: string
-      x-enum-varnames:
-      - ChannelTypeEmail
-      - ChannelTypeSms
-    Problem:
-      description: Standard error response returned by all API endpoints on failure.
-      properties:
-        detail:
-          description: Human-readable explanation of this specific error occurrence
-          example: A human-readable explanation of the error.
-          type: string
-        instance:
-          description: Request trace identifier for support and debugging
-          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
-          type: string
-        status:
-          description: HTTP status code
-          example: 0
-          type: integer
-        title:
-          description: Short description of the error type
-          example: Problem
-          type: string
-        type:
-          description: URI that identifies the error type
-          example: https://problems.omnisend.com/problem
-          type: string
-      type: object
-    ValidationProblem:
-      description: Error response returned when the request contains invalid input. The errors array lists every field that failed validation.
-      properties:
-        detail:
-          description: Human-readable explanation of this specific error occurrence
-          example: A human-readable explanation of the error.
-          type: string
-        errors:
-          description: List of fields that failed validation
-          items:
-            $ref: '#/components/schemas/FieldError'
-          type: array
-        instance:
-          description: Request trace identifier for support and debugging
-          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
-          type: string
-        status:
-          description: HTTP status code
-          example: 0
-          type: integer
-        title:
-          description: Short description of the error type
-          example: Problem
-          type: string
-        type:
-          description: URI that identifies the error type
-          example: https://problems.omnisend.com/problem
-          type: string
-      type: object
-    contactDto.Consent:
+    contactDto.OptIn:
       properties:
         channel:
           allOf:
@@ -131,19 +70,19 @@ components:
           - email
           - sms
         createdAt:
-          description: RFC3339 format
-          type: string
-        ip:
-          description: IP address of the user
           type: string
         source:
           maxLength: 100
           type: string
-        userAgent:
-          description: User agent of the device that user used to give consent
-          maxLength: 200
-          type: string
       type: object
+    contactDto.Channel:
+      enum:
+      - email
+      - sms
+      type: string
+      x-enum-varnames:
+      - ChannelTypeEmail
+      - ChannelTypeSms
     contactDto.Contact:
       properties:
         address:
@@ -228,20 +167,28 @@ components:
           maxItems: 100
           type: array
       type: object
-    FieldError:
-      description: A single field validation failure within a validation error response.
+    Problem:
+      description: Standard error response returned by all API endpoints on failure.
       properties:
-        code:
-          description: Error code indicating the type of failure
-          example: invalid_format
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
           type: string
-        field:
-          description: Dot-separated path to the field that failed validation
-          example: content.email.subject
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
           type: string
-        message:
-          description: Human-readable explanation of what is wrong with the field value
-          example: Must be a valid email address
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
           type: string
       type: object
     EventRequest:
@@ -275,7 +222,36 @@ components:
           description: Event properties, you can check events guides section to see what recommended properties you should provide for each event. Not providing recommending properties can result some of the features not working properly.
           type: object
       type: object
-    contactDto.OptIn:
+    ValidationProblem:
+      description: Error response returned when the request contains invalid input. The errors array lists every field that failed validation.
+      properties:
+        detail:
+          description: Human-readable explanation of this specific error occurrence
+          example: A human-readable explanation of the error.
+          type: string
+        errors:
+          description: List of fields that failed validation
+          items:
+            $ref: '#/components/schemas/FieldError'
+          type: array
+        instance:
+          description: Request trace identifier for support and debugging
+          example: urn:omnisend:request:00000000-0000-0000-0000-000000000001
+          type: string
+        status:
+          description: HTTP status code
+          example: 0
+          type: integer
+        title:
+          description: Short description of the error type
+          example: Problem
+          type: string
+        type:
+          description: URI that identifies the error type
+          example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    contactDto.Consent:
       properties:
         channel:
           allOf:
@@ -284,9 +260,17 @@ components:
           - email
           - sms
         createdAt:
+          description: RFC3339 format
+          type: string
+        ip:
+          description: IP address of the user
           type: string
         source:
           maxLength: 100
+          type: string
+        userAgent:
+          description: User agent of the device that user used to give consent
+          maxLength: 200
           type: string
       type: object
     contactDto.OptOut:
@@ -304,6 +288,22 @@ components:
           type: string
         source:
           maxLength: 100
+          type: string
+      type: object
+    FieldError:
+      description: A single field validation failure within a validation error response.
+      properties:
+        code:
+          description: Error code indicating the type of failure
+          example: invalid_format
+          type: string
+        field:
+          description: Dot-separated path to the field that failed validation
+          example: content.email.subject
+          type: string
+        message:
+          description: Human-readable explanation of what is wrong with the field value
+          example: Must be a valid email address
           type: string
       type: object
   parameters:

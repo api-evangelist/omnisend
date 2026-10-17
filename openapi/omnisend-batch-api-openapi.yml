@@ -315,36 +315,34 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Paging:
+    CreateBatchRequest:
       properties:
-        limit:
-          example: 100
-          type: integer
-        next:
-          example: https://api.omnisend.com/api/batches?limit=100&offset=105
+        endpoint:
+          enum:
+          - products
+          - contacts
+          - events
+          - categories
+          example: contacts
           type: string
-        offset:
-          example: 5
-          type: integer
-        previous:
-          example: https://api.omnisend.com/api/batches?limit=100&offset=5
-          type: string
-      type: object
-    CreateBatchResponse:
-      properties:
-        batchID:
-          type: string
-        totalCount:
-          type: integer
-      type: object
-    ListBatchesResponse:
-      properties:
-        batches:
-          items:
-            $ref: '#/components/schemas/Batch'
+        items:
+          items: {}
+          maxItems: 100
+          minItems: 1
           type: array
-        paging:
-          $ref: '#/components/schemas/Paging'
+        method:
+          enum:
+          - POST
+          - PUT
+          example: POST
+          type: string
+        origin:
+          example: omnisend
+          type: string
+      required:
+      - endpoint
+      - items
+      - method
       type: object
     Problem:
       description: Standard error response returned by all API endpoints on failure.
@@ -369,6 +367,29 @@ components:
           description: URI that identifies the error type
           example: https://problems.omnisend.com/problem
           type: string
+      type: object
+    BatchItem:
+      properties:
+        itemID:
+          example: 5f92cbf10cf217478ba93561
+          type: string
+        request: {}
+        response: {}
+        responseCode:
+          example: 200
+          type: integer
+        status:
+          example: finished
+          type: string
+      type: object
+    ListBatchesResponse:
+      properties:
+        batches:
+          items:
+            $ref: '#/components/schemas/Batch'
+          type: array
+        paging:
+          $ref: '#/components/schemas/Paging'
       type: object
     ValidationProblem:
       description: Error response returned when the request contains invalid input. The errors array lists every field that failed validation.
@@ -397,6 +418,28 @@ components:
         type:
           description: URI that identifies the error type
           example: https://problems.omnisend.com/problem
+          type: string
+      type: object
+    CreateBatchResponse:
+      properties:
+        batchID:
+          type: string
+        totalCount:
+          type: integer
+      type: object
+    Paging:
+      properties:
+        limit:
+          example: 100
+          type: integer
+        next:
+          example: https://api.omnisend.com/api/batches?limit=100&offset=105
+          type: string
+        offset:
+          example: 5
+          type: integer
+        previous:
+          example: https://api.omnisend.com/api/batches?limit=100&offset=5
           type: string
       type: object
     Batch:
@@ -446,35 +489,6 @@ components:
           example: 100
           type: integer
       type: object
-    CreateBatchRequest:
-      properties:
-        endpoint:
-          enum:
-          - products
-          - contacts
-          - events
-          - categories
-          example: contacts
-          type: string
-        items:
-          items: {}
-          maxItems: 100
-          minItems: 1
-          type: array
-        method:
-          enum:
-          - POST
-          - PUT
-          example: POST
-          type: string
-        origin:
-          example: omnisend
-          type: string
-      required:
-      - endpoint
-      - items
-      - method
-      type: object
     FieldError:
       description: A single field validation failure within a validation error response.
       properties:
@@ -489,20 +503,6 @@ components:
         message:
           description: Human-readable explanation of what is wrong with the field value
           example: Must be a valid email address
-          type: string
-      type: object
-    BatchItem:
-      properties:
-        itemID:
-          example: 5f92cbf10cf217478ba93561
-          type: string
-        request: {}
-        response: {}
-        responseCode:
-          example: 200
-          type: integer
-        status:
-          example: finished
           type: string
       type: object
   parameters:
