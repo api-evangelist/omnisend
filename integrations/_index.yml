@@ -150,3 +150,16 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: omnisend-wix-own
+  label: Wix (own)
+  partner: wix
+  partner_name: Wix (own)
+  category: Email
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.wix.com/app-market/developer/omnisend
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null

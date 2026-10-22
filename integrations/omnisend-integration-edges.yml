@@ -16,6 +16,7 @@ checked:
 - https://zapier.com/apps/omnisend/integrations
 - shopify/integrations/shopify-integration-edges.yml
 - wordpress/integrations/wordpress-integration-edges.yml
+- wix/integrations/wix-integration-edges.yml
 summary: null
 marketplace_apps:
 - marketplace: composio
@@ -227,4 +228,25 @@ edges:
   detected: '2026-10-15'
   detected_by: mirror-platform-listings.py
   category: WordPress plugin
+- partner_name: Wix (own)
+  partner: wix
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.wix.com/app-market/developer/omnisend
+  mirror_of: wix/integrations/wix-integration-edges.yml
+  apps:
+  - Omnisend Email Marketing & SMS
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: Email
+  badges:
+  - WIX_CHOICE
+  publisher_verified:
+  - Verified by Wix
 templates: []
