@@ -20,6 +20,7 @@ checked:
 - https://hex.pm/api
 - https://packagist.org/packages
 - https://pub.dev/api
+- intercom/integrations/intercom-integration-edges.yml
 summary: null
 marketplace_apps:
 - marketplace: composio
@@ -182,6 +183,37 @@ edges:
     builder: Pipedream repo (component)
   detected_by: sweep-workflow-automation.py
   first_seen: '2026-10-15'
+- partner_name: Packagist
+  partner: packagist
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (PHP)
+  evidence: https://packagist.org/packages/omnisend/php-sdk
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Packagist (public registry JSON)
+    spec_file: null
+    language: PHP
+    packages:
+    - name: omnisend/php-sdk
+      version: '1.2'
+      released: '2020-07-24'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/omnisend/php-sdk
+      repo_leg: github-org:omnisend
+      publisher_leg: org:omnisend
+      matched_by: github-org
+      abandoned: true
+    current: false
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
+  first_seen: '2026-10-22'
 - partner_name: Gorgias (own)
   partner: gorgias
   partner_match: mirror
@@ -252,35 +284,21 @@ edges:
   - WIX_CHOICE
   publisher_verified:
   - Verified by Wix
-- partner_name: Packagist
-  partner: packagist
-  partner_match: register
-  type: register
-  direction: provider-built
-  category: official SDK (PHP)
-  evidence: https://packagist.org/packages/omnisend/php-sdk
-  channel: package-registry
-  relationship: distribution-channel
-  contract_reference:
-    register: Packagist (public registry JSON)
-    spec_file: null
-    language: PHP
-    packages:
-    - name: omnisend/php-sdk
-      version: '1.2'
-      released: '2020-07-24'
-      released_field: time
-      lapsed: true
-      page: https://packagist.org/packages/omnisend/php-sdk
-      repo_leg: github-org:omnisend
-      publisher_leg: org:omnisend
-      matched_by: github-org
-      abandoned: true
-    current: false
-    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
-      24 months'
-    detected_by: sweep-php-dart-elixir-package-registries.py
-    detected: '2026-10-22'
-  detected_by: sweep-php-dart-elixir-package-registries.py
-  first_seen: '2026-10-22'
+- partner_name: Intercom (own)
+  partner: intercom
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.intercom.com/app-store/?app_package_code=omnisend
+  mirror_of: intercom/integrations/intercom-integration-edges.yml
+  apps:
+  - Omnisend
+  listing_count: 1
+  detected: '2026-10-23'
+  detected_by: mirror-platform-listings.py
+  category: Marketing & Campaigns
 templates: []
