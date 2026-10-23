@@ -17,6 +17,9 @@ checked:
 - shopify/integrations/shopify-integration-edges.yml
 - wordpress/integrations/wordpress-integration-edges.yml
 - wix/integrations/wix-integration-edges.yml
+- https://hex.pm/api
+- https://packagist.org/packages
+- https://pub.dev/api
 summary: null
 marketplace_apps:
 - marketplace: composio
@@ -249,4 +252,35 @@ edges:
   - WIX_CHOICE
   publisher_verified:
   - Verified by Wix
+- partner_name: Packagist
+  partner: packagist
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (PHP)
+  evidence: https://packagist.org/packages/omnisend/php-sdk
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Packagist (public registry JSON)
+    spec_file: null
+    language: PHP
+    packages:
+    - name: omnisend/php-sdk
+      version: '1.2'
+      released: '2020-07-24'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/omnisend/php-sdk
+      repo_leg: github-org:omnisend
+      publisher_leg: org:omnisend
+      matched_by: github-org
+      abandoned: true
+    current: false
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
+  first_seen: '2026-10-22'
 templates: []
