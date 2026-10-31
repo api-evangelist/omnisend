@@ -1,4 +1,4 @@
-# Omnisend (omnisend)
+# Omnisend
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,109 +64,246 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Omnisend is a Lithuanian-headquartered email and SMS marketing automation platform purpose-built for ecommerce, with first-class integrations into Shopify, BigCommerce, WooCommerce, Magento, Wix, Square Online, and other storefronts. The platform unifies automation workflows, campaign builders, segmentation, popups and forms, web push, product recommendations, A/B testing, and reporting to drive customer engagement and revenue. Omnisend's REST API exposes contacts, events, products, product categories, segments, campaigns, batches, email templates, email content, universal layouts, images, brands, and analytics reports. Authentication uses an API key passed via the `X-API-KEY` header, or OAuth 2.0 authorization-code flow with resource-scoped permissions for app-based integrations on the Omnisend App Market.
+Omnisend is a Lithuanian-headquartered email and SMS marketing automation platform purpose-built for ecommerce, with first-class integrations into Shopify, BigCommerce, WooCommerce, Magento, Wix, Square Online, and other storefronts. The platform unifies automation workflows, campaign builders, segmentation, popups and forms, web push, product recommendations, A/B testing, and reporting to drive customer engagement and revenue. The REST API at version 2026-03-15 is served from https://api.omnisend.com/api and covers contacts, events and custom event metadata, products, product categories, segments, campaigns, automations, batches, email templates, email content, universal layouts, images, brands and analytics — 82 published operations across 15 OpenAPI 3.0.0 documents. Authentication is an API key on the Authorization header (Omnisend-API-Key {key}) or OAuth 2.0 authorization code with PKCE and 26 resource scopes; every request must also carry an Omnisend-Version header, and a retired version returns 410. Omnisend additionally operates two first-party hosted MCP servers at mcp.omnisend.com and is listed in Claude's Connector Directory.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/omnisend/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/omnisend/refs/heads/main/apis.yml)
+**Areas:** Email Marketing · Marketing Automation · E-Commerce · SMS Marketing · Customer Engagement · Segmentation · Campaigns · Forms · Popups · Web Push · Automation Workflows · Analytics
 
-## Scope
+## Omnisend on APIs.io
 
-- **Type:** Index
-- **Position:** Consuming
-- **Access:** 3rd-Party
+Everything profiled for Omnisend is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/omnisend/](https://apis.io/providers/omnisend/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (16)
 
-- Email Marketing
-- Marketing Automation
-- Ecommerce
-- SMS Marketing
-- Customer Engagement
-- Segmentation
-- Campaigns
-- Forms
-- Popups
-- Web Push
+- [Omnisend Brands API](https://apis.io/apis/omnisend/omnisend-brands-api/) — The Brands API from Omnisend — 2 operation(s) for brands. Version 2026-03-15, harvested from Omnisend's published contract.
+- [Omnisend Campaigns API](https://apis.io/apis/omnisend/omnisend-campaigns-api/) — The Campaigns API from Omnisend — 14 operation(s) for campaigns. Version 2026-03-15, harvested from Omnisend's published contract.
+- [Omnisend Contacts API](https://apis.io/apis/omnisend/omnisend-contacts-api/) — The Contacts API from Omnisend — 7 operation(s) for contacts. Version 2026-03-15, harvested from Omnisend's published contract.
+- [Omnisend Events API](https://apis.io/apis/omnisend/omnisend-events-api/) — The Events API from Omnisend — 1 operation(s) for events. Version 2026-03-15, harvested from Omnisend's published contract.
+- [Omnisend Images API](https://apis.io/apis/omnisend/omnisend-images-api/) — The Images API from Omnisend — 5 operation(s) for images. Version 2026-03-15, harvested from Omnisend's published contract.
+- [Omnisend Products API](https://apis.io/apis/omnisend/omnisend-products-api/) — The Products API from Omnisend — 5 operation(s) for products. Version 2026-03-15, harvested from Omnisend's published contract.
+- [Omnisend Segments API](https://apis.io/apis/omnisend/omnisend-segments-api/) — The Segments API from Omnisend — 6 operation(s) for segments. Version 2026-03-15, harvested from Omnisend's published contract.
+- [Omnisend Automations API](https://apis.io/apis/omnisend/omnisend-automations-api/) — The Automations API from Omnisend — 13 operation(s) for creating, enabling, copying and restructuring event-triggered automation workflows, including the…
+- [Omnisend Event Metadata API](https://apis.io/apis/omnisend/omnisend-event-metadata-api/) — The Event Metadata API from Omnisend — 3 operation(s) for declaring, merging and querying brand-custom event schemas. The only Omnisend operations that…
+- [Omnisend Batch API](https://apis.io/apis/omnisend/omnisend-batch-api/) — The Batch API from Omnisend — 3 operation(s) for batch.
+- [Omnisend Email Content API](https://apis.io/apis/omnisend/omnisend-email-content-api/) — The Email Content API from Omnisend — 2 operation(s) for email content.
+- [Omnisend Email Templates API](https://apis.io/apis/omnisend/omnisend-email-templates-api/) — The Email Templates API from Omnisend — 4 operation(s) for email templates.
+- [Omnisend Email Universal Layouts API](https://apis.io/apis/omnisend/omnisend-email-universal-layouts-api/) — The Email Universal Layouts API from Omnisend — 2 operation(s) for email universal layouts.
+- [Omnisend Product Categories API](https://apis.io/apis/omnisend/omnisend-product-categories-api/) — The Product Categories API from Omnisend — 2 operation(s) for product categories.
+- [Omnisend Reports API](https://apis.io/apis/omnisend/omnisend-reports-api/) — The Reports API from Omnisend — 1 operation(s) for reports.
+- [Omnisend Statistics API](https://apis.io/apis/omnisend/omnisend-statistics-api/) — The Statistics API from Omnisend — 1 operation(s) for statistics.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-05-11
-- **Modified:** 2026-05-25
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Arazzo workflows (13)
 
-### Omnisend REST API
+Multi-step workflows that chain operations into a business task.
 
-Omnisend's REST API for ecommerce email and SMS marketing automation. Manage contacts, events, products, product categories, segments, campaigns, batches, email templates, email content, email universal layouts, images, brands, and analytics reports. Authentication uses `X-API-KEY` header or OAuth 2.0 with resource-scoped permissions (`contacts.read`, `contacts.write`, `events.write`, `products.read`, `products.write`, `campaigns.read`, `campaigns.write`, `segments.read`, `segments.write`, `email-templates.read`, `email-templates.write`, `images.read`, `images.write`, `brands.read`, `brands.write`, `analytics.read`). Cursor-based pagination across list endpoints.
+- [Omnisend Copy and Send Campaign](https://apis.io/arazzos/omnisend/omnisend-copy-and-send-campaign-workflow/)
+- [Omnisend Create and Send Campaign](https://apis.io/arazzos/omnisend/omnisend-create-and-send-campaign-workflow/)
+- [Omnisend Create and Verify Product Category](https://apis.io/arazzos/omnisend/omnisend-create-and-verify-category-workflow/)
+- [Omnisend Create and Verify Contact](https://apis.io/arazzos/omnisend/omnisend-create-and-verify-contact-workflow/)
+- [Omnisend Create and Verify Product](https://apis.io/arazzos/omnisend/omnisend-create-and-verify-product-workflow/)
+- [Omnisend Create Segment and Read Statistics](https://apis.io/arazzos/omnisend/omnisend-create-segment-and-stats-workflow/)
+- [Omnisend Refresh Product Catalog Entry](https://apis.io/arazzos/omnisend/omnisend-replace-product-workflow/)
+- [Omnisend Subscribe and Trigger Welcome](https://apis.io/arazzos/omnisend/omnisend-subscribe-and-welcome-workflow/)
+- [Omnisend Create and Tag Contact](https://apis.io/arazzos/omnisend/omnisend-tag-contact-workflow/)
+- [Omnisend Track Added-to-Cart Event](https://apis.io/arazzos/omnisend/omnisend-track-cart-event-workflow/)
+- [Omnisend Track Placed Order Event](https://apis.io/arazzos/omnisend/omnisend-track-order-event-workflow/)
+- [Omnisend Update Product Category](https://apis.io/arazzos/omnisend/omnisend-update-category-workflow/)
+- [Omnisend Upsert a Contact](https://apis.io/arazzos/omnisend/omnisend-upsert-contact-workflow/)
 
-- **Human URL:** [https://api-docs.omnisend.com/reference/overview](https://api-docs.omnisend.com/reference/overview)
-- **Base URL:** `https://api.omnisend.com/v5`
+#### AsyncAPI (1)
 
-#### Tags
+Event-driven and webhook contracts.
 
-- Email Marketing
-- Contacts
-- Campaigns
-- Ecommerce
-- Events
-- Segments
-- Products
-- Templates
-- Analytics
+- [Omnisend Webhooks](https://apis.io/asyncapis/omnisend/omnisend-webhooks/)
 
-#### Properties
+#### MCP servers (1)
 
-- [Documentation](https://api-docs.omnisend.com/)
-- [API Reference](https://api-docs.omnisend.com/reference/overview)
-- [Authentication](https://api-docs.omnisend.com/reference/authentication)
-- [O Auth](https://api-docs.omnisend.com/reference/oauth)
-- [Postman](https://www.postman.com/omnisend-api/workspace/omnisend/overview) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [L L Ms Txt](https://api-docs.omnisend.com/llms.txt)
-- [OpenAPI](openapi/omnisend-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/omnisend.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/omnisend.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/omnisend-contact-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/omnisend-event-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON-LD](json-ld/omnisend-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+Model Context Protocol servers that expose the API to agents.
 
-## Common Properties
+- [omnisend-mcp.yml](https://apis.io/servers/omnisend/omnisend-mcp-yml/)
 
-- [Arazzo Workflows](arazzo/) — [Arazzo Specification](https://spec.openapis.org/arazzo/latest.html)
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Omnisend Agentic Access](https://apis.io/agentic-access/omnisend/omnisend-agentic-access/)
+
+#### JSON Schema (2)
+
+The data models the API reads and writes.
+
+- [Omnisend Contact](https://apis.io/schemas/omnisend/omnisend-contact/)
+- [Omnisend Customer Event](https://apis.io/schemas/omnisend/omnisend-event/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Omnisend Context](https://apis.io/jsonld/omnisend/omnisend-context/)
+
+#### Collections (17)
+
+Postman and Open Collection request collections.
+
+- [Omnisend REST API](https://apis.io/collections/omnisend/open-omnisend/)
+- [Analytics API](https://apis.io/collections/omnisend/open-omnisend-analytics-api/)
+- [Automations API](https://apis.io/collections/omnisend/open-omnisend-automations-api/)
+- [Batches API](https://apis.io/collections/omnisend/open-omnisend-batches-api/)
+- [Brands API](https://apis.io/collections/omnisend/open-omnisend-brands-api/)
+- [Campaigns API](https://apis.io/collections/omnisend/open-omnisend-campaigns-api/)
+- [Contacts API](https://apis.io/collections/omnisend/open-omnisend-contacts-api/)
+- [Email Content API](https://apis.io/collections/omnisend/open-omnisend-emailcontent-api/)
+- [Email Templates API](https://apis.io/collections/omnisend/open-omnisend-emailtemplates-api/)
+- [Email Universal Layouts API](https://apis.io/collections/omnisend/open-omnisend-emailuniversallayouts-api/)
+- [Event Metadata API](https://apis.io/collections/omnisend/open-omnisend-event-metadata-api/)
+- [Events API](https://apis.io/collections/omnisend/open-omnisend-events-api/)
+- [Images API](https://apis.io/collections/omnisend/open-omnisend-images-api/)
+- [Product Categories API](https://apis.io/collections/omnisend/open-omnisend-productcategories-api/)
+- [Products API](https://apis.io/collections/omnisend/open-omnisend-products-api/)
+- [Segments API](https://apis.io/collections/omnisend/open-omnisend-segments-api/)
+- [Omnisend REST API](https://apis.io/collections/omnisend/postman-omnisend/)
+
+#### Overlays (31)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Omnisend Analytics Api Overlay](https://apis.io/overlays/omnisend/omnisend-analytics-api-overlay/)
+- [Omnisend Automations Api Overlay](https://apis.io/overlays/omnisend/omnisend-automations-api-overlay/)
+- [Omnisend Automations Api Phrasing Overlay](https://apis.io/overlays/omnisend/omnisend-automations-api-phrasing-overlay/)
+- [Omnisend Batch Api Phrasing Overlay](https://apis.io/overlays/omnisend/omnisend-batch-api-phrasing-overlay/)
+- [Omnisend Batches Api Overlay](https://apis.io/overlays/omnisend/omnisend-batches-api-overlay/)
+- [Omnisend Brands Api Overlay](https://apis.io/overlays/omnisend/omnisend-brands-api-overlay/)
+- [Omnisend Brands Api Phrasing Overlay](https://apis.io/overlays/omnisend/omnisend-brands-api-phrasing-overlay/)
+- [Omnisend Campaigns Api Overlay](https://apis.io/overlays/omnisend/omnisend-campaigns-api-overlay/)
+- [Omnisend Campaigns Api Phrasing Overlay](https://apis.io/overlays/omnisend/omnisend-campaigns-api-phrasing-overlay/)
+- [Omnisend Contacts Api Overlay](https://apis.io/overlays/omnisend/omnisend-contacts-api-overlay/)
+- [Omnisend Contacts Api Phrasing Overlay](https://apis.io/overlays/omnisend/omnisend-contacts-api-phrasing-overlay/)
+- [Omnisend Email Content Api Phrasing Overlay](https://apis.io/overlays/omnisend/omnisend-email-content-api-phrasing-overlay/)
+- [Omnisend Email Templates Api Phrasing Overlay](https://apis.io/overlays/omnisend/omnisend-email-templates-api-phrasing-overlay/)
+- [Omnisend Email Universal Layouts Api Phrasing Overlay](https://apis.io/overlays/omnisend/omnisend-email-universal-layouts-api-phrasing-overlay/)
+- [Omnisend Emailcontent Api Overlay](https://apis.io/overlays/omnisend/omnisend-emailcontent-api-overlay/)
+- [Omnisend Emailtemplates Api Overlay](https://apis.io/overlays/omnisend/omnisend-emailtemplates-api-overlay/)
+- [Omnisend Emailuniversallayouts Api Overlay](https://apis.io/overlays/omnisend/omnisend-emailuniversallayouts-api-overlay/)
+- [Omnisend Event Metadata Api Overlay](https://apis.io/overlays/omnisend/omnisend-event-metadata-api-overlay/)
+- [Omnisend Event Metadata Api Phrasing Overlay](https://apis.io/overlays/omnisend/omnisend-event-metadata-api-phrasing-overlay/)
+- [Omnisend Events Api Overlay](https://apis.io/overlays/omnisend/omnisend-events-api-overlay/)
+- [Omnisend Events Api Phrasing Overlay](https://apis.io/overlays/omnisend/omnisend-events-api-phrasing-overlay/)
+- [Omnisend Images Api Overlay](https://apis.io/overlays/omnisend/omnisend-images-api-overlay/)
+- [Omnisend Images Api Phrasing Overlay](https://apis.io/overlays/omnisend/omnisend-images-api-phrasing-overlay/)
+- [Omnisend Product Categories Api Phrasing Overlay](https://apis.io/overlays/omnisend/omnisend-product-categories-api-phrasing-overlay/)
+- [Omnisend Productcategories Api Overlay](https://apis.io/overlays/omnisend/omnisend-productcategories-api-overlay/)
+- …and 6 more published on APIs.io
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Omnisend — jsonschema rules](https://apis.io/rules/omnisend/omnisend-jsonschema-spectral-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Omnisend Authentication](https://apis.io/security/omnisend/omnisend-authentication/)
+- [Omnisend Domain Security](https://apis.io/security/omnisend/omnisend-domain-security/)
+- [Omnisend Vulnerability Disclosure](https://apis.io/security/omnisend/omnisend-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Omnisend Scopes](https://apis.io/scopes/omnisend/omnisend-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Omnisend Plans Pricing](https://apis.io/plans/omnisend/omnisend-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Omnisend Rate Limits](https://apis.io/rate-limits/omnisend/omnisend-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Omnisend Finops](https://apis.io/finops/omnisend/omnisend-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://www.omnisend.com)
-- [Portal](https://www.omnisend.com)
 - [Documentation](https://api-docs.omnisend.com)
-- [API Reference](https://api-docs.omnisend.com/reference/overview)
-- [Getting Started](https://api-docs.omnisend.com/docs/getting-started)
-- [Authentication](https://api-docs.omnisend.com/reference/authentication)
-- [O Auth](https://api-docs.omnisend.com/reference/oauth)
-- [Changelog](https://api-docs.omnisend.com/changelog)
-- [L L Ms Txt](https://api-docs.omnisend.com/llms.txt)
+- [Getting started](https://api-docs.omnisend.com/docs/getting-started)
+- [API reference](https://api-docs.omnisend.com/reference/overview)
 - [Pricing](https://www.omnisend.com/pricing)
-- [Plans](plans/omnisend-plans-pricing.yml)
-- [Rate Limits](rate-limits/omnisend-rate-limits.yml)
-- [Fin Ops](finops/omnisend-finops.yml)
-- [Sign Up](https://app.omnisend.com/signup)
-- [Login](https://app.omnisend.com/login)
+- [Sign up](https://app.omnisend.com/signup)
 - [Support](https://support.omnisend.com)
-- [Help Center](https://support.omnisend.com/en/articles/1061798-omnisend-api-documentation)
-- [Contact Support](https://www.omnisend.com/contact-us/support)
-- [Status Page](https://status.omnisend.com)
+- [Changelog](https://www.omnisend.com/changelog/)
 - [Blog](https://www.omnisend.com/blog)
-- [GitHub Organization](https://github.com/omnisend)
-- [LinkedIn](https://www.linkedin.com/company/omnisend)
-- [Privacy Policy](https://www.omnisend.com/privacy)
-- [Terms of Service](https://www.omnisend.com/terms)
-- [SDK](https://github.com/omnisend/php-sdk)
-- [Plugin](https://github.com/omnisend/wp-omnisend)
-- [Plugin](https://github.com/omnisend/magento2-plugin)
-- [Plugin](https://www.omnisend.com/integrations/woocommerce)
-- [Plugin](https://www.omnisend.com/integrations/shopify)
-- [Plugin](https://www.omnisend.com/integrations/bigcommerce)
-- [Integrations](https://www.omnisend.com/integrations)
-- [App Market](https://www.omnisend.com/app-market)
-- [Features](undefined)
+- [Terms of service](https://www.omnisend.com/terms)
+- [Privacy policy](https://www.omnisend.com/privacy)
+- [GitHub](https://github.com/omnisend)
+- [Status](https://status.omnisend.com)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
-**URL:** https://apievangelist.com
+**Kin Score 73.0** — exemplar · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 80.0 |
+| Contract quality | 68.6 |
+| Contract governance | 28.0 |
+| Operational transparency | 97.4 |
+| Developer ergonomics | 49.4 |
+| Access clarity | 77.6 |
+
+**Agent readiness 58.2** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 40.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/omnisend/](https://apis.io/providers/omnisend/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Omnisend: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/omnisend/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
